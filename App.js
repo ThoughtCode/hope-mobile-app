@@ -1,13 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { SwitchNavigator } from 'react-navigation';
+
+import Login from './src/components/Login/Login';
+import Home from './src/components/Home/Home';
+
+const MainNavigator = SwitchNavigator({
+  Home: { screen: Home },
+  Login: { screen: Login },
+  // Signup: { screen: Signup },
+  // Profile: { screen: Profile },
+  // RegisterMoon: { screen: RegisterMoon },
+  // Confirmation: { screen: Confirmation },
+  // ForgotPassword: { screen: ForgotPassword },
+  initialRouteName: 'Home',
+});
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <MainNavigator/>
       </View>
     );
   }
