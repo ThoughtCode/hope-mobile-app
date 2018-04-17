@@ -5524,6 +5524,10 @@ react-lifecycles-compat@^1.0.2:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-1.1.4.tgz#fc005c72849b7ed364de20a0f64ff58ebdc2009a"
 
+react-native-banner-carousel@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-banner-carousel/-/react-native-banner-carousel-1.0.3.tgz#83d760233cd7496b595a3c1e51399ffcb16edcb2"
+
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
