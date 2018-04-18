@@ -64,7 +64,7 @@ export default class Login extends React.Component {
                   />
                </View>
                <View style={styles.login_actions_container}>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
                      <Text style={styles.sign_up_button}>
                         ¿NO TIENE UNA CUENTA?
                      </Text>

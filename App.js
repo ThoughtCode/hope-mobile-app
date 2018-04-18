@@ -4,11 +4,12 @@ import { SwitchNavigator } from 'react-navigation';
 
 import Login from './src/components/Login/Login';
 import Home from './src/components/Home/Home';
+import SignUp from './src/components/SignUp/SignUp';
 
 const MainNavigator = SwitchNavigator({
   Home: { screen: Home },
   Login: { screen: Login },
-  // Signup: { screen: Signup },
+   SignUp: { screen: SignUp },
   // Profile: { screen: Profile },
   // RegisterMoon: { screen: RegisterMoon },
   // Confirmation: { screen: Confirmation },
