@@ -1,5 +1,15 @@
 {
   "expo": {
-    "sdkVersion": "26.0.0"
+    "name": "Hope App",
+    "icon": "./assets/img/app_logo.png",
+    "version": "0.2.0",
+    "slug": "hope-app",
+    "sdkVersion": "26.0.0",
+    "ios": {
+      "bundleIdentifier": "com.hope.app"
+    },
+    "android": {
+      "package": "com.hope.app"
+    }
   }
 }
