@@ -50,10 +50,10 @@ export default class Home extends Component {
         </View>
         <View style={styles.actions_container}>
           <View style={styles.signup_button_container}>
-          <TouchableOpacity 
-          // onPress={() => this.props.navigation.navigate('Login')}
+          <TouchableOpacity
+             onPress={() => this.props.navigation.navigate('SignUp')}
           >
-            <Text style={styles.action_buttons}>SIGNUP</Text>
+            <Text style={styles.action_buttons}>REGISTRO</Text>
         </TouchableOpacity>
           </View>
           <View style={styles.login_button_container}>
