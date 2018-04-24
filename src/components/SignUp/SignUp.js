@@ -8,6 +8,8 @@ import {
    View
 } from 'react-native';
 
+import * as urls from '../../constants/api';
+
 const styles = require('./SignUpStyles');
 
 export default class SignUp extends Component {
@@ -15,16 +17,36 @@ export default class SignUp extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         password: '',
-         email: '',
-         errorMessage: ''
+        firstname: '',
+        lastname: '',
+        email: '',      
+        password: '',
+        password_confirmation: '',
+        errorMessage: ''
       };
       this.signUpUser = this.signUpUser.bind(this);
    }
 
    signUpUser = () => {
-      // TODO Sign up user against API
-      console.log(this.state);
+    signup_url =  urls.BASE_URL + urls.SIGNUP_URI;
+    fetch(signup_url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "customer": {
+          "first_name": this.state.firstname,
+          "last_name": this.state.lastname,
+          "email": this.state.email,
+          "password": this.state.password,
+          "password_confirmation": this.state.password_confirmation
+        }
+      }),
+    })
+    .then((response) => console.log(response))
+    .catch((error) => this.setState({errorMessage: error.message}));
    };
 
    render() {
@@ -46,6 +68,20 @@ export default class SignUp extends Component {
                   </Text>
                   <TextInput
                      style={styles.sign_up_input}
+                     onChangeText={(firstname) => this.setState({firstname})}
+                     placeholder="NOMBRE"
+                     autoCapitalize="none"
+                     underlineColorAndroid="#fff"
+                  />
+                  <TextInput
+                     style={styles.sign_up_input}
+                     onChangeText={(lastname) => this.setState({lastname})}
+                     placeholder="APELLIDO"
+                     autoCapitalize="none"
+                     underlineColorAndroid="#fff"
+                  />
+                  <TextInput
+                     style={styles.sign_up_input}
                      onChangeText={(email) => this.setState({email})}
                      placeholder="CORREO ELECTRÓNICO"
                      autoCapitalize="none"
@@ -59,6 +95,17 @@ export default class SignUp extends Component {
                      autoCapitalize="none"
                      onFocus={() => {
                         this.setState({password: ""});
+                     }}
+                     secureTextEntry={true}
+                     underlineColorAndroid="#fff"
+                  />
+                  <TextInput
+                     style={styles.sign_up_input}
+                     onChangeText={(password_confirmation) => this.setState({password_confirmation})}
+                     placeholder="CONFIRMACIÓN DE CONTRASEÑA"
+                     autoCapitalize="none"
+                     onFocus={() => {
+                        this.setState({password_confirmation: ""});
                      }}
                      secureTextEntry={true}
                      underlineColorAndroid="#fff"

@@ -6,6 +6,14 @@ import Login from './src/components/Login/Login';
 import Home from './src/components/Home/Home';
 import SignUp from './src/components/SignUp/SignUp';
 
+// Don't show warnings about deprecation lifecycle methods on the App
+import { YellowBox } from 'react-native';
+
+YellowBox.ignoreWarnings([
+  'Warning: componentWillMount is deprecated',
+  'Warning: componentWillReceiveProps is deprecated',
+]);
+
 const MainNavigator = SwitchNavigator({
   Home: { screen: Home },
   Login: { screen: Login },
