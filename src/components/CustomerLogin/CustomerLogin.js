@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 import {
    KeyboardAvoidingView,
    ScrollView,
-   StyleSheet,
    Text,
    TextInput,
    TouchableOpacity,
    View
 } from 'react-native';
-import {SwitchNavigator} from 'react-navigation';
 
-const styles = require('./LoginStyles');
+import * as urls from '../../constants/api';
+
+const styles = require('./CustomerLoginStyles');
 
 export default class Login extends React.Component {
    constructor(props) {
@@ -20,13 +20,41 @@ export default class Login extends React.Component {
          password: '',
          errorMessage: ''
       };
-      this.signInUser = this.signInUser.bind(this);
+      this.signInUser = this.signInCustomer.bind(this);
    }
 
-   signInUser = () => {
-      // TODO Authenticate against API
-      console.log(this.state);
-   };
+  signInCustomer = () => {
+    this.setState({errorMessage: ''});
+    if (this.state.email === '') {
+      this.setState({errorMessage: "El campo de correo no puede estar vacío"})
+    } else if (this.state.password === '') {
+      this.setState({errorMessage: "Por favor ingrese su contraseña"})
+    } else {
+      signinURL = urls.BASE_URL + urls.CUSTOMER_SIGNIN;
+      fetch(signinURL, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "customer": {
+            "email": this.state.email,
+            "password": this.state.password,
+          }
+        }),
+      })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            this.props.navigation.navigate('ClientDashboard');
+          } else if (response.status === 422) {
+            this.setState({errorMessage: "Verifique su usuario y su contraseña"});
+          }
+        })
+        .catch((error) => this.setState({errorMessage: error.message}));
+    }
+  };
 
    render() {
       return (
@@ -64,6 +92,11 @@ export default class Login extends React.Component {
                   />
                </View>
                <View style={styles.login_actions_container}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('AgentLogin')}>
+                     <Text style={styles.sign_up_button}>
+                        ENTRAR COMO UN AGENTE
+                     </Text>
+                  </TouchableOpacity>
                   <TouchableOpacity onPress={() => this.props.navigation.navigate('ClientSignUp')}>
                      <Text style={styles.sign_up_button}>
                         ¿NO TIENE UNA CUENTA?
@@ -75,7 +108,7 @@ export default class Login extends React.Component {
                      </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                     onPress={this.signInUser}
+                     onPress={this.signInCustomer}
                      style={styles.login_button}
                   >
                      <Text style={styles.login_button_text}>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SwitchNavigator } from 'react-navigation';
+import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
 import Carousel from 'react-native-banner-carousel';
 
 const styles = require('./HomeStyles');
@@ -49,20 +48,20 @@ export default class Home extends Component {
           </Carousel>
         </View>
         <View style={styles.actions_container}>
-          <View style={styles.signup_button_container}>
           <TouchableOpacity
-             onPress={() => this.props.navigation.navigate('SignUp')}
+            onPress={() => this.props.navigation.navigate('ClientSignUp')}
           >
-            <Text style={styles.action_buttons}>REGISTRO</Text>
-        </TouchableOpacity>
-          </View>
-          <View style={styles.login_button_container}>
-            <TouchableOpacity 
-              onPress={() => this.props.navigation.navigate('Login')}
-              >
-                <Text style={styles.action_buttons}>LOGIN</Text>
-            </TouchableOpacity>
-          </View>
+            <View style={styles.signup_button_container}>
+              <Text style={styles.action_buttons}>REGISTRO</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('CustomerLogin')}
+          >
+            <View style={styles.login_button_container}>
+              <Text style={styles.action_buttons}>LOGIN</Text>
+            </View>
+          </TouchableOpacity>
           
         </View>
       </View>

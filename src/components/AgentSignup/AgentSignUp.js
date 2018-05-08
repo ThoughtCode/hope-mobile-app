@@ -10,9 +10,9 @@ import {
 
 import * as urls from '../../constants/api';
 
-const styles = require('./ClientSignUpStyles');
+const styles = require('./AgentSignUpStyles');
 
-export default class ClientSignUp extends Component {
+export default class AgentSignUp extends Component {
 
   constructor(props) {
     super(props);
@@ -22,19 +22,22 @@ export default class ClientSignUp extends Component {
       email: '',
       password: '',
       password_confirmation: '',
+      national_id: "",
+      cell_phone: "",
+      birthday: "",
       errorMessage: ''
     };
-    this.signUpUser = this.signUpUser.bind(this);
+    this.signUpAgent = this.signUpAgent.bind(this);
   }
 
-  signUpUser = () => {
+  signUpAgent = () => {
     this.setState({errorMessage: ''});
     if (this.state.email === '') {
       this.setState({errorMessage: "El campo de correo no puede estar vacío"})
     } else if (this.state.password != this.state.password_confirmation) {
       this.setState({errorMessage: "Las contraseñas no coinciden"})
     } else {
-      signup_url = urls.BASE_URL + urls.SIGNUP_URI;
+      signup_url = urls.BASE_URL + urls.AGENT_SIGNUP_URI;
       fetch(signup_url, {
         method: 'POST',
         headers: {
@@ -42,12 +45,15 @@ export default class ClientSignUp extends Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "customer": {
+          "agent": {
             "first_name": this.state.firstname,
             "last_name": this.state.lastname,
             "email": this.state.email,
             "password": this.state.password,
-            "password_confirmation": this.state.password_confirmation
+            "password_confirmation": this.state.password_confirmation,
+            "national_id": this.state.national_id,
+            "cell_phone": this.state.cell_phone,
+            "birthday": this.state.birthday
           }
         }),
       })
@@ -60,6 +66,8 @@ export default class ClientSignUp extends Component {
         })
         .catch((error) => this.setState({errorMessage: error.message}));
     }
+
+
   };
 
   render() {
@@ -123,20 +131,38 @@ export default class ClientSignUp extends Component {
               secureTextEntry={true}
               underlineColorAndroid="#fff"
             />
+            <TextInput
+              style={styles.sign_up_input}
+              onChangeText={(national_id) => this.setState({national_id})}
+              placeholder="CÉDULA"
+              autoCapitalize="none"
+              underlineColorAndroid="#fff"
+              keyboardType="numeric"
+            />
+            <TextInput
+              style={styles.sign_up_input}
+              onChangeText={(national_id) => this.setState({national_id})}
+              placeholder="CELULAR"
+              autoCapitalize="none"
+              underlineColorAndroid="#fff"
+              keyboardType="phone-pad"
+            />
+            <TextInput
+              style={styles.sign_up_input}
+              onChangeText={(national_id) => this.setState({national_id})}
+              placeholder="CUMPLEAÑOS"
+              autoCapitalize="none"
+              underlineColorAndroid="#fff"
+            />
           </View>
           <View style={styles.sign_up_actions_container}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('AgentSignUp')}>
-              <Text style={styles.login_button}>
-                REGISTRARSE COMO AGENTE
-              </Text>
-            </TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
               <Text style={styles.login_button}>
                 ATRÁS
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={this.signUpUser}
+              onPress={this.signUpAgent}
               style={styles.sign_up_button}
             >
               <Text style={styles.sign_up_text}>
