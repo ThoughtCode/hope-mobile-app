@@ -59,7 +59,9 @@ export default class AgentSignUp extends Component {
       })
         .then((response) => {
           if (response.status === 200) {
-            this.props.navigation.navigate('ClientDashboard');
+            response.json().then((data) => {
+              this.props.navigation.navigate('AgentDashboard', { data });
+            });
           } else if (response.status === 422) {
             this.setState({errorMessage: "Ya existe un usuario con ese correo electrónico"});
           }

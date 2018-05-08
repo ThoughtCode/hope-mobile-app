@@ -24,7 +24,6 @@ export default class Login extends React.Component {
   }
 
   signInCustomer = () => {
-    let apiResponse = {};
     this.setState({errorMessage: ''});
     if (this.state.email === '') {
       this.setState({errorMessage: "El campo de correo no puede estar vacío"})

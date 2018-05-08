@@ -12,7 +12,7 @@ import * as urls from '../../constants/api';
 
 const styles = require('./AgentLoginStyles');
 
-export default class Login extends React.Component {
+export default class AgentLogin extends React.Component {
    constructor(props) {
       super(props);
       this.state = {
@@ -20,7 +20,7 @@ export default class Login extends React.Component {
          password: '',
          errorMessage: ''
       };
-      this.signInUser = this.signInAgent.bind(this);
+      this.signInAgent = this.signInAgent.bind(this);
    }
 
   signInAgent = () => {
@@ -38,21 +38,21 @@ export default class Login extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "agents": {
+          "agent": {
             "email": this.state.email,
             "password": this.state.password,
           }
         }),
-      })
-        .then((response) => {
-          console.log(response);
-          if (response.status === 200) {
-            this.props.navigation.navigate('ClientDashboard');
-          } else if (response.status === 422) {
-            this.setState({errorMessage: "Verifique su usuario y su contraseña"});
-          }
-        })
-        .catch((error) => this.setState({errorMessage: error.message}));
+      }).then((response) => {
+        if (response.status === 401) {
+          this.setState({errorMessage: "Verifique su usuario y su contraseña"});
+          return response;
+        } else {
+          response.json().then((data) => {
+            this.props.navigation.navigate('AgentDashboard', { data });
+          });
+        }
+      }).catch((error) => this.setState({errorMessage: error.message}));
     }
   };
 
