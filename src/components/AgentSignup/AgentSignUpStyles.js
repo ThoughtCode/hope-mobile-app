@@ -27,8 +27,8 @@ module.exports = StyleSheet.create({
       height: 30,
       borderColor: 'gray',
       borderBottomWidth: 1,
-      marginTop: 15,
-      marginBottom: 15,
+      marginTop: 5,
+      marginBottom: 5,
       textAlign: 'left',
       fontSize: 10
    },

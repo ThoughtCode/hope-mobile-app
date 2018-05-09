@@ -49,7 +49,7 @@ export default class Login extends React.Component {
             return response;
           } else {
             response.json().then((data) => {
-              this.props.navigation.navigate('ClientDashboard', { data });
+              this.props.navigation.navigate('CustomerDashboard', { data });
             });
           }
       }).catch((error) => this.setState({errorMessage: error.message}));
@@ -97,7 +97,7 @@ export default class Login extends React.Component {
                 ENTRAR COMO UN AGENTE
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('ClientSignUp')}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerSignUp')}>
               <Text style={styles.sign_up_button}>
                 ¿NO TIENE UNA CUENTA?
               </Text>

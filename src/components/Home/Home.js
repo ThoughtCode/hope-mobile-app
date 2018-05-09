@@ -49,7 +49,7 @@ export default class Home extends Component {
         </View>
         <View style={styles.actions_container}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('ClientSignUp')}
+            onPress={() => this.props.navigation.navigate('CustomerSignUp')}
           >
             <View style={styles.signup_button_container}>
               <Text style={styles.action_buttons}>REGISTRO</Text>

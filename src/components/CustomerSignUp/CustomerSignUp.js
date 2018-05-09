@@ -10,9 +10,9 @@ import {
 
 import * as urls from '../../constants/api';
 
-const styles = require('./ClientSignUpStyles');
+const styles = require('./CustomerSignUpStyles');
 
-export default class ClientSignUp extends Component {
+export default class CustomerSignUp extends Component {
 
   constructor(props) {
     super(props);
@@ -54,7 +54,7 @@ export default class ClientSignUp extends Component {
         .then((response) => {
           if (response.status === 200) {
             response.json().then((data) => {
-              this.props.navigation.navigate('ClientDashboard', { data });
+              this.props.navigation.navigate('CustomerDashboard', { data });
             });
           } else if (response.status === 422) {
             this.setState({errorMessage: "Ya existe un usuario con ese correo electrónico"});

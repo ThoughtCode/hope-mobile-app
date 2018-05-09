@@ -3,9 +3,9 @@ import {Text, TouchableOpacity, View} from 'react-native';
 
 import * as urls from '../../constants/api';
 
-const styles = require('./ClientDashboardStyles');
+const styles = require('./CustomerDashboardStyles');
 
-export default class ClientDashboard extends Component {
+export default class CustomerDashboard extends Component {
   constructor(props) {
     super(props);
     // this.state = {

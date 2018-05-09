@@ -53,7 +53,6 @@ export default class AgentSignUp extends Component {
             "password_confirmation": this.state.password_confirmation,
             "national_id": this.state.national_id,
             "cell_phone": this.state.cell_phone,
-            "birthday": this.state.birthday
           }
         }),
       })
@@ -148,13 +147,6 @@ export default class AgentSignUp extends Component {
               autoCapitalize="none"
               underlineColorAndroid="#fff"
               keyboardType="phone-pad"
-            />
-            <TextInput
-              style={styles.sign_up_input}
-              onChangeText={(national_id) => this.setState({national_id})}
-              placeholder="CUMPLEAÑOS"
-              autoCapitalize="none"
-              underlineColorAndroid="#fff"
             />
           </View>
           <View style={styles.sign_up_actions_container}>

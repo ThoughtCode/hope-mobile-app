@@ -97,7 +97,7 @@ export default class AgentLogin extends React.Component {
                         ENTRAR COMO UN CLIENTE
                      </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ClientSignUp')}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerSignUp')}>
                      <Text style={styles.sign_up_button}>
                         ¿NO TIENE UNA CUENTA?
                      </Text>
