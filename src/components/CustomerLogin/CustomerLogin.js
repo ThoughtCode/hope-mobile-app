@@ -102,7 +102,7 @@ export default class Login extends React.Component {
                 ¿NO TIENE UNA CUENTA?
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerResetPassword')}>
               <Text style={styles.sign_up_button}>
                 ¿OLVIDÓ SU CONTRASEÑA?
               </Text>
