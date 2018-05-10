@@ -102,7 +102,7 @@ export default class AgentLogin extends React.Component {
                         ¿NO TIENE UNA CUENTA?
                      </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('AgentResetPassword')}>
                      <Text style={styles.sign_up_button}>
                         ¿OLVIDÓ SU CONTRASEÑA?
                      </Text>
