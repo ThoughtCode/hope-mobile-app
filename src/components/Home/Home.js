@@ -9,17 +9,17 @@ const BannerHeight = Dimensions.get('window').height;
 
 const images = [
   {
-    uri: "https://images.pexels.com/photos/132037/pexels-photo-132037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    src: require("../../../assets/img/home_splash_1.jpg"),
     description: "Feature 1",
     subtitle: "Lorem ipsum dolor sit amet"
   },
   {
-    uri: "https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    src: require("../../../assets/img/home_splash_2.jpg"),
     description: "Feature 2",
     subtitle: "Lorem ipsum dolor sit amet"
   },
   {
-    uri: "https://images.pexels.com/photos/371633/pexels-photo-371633.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    src: require("../../../assets/img/home_splash_3.jpg"),
     description: "Feature 3",
     subtitle: "Lorem ipsum dolor sit amet"
   }
@@ -30,7 +30,7 @@ export default class Home extends Component {
   renderPage(image, index) {
     return (
         <View key={index}>
-            <Image style={{ width: BannerWidth, height: BannerHeight }} source={{ uri: image.uri }} />
+            <Image style={{ width: BannerWidth, height: BannerHeight }} source={ image.src } />
             <Text style={styles.carousel_description}> {image.description} </Text>
             <Text style={styles.carousel_subtitle}> {image.subtitle} </Text>
         </View>
