@@ -23,30 +23,53 @@ module.exports = StyleSheet.create({
     position: 'absolute', 
     top: BannerHeight/2
   },
+  carousel_subtitle: {
+    width: BannerWidth,
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: '900',
+    color: '#fff',
+    position: 'absolute',
+    top: BannerHeight/1.8
+  },
   actions_container: {
-    flex: 1,
+    position: 'absolute',
+    bottom: 20,
     flexDirection: 'row',
     alignItems: 'stretch',
-    backgroundColor: '#000'
+    backgroundColor: 'transparent',
   },
   signup_button_container: {
-    flex: 1,
-    backgroundColor: '#157DF8',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: 140,
+    height: 30,
+    borderRadius: 3,
+    margin: 10
   },
   login_button_container: {
     flex: 1,
-    backgroundColor: '#C4DE9F',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: 140,
+    height: 30,
+    borderRadius: 3,
+    margin: 10
   },
   action_buttons: {
     width: 200,
-    color: "#fff",
+    color: "#0069A7",
     fontWeight: '900',
-    fontSize: 24,
+    fontSize: 14,
     textAlign: 'center',
     textAlignVertical: 'center'
+  },
+  logo_image: {
+    position: 'absolute',
+    width: 120,
+    height: 110,
+    top: 150
   }
 });

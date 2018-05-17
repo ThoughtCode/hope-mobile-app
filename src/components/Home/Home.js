@@ -10,15 +10,18 @@ const BannerHeight = Dimensions.get('window').height;
 const images = [
   {
     uri: "https://images.pexels.com/photos/132037/pexels-photo-132037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    description: "Feature 1"
+    description: "Feature 1",
+    subtitle: "Lorem ipsum dolor sit amet"
   },
   {
     uri: "https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    description: "Feature 2"
+    description: "Feature 2",
+    subtitle: "Lorem ipsum dolor sit amet"
   },
   {
     uri: "https://images.pexels.com/photos/371633/pexels-photo-371633.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    description: "Feature 3"
+    description: "Feature 3",
+    subtitle: "Lorem ipsum dolor sit amet"
   }
 ];
 
@@ -29,6 +32,7 @@ export default class Home extends Component {
         <View key={index}>
             <Image style={{ width: BannerWidth, height: BannerHeight }} source={{ uri: image.uri }} />
             <Text style={styles.carousel_description}> {image.description} </Text>
+            <Text style={styles.carousel_subtitle}> {image.subtitle} </Text>
         </View>
     );
   }
@@ -47,6 +51,7 @@ export default class Home extends Component {
             {images.map((image, index) => this.renderPage(image, index))}
           </Carousel>
         </View>
+        <Image style={ styles.logo_image } source={ require('../../../assets/img/logo_blanco.png')} />
         <View style={styles.actions_container}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('CustomerSignUp')}
