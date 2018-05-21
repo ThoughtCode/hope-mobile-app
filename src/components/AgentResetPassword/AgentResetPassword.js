@@ -53,7 +53,7 @@ export default class AgentResetPassword extends Component {
         }).then((response) => {
           console.log(response);
           if (response.status === 404) {
-            this.setState({ errorMessage: "El correo no existe" });
+            this.setState({ errorMessage: "El correo electrónico introducido \n no existe en nuestro sistema" });
             return response;
           } else {
             response.json().then(() => {
@@ -109,7 +109,7 @@ export default class AgentResetPassword extends Component {
             style={styles.forgot_password_input}
             onChangeText={(resetCode) => this.setState({ resetCode })}
             placeholder="CÓDIGO DE REINICIO"
-            placeholderTextColor='#000'
+            placeholderTextColor="#000"
             autoCapitalize="none"
             onFocus={() => this.setState({ resetCode: "" })}
             keyboardType="numeric"
@@ -126,9 +126,12 @@ export default class AgentResetPassword extends Component {
             style={styles.forgot_password_input}
             onChangeText={(newPassword) => this.setState({ newPassword })}
             placeholder="NUEVA CONTRASEÑA"
-            placeholderTextColor='#000'
+            placeholderTextColor="#000"
             autoCapitalize="none"
-            onFocus={() => { this.setState({ newPassword: "" }); this.setState({ recoverButtonText: 'RESETEAR' }) }}
+            onFocus={() => {
+              this.setState({ newPassword: "" });
+              this.setState({ recoverButtonText: 'RESETEAR' })
+            }}
             secureTextEntry={true}
             underlineColorAndroid="transparent"
           />
@@ -141,11 +144,11 @@ export default class AgentResetPassword extends Component {
           />
           <TextInput
             style={styles.forgot_password_input}
-            onChangeText={(confirmNewPassword) => this.setState({ confirmNewPassword })}
+            onChangeText={ (confirmNewPassword) => this.setState({ confirmNewPassword }) }
             placeholder="CONFIRME NUEVA CONTRASEÑA"
-            placeholderTextColor='#000'
+            placeholderTextColor="#000"
             autoCapitalize="none"
-            onFocus={() => { this.setState({ confirmNewPassword: "" }); }}
+            onFocus={() => { this.setState({ confirmNewPassword: "" }); } }
             secureTextEntry={true}
             underlineColorAndroid="transparent"
           />
@@ -160,12 +163,16 @@ export default class AgentResetPassword extends Component {
         behavior="padding"
         style={styles.fullSize}
       >
-        <ScrollView contentContainerStyle={styles.forgot_password_container}
+        <ScrollView
+          contentContainerStyle={styles.forgot_password_container}
           keyboardShouldPersistTaps='never'
           scrollEnabled={false}
         >
           <View style={styles.logo_container}>
-            <Image style={styles.logo_image} source={require('../../../assets/img/logo_azul.png')} />
+            <Image
+              style={ styles.logo_image } 
+              source={require('../../../assets/img/logo_azul.png')}
+            />
           </View>
           <View style={styles.agent_indicator}>
             <Text style={styles.agent_indicator_text}>
@@ -187,21 +194,22 @@ export default class AgentResetPassword extends Component {
                 size={32}
                 color='#000'
               />
-              <TextInput style={styles.forgot_password_input}
+              <TextInput
+                style={styles.forgot_password_input}
                 onChangeText={(email) => this.setState({ email })}
                 value={this.state.username}
                 placeholder="CORREO ELECTRONICO"
-                placeholderTextColor='#000'
+                placeholderTextColor="#000"
                 autoCapitalize="none"
                 keyboardType="email-address"
                 underlineColorAndroid="transparent"
               />
             </View>
-
             {this.renderIf(this.state.resetPassword, this.resetPasswordFields())}
           </View>
           <View style={styles.forgot_password_actions_container}>
-            <TouchableOpacity onPress={this.resetPassword}
+            <TouchableOpacity
+              onPress={this.resetPassword}
               style={styles.forgot_password_button}
             >
               <Text style={styles.forgot_password_text}>

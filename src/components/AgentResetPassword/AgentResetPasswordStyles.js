@@ -69,7 +69,7 @@ module.exports = StyleSheet.create ({
     height: 40,
     textAlign: 'left',
     fontSize: 10,
-    paddingLeft: 10,
+    paddingLeft: 10
   },
   login_button: {
     backgroundColor: '#fff',

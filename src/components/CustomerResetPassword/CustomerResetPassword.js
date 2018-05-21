@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
 import {
+  Image,
   KeyboardAvoidingView,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View } from 'react-native';
+  View
+} from 'react-native';
 
 import * as urls from '../../constants/api';
 
@@ -28,11 +31,11 @@ export default class CustomerResetPassword extends Component {
 
   resetPassword = () => {
     if (this.state.email === '') {
-      this.setState({errorMessage: "El campo de correo no puede estar vacío"})
+      this.setState({ errorMessage: "El campo de correo no puede estar vacío" })
     } else {
       forgotPasswordURL = urls.BASE_URL + urls.CUSTOMER_RECOVER_PASSWORD;
       updatePasswordURL = urls.BASE_URL + urls.CUSTOMER_UPDATE_PASSWORD;
-      if(this.state.resetPassword === true) {
+      if (this.state.resetPassword === true) {
         fetch(updatePasswordURL, {
           method: 'POST',
           headers: {
@@ -50,14 +53,14 @@ export default class CustomerResetPassword extends Component {
         }).then((response) => {
           console.log(response);
           if (response.status === 404) {
-            this.setState({errorMessage: "El correo no existe"});
+            this.setState({ errorMessage: "El correo electrónico introducido \n no existe en nuestro sistema" });
             return response;
           } else {
             response.json().then(() => {
-              this.props.navigation.navigate('CustomerLogin' );
+              this.props.navigation.navigate('CustomerLogin');
             });
           }
-        }).catch((error) => this.setState({errorMessage: error.message}));
+        }).catch((error) => this.setState({ errorMessage: error.message }));
       } else {
         fetch(forgotPasswordURL, {
           method: 'POST',
@@ -72,14 +75,14 @@ export default class CustomerResetPassword extends Component {
           }),
         }).then((response) => {
           if (response.status === 404) {
-            this.setState({errorMessage: "El correo no existe"});
+            this.setState({ errorMessage: "El correo electrónico introducido \n no existe en nuestro sistema" });
             return response;
           } else {
             response.json().then(() => {
               this.setState({ resetPassword: true })
             });
           }
-        }).catch((error) => this.setState({errorMessage: error.message}));
+        }).catch((error) => this.setState({ errorMessage: error.message }));
       }
     }
 
@@ -95,79 +98,127 @@ export default class CustomerResetPassword extends Component {
 
   resetPasswordFields = () => {
     return (
-      <View>
-        <TextInput
-          style = {styles.forgot_password_input}
-          onChangeText = {(resetCode) => this.setState({resetCode})}
-          placeholder = "CÓDIGO DE REINICIO"
-          autoCapitalize = "none"
-          onFocus = { () => this.setState({resetCode: ""})}
-          keyboardType = "numeric"
-          underlineColorAndroid = "#fff"/>
-        <TextInput
-          style = {styles.forgot_password_input}
-          onChangeText = {(newPassword) => this.setState({newPassword})}
-          placeholder = "NUEVA CONTRASEÑA"
-          autoCapitalize = "none"
-          onFocus = { () => {this.setState({newPassword: ""}); this.setState({recoverButtonText: 'RESETEAR'})}}
-          secureTextEntry = { true }
-          underlineColorAndroid = "#fff"/>
-        <TextInput
-          style = {styles.forgot_password_input}
-          onChangeText = {(confirmNewPassword) => this.setState({confirmNewPassword})}
-          placeholder = "CONFIRME NUEVA CONTRASEÑA"
-          autoCapitalize = "none"
-          onFocus = { () => {this.setState({confirmNewPassword: ""});}}
-          secureTextEntry = { true }
-          underlineColorAndroid = "#fff"/>
+      <View style={styles.form_container}>
+        <View style={styles.forgot_password_input_container}>
+          <FontAwesome
+            name="key"
+            size={32}
+            color='#000'
+          />
+          <TextInput
+            style={styles.forgot_password_input}
+            onChangeText={(resetCode) => this.setState({ resetCode })}
+            placeholder="CÓDIGO DE REINICIO"
+            placeholderTextColor="#000"
+            autoCapitalize="none"
+            onFocus={() => this.setState({ resetCode: "" })}
+            keyboardType="numeric"
+            underlineColorAndroid="transparent"
+          />
+        </View>
+        <View style={styles.forgot_password_input_container}>
+          <FontAwesome
+            name="lock"
+            size={32}
+            color='#000'
+          />
+          <TextInput
+            style={styles.forgot_password_input}
+            onChangeText={(newPassword) => this.setState({ newPassword })}
+            placeholder="NUEVA CONTRASEÑA"
+            placeholderTextColor="#000"
+            autoCapitalize="none"
+            onFocus={() => {
+              this.setState({ newPassword: "" });
+              this.setState({ recoverButtonText: 'RESETEAR' })
+            }}
+            secureTextEntry={true}
+            underlineColorAndroid="transparent"
+          />
+        </View>
+        <View style={styles.forgot_password_input_container}>
+          <FontAwesome
+            name="lock"
+            size={32}
+            color='#000'
+          />
+          <TextInput
+            style={styles.forgot_password_input}
+            onChangeText={ (confirmNewPassword) => this.setState({ confirmNewPassword }) }
+            placeholder="CONFIRME NUEVA CONTRASEÑA"
+            placeholderTextColor="#000"
+            autoCapitalize="none"
+            onFocus={() => { this.setState({ confirmNewPassword: "" }); } }
+            secureTextEntry={true}
+            underlineColorAndroid="transparent"
+          />
+        </View>
       </View>
     )
   }
 
-  render () {
+  render() {
     return (
       <KeyboardAvoidingView
-        behavior = "padding"
-        style = {styles.fullSize}
+        behavior="padding"
+        style={styles.fullSize}
       >
-        <ScrollView contentContainerStyle = {styles.forgot_password_container}
-                    keyboardShouldPersistTaps='never'
-                    scrollEnabled={false}
+        <ScrollView
+          contentContainerStyle={styles.forgot_password_container}
+          keyboardShouldPersistTaps='never'
+          scrollEnabled={false}
         >
+          <View style={styles.logo_container}>
+            <Image
+              style={ styles.logo_image } 
+              source={require('../../../assets/img/logo_azul.png')}
+            />
+          </View>
+          <View style={styles.customer_indicator}>
+            <Text style={styles.customer_indicator_text}>
+              Recuperar Contraseña Cliente
+            </Text>
+          </View>
           <View style={styles.forgot_password_banner_container}>
-            <Text style={styles.forgot_password_text}>
-              RESETEAR CONTRASEÑA
-            </Text>
             <Text style={styles.forgot_password_help_text}>
-              POR FAVOR INTRODUZCA EL CORREO QUE TENEMOS {"\n"}
-              REGISTRADO EN NUESTRO SISTEMA
+              Introduzca su correo electrónico
             </Text>
-            <Text>
+            <Text style={styles.error_message}>
               {this.state.errorMessage}
             </Text>
           </View>
           <View style={styles.forgot_password_form_container}>
-            <TextInput style = {styles.forgot_password_input}
-                       onChangeText = {(email) => this.setState({email})}
-                       value = {this.state.username}
-                       placeholder = "EMAIL ADDRESS"
-                       autoCapitalize = "none"
-                       keyboardType = "email-address"
-                       underlineColorAndroid = "#fff"
-            />
+            <View style={styles.forgot_password_input_container}>
+              <FontAwesome
+                name="envelope"
+                size={32}
+                color='#000'
+              />
+              <TextInput
+                style={styles.forgot_password_input}
+                onChangeText={(email) => this.setState({ email })}
+                value={this.state.username}
+                placeholder="CORREO ELECTRONICO"
+                placeholderTextColor="#000"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                underlineColorAndroid="transparent"
+              />
+            </View>
             {this.renderIf(this.state.resetPassword, this.resetPasswordFields())}
           </View>
           <View style={styles.forgot_password_actions_container}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerLogin')}>
-              <Text style={styles.login_button}>
-                ATRÁS
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.resetPassword}
-                              style={styles.forgot_password_button}
+            <TouchableOpacity
+              onPress={this.resetPassword}
+              style={styles.forgot_password_button}
             >
               <Text style={styles.forgot_password_text}>
                 {this.state.recoverButtonText}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerLogin')}>
+              <Text style={styles.login_button}>
+                Regresar
               </Text>
             </TouchableOpacity>
           </View>
