@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Hope App",
-    "icon": "./assets/img/logo_blanco.png",
+    "icon": "./assets/img/logo_azul.png",
     "version": "0.2.0",
     "slug": "hope-app",
     "sdkVersion": "26.0.0",
