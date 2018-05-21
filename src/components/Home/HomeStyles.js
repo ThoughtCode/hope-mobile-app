@@ -7,12 +7,12 @@ const BannerHeight = Dimensions.get('window').height;
 module.exports = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   carousel_container: {
     flex: 9,
+    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   carousel_description: {
     width: BannerWidth,

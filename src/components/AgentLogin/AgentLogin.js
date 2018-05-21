@@ -1,11 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
 import {
-   KeyboardAvoidingView,
-   ScrollView,
-   Text,
-   TextInput,
-   TouchableOpacity,
-   View
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 import * as urls from '../../constants/api';
@@ -13,22 +16,22 @@ import * as urls from '../../constants/api';
 const styles = require('./AgentLoginStyles');
 
 export default class AgentLogin extends React.Component {
-   constructor(props) {
-      super(props);
-      this.state = {
-         email: '',
-         password: '',
-         errorMessage: ''
-      };
-      this.signInAgent = this.signInAgent.bind(this);
-   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      errorMessage: ''
+    };
+    this.signInAgent = this.signInAgent.bind(this);
+  }
 
   signInAgent = () => {
-    this.setState({errorMessage: ''});
+    this.setState({ errorMessage: '' });
     if (this.state.email === '') {
-      this.setState({errorMessage: "El campo de correo no puede estar vacío"})
+      this.setState({ errorMessage: "El campo de correo no puede estar vacío" })
     } else if (this.state.password === '') {
-      this.setState({errorMessage: "Por favor ingrese su contraseña"})
+      this.setState({ errorMessage: "Por favor ingrese su contraseña" })
     } else {
       signinURL = urls.BASE_URL + urls.AGENT_SIGNIN;
       fetch(signinURL, {
@@ -45,79 +48,109 @@ export default class AgentLogin extends React.Component {
         }),
       }).then((response) => {
         if (response.status === 401) {
-          this.setState({errorMessage: "Verifique su usuario y su contraseña"});
+          this.setState({ errorMessage: "Verifique su usuario y su contraseña" });
           return response;
         } else {
           response.json().then((data) => {
             this.props.navigation.navigate('AgentDashboard', { data });
           });
         }
-      }).catch((error) => this.setState({errorMessage: error.message}));
+      }).catch((error) => this.setState({ errorMessage: error.message }));
     }
   };
 
-   render() {
-      return (
-         <KeyboardAvoidingView
-            style={styles.fullSize}
-            behavior="padding"
-         >
-            <ScrollView
-               contentContainerStyle={styles.login_container}
-               keyboardShouldPersistTaps='never'
-               scrollEnabled={false}
+  render() {
+    return (
+      <ImageBackground
+        style={{
+          flex: 1,
+          resizeMode: 'center',
+        }}
+        source={require("../../../assets/img/home_splash_3.jpg")}
+      >
+        <KeyboardAvoidingView
+          style={styles.fullSize}
+          behavior="padding"
+        >
+          <View style={styles.agent_indicator}>
+            <Text style={styles.agent_indicator_text}>
+              AGENTE
+            </Text>
+          </View>
+          <View style={styles.customer_login_action}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('CustomerLogin')}
             >
-               <View style={styles.login_form_container}>
-                  <Text>
-                     {this.state.errorMessage}
-                  </Text>
-                  <TextInput
-                     style={styles.login_input}
-                     onChangeText={(email) => this.setState({email})}
-                     value={this.state.email}
-                     placeholder="CORREO ELECTRÓNICO"
-                     autoCapitalize="none"
-                     keyboardType="email-address"
-                     underlineColorAndroid="#fff"
+              <Text
+                style={styles.customer_login_action_text}
+              >
+                Entrar como cliente
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <Image style={styles.logo_image} source={require('../../../assets/img/logo_blanco.png')} />
+          <ScrollView
+            contentContainerStyle={styles.login_container}
+            keyboardShouldPersistTaps='never'
+            scrollEnabled={false}
+          >
+            <View style={styles.login_form_container}>
+              <Text>
+                {this.state.errorMessage}
+              </Text>
+              <View style={styles.input_container}>
+                <View style={styles.input_container_user}>
+                  <FontAwesome
+                    name="user"
+                    size={32}
+                    color='#fff'
                   />
                   <TextInput
-                     style={styles.login_input}
-                     onChangeText={(password) => this.setState({password})}
-                     value={this.state.password}
-                     placeholder="CONTRASEÑA"
-                     autoCapitalize="none"
-                     onFocus={() => this.setState({password: ""})}
-                     secureTextEntry={true}
-                     underlineColorAndroid="#fff"
+                    style={styles.login_input}
+                    onChangeText={(email) => this.setState({ email })}
+                    value={this.state.email}
+                    placeholder="CORREO ELECTRÓNICO"
+                    placeholderTextColor='#fff'
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    underlineColorAndroid="transparent"
                   />
-               </View>
-               <View style={styles.login_actions_container}>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerLogin')}>
-                     <Text style={styles.sign_up_button}>
-                        ENTRAR COMO UN CLIENTE
-                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerSignUp')}>
-                     <Text style={styles.sign_up_button}>
-                        ¿NO TIENE UNA CUENTA?
-                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('AgentResetPassword')}>
-                     <Text style={styles.sign_up_button}>
-                        ¿OLVIDÓ SU CONTRASEÑA?
-                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                     onPress={this.signInAgent}
-                     style={styles.login_button}
-                  >
-                     <Text style={styles.login_button_text}>
-                        INICIAR SESIÓN
-                     </Text>
-                  </TouchableOpacity>
-               </View>
-            </ScrollView>
-         </KeyboardAvoidingView>
-      );
-   }
+                </View>
+                <View style={styles.input_container_password}>
+                  <FontAwesome
+                    name="lock"
+                    size={32}
+                    color='#fff'
+                  />
+                  <TextInput
+                    style={styles.login_input}
+                    onChangeText={(password) => this.setState({ password })}
+                    value={this.state.password}
+                    placeholder="CONTRASEÑA"
+                    placeholderTextColor='#fff'
+                    autoCapitalize="none"
+                    onFocus={() => this.setState({ password: "" })}
+                    secureTextEntry={true}
+                    underlineColorAndroid="#fff"
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={styles.login_actions_container}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerSignUp')}>
+                <Text style={styles.sign_up_button}>
+                  ¿NO TIENE UNA CUENTA?
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('AgentResetPassword')}>
+                <Text style={styles.sign_up_button}>
+                  ¿OLVIDÓ SU CONTRASEÑA?
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </ImageBackground>
+    );
+  }
 }
