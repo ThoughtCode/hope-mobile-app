@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
+import {FontAwesome} from '@expo/vector-icons';
 import {
+  Image,
+  ImageBackground,
   KeyboardAvoidingView,
   ScrollView,
   Text,
@@ -59,7 +62,7 @@ export default class AgentSignUp extends Component {
         .then((response) => {
           if (response.status === 200) {
             response.json().then((data) => {
-              this.props.navigation.navigate('AgentDashboard', { data });
+              this.props.navigation.navigate('AgentDashboard', {data});
             });
           } else if (response.status === 422) {
             this.setState({errorMessage: "Ya existe un usuario con ese correo electrónico"});
@@ -73,99 +76,184 @@ export default class AgentSignUp extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView
-        behaviour='padding'
-        style={styles.sign_up_container}
+      <ImageBackground
+        style={{
+          flex: 1,
+          resizeMode: 'center',
+        }}
+        source={require("../../../assets/img/home_splash_3.jpg")}
       >
-        <ScrollView
-          contentContainerStyle={styles.sign_up_container}
-          keyboardShouldPersistTaps='never'
+        <KeyboardAvoidingView
+          behaviour='padding'
+          style={styles.fullSize}
         >
-          <View style={styles.sign_up_form_container}>
-            <Text style={styles.sign_up_banner_text}>
-              REGISTRO
-            </Text>
-            <Text>
-              {this.state.errorMessage}
-            </Text>
-            <TextInput
-              style={styles.sign_up_input}
-              onChangeText={(firstname) => this.setState({firstname})}
-              placeholder="NOMBRE"
-              autoCapitalize="none"
-              underlineColorAndroid="#fff"
-            />
-            <TextInput
-              style={styles.sign_up_input}
-              onChangeText={(lastname) => this.setState({lastname})}
-              placeholder="APELLIDO"
-              autoCapitalize="none"
-              underlineColorAndroid="#fff"
-            />
-            <TextInput
-              style={styles.sign_up_input}
-              onChangeText={(email) => this.setState({email})}
-              placeholder="CORREO ELECTRÓNICO"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              underlineColorAndroid="#fff"
-            />
-            <TextInput
-              style={styles.sign_up_input}
-              onChangeText={(password) => this.setState({password})}
-              placeholder="CONTRASEÑA"
-              autoCapitalize="none"
-              onFocus={() => {
-                this.setState({password: ""});
-              }}
-              secureTextEntry={true}
-              underlineColorAndroid="#fff"
-            />
-            <TextInput
-              style={styles.sign_up_input}
-              onChangeText={(password_confirmation) => this.setState({password_confirmation})}
-              placeholder="CONFIRMACIÓN DE CONTRASEÑA"
-              autoCapitalize="none"
-              onFocus={() => {
-                this.setState({password_confirmation: ""});
-              }}
-              secureTextEntry={true}
-              underlineColorAndroid="#fff"
-            />
-            <TextInput
-              style={styles.sign_up_input}
-              onChangeText={(national_id) => this.setState({national_id})}
-              placeholder="CÉDULA"
-              autoCapitalize="none"
-              underlineColorAndroid="#fff"
-              keyboardType="numeric"
-            />
-            <TextInput
-              style={styles.sign_up_input}
-              onChangeText={(national_id) => this.setState({national_id})}
-              placeholder="CELULAR"
-              autoCapitalize="none"
-              underlineColorAndroid="#fff"
-              keyboardType="phone-pad"
+          <View style={styles.logo_container}>
+            <Image
+              style={styles.logo_image}
+              source={require('../../../assets/img/logo_blanco.png')}
             />
           </View>
-          <View style={styles.sign_up_actions_container}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
-              <Text style={styles.login_button}>
-                ATRÁS
+          <View style={styles.agent_indicator}>
+            <Text style={styles.agent_indicator_text}>
+              Registro de Agente
+            </Text>
+          </View>
+          <View style={styles.customer_login_action}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('CustomerSignUp')}
+            >
+              <Text
+                style={styles.customer_login_action_text}
+              >
+                Registrarse como cliente
               </Text>
             </TouchableOpacity>
+          </View>
+          <ScrollView
+            contentContainerStyle={styles.sign_up_container}
+            keyboardShouldPersistTaps='never'
+          >
+            <View style={styles.sign_up_form_container}>
+              <Text>
+                {this.state.errorMessage}
+              </Text>
+              <View style={styles.input_container}>
+                <View style={styles.signup_input_container_border}>
+                  <FontAwesome
+                    name="user"
+                    size={32}
+                    color='#fff'
+                  />
+                  <TextInput
+                    style={styles.signup_input}
+                    onChangeText={(firstname) => this.setState({firstname})}
+                    placeholder="NOMBRE"
+                    placeholderTextColor="#fff"
+                    autoCapitalize="none"
+                    underlineColorAndroid="transparent"
+                  />
+                </View>
+                <View style={styles.signup_input_container_border}>
+                  <FontAwesome
+                    name="user"
+                    size={32}
+                    color='#fff'
+                  />
+                  <TextInput
+                    style={styles.signup_input}
+                    onChangeText={(lastname) => this.setState({lastname})}
+                    placeholder="APELLIDO"
+                    placeholderTextColor="#fff"
+                    autoCapitalize="none"
+                    underlineColorAndroid="transparent"
+                  />
+                </View>
+                <View style={styles.signup_input_container_border}>
+                  <FontAwesome
+                    name="envelope"
+                    size={26}
+                    color='#fff'
+                  />
+                  <TextInput
+                    style={styles.signup_input}
+                    onChangeText={(email) => this.setState({email})}
+                    placeholder="CORREO ELECTRÓNICO"
+                    placeholderTextColor="#fff"
+                    autoCapitalize="none"
+                    underlineColorAndroid="transparent"
+                  />
+                </View>
+                <View style={styles.signup_input_container_border}>
+                  <FontAwesome
+                    name="lock"
+                    size={32}
+                    color='#fff'
+                  />
+                  <TextInput
+                    style={styles.signup_input}
+                    onChangeText={(password) => this.setState({password})}
+                    placeholder="CONTRASEÑA"
+                    placeholderTextColor="#fff"
+                    autoCapitalize="none"
+                    underlineColorAndroid="transparent"
+                    onFocus={() => {
+                      this.setState({password: ""});
+                    }}
+                    secureTextEntry={true}
+                  />
+                </View>
+                <View style={styles.signup_input_container_border}>
+                  <FontAwesome
+                    name="lock"
+                    size={32}
+                    color='#fff'
+                  />
+                  <TextInput
+                    style={styles.signup_input}
+                    onChangeText={(password_confirmation) => this.setState({password_confirmation})}
+                    placeholder="CONFIRMACIÓN DE CONTRASEÑA"
+                    placeholderTextColor="#fff"
+                    autoCapitalize="none"
+                    underlineColorAndroid="transparent"
+                    onFocus={() => {
+                      this.setState({password_confirmation: ""});
+                    }}
+                    secureTextEntry={true}
+                  />
+                </View>
+                <View style={styles.signup_input_container_border}>
+                  <FontAwesome
+                    name="id-card"
+                    size={24}
+                    color='#fff'
+                  />
+                  <TextInput
+                    style={styles.signup_input}
+                    onChangeText={(national_id) => this.setState({national_id})}
+                    placeholder="CÉDULA"
+                    placeholderTextColor="#fff"
+                    autoCapitalize="none"
+                    underlineColorAndroid="transparent"
+                    keyboardType="numeric"
+                  />
+                </View>
+                <View style={styles.signup_input_container}>
+                  <FontAwesome
+                    name="mobile-phone"
+                    size={40}
+                    color='#fff'
+                  />
+                  <TextInput
+                    style={styles.signup_input}
+                    onChangeText={(national_id) => this.setState({national_id})}
+                    placeholder="CELULAR"
+                    placeholderTextColor="#fff"
+                    autoCapitalize="none"
+                    underlineColorAndroid="transparent"
+                    keyboardType="phone-pad"
+                  />
+                </View>
+              </View>
+            </View>
             <TouchableOpacity
               onPress={this.signUpAgent}
-              style={styles.sign_up_button}
+              style={styles.signup_button}
             >
-              <Text style={styles.sign_up_text}>
+              <Text style={styles.signup_button_text}>
                 REGISTRAR
               </Text>
             </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Home')}
+              style={styles.back_button}
+            >
+              <Text style={styles.back_button_text}>
+                REGRESAR
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </ImageBackground>
     )
   }
 };
