@@ -29,7 +29,7 @@ module.exports = StyleSheet.create({
     top: 100,
     right: 0,
     paddingHorizontal: 5,
-    paddingVertical: 5,
+    paddingVertical: 15,
     zIndex: 1
   },
   customer_login_action_text: {
@@ -92,6 +92,19 @@ module.exports = StyleSheet.create({
   login_button_text: {
     color: '#0069A7',
     fontSize: 20,
+    fontWeight: '600',
+    letterSpacing: 10
+  },
+  back_button: {
+    marginTop: 20,
+    width: 200,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  back_button_text: {
+    color: '#fff',
+    fontSize: 16,
     fontWeight: '600',
     letterSpacing: 10
   },

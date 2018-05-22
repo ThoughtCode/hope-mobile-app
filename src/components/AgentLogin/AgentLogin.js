@@ -135,6 +135,22 @@ export default class AgentLogin extends React.Component {
                   />
                 </View>
               </View>
+              <TouchableOpacity
+                onPress={this.signInAgent}
+                style={styles.login_button}
+              >
+                <Text style={styles.login_button_text}>
+                  Entrar
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Home')}
+                style={styles.back_button}
+              >
+                <Text style={styles.back_button_text}>
+                  REGRESAR
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.login_actions_container}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerSignUp')}>

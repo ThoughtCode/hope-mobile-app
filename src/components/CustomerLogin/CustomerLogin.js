@@ -140,6 +140,14 @@ export default class CustomerLogin extends React.Component {
                   Entrar
                 </Text>
               </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Home')}
+                style={styles.back_button}
+              >
+                <Text style={styles.back_button_text}>
+                  REGRESAR
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.login_actions_container}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerSignUp')}>
