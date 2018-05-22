@@ -26,6 +26,12 @@ export default class AgentLogin extends React.Component {
     this.signInAgent = this.signInAgent.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.navigation.state.params != null) {
+      this.setState({errorMessage: this.props.navigation.state.params.data.agent.data.attributes.recover_password_text})
+    }
+  }
+
   signInAgent = () => {
     this.setState({ errorMessage: '' });
     if (this.state.email === '') {

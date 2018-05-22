@@ -71,5 +71,14 @@ module.exports = StyleSheet.create({
     width: 120,
     height: 110,
     top: 150
+  },
+  recover_password_text: {
+    position: 'absolute',
+    width: 200,
+    height: 20,
+    top: 300,
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: '600'
   }
 });

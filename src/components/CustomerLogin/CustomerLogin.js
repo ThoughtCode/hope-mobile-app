@@ -26,6 +26,12 @@ export default class CustomerLogin extends React.Component {
     this.signInUser = this.signInCustomer.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.navigation.state.params != null) {
+      this.setState({errorMessage: this.props.navigation.state.params.data.agent.data.attributes.recover_password_text})
+    }
+  }
+
   signInCustomer = () => {
     this.setState({ errorMessage: '' });
     if (this.state.email === '') {

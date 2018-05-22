@@ -57,7 +57,7 @@ export default class AgentResetPassword extends Component {
             return response;
           } else {
             response.json().then(() => {
-              this.props.navigation.navigate('CustomerLogin');
+              this.props.navigation.navigate('AgentLogin', {recover_password_text: "Contraseña recuperada. \n Utilice nuevas credenciales \n para ingresar"});
             });
           }
         }).catch((error) => this.setState({ errorMessage: error.message }));
