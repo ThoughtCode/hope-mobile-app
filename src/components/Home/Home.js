@@ -9,17 +9,17 @@ const BannerHeight = Dimensions.get('window').height;
 
 const images = [
   {
-    src: require("../../../assets/img/home_splash_1.jpg"),
+    src: require("../../../assets/img/home_splash_1_opacity.jpg"),
     description: "Feature 1",
     subtitle: "Lorem ipsum dolor sit amet"
   },
   {
-    src: require("../../../assets/img/home_splash_2.jpg"),
+    src: require("../../../assets/img/home_splash_2_opacity.jpg"),
     description: "Feature 2",
     subtitle: "Lorem ipsum dolor sit amet"
   },
   {
-    src: require("../../../assets/img/home_splash_3.jpg"),
+    src: require("../../../assets/img/home_splash_3_opacity.jpg"),
     description: "Feature 3",
     subtitle: "Lorem ipsum dolor sit amet"
   }
