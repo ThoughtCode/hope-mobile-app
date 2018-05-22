@@ -45,7 +45,7 @@ module.exports = StyleSheet.create({
     color: '#fff',
     fontSize: 10
   },
-  sign_up_form_container: {
+  signup_form_container: {
     flex: 1,
     backgroundColor: 'transparent',
     alignItems: 'center',

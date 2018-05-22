@@ -113,7 +113,7 @@ export default class AgentSignUp extends Component {
             contentContainerStyle={styles.sign_up_container}
             keyboardShouldPersistTaps='never'
           >
-            <View style={styles.sign_up_form_container}>
+            <View style={styles.signup_form_container}>
               <Text>
                 {this.state.errorMessage}
               </Text>
