@@ -27,7 +27,7 @@ export default class CustomerSignUp extends Component {
       password_confirmation: '',
       errorMessage: ''
     };
-    this.signUpUser = this.signUpUser.bind(this);
+    this.signUpCustomer = this.signUpCustomer.bind(this);
   }
 
   signUpCustomer = () => {
@@ -88,17 +88,17 @@ export default class CustomerSignUp extends Component {
           </View>
           <View style={styles.customer_indicator}>
             <Text style={styles.customer_indicator_text}>
-              Registro de Agente
+              Registro de Cliente
             </Text>
           </View>
           <View style={styles.agent_login_action}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('CustomerSignUp')}
+              onPress={() => this.props.navigation.navigate('AgentSignUp')}
             >
               <Text
                 style={styles.agent_login_action_text}
               >
-                Registrarse como cliente
+                Registrarse como agente
               </Text>
             </TouchableOpacity>
           </View>
