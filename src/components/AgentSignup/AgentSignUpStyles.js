@@ -46,6 +46,7 @@ module.exports = StyleSheet.create({
     fontSize: 10
   },
   signup_form_container: {
+    marginTop: 50,
     flex: 1,
     backgroundColor: 'transparent',
     alignItems: 'center',
@@ -114,6 +115,6 @@ module.exports = StyleSheet.create({
   },
   logo_image: {
     width: 60,
-    height: 50,
+    height: 54,
   }
 });
