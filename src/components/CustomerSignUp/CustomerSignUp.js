@@ -72,7 +72,6 @@ export default class CustomerSignUp extends Component {
       <ImageBackground
         style={{
           flex: 1,
-          resizeMode: 'center',
         }}
         source={require("../../../assets/img/home_splash_3.jpg")}
       >

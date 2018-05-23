@@ -68,10 +68,7 @@ export default class AgentLogin extends React.Component {
   render() {
     return (
       <ImageBackground
-        style={{
-          flex: 1,
-          resizeMode: 'center',
-        }}
+        style={styles.image_background}
         source={require("../../../assets/img/home_splash_3.jpg")}
       >
         <KeyboardAvoidingView
@@ -137,7 +134,7 @@ export default class AgentLogin extends React.Component {
                     autoCapitalize="none"
                     onFocus={() => this.setState({ password: "" })}
                     secureTextEntry={true}
-                    underlineColorAndroid="#fff"
+                    underlineColorAndroid="transparent"
                   />
                 </View>
               </View>

@@ -1,5 +1,5 @@
 const React = require('react-native');
-const { Dimensions, StyleSheet } = React;
+const {Dimensions, StyleSheet} = React;
 
 module.exports = StyleSheet.create({
   fullSize: {
@@ -8,6 +8,9 @@ module.exports = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  image_background: {
+    flex: 1,
   },
   agent_indicator: {
     backgroundColor: '#fff',
