@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  Text,
+  View }
+from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
 import * as urls from '../../constants/api';
 
@@ -35,14 +41,95 @@ export default class CustomerDashboard extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>
-          Bievenido {this.props.navigation.state.params.data.customer.data.attributes.first_name}
-        </Text>
-        <TouchableOpacity onPress={() => this.signOutCustomer (this.props.navigation.state.params.data.customer.data.attributes.access_token)}>
-          <Text>
-            SIGNOUT
-          </Text>
-        </TouchableOpacity>
+        <Image source={require('../../../assets/img/dashboard-home.png')}  style={styles.banner_image}/>
+        <Image source={require('../../../assets/img/logo_blanco.png')}  style={styles.logo_image}/>
+        <ScrollView>
+          <View style={styles.section_servicios_container}>
+            <Text style={styles.section_title}>Servicios</Text>
+            <ScrollView
+              contentContainerStyle={styles.servicios_container}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={styles.servicios_item}>
+                <Image source={require('../../../assets/img/servicios_1.png')}
+                       style={styles.servicios_item_image}
+                />
+                <Text>Limpieza de Casa</Text>
+              </View>
+              <View style={styles.servicios_item}>
+                <Image source={require('../../../assets/img/servicios_1.png')}
+                       style={styles.servicios_item_image}
+                />
+                <Text>Limpieza de Casa</Text>
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.section_trabajos_container}>
+            <Text style={styles.section_title}>Próximos Trabajos</Text>
+            <ScrollView
+              contentContainerStyle={styles.servicios_container}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={styles.servicios_item}>
+                <Text style={styles.servicios_item_text}>Limpieza de Yate</Text>
+                <Text style={styles.servicios_item_text}>Mayo 18 de 2018 - 8:30 am</Text>
+                <Text style={styles.servicios_item_text}>Mas agentes están en camino</Text>
+              </View>
+              <View style={styles.servicios_item}>
+                <Text style={styles.servicios_item_text}>Limpieza de Bodega</Text>
+                <Text style={styles.servicios_item_text}>Mayo 18 de 2018 - 8:30 am</Text>
+                <Text style={styles.servicios_item_text}>Mas agentes están en camino</Text>
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.section_trabajos_container}>
+            <Text style={styles.section_title}>Historial de Trabajos</Text>
+            <ScrollView
+              contentContainerStyle={styles.servicios_container}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={styles.servicios_item}>
+                <Text style={styles.servicios_item_text}>Limpieza de Yate</Text>
+                <Text style={styles.servicios_item_text}>Mayo 18 de 2018 - 8:30 am</Text>
+                <Text style={styles.servicios_item_text}>Realizado exitosamente</Text>
+              </View>
+              <View style={styles.servicios_item}>
+                <Text style={styles.servicios_item_text}>Limpieza de Edificio</Text>
+                <Text style={styles.servicios_item_text}>Mayo 18 de 2018 - 8:30 am</Text>
+                <Text style={styles.servicios_item_text}>Realizado exitosamente</Text>
+              </View>
+            </ScrollView>
+          </View>
+        </ScrollView>
+        <View style={styles.footer}>
+          <View style={styles.footer_item}>
+            <FontAwesome
+              name="home"
+              size={32}
+              color='gray'
+            />
+            <Text style={styles.footer_item_text}>Home</Text>
+          </View>
+          <View style={styles.footer_item}>
+            <FontAwesome
+              name="briefcase"
+              size={32}
+              color='gray'
+            />
+            <Text style={styles.footer_item_text}>Trabajos</Text>
+          </View>
+          <View style={styles.footer_item}>
+            <FontAwesome
+              name="user"
+              size={32}
+              color='gray'
+            />
+            <Text style={styles.footer_item_text}>Profile</Text>
+          </View>
+        </View>
       </View>
     );
   }
