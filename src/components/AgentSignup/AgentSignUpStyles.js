@@ -46,7 +46,7 @@ module.exports = StyleSheet.create({
     fontSize: 10
   },
   signup_form_container: {
-    marginTop: 50,
+    marginTop: 70,
     flex: 1,
     backgroundColor: 'transparent',
     alignItems: 'center',

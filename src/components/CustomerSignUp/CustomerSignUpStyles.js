@@ -15,7 +15,7 @@ module.exports = StyleSheet.create({
     justifyContent: 'space-between',
   },
   signup_form_container: {
-    marginTop: 50,
+    marginTop: 70,
     flex: 1,
     backgroundColor: 'transparent',
     alignItems: 'center',

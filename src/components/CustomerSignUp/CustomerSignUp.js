@@ -142,7 +142,7 @@ export default class CustomerSignUp extends Component {
                 </View>
                 <View style={styles.signup_input_container_border}>
                   <FontAwesome
-                    name="user"
+                    name="envelope"
                     size={32}
                     color='#fff'
                   />
@@ -158,7 +158,7 @@ export default class CustomerSignUp extends Component {
                 </View>
                 <View style={styles.signup_input_container_border}>
                   <FontAwesome
-                    name="user"
+                    name="lock"
                     size={32}
                     color='#fff'
                   />
@@ -177,7 +177,7 @@ export default class CustomerSignUp extends Component {
                 </View>
                 <View style={styles.signup_input_container}>
                   <FontAwesome
-                    name="user"
+                    name="lock"
                     size={32}
                     color='#fff'
                   />

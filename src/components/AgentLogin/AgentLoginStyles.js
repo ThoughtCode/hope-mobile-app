@@ -41,7 +41,7 @@ module.exports = StyleSheet.create({
   },
   login_container: {
     flex: 1,
-    top: 250,
+    top: 270,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'space-between',
