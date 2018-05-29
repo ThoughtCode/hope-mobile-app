@@ -58,7 +58,7 @@ export default class CustomerLogin extends React.Component {
           return response;
         } else {
           response.json().then((data) => {
-            this.props.navigation.navigate('CustomerDashboard', { data });
+            this.props.navigation.navigate('CustomerDashboard', { data: data });
           });
         }
       }).catch((error) => this.setState({ errorMessage: error.message }));

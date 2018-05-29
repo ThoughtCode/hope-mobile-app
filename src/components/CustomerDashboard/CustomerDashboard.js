@@ -14,31 +14,48 @@ const styles = require('./CustomerDashboardStyles');
 export default class CustomerDashboard extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   email: '',
-    //   password: '',
-    //   errorMessage: ''
-    // };
-    this.signOutCustomer = this.signOutCustomer.bind(this);
+    this.state = {
+      servicesTypes: [],
+    };
+    this.getServicesTypes = this.getServicesTypes.bind(this);
   }
 
-  signOutCustomer = (authToken) => {
-    signoutURL = urls.BASE_URL + urls.CUSTOMER_SIGNOUT;
-    fetch(signoutURL, {
-      method: 'DELETE',
+  // signOutCustomer = (authToken) => {
+  //   signoutURL = urls.BASE_URL + urls.CUSTOMER_SIGNOUT;
+  //   fetch(signoutURL, {
+  //     method: 'DELETE',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Token ${authToken}`
+  //     },
+  //   }).then((response) => {
+  //       if (response.status === 200) {
+  //         this.props.navigation.navigate('CustomerLogin');
+  //       }
+  //     }).catch((error) => this.setState({errorMessage: error.message}));
+  // };
+
+  getServicesTypes = (authToken) => {
+    servicesTypesURL = urls.BASE_URL + urls.SERVICE_TYPES;
+    fetch(servicesTypesURL, {
+      method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'Authorization': `Token ${authToken}`
       },
-    }).then((response) => {
-        if (response.status === 200) {
-          this.props.navigation.navigate('CustomerLogin');
-        }
-      }).catch((error) => this.setState({errorMessage: error.message}));
+    }).then((response) => response.json()).
+      then((data) => {
+      let servicesTypes = data.service_type;
+      this.setState({servicesTypes: servicesTypes.data});
+    }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
   render() {
+    const data = this.props.navigation.getParam('data');
+    const authToken = data.customer.data.attributes.access_token;
+    this.getServicesTypes(authToken);
     return (
       <View style={styles.container}>
         <Image source={require('../../../assets/img/dashboard-home.png')}  style={styles.banner_image}/>
@@ -51,18 +68,18 @@ export default class CustomerDashboard extends Component {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              <View style={styles.servicios_item}>
-                <Image source={require('../../../assets/img/servicios_1.png')}
-                       style={styles.servicios_item_image}
-                />
-                <Text>Limpieza de Casa</Text>
-              </View>
-              <View style={styles.servicios_item}>
-                <Image source={require('../../../assets/img/servicios_1.png')}
-                       style={styles.servicios_item_image}
-                />
-                <Text>Limpieza de Casa</Text>
-              </View>
+              {
+                this.state.servicesTypes.map((serviceType) => {
+                  return(
+                    <View style={styles.servicios_item}>
+                      <Image source={require('../../../assets/img/servicios_1.png')}
+                             style={styles.servicios_item_image}
+                      />
+                      <Text>{serviceType.attributes.name}</Text>
+                    </View>
+                  );
+                })
+              }
             </ScrollView>
           </View>
           <View style={styles.section_trabajos_container}>
