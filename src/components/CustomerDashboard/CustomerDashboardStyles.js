@@ -32,6 +32,7 @@ module.exports = StyleSheet.create({
     shadowRadius: 3,
     elevation: 2,
   },
+
   section_trabajos_container: {
     height: 200,
     padding: 10,
@@ -45,6 +46,38 @@ module.exports = StyleSheet.create({
     shadowRadius: 3,
     elevation: 2,
   },
+  trabajos_container: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  trabajos_item :{
+    width: Dimensions.get('window').width,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  trabajos_avatars_container: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  trabajos_item_title: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: '900'
+  },
+  trabajos_item_date: {
+    flex: 1,
+    color: '#2478AE'
+  },
+  trabajos_avatar_image: {
+    height: 30,
+    resizeMode: 'contain'
+  },
+  trabajos_item_footer: {
+    flex: 1
+  },
+
   section_title:  {
     fontSize: 20,
     fontWeight: '900',
@@ -80,5 +113,5 @@ module.exports = StyleSheet.create({
   },
   footer_item_text: {
     color: 'gray'
-  }
+  },
 });

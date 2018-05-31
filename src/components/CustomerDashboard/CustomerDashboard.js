@@ -105,38 +105,54 @@ export default class CustomerDashboard extends Component {
           <View style={styles.section_trabajos_container}>
             <Text style={styles.section_title}>Próximos Trabajos</Text>
             <ScrollView
-              contentContainerStyle={styles.servicios_container}
+              contentContainerStyle={styles.trabajos_container}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              <View style={styles.servicios_item}>
-                <Text style={styles.servicios_item_text}>Limpieza de Yate</Text>
-                <Text style={styles.servicios_item_text}>Mayo 18 de 2018 - 8:30 am</Text>
-                <Text style={styles.servicios_item_text}>Mas agentes están en camino</Text>
+              <View style={styles.trabajos_item}>
+                <Text style={styles.trabajos_item_title}>Limpieza de Yate</Text>
+                <Text style={styles.trabajos_item_date}>Mayo 18 de 2018 - 8:30 am</Text>
+                <View style={styles.trabajos_avatars_container}>
+                  <Image source={require('../../../assets/img/profile_avatar1.png')}  style={styles.trabajos_avatar_image}/>
+                  <Image source={require('../../../assets/img/profile_avatar2.png')}  style={styles.trabajos_avatar_image}/>
+                </View>
+                <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text>
               </View>
-              <View style={styles.servicios_item}>
-                <Text style={styles.servicios_item_text}>Limpieza de Bodega</Text>
-                <Text style={styles.servicios_item_text}>Mayo 18 de 2018 - 8:30 am</Text>
-                <Text style={styles.servicios_item_text}>Mas agentes están en camino</Text>
+              <View style={styles.trabajos_item}>
+                <Text style={styles.trabajos_item_title}>Limpieza de Bodega</Text>
+                <Text style={styles.trabajos_item_date}>Mayo 18 de 2018 - 8:30 am</Text>
+                <View style={styles.trabajos_avatars_container}>
+                  <Image source={require('../../../assets/img/profile_avatar2.png')}  style={styles.trabajos_avatar_image}/>
+                  <Image source={require('../../../assets/img/profile_avatar1.png')}  style={styles.trabajos_avatar_image}/>
+                  <Image source={require('../../../assets/img/profile_avatar3.png')}  style={styles.trabajos_avatar_image}/>
+                </View>
+                <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text>
               </View>
             </ScrollView>
           </View>
           <View style={styles.section_trabajos_container}>
             <Text style={styles.section_title}>Historial de Trabajos</Text>
             <ScrollView
-              contentContainerStyle={styles.servicios_container}
+              contentContainerStyle={styles.trabajos_container}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              <View style={styles.servicios_item}>
-                <Text style={styles.servicios_item_text}>Limpieza de Yate</Text>
-                <Text style={styles.servicios_item_text}>Mayo 18 de 2018 - 8:30 am</Text>
-                <Text style={styles.servicios_item_text}>Realizado exitosamente</Text>
+              <View style={styles.trabajos_item}>
+                <Text style={styles.trabajos_item_title}>Limpieza de Yate</Text>
+                <Text style={styles.trabajos_item_date}>Mayo 18 de 2018 - 8:30 am</Text>
+                <View style={styles.trabajos_avatars_container}>
+                  <Image source={require('../../../assets/img/profile_avatar2.png')}  style={styles.trabajos_avatar_image}/>
+                </View>
+                <Text style={styles.trabajos_item_footer}>Realizado exitosamente</Text>
               </View>
-              <View style={styles.servicios_item}>
-                <Text style={styles.servicios_item_text}>Limpieza de Edificio</Text>
-                <Text style={styles.servicios_item_text}>Mayo 18 de 2018 - 8:30 am</Text>
-                <Text style={styles.servicios_item_text}>Realizado exitosamente</Text>
+              <View style={styles.trabajos_item}>
+                <Text style={styles.trabajos_item_title}>Limpieza de Edificio</Text>
+                <Text style={styles.trabajos_item_date}>Mayo 18 de 2018 - 8:30 am</Text>
+                <View style={styles.trabajos_avatars_container}>
+                  <Image source={require('../../../assets/img/profile_avatar2.png')}  style={styles.trabajos_avatar_image}/>
+                  <Image source={require('../../../assets/img/profile_avatar1.png')}  style={styles.trabajos_avatar_image}/>
+                </View>
+                <Text style={styles.trabajos_item_footer}>Realizado exitosamente</Text>
               </View>
             </ScrollView>
           </View>
