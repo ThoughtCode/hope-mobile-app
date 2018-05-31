@@ -4,21 +4,20 @@ const { Dimensions, StyleSheet } = React;
 module.exports = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: 'lightgray'
+    backgroundColor: '#FAFAFA'
   },
   banner_image: {
     width: Dimensions.get('window').width,
-    height: 200,
-    resizeMode: 'contain',
+    height: 150,
+    resizeMode: 'stretch',
   },
   logo_image: {
     position: 'absolute',
-    width: 120,
-    height: 110,
-    top: 50
+    width: 100,
+    height: 90,
+    top: 40
   },
   section_servicios_container: {
     height: 270,
@@ -26,7 +25,12 @@ module.exports = StyleSheet.create({
     borderRadius: 5,
     margin: 10,
     backgroundColor: 'white',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    shadowColor: 'lightgray',
+    shadowOffset: { width: 1, height: 3 },
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    elevation: 2,
   },
   section_trabajos_container: {
     height: 200,
@@ -34,7 +38,12 @@ module.exports = StyleSheet.create({
     borderRadius: 5,
     margin: 10,
     backgroundColor: 'white',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    shadowColor: 'lightgray',
+    shadowOffset: { width: 1, height: 3 },
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    elevation: 2,
   },
   section_title:  {
     fontSize: 20,
@@ -58,11 +67,12 @@ module.exports = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderTopWidth: 1,
-    height: 70,
+    borderTopWidth: 3,
+    height: 60,
     width: Dimensions.get('window').width,
     alignItems: 'center',
-    paddingHorizontal: 50
+    paddingHorizontal: 50,
+    borderColor: '#DDDCDC'
   },
   footer_item: {
     alignItems: 'center',

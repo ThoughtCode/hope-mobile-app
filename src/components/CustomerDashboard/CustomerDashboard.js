@@ -16,8 +16,10 @@ export default class CustomerDashboard extends Component {
     super(props);
     this.state = {
       servicesTypes: [],
+      jobDetails:[]
     };
     this.getServicesTypes = this.getServicesTypes.bind(this);
+    this.getNextJobs = this.getNextJobs.bind(this);
   }
 
   // signOutCustomer = (authToken) => {
@@ -52,10 +54,28 @@ export default class CustomerDashboard extends Component {
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
+  getNextJobs = (authToken) => {
+    nextJobsURL = urls.BASE_URL + urls.NEXT_JOBS;
+    fetch(servicesTypesURL, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authToken}`
+      },
+    }).then((response) => response.json()).
+    then((data) => {
+      let nextJobs = data;
+      console.log(nextJobs);
+      // this.setState({servicesTypes: servicesTypes.data});
+    }).catch((error) => this.setState({errorMessage: error.message}));
+  };
+
   render() {
     const data = this.props.navigation.getParam('data');
     const authToken = data.customer.data.attributes.access_token;
     this.getServicesTypes(authToken);
+    this.getNextJobs(authToken);
     return (
       <View style={styles.container}>
         <Image source={require('../../../assets/img/dashboard-home.png')}  style={styles.banner_image}/>
@@ -125,7 +145,7 @@ export default class CustomerDashboard extends Component {
           <View style={styles.footer_item}>
             <FontAwesome
               name="home"
-              size={32}
+              size={24}
               color='gray'
             />
             <Text style={styles.footer_item_text}>Home</Text>
@@ -133,7 +153,7 @@ export default class CustomerDashboard extends Component {
           <View style={styles.footer_item}>
             <FontAwesome
               name="briefcase"
-              size={32}
+              size={24}
               color='gray'
             />
             <Text style={styles.footer_item_text}>Trabajos</Text>
@@ -141,7 +161,7 @@ export default class CustomerDashboard extends Component {
           <View style={styles.footer_item}>
             <FontAwesome
               name="user"
-              size={32}
+              size={24}
               color='gray'
             />
             <Text style={styles.footer_item_text}>Profile</Text>
