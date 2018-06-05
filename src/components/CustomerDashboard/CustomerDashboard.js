@@ -16,6 +16,7 @@ export default class CustomerDashboard extends Component {
     super(props);
     this.state = {
       servicesTypes: [],
+      nextJobs: [],
       jobDetails:[]
     };
     this.getServicesTypes = this.getServicesTypes.bind(this);
@@ -66,8 +67,7 @@ export default class CustomerDashboard extends Component {
     }).then((response) => response.json()).
     then((data) => {
       let nextJobs = data;
-      console.log(nextJobs);
-      // this.setState({servicesTypes: servicesTypes.data});
+      this.setState({nextJobs: Object.values(nextJobs)});
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
@@ -81,8 +81,8 @@ export default class CustomerDashboard extends Component {
         <Image source={require('../../../assets/img/dashboard-home.png')}  style={styles.banner_image}/>
         <Image source={require('../../../assets/img/logo_blanco.png')}  style={styles.logo_image}/>
         <ScrollView>
+          <Text style={styles.section_title}>Servicios</Text>
           <View style={styles.section_servicios_container}>
-            <Text style={styles.section_title}>Servicios</Text>
             <ScrollView
               contentContainerStyle={styles.servicios_container}
               horizontal={true}
@@ -95,15 +95,16 @@ export default class CustomerDashboard extends Component {
                       <Image source={require('../../../assets/img/servicios_1.png')}
                              style={styles.servicios_item_image}
                       />
-                      <Text>{serviceType.attributes.name}</Text>
+                      <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
                     </View>
                   );
                 })
               }
             </ScrollView>
           </View>
+
+          <Text style={styles.section_title}>Próximos Trabajos</Text>
           <View style={styles.section_trabajos_container}>
-            <Text style={styles.section_title}>Próximos Trabajos</Text>
             <ScrollView
               contentContainerStyle={styles.trabajos_container}
               horizontal={true}
@@ -130,8 +131,8 @@ export default class CustomerDashboard extends Component {
               </View>
             </ScrollView>
           </View>
+          <Text style={styles.section_title}>Historial de Trabajos</Text>
           <View style={styles.section_trabajos_container}>
-            <Text style={styles.section_title}>Historial de Trabajos</Text>
             <ScrollView
               contentContainerStyle={styles.trabajos_container}
               horizontal={true}

@@ -22,38 +22,31 @@ module.exports = StyleSheet.create({
   section_servicios_container: {
     height: 270,
     padding: 10,
-    borderRadius: 5,
-    margin: 10,
-    backgroundColor: 'white',
     alignItems: 'flex-start',
-    shadowColor: 'lightgray',
-    shadowOffset: { width: 1, height: 3 },
-    shadowOpacity: 0.8,
-    shadowRadius: 3,
-    elevation: 2,
   },
 
   section_trabajos_container: {
     height: 200,
     padding: 10,
-    borderRadius: 5,
-    margin: 10,
-    backgroundColor: 'white',
     alignItems: 'flex-start',
-    shadowColor: 'lightgray',
-    shadowOffset: { width: 1, height: 3 },
-    shadowOpacity: 0.8,
-    shadowRadius: 3,
-    elevation: 2,
   },
   trabajos_container: {
     alignItems: 'center',
     justifyContent: 'center'
   },
   trabajos_item :{
-    width: Dimensions.get('window').width,
+    width: Dimensions.get('window').width - 40,
+    padding: 10,
     alignItems: 'center',
     justifyContent: 'space-between',
+    backgroundColor: 'white',
+    shadowColor: 'lightgray',
+    shadowOffset: { width: 1, height: 3 },
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    elevation: 2,
+    borderRadius: 5,
+    margin: 10,
   },
   trabajos_avatars_container: {
     flex: 1,
@@ -81,21 +74,32 @@ module.exports = StyleSheet.create({
   section_title:  {
     fontSize: 20,
     fontWeight: '900',
-    marginBottom: 10
+    marginLeft: 20
   },
   servicios_container: {
     alignItems: 'center',
     justifyContent: 'center'
   },
   servicios_item :{
-    width: Dimensions.get('window').width,
+    width: Dimensions.get('window').width - 40,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    backgroundColor: 'white',
+    shadowColor: 'lightgray',
+    borderRadius: 5,
+    margin: 10,
+    shadowOffset: { width: 1, height: 3 },
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    elevation: 2,
   },
   servicios_item_image: {
-    width: Dimensions.get('window').width,
-    height: 200,
+    width: Dimensions.get('window').width - 40,
+    flex: 1,
     resizeMode: 'cover',
+  },
+  servicios_item_description: {
+    margin: 10
   },
   footer: {
     flexDirection: 'row',
