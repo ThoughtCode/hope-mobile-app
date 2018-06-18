@@ -11,6 +11,7 @@ import CustomerDashboard from './src/components/CustomerDashboard/CustomerDashbo
 import AgentDashboard from './src/components/AgentDashboard/AgentDashboard';
 import CustomerResetPassword from './src/components/CustomerResetPassword/CustomerResetPassword';
 import AgentResetPassword from './src/components/AgentResetPassword/AgentResetPassword';
+import CustomerProfile from './src/components/CustomerProfile/CustomerProfile';
 // Don't show warnings about deprecation lifecycle methods on the App
 import { YellowBox } from 'react-native';
 
@@ -29,7 +30,7 @@ const MainNavigator = SwitchNavigator({
   AgentDashboard: { screen: AgentDashboard },
   CustomerResetPassword: { screen: CustomerResetPassword},
   AgentResetPassword: { screen: AgentResetPassword},
-  // Profile: { screen: Profile },
+  CustomerProfile: { screen: CustomerProfile },
   // RegisterMoon: { screen: RegisterMoon },
   // Confirmation: { screen: Confirmation },
   // ForgotPassword: { screen: ForgotPassword },

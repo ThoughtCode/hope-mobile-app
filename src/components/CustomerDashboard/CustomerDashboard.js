@@ -3,6 +3,7 @@ import {
   Image,
   ScrollView,
   Text,
+  TouchableOpacity,
   View }
 from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
@@ -196,14 +197,14 @@ export default class CustomerDashboard extends Component {
             />
             <Text style={styles.footer_item_text}>Trabajos</Text>
           </View>
-          <View style={styles.footer_item}>
+          <TouchableOpacity style={styles.footer_item} onPress={()=>this.props.navigation.navigate('CustomerProfile', { data: this.props.navigation.getParam('data')})}>
             <FontAwesome
               name="user"
               size={24}
               color='gray'
             />
             <Text style={styles.footer_item_text}>Profile</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
