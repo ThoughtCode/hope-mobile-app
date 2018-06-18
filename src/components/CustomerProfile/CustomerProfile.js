@@ -11,7 +11,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import * as urls from '../../constants/api';
 
 
-const styles = require('../CustomerDashboard/CustomerDashboardStyles');
+const styles = require('./CustomerProfileStyles');
 
 export default class CustomerProfile extends Component {
   // constructor(props) {
@@ -51,11 +51,19 @@ export default class CustomerProfile extends Component {
   // }
 
   render() {
+    // console.log(this.props.navigation.getParam('data'));
     return (
         <View style={styles.container}>
-          <Image source={require('../../../assets/img/dashboard-home.png')}  style={styles.banner_image}/>
-          <Image source={require('../../../assets/img/logo_blanco.png')}  style={styles.logo_image}/>
+          <View style={styles.header}>
+            <Text style={styles.header_title}>Perfil</Text>
+          </View>
           <ScrollView>
+            <View style={styles.profile_picture_name_container}>
+
+              <Text style={styles.profile_name}>
+                {this.props.navigation.getParam('data').customer.data.attributes.first_name} {this.props.navigation.getParam('data').customer.data.attributes.last_name}
+              </Text>
+            </View>
             <Text style={styles.section_title}>Profile</Text>
           </ScrollView>
 
