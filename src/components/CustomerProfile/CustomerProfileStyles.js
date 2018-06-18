@@ -6,7 +6,7 @@ module.exports = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: '#FAFAFA'
+    backgroundColor: '#fff'
   },
   header: {
     width: Dimensions.get('window').width,
@@ -21,18 +21,22 @@ module.exports = StyleSheet.create({
   },
   profile_picture_name_container: {
     width: Dimensions.get('window').width,
-    height: 100,
+    height: 160,
     backgroundColor: '#FAFAFA',
     borderColor: '#DDDCDC',
     borderTopWidth: 2,
     borderBottomWidth: 2,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-evenly'
   },
   profile_name: {
     fontSize: 20,
     fontWeight: '600'
+  },
+  profile_image: {
+    height: 100,
+    resizeMode: 'contain'
   },
 
 

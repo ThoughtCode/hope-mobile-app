@@ -59,7 +59,7 @@ export default class CustomerProfile extends Component {
           </View>
           <ScrollView>
             <View style={styles.profile_picture_name_container}>
-
+              <Image source={require('../../../assets/img/customer_profile.png')}  style={styles.profile_image}/>
               <Text style={styles.profile_name}>
                 {this.props.navigation.getParam('data').customer.data.attributes.first_name} {this.props.navigation.getParam('data').customer.data.attributes.last_name}
               </Text>
