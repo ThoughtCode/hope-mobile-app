@@ -14,6 +14,11 @@ module.exports = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  main_content: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
   header_title: {
     fontSize: 20,
     color: '#2478AE',
@@ -38,91 +43,42 @@ module.exports = StyleSheet.create({
     height: 100,
     resizeMode: 'contain'
   },
-
-
-
-
-  section_servicios_container: {
-    height: 270,
-    padding: 10,
-    alignItems: 'flex-start',
-  },
-
-  section_trabajos_container: {
-    height: 200,
-    padding: 10,
-    alignItems: 'flex-start',
-  },
-  trabajos_container: {
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  trabajos_item :{
-    width: Dimensions.get('window').width - 40,
-    padding: 10,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: 'white',
-    shadowColor: 'lightgray',
-    shadowOffset: { width: 1, height: 3 },
-    shadowOpacity: 0.8,
-    shadowRadius: 3,
-    elevation: 2,
-    borderRadius: 5,
-    margin: 10,
-  },
-  trabajos_avatars_container: {
-    flex: 1,
+  accordion_header: {
+    width: Dimensions.get('window').width,
+    height: 50,
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'space-between',
+    paddingHorizontal: 50,
+    borderColor: '#DDDCDC',
+    borderBottomWidth: 1,
   },
-  trabajos_item_title: {
+  accordion_header_title: {
+    fontSize: 16
+  },
+  accordion_content: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    backgroundColor: '#DDDCDC',
+  },
+  logout_container: {
+    width: Dimensions.get('window').width,
+    height: 40,
+    backgroundColor: '#2478AE',
+  },
+  logout_button: {
     flex: 1,
-    fontSize: 16,
-    fontWeight: '900'
-  },
-  trabajos_item_date: {
-    flex: 1,
-    color: '#2478AE'
-  },
-  trabajos_avatar_image: {
-    height: 30,
-    resizeMode: 'contain'
-  },
-  trabajos_item_footer: {
-    flex: 1
-  },
-
-  section_title:  {
-    fontSize: 20,
-    fontWeight: '900',
-    marginLeft: 20
-  },
-  servicios_container: {
     alignItems: 'center',
     justifyContent: 'center'
   },
-  servicios_item :{
-    width: Dimensions.get('window').width - 40,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    backgroundColor: 'white',
-    shadowColor: 'lightgray',
-    borderRadius: 5,
-    margin: 10,
-    shadowOffset: { width: 1, height: 3 },
-    shadowOpacity: 0.8,
-    shadowRadius: 3,
-    elevation: 2,
-  },
-  servicios_item_image: {
-    width: Dimensions.get('window').width - 40,
-    flex: 1,
-    resizeMode: 'cover',
-  },
-  servicios_item_description: {
-    margin: 10
+  logout_button_text: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#fff'
   },
   footer: {
     flexDirection: 'row',
