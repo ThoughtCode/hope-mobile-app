@@ -4,9 +4,10 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View }
-from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+  View
+}
+  from 'react-native';
+import {FontAwesome} from '@expo/vector-icons';
 
 import * as urls from '../../constants/api';
 
@@ -51,10 +52,9 @@ export default class CustomerDashboard extends Component {
         'Content-Type': 'application/json',
         'Authorization': `Token ${authToken}`
       },
-    }).then((response) => response.json()).
-      then((data) => {
+    }).then((response) => response.json()).then((data) => {
       let servicesTypes = data.service_type.data;
-      this.setState({ servicesTypes });
+      this.setState({servicesTypes});
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
@@ -67,10 +67,9 @@ export default class CustomerDashboard extends Component {
         'Content-Type': 'application/json',
         'Authorization': `Token ${authToken}`
       },
-    }).then((response) => response.json()).
-    then((data) => {
+    }).then((response) => response.json()).then((data) => {
       let nextJobs = data.job.data;
-      this.setState({ nextJobs });
+      this.setState({nextJobs});
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
@@ -83,10 +82,9 @@ export default class CustomerDashboard extends Component {
         'Content-Type': 'application/json',
         'Authorization': `Token ${authToken}`
       },
-    }).then((response) => response.json()).
-    then((data) => {
+    }).then((response) => response.json()).then((data) => {
       let pastJobs = data.job.data;
-      this.setState({ pastJobs });
+      this.setState({pastJobs});
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
@@ -100,113 +98,126 @@ export default class CustomerDashboard extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Image source={require('../../../assets/img/dashboard-home.png')}  style={styles.banner_image}/>
-        <Image source={require('../../../assets/img/logo_blanco.png')}  style={styles.logo_image}/>
-        <ScrollView>
-          <Text style={styles.section_title}>Servicios</Text>
-          <View style={styles.section_servicios_container}>
-            <ScrollView
-              contentContainerStyle={styles.servicios_container}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              {
-                this.state.servicesTypes.map((serviceType) => {
-                  return(
-                    <View key={ serviceType.id }style={styles.servicios_item}>
-                      <Image source={require('../../../assets/img/servicios_1.png')}
-                             style={styles.servicios_item_image}
-                      />
-                      <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
-                    </View>
-                  );
-                })
-              }
-            </ScrollView>
-          </View>
+        <View style={styles.container}>
+          <Image source={require('../../../assets/img/dashboard-home.png')} style={styles.banner_image}/>
+          <Image source={require('../../../assets/img/logo_blanco.png')} style={styles.logo_image}/>
+          <ScrollView>
+            <Text style={styles.section_title}>Servicios</Text>
+            <View style={styles.section_servicios_container}>
+              <ScrollView
+                  contentContainerStyle={styles.servicios_container}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+              >
+                {
+                  this.state.servicesTypes.map((serviceType) => {
+                    return (
+                        <View key={serviceType.id} style={styles.servicios_item}>
+                          <Image source={require('../../../assets/img/servicios_1.png')}
+                                 style={styles.servicios_item_image}
+                          />
+                          <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
+                        </View>
+                    );
+                  })
+                }
+              </ScrollView>
+            </View>
 
-          <Text style={styles.section_title}>Próximos Trabajos</Text>
-          <View style={styles.section_trabajos_container}>
-            <ScrollView
-              contentContainerStyle={styles.trabajos_container}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
+            <Text style={styles.section_title}>Próximos Trabajos</Text>
+            <View style={styles.section_trabajos_container}>
+              <ScrollView
+                  contentContainerStyle={styles.trabajos_container}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+              >
+                {
+                  this.state.nextJobs.map((job) => {
+                    const date = new Date(job.attributes.started_at), locale = "es-ES",
+                        month = date.toLocaleString(locale, {month: "long"});
+                    return (
+                        <View key={job.id} style={styles.trabajos_item}>
+                          <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
+                          <Text style={styles.trabajos_item_date}>
+                            {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
+                          </Text>
+                          <View style={styles.trabajos_avatars_container}>
+                            <Image source={require('../../../assets/img/profile_avatar1.png')}
+                                   style={styles.trabajos_avatar_image}/>
+                            <Image source={require('../../../assets/img/profile_avatar2.png')}
+                                   style={styles.trabajos_avatar_image}/>
+                          </View>
+                          <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text>
+                        </View>
+                    );
+                  })
+                }
+              </ScrollView>
+            </View>
+            <Text style={styles.section_title}>Historial de Trabajos</Text>
+            <View style={styles.section_trabajos_container}>
+              <ScrollView
+                  contentContainerStyle={styles.trabajos_container}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+              >
+                {
+                  this.state.pastJobs.map((job) => {
+                    const date = new Date(job.attributes.started_at), locale = "es-ES",
+                        month = date.toLocaleString(locale, {month: "long"});
+                    return (
+                        <View key={job.id} style={styles.trabajos_item}>
+                          <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
+                          <Text style={styles.trabajos_item_date}>
+                            {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
+                          </Text>
+                          <View style={styles.trabajos_avatars_container}>
+                            <Image source={require('../../../assets/img/profile_avatar3.png')}
+                                   style={styles.trabajos_avatar_image}/>
+                          </View>
+                          <Text style={styles.trabajos_item_footer}>Realizado exitosamente</Text>
+                        </View>
+                    );
+                  })
+                }
+              </ScrollView>
+            </View>
+          </ScrollView>
+          <View style={styles.footer}>
+            <View style={styles.footer_item}>
+              <FontAwesome
+                  name="home"
+                  size={24}
+                  color='gray'
+              />
+              <Text style={styles.footer_item_text}>Home</Text>
+            </View>
+            <View style={styles.footer_item}>
+              <TouchableOpacity
+                  style={styles.footer_item}
+                  onPress={() => this.props.navigation.navigate('CustomerJobs', {data: this.props.navigation.getParam('data')})}
+              >
+                <FontAwesome
+                    name="briefcase"
+                    size={24}
+                    color='gray'
+                />
+                <Text style={styles.footer_item_text}>Trabajos</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+                style={styles.footer_item}
+                onPress={() => this.props.navigation.navigate('CustomerProfile', {data: this.props.navigation.getParam('data')})}
             >
-              {
-                this.state.nextJobs.map((job) => {
-                  const date = new Date(job.attributes.started_at), locale = "es-ES", month = date.toLocaleString(locale, { month: "long" });
-                  return(
-                    <View key={ job.id } style={styles.trabajos_item}>
-                      <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
-                      <Text style={styles.trabajos_item_date}>
-                        {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
-                      </Text>
-                      <View style={styles.trabajos_avatars_container}>
-                        <Image source={require('../../../assets/img/profile_avatar1.png')}  style={styles.trabajos_avatar_image}/>
-                        <Image source={require('../../../assets/img/profile_avatar2.png')}  style={styles.trabajos_avatar_image}/>
-                      </View>
-                      <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text>
-                    </View>
-                  );
-                })
-              }
-            </ScrollView>
+              <FontAwesome
+                  name="user"
+                  size={24}
+                  color='gray'
+              />
+              <Text style={styles.footer_item_text}>Profile</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={styles.section_title}>Historial de Trabajos</Text>
-          <View style={styles.section_trabajos_container}>
-            <ScrollView
-              contentContainerStyle={styles.trabajos_container}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              {
-                this.state.pastJobs.map((job) => {
-                  const date = new Date(job.attributes.started_at), locale = "es-ES", month = date.toLocaleString(locale, { month: "long" });
-                  return(
-                    <View key={ job.id } style={styles.trabajos_item}>
-                      <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
-                      <Text style={styles.trabajos_item_date}>
-                        {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
-                      </Text>
-                      <View style={styles.trabajos_avatars_container}>
-                        <Image source={require('../../../assets/img/profile_avatar3.png')}  style={styles.trabajos_avatar_image}/>
-                      </View>
-                      <Text style={styles.trabajos_item_footer}>Realizado exitosamente</Text>
-                    </View>
-                  );
-                })
-              }
-            </ScrollView>
-          </View>
-        </ScrollView>
-        <View style={styles.footer}>
-          <View style={styles.footer_item}>
-            <FontAwesome
-              name="home"
-              size={24}
-              color='gray'
-            />
-            <Text style={styles.footer_item_text}>Home</Text>
-          </View>
-          <View style={styles.footer_item}>
-            <FontAwesome
-              name="briefcase"
-              size={24}
-              color='gray'
-            />
-            <Text style={styles.footer_item_text}>Trabajos</Text>
-          </View>
-          <TouchableOpacity style={styles.footer_item} onPress={()=>this.props.navigation.navigate('CustomerProfile', { data: this.props.navigation.getParam('data')})}>
-            <FontAwesome
-              name="user"
-              size={24}
-              color='gray'
-            />
-            <Text style={styles.footer_item_text}>Profile</Text>
-          </TouchableOpacity>
         </View>
-      </View>
     );
   }
 }

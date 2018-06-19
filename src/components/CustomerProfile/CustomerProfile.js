@@ -4,9 +4,10 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View }
+  View
+}
   from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import {FontAwesome} from '@expo/vector-icons';
 import Accordion from 'react-native-collapsible/Accordion';
 
 import * as urls from '../../constants/api';
@@ -36,14 +37,14 @@ const SECTIONS = [
 export default class CustomerProfile extends Component {
   constructor(props) {
     super(props);
-  //   this.state = {
-  //     servicesTypes: [],
-  //     nextJobs: [],
-  //     pastJobs: []
-  //   };
-  //   this.getServicesTypes = this.getServicesTypes.bind(this);
-  //   this.getNextJobs = this.getNextJobs.bind(this);
-  //   this.getPastJobs = this.getPastJobs.bind(this);
+    //   this.state = {
+    //     servicesTypes: [],
+    //     nextJobs: [],
+    //     pastJobs: []
+    //   };
+    //   this.getServicesTypes = this.getServicesTypes.bind(this);
+    //   this.getNextJobs = this.getNextJobs.bind(this);
+    //   this.getPastJobs = this.getPastJobs.bind(this);
     this.signOutCustomer = this.signOutCustomer.bind(this);
   }
 
@@ -57,10 +58,10 @@ export default class CustomerProfile extends Component {
         'Authorization': `Token ${authToken}`
       },
     }).then((response) => {
-        if (response.status === 200) {
-          this.props.navigation.navigate('CustomerLogin');
-        }
-      }).catch((error) => this.setState({errorMessage: error.message}));
+      if (response.status === 200) {
+        this.props.navigation.navigate('CustomerLogin');
+      }
+    }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
   _renderHeader(section) {
@@ -92,7 +93,7 @@ export default class CustomerProfile extends Component {
           </View>
           <ScrollView contentContainerStyle={styles.main_content}>
             <View style={styles.profile_picture_name_container}>
-              <Image source={require('../../../assets/img/customer_profile.png')}  style={styles.profile_image}/>
+              <Image source={require('../../../assets/img/customer_profile.png')} style={styles.profile_image}/>
               <Text style={styles.profile_name}>
                 {this.props.navigation.getParam('data').customer.data.attributes.first_name} {this.props.navigation.getParam('data').customer.data.attributes.last_name}
               </Text>
@@ -103,7 +104,8 @@ export default class CustomerProfile extends Component {
                 renderContent={this._renderContent}
             />
             <View style={styles.logout_container}>
-              <TouchableOpacity style={styles.logout_button} onPress={()=>this.signOutCustomer(this.props.navigation.getParam('data').customer.data.attributes.access_token)}>
+              <TouchableOpacity style={styles.logout_button}
+                                onPress={() => this.signOutCustomer(this.props.navigation.getParam('data').customer.data.attributes.access_token)}>
                 <Text style={styles.logout_button_text}>
                   Cerrar Sesión
                 </Text>
@@ -112,7 +114,8 @@ export default class CustomerProfile extends Component {
           </ScrollView>
 
           <View style={styles.footer}>
-            <TouchableOpacity style={styles.footer_item} onPress={()=>this.props.navigation.navigate('CustomerDashboard', { data: this.props.navigation.getParam('data')})}>
+            <TouchableOpacity style={styles.footer_item}
+                              onPress={() => this.props.navigation.navigate('CustomerDashboard', {data: this.props.navigation.getParam('data')})}>
               <FontAwesome
                   name="home"
                   size={24}
@@ -123,20 +126,30 @@ export default class CustomerProfile extends Component {
               </Text>
             </TouchableOpacity>
             <View style={styles.footer_item}>
-              <FontAwesome
-                  name="briefcase"
-                  size={24}
-                  color='gray'
-              />
-              <Text style={styles.footer_item_text}>Trabajos</Text>
+              <TouchableOpacity
+                  style={styles.footer_item}
+                  onPress={() => this.props.navigation.navigate('CustomerJobs', {data: this.props.navigation.getParam('data')})}
+              >
+                <FontAwesome
+                    name="briefcase"
+                    size={24}
+                    color='gray'
+                />
+                <Text style={styles.footer_item_text}>Trabajos</Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.footer_item}>
-              <FontAwesome
-                  name="user"
-                  size={24}
-                  color='gray'
-              />
-              <Text style={styles.footer_item_text}>Profile</Text>
+              <TouchableOpacity
+                  style={styles.footer_item}
+                  onPress={() => this.props.navigation.navigate('CustomerProfile', {data: this.props.navigation.getParam('data')})}
+              >
+                <FontAwesome
+                    name="user"
+                    size={24}
+                    color='gray'
+                />
+                <Text style={styles.footer_item_text}>Profile</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
