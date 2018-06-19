@@ -31,4 +31,23 @@ module.exports = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between'
   },
+
+
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderTopWidth: 3,
+    height: 60,
+    width: Dimensions.get('window').width,
+    alignItems: 'center',
+    paddingHorizontal: 50,
+    borderColor: '#DDDCDC'
+  },
+  footer_item: {
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+  footer_item_text: {
+    color: 'gray'
+  },
 })

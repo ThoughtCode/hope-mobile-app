@@ -29,9 +29,52 @@ export default class CustomerJobs extends Component {
                 color='#2478AE'
             />
           </View>
+
           <ScrollView contentContainerStyle={styles.main_content}>
 
           </ScrollView>
+
+          <View style={styles.footer}>
+            <TouchableOpacity
+                style={styles.footer_item}
+                onPress={() => this.props.navigation.navigate('CustomerDashboard', {data: this.props.navigation.getParam('data')})}
+            >
+              <FontAwesome
+                  name="home"
+                  size={24}
+                  color='gray'
+              />
+              <Text style={styles.footer_item_text}>
+                Home
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.footer_item}>
+              <TouchableOpacity
+                  style={styles.footer_item}
+                  onPress={() => this.props.navigation.navigate('CustomerJobs', {data: this.props.navigation.getParam('data')})}
+              >
+                <FontAwesome
+                    name="briefcase"
+                    size={24}
+                    color='gray'
+                />
+                <Text style={styles.footer_item_text}>Trabajos</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.footer_item}>
+              <TouchableOpacity
+                  style={styles.footer_item}
+                  onPress={() => this.props.navigation.navigate('CustomerProfile', {data: this.props.navigation.getParam('data')})}
+              >
+                <FontAwesome
+                    name="user"
+                    size={24}
+                    color='gray'
+                />
+                <Text style={styles.footer_item_text}>Profile</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
     )
   }
