@@ -4,9 +4,9 @@ import {FontAwesome} from '@expo/vector-icons';
 
 import * as urls from '../../constants/api';
 
-const styles = require('./CreateJobStyles');
+const styles = require('./CustomerAddressStyles');
 
-export default class CreateJob extends Component {
+export default class CustomerAddress extends Component {
   constructor(props) {
     super(props);
 
@@ -30,7 +30,7 @@ export default class CreateJob extends Component {
           <View style={styles.header}>
             <TouchableOpacity
               style={styles.jobs_back_button}
-              onPress={() => this.props.navigation.navigate('CustomerDashboard', {data: this.props.navigation.getParam('data')})}
+              onPress={() => this.props.navigation.navigate('CreateJob', {data: this.props.navigation.getParam('data')})}
             >
               <FontAwesome
                 name="chevron-left"
@@ -39,7 +39,7 @@ export default class CreateJob extends Component {
               />
             </TouchableOpacity>
             <Text style={styles.jobs_header}>
-              Describe tu Trabajo
+              Direcciones
             </Text>
             <Image source={require('../../../assets/img/logo_blanco.png')} style={styles.logo_image}/>
           </View>
@@ -47,88 +47,18 @@ export default class CreateJob extends Component {
 
         <ScrollView contentContainerStyle={styles.main_content}>
 
-          <TouchableOpacity
-            style={styles.jobs_details_container}
-            onPress={() => this.props.navigation.navigate('CustomerAddress', {data: this.props.navigation.getParam('data')})}
-          >
+          <TouchableOpacity style={styles.jobs_details_container}>
+            <FontAwesome
+              name="home"
+              size={30}
+              color='#2478AE'
+            />
             <View style={styles.job_detail}>
               <Text style={styles.jobs_titles}>
                 Dirección
               </Text>
               <Text style={styles.jobs_descriptions}>
                 {this.state.address}
-              </Text>
-            </View>
-            <View style={styles.jobs_action_icon}>
-              <FontAwesome
-                name="map-marker"
-                size={30}
-                color='#2478AE'
-              />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.jobs_details_container}>
-            <View style={styles.job_detail}>
-              <Text style={styles.jobs_titles}>
-                Fecha y Hora
-              </Text>
-              <Text style={styles.jobs_descriptions}>
-                {this.state.time_and_date}
-              </Text>
-            </View>
-            <View style={styles.jobs_action_icon}>
-              <FontAwesome
-                name="chevron-right"
-                size={30}
-                color='#2478AE'
-              />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.jobs_details_container}>
-            <View style={styles.job_detail}>
-              <Text style={styles.jobs_titles}>
-                Servicio Principal
-              </Text>
-              <Text style={styles.jobs_descriptions}>
-                {this.state.main_service}
-              </Text>
-            </View>
-            <View style={styles.jobs_action_icon}>
-              <FontAwesome
-                name="chevron-right"
-                size={30}
-                color='#2478AE'
-              />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.jobs_details_container}>
-            <View style={styles.job_detail}>
-              <Text style={styles.jobs_titles}>
-                Servicios Adicionales
-              </Text>
-              <Text style={styles.jobs_descriptions}>
-                {this.state.added_services}
-              </Text>
-            </View>
-            <View style={styles.jobs_action_icon}>
-              <FontAwesome
-                name="chevron-right"
-                size={30}
-                color='#2478AE'
-              />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.jobs_details_container}>
-            <View style={styles.job_detail}>
-              <Text style={styles.jobs_titles}>
-                Detalles adicionales
-              </Text>
-              <Text style={styles.jobs_descriptions}>
-                {this.state.additional_details}
               </Text>
             </View>
             <View style={styles.jobs_action_icon}>
@@ -140,11 +70,32 @@ export default class CreateJob extends Component {
             </View>
           </TouchableOpacity>
 
-          <View style={styles.jobs_value}>
-            <Text style={styles.jobs_value_text}>Total trabajo: </Text>
-            <Text style={styles.jobs_value_text}>$ {this.state.valor}</Text>
-          </View>
+          <TouchableOpacity style={styles.jobs_details_container}>
+            <FontAwesome
+              name="briefcase"
+              size={30}
+              color='#2478AE'
+            />
+            <View style={styles.job_detail}>
+              <Text style={styles.jobs_titles}>
+                Fecha y Hora
+              </Text>
+              <Text style={styles.jobs_descriptions}>
+                {this.state.time_and_date}
+              </Text>
+            </View>
+            <View style={styles.jobs_action_icon}>
+              <FontAwesome
+                name="edit"
+                size={30}
+                color='#2478AE'
+              />
+            </View>
+          </TouchableOpacity>
         </ScrollView>
+        <TouchableOpacity style={styles.jobs_value}>
+          <Text style={styles.jobs_value_text}>Nueva Dirección</Text>
+        </TouchableOpacity>
 
         <View style={styles.footer}>
           <TouchableOpacity style={styles.jobs_store_button}>

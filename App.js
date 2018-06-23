@@ -13,6 +13,7 @@ import CustomerResetPassword from './src/components/CustomerResetPassword/Custom
 import AgentResetPassword from './src/components/AgentResetPassword/AgentResetPassword';
 import CustomerProfile from './src/components/CustomerProfile/CustomerProfile';
 import CustomerJobs from './src/components/CustomerJobs/CustomerJobs';
+import CustomerAddress from './src/components/CustomerAddress/CustomerAddress';
 
 // Don't show warnings about deprecation lifecycle methods on the App
 import { YellowBox } from 'react-native';
@@ -36,6 +37,7 @@ const MainNavigator = SwitchNavigator({
   CustomerProfile: { screen: CustomerProfile },
   CustomerJobs: { screen: CustomerJobs },
   CreateJob: { screen: CreateJob },
+  CustomerAddress: { screen: CustomerAddress },
   initialRouteName: 'Home',
 });
 
