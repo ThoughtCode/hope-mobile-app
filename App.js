@@ -16,6 +16,7 @@ import CustomerJobs from './src/components/CustomerJobs/CustomerJobs';
 
 // Don't show warnings about deprecation lifecycle methods on the App
 import { YellowBox } from 'react-native';
+import CreateJob from "./src/components/CreateJob/CreateJob";
 
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
@@ -34,6 +35,7 @@ const MainNavigator = SwitchNavigator({
   AgentResetPassword: { screen: AgentResetPassword},
   CustomerProfile: { screen: CustomerProfile },
   CustomerJobs: { screen: CustomerJobs },
+  CreateJob: { screen: CreateJob },
   initialRouteName: 'Home',
 });
 

@@ -12,7 +12,6 @@ module.exports = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: 80,
     alignItems: 'center',
-    justifyContent: 'center',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -20,6 +19,13 @@ module.exports = StyleSheet.create({
     borderColor: '#DDDCDC',
     borderBottomWidth: 1,
     paddingBottom: 10
+  },
+  add_job_button: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-around',
   },
   header_title: {
     fontSize: 20,

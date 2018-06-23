@@ -20,62 +20,67 @@ export default class CustomerJobs extends Component {
 
   render() {
     return (
-        <View style={styles.container}>
-          <View style={styles.header}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.add_job_button}
+            onPress={() => this.props.navigation.navigate('CreateJob', {data: this.props.navigation.getParam('data')})}
+          >
             <Text style={styles.header_title}>Trabajos</Text>
             <FontAwesome
-                name="plus-circle"
-                size={24}
-                color='#2478AE'
+              name="plus-circle"
+              size={24}
+              color='#2478AE'
             />
-          </View>
+          </TouchableOpacity>
+        </View>
 
-          <ScrollView contentContainerStyle={styles.main_content}>
+        <ScrollView contentContainerStyle={styles.main_content}>
 
-          </ScrollView>
+        </ScrollView>
 
-          <View style={styles.footer}>
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={styles.footer_item}
+            onPress={() => this.props.navigation.navigate('CustomerDashboard', {data: this.props.navigation.getParam('data')})}
+          >
+            <FontAwesome
+              name="home"
+              size={24}
+              color='gray'
+            />
+            <Text style={styles.footer_item_text}>
+              Home
+            </Text>
+          </TouchableOpacity>
+          <View style={styles.footer_item}>
             <TouchableOpacity
-                style={styles.footer_item}
-                onPress={() => this.props.navigation.navigate('CustomerDashboard', {data: this.props.navigation.getParam('data')})}
+              style={styles.footer_item}
+              onPress={() => this.props.navigation.navigate('CustomerJobs', {data: this.props.navigation.getParam('data')})}
             >
               <FontAwesome
-                  name="home"
-                  size={24}
-                  color='gray'
+                name="briefcase"
+                size={24}
+                color='gray'
               />
-              <Text style={styles.footer_item_text}>
-                Home
-              </Text>
+              <Text style={styles.footer_item_text}>Trabajos</Text>
             </TouchableOpacity>
-            <View style={styles.footer_item}>
-              <TouchableOpacity
-                  style={styles.footer_item}
-                  onPress={() => this.props.navigation.navigate('CustomerJobs', {data: this.props.navigation.getParam('data')})}
-              >
-                <FontAwesome
-                    name="briefcase"
-                    size={24}
-                    color='gray'
-                />
-                <Text style={styles.footer_item_text}>Trabajos</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.footer_item}>
-              <TouchableOpacity
-                  style={styles.footer_item}
-                  onPress={() => this.props.navigation.navigate('CustomerProfile', {data: this.props.navigation.getParam('data')})}
-              >
-                <FontAwesome
-                    name="user"
-                    size={24}
-                    color='gray'
-                />
-                <Text style={styles.footer_item_text}>Profile</Text>
-              </TouchableOpacity>
-            </View>
+          </View>
+          <View style={styles.footer_item}>
+            <TouchableOpacity
+              style={styles.footer_item}
+              onPress={() => this.props.navigation.navigate('CustomerProfile', {data: this.props.navigation.getParam('data')})}
+            >
+              <FontAwesome
+                name="user"
+                size={24}
+                color='gray'
+              />
+              <Text style={styles.footer_item_text}>Profile</Text>
+            </TouchableOpacity>
           </View>
         </View>
+      </View>
     )
   }
 }
