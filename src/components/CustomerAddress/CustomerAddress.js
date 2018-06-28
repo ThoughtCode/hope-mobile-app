@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 import {Image, ImageBackground, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
 
+import {connect} from 'react-redux';
+import {setProperty} from "../../actions";
+
 import * as urls from '../../constants/api';
 
 const styles = require('./CustomerAddressStyles');
 
-export default class CustomerAddress extends Component {
+class CustomerAddress extends Component {
   constructor(props) {
     super(props);
 
@@ -75,12 +78,15 @@ export default class CustomerAddress extends Component {
                   />
                   <TouchableOpacity
                     onPress={
-                      () => this.props.navigation.navigate('CreateJob',
-                        {
-                          data: this.props.navigation.getParam('data'),
-                          property: property
-                        }
-                      )
+                      () => {
+                        this.props.navigation.navigate('CreateJob',
+                          {
+                            data: this.props.navigation.getParam('data'),
+                            property: property
+                          }
+                        );
+                        this.props.setProperty(property);
+                      }
                     }
                   >
                     <View style={styles.job_detail}>
@@ -121,3 +127,5 @@ export default class CustomerAddress extends Component {
     );
   }
 }
+
+export default connect(null, {setProperty})(CustomerAddress);
