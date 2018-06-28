@@ -16,7 +16,25 @@ export default class CreateJob extends Component {
       time_and_date: "23 de mayo de 2018 - 12:00 HH",
       main_service: "Limpieza de casa",
       added_services: "Limpieza de Edificio",
-      additional_details: "¿Como mas describirias tu trabajo?"
+      additional_details: "¿Como mas describirias tu trabajo?",
+      property:{}
+    }
+  }
+
+  renderPropertyAddress = () => {
+    if (Object.keys(this.state.property).length !== 0) {
+      return (
+        this.state.property.attributes.number + this.state.property.attributes.p_street + this.state.property.attributes.city + "\n" + "Ecuador"
+      );
+    } else {
+      return ("Seleccione una propiedad");
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.navigation.getParam('property') != null) {
+      let property = this.props.navigation.getParam('property');
+      this.setState({property});
     }
   }
 
@@ -56,7 +74,7 @@ export default class CreateJob extends Component {
                 Dirección
               </Text>
               <Text style={styles.jobs_descriptions}>
-                {this.state.address}
+                { this.renderPropertyAddress() }
               </Text>
             </View>
             <View style={styles.jobs_action_icon}>

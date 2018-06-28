@@ -11,13 +11,31 @@ export default class CustomerAddress extends Component {
     super(props);
 
     this.state = {
-      value: 2.50,
-      address: "6060 La Floresta, Quito-Ecuador",
-      time_and_date: "23 de mayo de 2018 - 12:00 HH",
-      main_service: "Limpieza de casa",
-      added_services: "Limpieza de Edificio",
-      additional_details: "¿Como mas describirias tu trabajo?"
+      properties: [],
+      errorMessage: ""
     }
+  }
+
+  getProperties = (authToken) => {
+    getPropertiesURL = urls.BASE_URL + urls.PROPERTIES;
+    fetch(getPropertiesURL, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authToken}`
+      },
+    }).then((response) => response.json()).then((data) => {
+      let properties = data.property.data;
+      this.setState({properties});
+      // console.log(data);
+    }).catch((error) => this.setState({errorMessage: error.message}));
+  };
+
+  componentWillMount() {
+    const data = this.props.navigation.getParam('data');
+    const authToken = data.customer.data.attributes.access_token;
+    this.getProperties(authToken);
   }
 
   render() {
@@ -46,52 +64,46 @@ export default class CustomerAddress extends Component {
         </ImageBackground>
 
         <ScrollView contentContainerStyle={styles.main_content}>
+          {
+            this.state.properties.map((property) => {
+              return (
+                <View key={property.attributes.id} style={styles.jobs_details_container}>
+                  <FontAwesome
+                    name="home"
+                    size={30}
+                    color='#2478AE'
+                  />
+                  <TouchableOpacity
+                    onPress={
+                      () => this.props.navigation.navigate('CreateJob',
+                        {
+                          data: this.props.navigation.getParam('data'),
+                          property: property
+                        }
+                      )
+                    }
+                  >
+                    <View style={styles.job_detail}>
+                      <Text style={styles.jobs_titles}>
+                        {property.attributes.name}
+                      </Text>
+                      <Text style={styles.jobs_descriptions}>
+                        {property.attributes.number} {property.attributes.p_street}, {property.attributes.city} {'\n'} Ecuador
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <View style={styles.jobs_action_icon}>
+                    <FontAwesome
+                      name="edit"
+                      size={30}
+                      color='#2478AE'
+                    />
+                  </View>
 
-          <TouchableOpacity style={styles.jobs_details_container}>
-            <FontAwesome
-              name="home"
-              size={30}
-              color='#2478AE'
-            />
-            <View style={styles.job_detail}>
-              <Text style={styles.jobs_titles}>
-                Dirección
-              </Text>
-              <Text style={styles.jobs_descriptions}>
-                {this.state.address}
-              </Text>
-            </View>
-            <View style={styles.jobs_action_icon}>
-              <FontAwesome
-                name="edit"
-                size={30}
-                color='#2478AE'
-              />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.jobs_details_container}>
-            <FontAwesome
-              name="briefcase"
-              size={30}
-              color='#2478AE'
-            />
-            <View style={styles.job_detail}>
-              <Text style={styles.jobs_titles}>
-                Fecha y Hora
-              </Text>
-              <Text style={styles.jobs_descriptions}>
-                {this.state.time_and_date}
-              </Text>
-            </View>
-            <View style={styles.jobs_action_icon}>
-              <FontAwesome
-                name="edit"
-                size={30}
-                color='#2478AE'
-              />
-            </View>
-          </TouchableOpacity>
+                </View>
+              )
+            })
+          }
         </ScrollView>
         <TouchableOpacity style={styles.jobs_value}>
           <Text style={styles.jobs_value_text}>Nueva Dirección</Text>
