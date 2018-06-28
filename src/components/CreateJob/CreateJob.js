@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import {Image, ImageBackground, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
@@ -19,7 +19,7 @@ class CreateJob extends Component {
       main_service: "Limpieza de casa",
       added_services: "Limpieza de Edificio",
       additional_details: "¿Como mas describirias tu trabajo?",
-      property:{},
+      property: {},
       date: ''
     }
   }
@@ -34,10 +34,24 @@ class CreateJob extends Component {
     }
   }
 
+  renderDateTime = () => {
+    if (this.state.date.length !== 0) {
+      return (
+        this.state.date
+      );
+    } else {
+      return ("Seleccione una fecha");
+    }
+  }
+
   componentWillMount() {
     if (this.props.job.property != null) {
       let property = this.props.job.property;
       this.setState({property});
+    }
+    if (this.props.job.date != null) {
+      let date = this.props.job.date;
+      this.setState({date});
     }
   }
 
@@ -79,7 +93,7 @@ class CreateJob extends Component {
                 Dirección
               </Text>
               <Text style={styles.jobs_descriptions}>
-                { this.renderPropertyAddress() }
+                {this.renderPropertyAddress()}
               </Text>
             </View>
             <View style={styles.jobs_action_icon}>
@@ -100,7 +114,7 @@ class CreateJob extends Component {
                 Fecha y Hora
               </Text>
               <Text style={styles.jobs_descriptions}>
-                {this.state.time_and_date}
+                {this.renderDateTime()}
               </Text>
             </View>
             <View style={styles.jobs_action_icon}>

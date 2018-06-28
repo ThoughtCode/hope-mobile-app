@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-
 import {FontAwesome} from '@expo/vector-icons';
 
 import {connect} from 'react-redux';
-import {setProperty} from "../../actions";
+import {setDate} from "../../actions";
 
 import * as urls from '../../constants/api';
 
@@ -85,7 +84,19 @@ class CustomerDateTime extends Component {
         </ScrollView>
 
         <View style={styles.footer}>
-          <TouchableOpacity style={styles.jobs_store_button}>
+          <TouchableOpacity
+            style={styles.jobs_store_button}
+            onPress={
+              () => {
+                this.props.navigation.navigate('CreateJob',
+                  {
+                    data: this.props.navigation.getParam('data'),
+                  }
+                );
+                this.props.setDate(this.state.date);
+              }
+            }
+          >
             <Text style={styles.jobs_store_button_text}>
               Guardar
             </Text>
@@ -97,4 +108,4 @@ class CustomerDateTime extends Component {
   }
 }
 
-export default connect(null, {setProperty})(CustomerDateTime);
+export default connect(null, {setDate})(CustomerDateTime);
