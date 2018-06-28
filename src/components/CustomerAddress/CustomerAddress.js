@@ -82,7 +82,6 @@ class CustomerAddress extends Component {
                         this.props.navigation.navigate('CreateJob',
                           {
                             data: this.props.navigation.getParam('data'),
-                            property: property
                           }
                         );
                         this.props.setProperty(property);

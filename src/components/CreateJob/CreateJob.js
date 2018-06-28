@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+
 import {Image, ImageBackground, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
 
@@ -6,7 +8,7 @@ import * as urls from '../../constants/api';
 
 const styles = require('./CreateJobStyles');
 
-export default class CreateJob extends Component {
+class CreateJob extends Component {
   constructor(props) {
     super(props);
 
@@ -24,7 +26,7 @@ export default class CreateJob extends Component {
   renderPropertyAddress = () => {
     if (Object.keys(this.state.property).length !== 0) {
       return (
-        this.state.property.attributes.number + this.state.property.attributes.p_street + this.state.property.attributes.city + "\n" + "Ecuador"
+        this.state.property.attributes.number + " " + this.state.property.attributes.p_street + " " + this.state.property.attributes.city + "\n" + "Ecuador"
       );
     } else {
       return ("Seleccione una propiedad");
@@ -32,13 +34,15 @@ export default class CreateJob extends Component {
   }
 
   componentWillMount() {
-    if (this.props.navigation.getParam('property') != null) {
-      let property = this.props.navigation.getParam('property');
+    if (this.props.job.property != null) {
+      let property = this.props.job.property;
       this.setState({property});
     }
   }
 
   render() {
+    console.log('this.props', this.props);
+
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -176,3 +180,11 @@ export default class CreateJob extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    job: state
+  };
+}
+
+export default connect(mapStateToProps, null)(CreateJob);
