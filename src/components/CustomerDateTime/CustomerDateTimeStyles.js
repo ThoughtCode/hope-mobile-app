@@ -34,6 +34,8 @@ module.exports = StyleSheet.create({
     flex: 1,
     width: Dimensions.get('window').width,
     display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   footer: {
     display: 'flex',
@@ -91,5 +93,24 @@ module.exports = StyleSheet.create({
   jobs_descriptions: {
     marginTop: 10,
     fontStyle: 'italic'
+  },
+  select_date_button: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#2478AE',
+    padding: 15,
+    margin: 40,
+    width: Dimensions.get('window').width - 80,
+  },
+  select_date_text: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: '600'
+  },
+  date_text: {
+    fontSize: 24,
+    fontWeight: '600'
   }
 });
