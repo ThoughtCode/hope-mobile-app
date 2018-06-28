@@ -14,6 +14,7 @@ import AgentResetPassword from './src/components/AgentResetPassword/AgentResetPa
 import CustomerProfile from './src/components/CustomerProfile/CustomerProfile';
 import CustomerJobs from './src/components/CustomerJobs/CustomerJobs';
 import CustomerAddress from './src/components/CustomerAddress/CustomerAddress';
+import CustomerDateTime from './src/components/CustomerDateTime/CustomerDateTime';
 import CreateJob from "./src/components/CreateJob/CreateJob";
 
 // Don't show warnings about deprecation lifecycle methods on the App
@@ -46,6 +47,7 @@ const MainNavigator = SwitchNavigator({
   CustomerJobs: {screen: CustomerJobs},
   CreateJob: {screen: CreateJob},
   CustomerAddress: {screen: CustomerAddress},
+  CustomerDateTime: {screen: CustomerDateTime},
   initialRouteName: 'Home',
 });
 

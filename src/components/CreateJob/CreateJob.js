@@ -19,7 +19,8 @@ class CreateJob extends Component {
       main_service: "Limpieza de casa",
       added_services: "Limpieza de Edificio",
       additional_details: "¿Como mas describirias tu trabajo?",
-      property:{}
+      property:{},
+      date: ''
     }
   }
 
@@ -90,7 +91,10 @@ class CreateJob extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.jobs_details_container}>
+          <TouchableOpacity
+            style={styles.jobs_details_container}
+            onPress={() => this.props.navigation.navigate('CustomerDateTime', {data: this.props.navigation.getParam('data')})}
+          >
             <View style={styles.job_detail}>
               <Text style={styles.jobs_titles}>
                 Fecha y Hora
