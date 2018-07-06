@@ -29,10 +29,7 @@ module.exports = StyleSheet.create({
     fontSize: 20
   },
   main_content: {
-    flex: 1,
     width: Dimensions.get('window').width,
-    display: 'flex',
-    justifyContent: 'space-between',
     // backgroundColor: 'gray'
   },
   footer: {
@@ -71,7 +68,7 @@ module.exports = StyleSheet.create({
 
   jobs_details_container: {
     display: 'flex',
-    flex: 1,
+    height: 100,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

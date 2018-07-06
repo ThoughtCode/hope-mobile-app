@@ -62,7 +62,7 @@ class CreateJob extends Component {
   renderServices = () => {
     if (Object.keys(this.state.serviceType).length !== 0) {
       return (
-        <View>
+        <View style={{ height: 200}}>
           <TouchableOpacity
             style={styles.jobs_details_container}
             onPress={() => this.props.navigation.navigate('CustomerMainService', {data: this.props.navigation.getParam('data')})}
