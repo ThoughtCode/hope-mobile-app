@@ -15,12 +15,12 @@ class CreateJob extends Component {
     this.state = {
       value: 2.50,
       address: "6060 La Floresta, Quito-Ecuador",
-      time_and_date: "23 de mayo de 2018 - 12:00 HH",
       main_service: "Limpieza de casa",
       added_services: "Limpieza de Edificio",
       additional_details: "¿Como mas describirias tu trabajo?",
       property: {},
-      date: ''
+      date: '',
+      serviceType: {}
     }
   }
 
@@ -34,17 +34,79 @@ class CreateJob extends Component {
     }
   }
 
+  formatDate = (date) => {
+    const newDate = new Date(date), locale = "es-ES",
+      month = newDate.toLocaleString(locale, {month: "long"});
+    formattedDate = month.charAt(0).toUpperCase() + month.slice(1) + " " + newDate.getDate() + " de " + newDate.getFullYear() + " - " + newDate.getHours() + ":" + newDate.getMinutes() + "Hrs";
+    return formattedDate;
+  }
+
   renderDateTime = () => {
     if (this.state.date.length !== 0) {
       return (
-        this.state.date
+        this.formatDate(this.state.date)
       );
     } else {
       return ("Seleccione una fecha");
     }
   }
 
-  componentWillMount() {
+  renderServiceType = () => {
+    if (Object.keys(this.state.serviceType).length !== 0) {
+      return ('Service type');
+    } else {
+      return("Seleccione tipo de servicio");
+    }
+  }
+
+  renderServices = () => {
+    if (Object.keys(this.state.serviceType).length !== 0) {
+      return (
+        <View>
+          <TouchableOpacity
+            style={styles.jobs_details_container}
+            onPress={() => this.props.navigation.navigate('CustomerMainService', {data: this.props.navigation.getParam('data')})}
+          >
+            <View style={styles.job_detail}>
+              <Text style={styles.jobs_titles}>
+                Servicio Principal
+              </Text>
+              <Text style={styles.jobs_descriptions}>
+                {this.state.main_service}
+              </Text>
+            </View>
+            <View style={styles.jobs_action_icon}>
+              <FontAwesome
+                name="chevron-right"
+                size={30}
+                color='#2478AE'
+              />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.jobs_details_container}>
+            <View style={styles.job_detail}>
+              <Text style={styles.jobs_titles}>
+                Servicios Adicionales
+              </Text>
+              <Text style={styles.jobs_descriptions}>
+                {this.state.added_services}
+              </Text>
+            </View>
+            <View style={styles.jobs_action_icon}>
+              <FontAwesome
+                name="chevron-right"
+                size={30}
+                color='#2478AE'
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+  }
+
+  componentDidMount() {
     if (this.props.job.property != null) {
       let property = this.props.job.property;
       this.setState({property});
@@ -53,6 +115,7 @@ class CreateJob extends Component {
       let date = this.props.job.date;
       this.setState({date});
     }
+    console.log(this.props.navigation.getParam('data'));
   }
 
   render() {
@@ -126,13 +189,16 @@ class CreateJob extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.jobs_details_container}>
+          <TouchableOpacity
+            style={styles.jobs_details_container}
+            onPress={() => this.props.navigation.navigate('CustomerServiceType', {data: this.props.navigation.getParam('data')})}
+          >
             <View style={styles.job_detail}>
               <Text style={styles.jobs_titles}>
-                Servicio Principal
+                Tipo de Servicio
               </Text>
               <Text style={styles.jobs_descriptions}>
-                {this.state.main_service}
+                {this.renderServiceType()}
               </Text>
             </View>
             <View style={styles.jobs_action_icon}>
@@ -144,23 +210,7 @@ class CreateJob extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.jobs_details_container}>
-            <View style={styles.job_detail}>
-              <Text style={styles.jobs_titles}>
-                Servicios Adicionales
-              </Text>
-              <Text style={styles.jobs_descriptions}>
-                {this.state.added_services}
-              </Text>
-            </View>
-            <View style={styles.jobs_action_icon}>
-              <FontAwesome
-                name="chevron-right"
-                size={30}
-                color='#2478AE'
-              />
-            </View>
-          </TouchableOpacity>
+          {this.renderServices()}
 
           <TouchableOpacity style={styles.jobs_details_container}>
             <View style={styles.job_detail}>

@@ -15,6 +15,8 @@ import CustomerProfile from './src/components/CustomerProfile/CustomerProfile';
 import CustomerJobs from './src/components/CustomerJobs/CustomerJobs';
 import CustomerAddress from './src/components/CustomerAddress/CustomerAddress';
 import CustomerDateTime from './src/components/CustomerDateTime/CustomerDateTime';
+import CustomerMainService from './src/components/CustomerMainService/CustomerMainService';
+import CustomerServiceType from './src/components/CustomerServiceType/CustomerServiceType';
 import CreateJob from "./src/components/CreateJob/CreateJob";
 
 // Don't show warnings about deprecation lifecycle methods on the App
@@ -31,6 +33,7 @@ store.subscribe(() => console.log('store', store.getState()));
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
   'Warning: componentWillReceiveProps is deprecated',
+  'Warning: componentWillUpdate is deprecated'
 ]);
 
 const MainNavigator = SwitchNavigator({
@@ -48,6 +51,8 @@ const MainNavigator = SwitchNavigator({
   CreateJob: {screen: CreateJob},
   CustomerAddress: {screen: CustomerAddress},
   CustomerDateTime: {screen: CustomerDateTime},
+  CustomerMainService: {screen: CustomerMainService},
+  CustomerServiceType: {screen: CustomerServiceType},
   initialRouteName: 'Home',
 });
 

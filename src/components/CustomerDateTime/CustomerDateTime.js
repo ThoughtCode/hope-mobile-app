@@ -16,7 +16,7 @@ class CustomerDateTime extends Component {
     super(props);
 
     this.state = {
-      date: "",
+      date: null,
       isDateTimePickerVisible: false,
       errorMessage: ""
     }
@@ -26,11 +26,20 @@ class CustomerDateTime extends Component {
 
   hideDateTimePicker = () => this.setState({isDateTimePickerVisible: false});
 
+  formatDate = (date) => {
+    if(date != null) {
+      const newDate = new Date(date), locale = "es-ES",
+        month = newDate.toLocaleString(locale, {month: "long"});
+      formattedDate = month.charAt(0).toUpperCase() + month.slice(1) + " " + newDate.getDate() + " de " + newDate.getFullYear() + " - " + newDate.getHours() + ":" + newDate.getMinutes() + "Hrs";
+      return formattedDate;
+    } else {
+      return '';
+    }
+  }
+
   handleDatePicked = (date) => {
-    const newDate = new Date(date), locale = "es-ES",
-      month = newDate.toLocaleString(locale, {month: "long"});
-    formattedDate = month.charAt(0).toUpperCase() + month.slice(1) + " " + newDate.getDate() + " de " + newDate.getFullYear() + " - " + newDate.getHours() + ":" + newDate.getMinutes() + "Hrs";
-    this.setState({date: formattedDate});
+    let datePicked = new Date(date);
+    this.setState({date: datePicked});
     this.hideDateTimePicker();
   }
 
@@ -73,7 +82,7 @@ class CustomerDateTime extends Component {
             </Text>
           </TouchableOpacity>
           <Text style={styles.date_text}>
-            {this.state.date}
+            {this.formatDate(this.state.date)}
           </Text>
           <DateTimePicker
             isVisible={this.state.isDateTimePickerVisible}

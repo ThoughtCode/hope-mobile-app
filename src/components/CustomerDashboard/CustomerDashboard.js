@@ -88,7 +88,7 @@ export default class CustomerDashboard extends Component {
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const data = this.props.navigation.getParam('data');
     const authToken = data.customer.data.attributes.access_token;
     this.getServicesTypes(authToken);
