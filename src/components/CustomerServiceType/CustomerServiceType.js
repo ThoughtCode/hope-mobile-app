@@ -35,6 +35,12 @@ class CustomerServiceType extends Component {
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
+  componentDidMount() {
+    const data = this.props.navigation.getParam('data');
+    const authToken = data.customer.data.attributes.access_token;
+    this.getServicesTypes(authToken);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -60,7 +66,13 @@ class CustomerServiceType extends Component {
         </View>
 
         <ScrollView contentContainerStyle={styles.main_content}>
-
+          {
+            this.state.servicesTypes.map((serviceType) => {
+              return (
+                  <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
+              );
+            })
+          }
         </ScrollView>
 
         <View style={styles.footer}>
