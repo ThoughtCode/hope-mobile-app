@@ -112,5 +112,5 @@ module.exports = StyleSheet.create({
   date_text: {
     fontSize: 24,
     fontWeight: '600'
-  }
+  },
 });

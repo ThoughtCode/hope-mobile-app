@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import RadioGroup from 'react-native-radio-buttons-group';
 
 import {FontAwesome} from '@expo/vector-icons';
 
@@ -16,7 +17,8 @@ class CustomerServiceType extends Component {
 
     this.state = {
       servicesTypes: [],
-      errorMessage: ""
+      errorMessage: "",
+      selectedServiceType: null
     }
   }
 
@@ -34,6 +36,34 @@ class CustomerServiceType extends Component {
       this.setState({servicesTypes});
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
+
+  selectedServiceType =(serviceType) => {
+    this.setState({selectedServiceType: this.state.servicesTypes.find( st => {return st.id === serviceType.value} )
+  })}
+
+  renderServicesTypes = () => {
+    if(this.state.servicesTypes.length != 0)
+    {
+      let radio_props = [];
+      this.state.servicesTypes.map(serviceType => {
+        radio_props.push(
+          {
+            label: serviceType.attributes.name,
+            value: serviceType.id,
+            color: '#2478AE',
+            size: 30,
+          }
+        )
+      });
+
+      return (
+        <View>
+          <RadioGroup radioButtons={radio_props} onPress={value => this.selectedServiceType(value.find(serviceType => {return serviceType.selected}))}/>
+        </View>
+      );
+    }
+
+  }
 
   componentDidMount() {
     const data = this.props.navigation.getParam('data');
@@ -67,11 +97,12 @@ class CustomerServiceType extends Component {
 
         <ScrollView contentContainerStyle={styles.main_content}>
           {
-            this.state.servicesTypes.map((serviceType) => {
-              return (
-                  <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
-              );
-            })
+            // this.state.servicesTypes.map((serviceType) => {
+            //   return (
+            //       <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
+            //   );
+            // })
+            this.renderServicesTypes()
           }
         </ScrollView>
 
@@ -85,7 +116,7 @@ class CustomerServiceType extends Component {
                     data: this.props.navigation.getParam('data'),
                   }
                 );
-                // this.props.setDate(this.state.date);
+                this.props.setServiceType(this.state.selectedServiceType);
               }
             }
           >

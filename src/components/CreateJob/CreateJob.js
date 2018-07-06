@@ -53,7 +53,7 @@ class CreateJob extends Component {
 
   renderServiceType = () => {
     if (Object.keys(this.state.serviceType).length !== 0) {
-      return ('Service type');
+      return (this.state.serviceType.attributes.name);
     } else {
       return("Seleccione tipo de servicio");
     }
@@ -114,6 +114,10 @@ class CreateJob extends Component {
     if (this.props.job.date != null) {
       let date = this.props.job.date;
       this.setState({date});
+    }
+    if (this.props.job.serviceType != null) {
+      let serviceType = this.props.job.serviceType;
+      this.setState({serviceType});
     }
     console.log(this.props.navigation.getParam('data'));
   }

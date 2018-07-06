@@ -113,15 +113,6 @@ class CustomerAddress extends Component {
         <TouchableOpacity style={styles.jobs_value}>
           <Text style={styles.jobs_value_text}>Nueva Dirección</Text>
         </TouchableOpacity>
-
-        <View style={styles.footer}>
-          <TouchableOpacity style={styles.jobs_store_button}>
-            <Text style={styles.jobs_store_button_text}>
-              Guardar Trabajo
-            </Text>
-          </TouchableOpacity>
-        </View>
-
       </View>
     );
   }
