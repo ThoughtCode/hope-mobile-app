@@ -51,7 +51,6 @@ export default class CustomerResetPassword extends Component {
             }
           }),
         }).then((response) => {
-          console.log(response);
           if (response.status === 404) {
             this.setState({ errorMessage: "El correo electrónico introducido \n no existe en nuestro sistema" });
             return response;

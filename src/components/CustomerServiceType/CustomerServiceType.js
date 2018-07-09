@@ -5,7 +5,7 @@ import RadioGroup from 'react-native-radio-buttons-group';
 import {FontAwesome} from '@expo/vector-icons';
 
 import {connect} from 'react-redux';
-import {setServiceType} from "../../actions";
+import {setServiceType, setServices} from "../../actions";
 
 import * as urls from '../../constants/api';
 
@@ -17,6 +17,7 @@ class CustomerServiceType extends Component {
 
     this.state = {
       servicesTypes: [],
+      services: {},
       errorMessage: "",
       selectedServiceType: null
     }
@@ -34,12 +35,36 @@ class CustomerServiceType extends Component {
     }).then((response) => response.json()).then((data) => {
       let servicesTypes = data.service_type.data;
       this.setState({servicesTypes});
+      this.setState({selectedServiceType: this.state.servicesTypes[0]})
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
-  selectedServiceType =(serviceType) => {
-    this.setState({selectedServiceType: this.state.servicesTypes.find( st => {return st.id === serviceType.value} )
-  })}
+  selectedServiceType = (serviceType) => {
+    this.setState(
+      { selectedServiceType: this.state.servicesTypes.find( st => {return st.id === serviceType.value}) },
+        () => { this.props.setServiceType(this.state.selectedServiceType)});
+  }
+
+  getServices = (authToken, serviceTypeId) => {
+    servicesTypesURL = urls.BASE_URL + urls.SERVICE_TYPES + '/' + serviceTypeId ;
+    fetch(servicesTypesURL, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authToken}`
+      },
+    }).then((response) => response.json()).then((data) => {
+      let services = {};
+      services.base = data.service_type.data.attributes.service_base;
+      services.addon = data.service_type.data.attributes.services_addons;
+      this.setState({services}, () => {
+        this.props.setServiceType(this.state.selectedServiceType) ;
+        this.props.setServices(this.state.services) ;
+        this.props.navigation.navigate('CreateJob', { data: this.props.navigation.getParam('data'),});
+      });
+    }).catch((error) => this.setState({errorMessage: error.message}));
+  };
 
   renderServicesTypes = () => {
     if(this.state.servicesTypes.length != 0)
@@ -62,7 +87,6 @@ class CustomerServiceType extends Component {
         </View>
       );
     }
-
   }
 
   componentDidMount() {
@@ -96,14 +120,7 @@ class CustomerServiceType extends Component {
         </View>
 
         <ScrollView contentContainerStyle={styles.main_content}>
-          {
-            // this.state.servicesTypes.map((serviceType) => {
-            //   return (
-            //       <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
-            //   );
-            // })
-            this.renderServicesTypes()
-          }
+          { this.renderServicesTypes() }
         </ScrollView>
 
         <View style={styles.footer}>
@@ -111,12 +128,7 @@ class CustomerServiceType extends Component {
             style={styles.jobs_store_button}
             onPress={
               () => {
-                this.props.navigation.navigate('CreateJob',
-                  {
-                    data: this.props.navigation.getParam('data'),
-                  }
-                );
-                this.props.setServiceType(this.state.selectedServiceType);
+                this.getServices(this.props.navigation.getParam('data').customer.data.attributes.access_token, this.state.selectedServiceType.id);
               }
             }
           >
@@ -131,4 +143,4 @@ class CustomerServiceType extends Component {
   }
 }
 
-export default connect(null, {setServiceType})(CustomerServiceType);
+export default connect(null, {setServiceType, setServices})(CustomerServiceType);

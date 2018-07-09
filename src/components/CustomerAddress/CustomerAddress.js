@@ -31,7 +31,6 @@ class CustomerAddress extends Component {
     }).then((response) => response.json()).then((data) => {
       let properties = data.property.data;
       this.setState({properties});
-      // console.log(data);
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
