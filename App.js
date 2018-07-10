@@ -15,7 +15,7 @@ import CustomerProfile from './src/components/CustomerProfile/CustomerProfile';
 import CustomerJobs from './src/components/CustomerJobs/CustomerJobs';
 import CustomerAddress from './src/components/CustomerAddress/CustomerAddress';
 import CustomerDateTime from './src/components/CustomerDateTime/CustomerDateTime';
-import CustomerMainService from './src/components/CustomerMainService/CustomerMainService';
+import CustomerBaseService from './src/components/CustomerBaseService/CustomerBaseService';
 import CustomerServiceType from './src/components/CustomerServiceType/CustomerServiceType';
 import CreateJob from "./src/components/CreateJob/CreateJob";
 
@@ -51,7 +51,7 @@ const MainNavigator = SwitchNavigator({
   CreateJob: {screen: CreateJob},
   CustomerAddress: {screen: CustomerAddress},
   CustomerDateTime: {screen: CustomerDateTime},
-  CustomerMainService: {screen: CustomerMainService},
+  CustomerBaseService: {screen: CustomerBaseService},
   CustomerServiceType: {screen: CustomerServiceType},
   initialRouteName: 'Home',
 });

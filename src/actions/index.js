@@ -2,6 +2,7 @@ export const SET_PROPERTY = 'SET_PROPERTY';
 export const SET_DATE = 'SET_DATE';
 export const SET_SERVICE_TYPE = 'SET_SERVICE_TYPE';
 export const SET_SERVICES = 'SET_SERVICES';
+export const SET_BASE_SERVICE = 'SET_BASE_SERVICE';
 
 export function setProperty(property) {
   return {
@@ -28,5 +29,12 @@ export function setServices(services) {
   return {
     type: SET_SERVICES,
     services
+  }
+}
+
+export function setBaseService(baseService) {
+  return {
+    type: SET_BASE_SERVICE,
+    baseService
   }
 }

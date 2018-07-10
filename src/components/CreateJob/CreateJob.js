@@ -15,7 +15,7 @@ class CreateJob extends Component {
     this.state = {
       value: 2.50,
       address: "6060 La Floresta, Quito-Ecuador",
-      main_service: "Limpieza de casa",
+      baseService: "Seleccione un servicio",
       added_services: "Limpieza de Edificio",
       additional_details: "¿Como mas describirias tu trabajo?",
       property: {},
@@ -59,20 +59,28 @@ class CreateJob extends Component {
     }
   }
 
+  renderBaseService = () => {
+    if (Object.keys(this.state.baseService).length !== 0) {
+      return (this.state.baseService.name);
+    } else {
+      return("Seleccione un servicio");
+    }
+  }
+
   renderServices = () => {
     if (Object.keys(this.state.serviceType).length !== 0) {
       return (
         <View style={{ height: 200}}>
           <TouchableOpacity
             style={styles.jobs_details_container}
-            onPress={() => this.props.navigation.navigate('CustomerMainService', {data: this.props.navigation.getParam('data')})}
+            onPress={() => this.props.navigation.navigate('CustomerBaseService', {data: this.props.navigation.getParam('data')})}
           >
             <View style={styles.job_detail}>
               <Text style={styles.jobs_titles}>
                 Servicio Principal
               </Text>
               <Text style={styles.jobs_descriptions}>
-                {this.state.main_service}
+                {this.renderBaseService()}
               </Text>
             </View>
             <View style={styles.jobs_action_icon}>
@@ -119,7 +127,10 @@ class CreateJob extends Component {
       let serviceType = this.props.job.serviceType;
       this.setState({serviceType});
     }
-    console.log(this.props.navigation.getParam('data'));
+    if (this.props.job.baseService != null) {
+      let baseService = this.props.job.baseService;
+      this.setState({baseService});
+    }
   }
 
   render() {
