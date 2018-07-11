@@ -5,51 +5,36 @@ import RadioGroup from 'react-native-radio-buttons-group';
 import {FontAwesome} from '@expo/vector-icons';
 
 import {connect} from 'react-redux';
-import {setBaseService} from "../../actions";
+import {setAddonService} from "../../actions";
 
-const styles = require('./CustomerBaseServiceStyles');
+const styles = require('./CustomerAddonServiceStyles');
 
-class CustomerBaseService extends Component {
+class CustomerAddonService extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedBaseService: {},
-      baseServices: [],
+      selectedAddonService: {},
+      addonServices: [],
       errorMessage: ""
     }
   }
 
-  // getMainServices = (authToken) => {
-  //   getPropertiesURL = urls.BASE_URL + urls.PROPERTIES;
-  //   fetch(getPropertiesURL, {
-  //     method: 'GET',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Token ${authToken}`
-  //     },
-  //   }).then((response) => response.json()).then((data) => {
-  //     let properties = data.property.data;
-  //     this.setState({properties});
-  //   }).catch((error) => this.setState({errorMessage: error.message}));
-  // };
-
-  selectedBaseService = (baseService) => {
+  selectedAddonService = (addonService) => {
     this.setState(
-      { selectedBaseService: this.state.baseServices.find( bs => {return bs.id === baseService.value}) },
-      () => { this.props.setBaseService(this.state.selectedBaseService)});
+      { selectedAddonService: this.state.addonServices.find( as => {return as.id === addonService.value}) },
+      () => { this.props.setAddonService(this.state.selectedAddonService)});
   }
 
-  renderBaseServices = () => {
-    if(this.state.baseServices.length != 0)
+  renderAddonServices = () => {
+    if(this.state.addonServices.length != 0)
     {
       let radio_props = [];
-      this.state.baseServices.map(baseService => {
+      this.state.addonServices.map(addonService => {
         radio_props.push(
           {
-            label: baseService.name,
-            value: baseService.id,
+            label: addonService.name,
+            value: addonService.id,
             color: '#2478AE',
             size: 30,
           }
@@ -58,24 +43,25 @@ class CustomerBaseService extends Component {
 
       return (
         <View>
-          <RadioGroup radioButtons={radio_props} onPress={value => this.selectedBaseService(value.find(baseService => {return baseService.selected}))}/>
+          <RadioGroup radioButtons={radio_props} onPress={value => this.selectedAddonService(value.find(addonService => {return addonService.selected}))}/>
         </View>
       );
     }
   }
 
   componentDidMount() {
-    if (this.props.baseServices != null) {
-      let baseServices = this.props.baseServices;
-      this.setState({baseServices}, () => {
-        this.setState({selectedBaseService: this.state.baseServices[0]}, () => {
-          this.props.setBaseService(this.state.selectedBaseService);
+    if (this.props.addonServices != null) {
+      let addonServices = this.props.addonServices;
+      this.setState({addonServices}, () => {
+        this.setState({selectedAddonService: this.state.addonServices[0]}, () => {
+          this.props.setAddonService(this.state.selectedAddonService);
         })
       });
     }
   }
 
   render() {
+    console.log(this.state);
     return (
       <View style={styles.container}>
         <View
@@ -93,7 +79,7 @@ class CustomerBaseService extends Component {
               />
             </TouchableOpacity>
             <Text style={styles.jobs_header}>
-              Servicio Principal
+              Servicio Adicional
             </Text>
             <View/>
           </View>
@@ -101,7 +87,7 @@ class CustomerBaseService extends Component {
 
         <ScrollView contentContainerStyle={styles.main_content}>
           {
-            this.renderBaseServices()
+            this.renderAddonServices()
           }
         </ScrollView>
 
@@ -131,8 +117,8 @@ class CustomerBaseService extends Component {
 
 const mapStateToProps = state => {
   return {
-    baseServices: state.services.base
+    addonServices: state.services.addon
   };
 }
 
-export default connect(mapStateToProps, {setBaseService})(CustomerBaseService);
+export default connect(mapStateToProps, {setAddonService})(CustomerAddonService);

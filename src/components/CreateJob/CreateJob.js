@@ -15,12 +15,12 @@ class CreateJob extends Component {
     this.state = {
       value: 2.50,
       address: "6060 La Floresta, Quito-Ecuador",
-      baseService: "Seleccione un servicio",
-      added_services: "Limpieza de Edificio",
       additional_details: "¿Como mas describirias tu trabajo?",
       property: {},
       date: '',
-      serviceType: {}
+      serviceType: {},
+      addonService: null,
+      baseService: null
     }
   }
 
@@ -63,7 +63,15 @@ class CreateJob extends Component {
     if (Object.keys(this.state.baseService).length !== 0) {
       return (this.state.baseService.name);
     } else {
-      return("Seleccione un servicio");
+      return("Seleccione un servicio base");
+    }
+  }
+
+  renderAddonService = () => {
+    if (Object.keys(this.state.addonService).length !== 0) {
+      return (this.state.addonService.name);
+    } else {
+      return("Seleccione un servicio adicional");
     }
   }
 
@@ -92,13 +100,16 @@ class CreateJob extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.jobs_details_container}>
+          <TouchableOpacity
+            style={styles.jobs_details_container}
+            onPress={() => this.props.navigation.navigate('CustomerAddonService', {data: this.props.navigation.getParam('data')})}
+          >
             <View style={styles.job_detail}>
               <Text style={styles.jobs_titles}>
                 Servicios Adicionales
               </Text>
               <Text style={styles.jobs_descriptions}>
-                {this.state.added_services}
+                {this.renderAddonService()}
               </Text>
             </View>
             <View style={styles.jobs_action_icon}>
@@ -130,6 +141,10 @@ class CreateJob extends Component {
     if (this.props.job.baseService != null) {
       let baseService = this.props.job.baseService;
       this.setState({baseService});
+    }
+    if (this.props.job.addonService != null) {
+      let addonService = this.props.job.addonService;
+      this.setState({addonService});
     }
   }
 

@@ -17,6 +17,7 @@ import CustomerAddress from './src/components/CustomerAddress/CustomerAddress';
 import CustomerDateTime from './src/components/CustomerDateTime/CustomerDateTime';
 import CustomerBaseService from './src/components/CustomerBaseService/CustomerBaseService';
 import CustomerServiceType from './src/components/CustomerServiceType/CustomerServiceType';
+import CustomerAddonService from './src/components/CustomerAddonService/CustomerAddonService';
 import CreateJob from "./src/components/CreateJob/CreateJob";
 
 // Don't show warnings about deprecation lifecycle methods on the App
@@ -52,6 +53,7 @@ const MainNavigator = SwitchNavigator({
   CustomerAddress: {screen: CustomerAddress},
   CustomerDateTime: {screen: CustomerDateTime},
   CustomerBaseService: {screen: CustomerBaseService},
+  CustomerAddonService: {screen: CustomerAddonService},
   CustomerServiceType: {screen: CustomerServiceType},
   initialRouteName: 'Home',
 });

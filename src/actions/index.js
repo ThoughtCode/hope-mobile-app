@@ -3,6 +3,7 @@ export const SET_DATE = 'SET_DATE';
 export const SET_SERVICE_TYPE = 'SET_SERVICE_TYPE';
 export const SET_SERVICES = 'SET_SERVICES';
 export const SET_BASE_SERVICE = 'SET_BASE_SERVICE';
+export const SET_ADDON_SERVICE = 'SET_ADDON_SERVICE';
 
 export function setProperty(property) {
   return {
@@ -36,5 +37,12 @@ export function setBaseService(baseService) {
   return {
     type: SET_BASE_SERVICE,
     baseService
+  }
+}
+
+export function setAddonService(addonService) {
+  return {
+    type: SET_ADDON_SERVICE,
+    addonService
   }
 }

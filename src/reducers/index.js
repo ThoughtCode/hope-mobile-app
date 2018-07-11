@@ -1,5 +1,12 @@
 import {combineReducers} from 'redux';
-import {SET_PROPERTY, SET_DATE, SET_SERVICE_TYPE, SET_SERVICES, SET_BASE_SERVICE} from "../actions";
+import {
+  SET_PROPERTY,
+  SET_DATE,
+  SET_SERVICE_TYPE,
+  SET_SERVICES,
+  SET_BASE_SERVICE,
+  SET_ADDON_SERVICE
+} from "../actions";
 
 function property(state = [], action) {
   switch (action.type) {
@@ -46,5 +53,22 @@ function baseService(state = [], action) {
   }
 }
 
-const rootReducer = combineReducers({property, date, serviceType, services, baseService});
+function addonService(state = [], action) {
+  switch (action.type) {
+    case SET_ADDON_SERVICE:
+      return action.addonService;
+    default:
+      return state;
+  }
+}
+
+const rootReducer = combineReducers({
+  property,
+  date,
+  serviceType,
+  services,
+  baseService,
+  addonService
+});
+
 export default rootReducer;
