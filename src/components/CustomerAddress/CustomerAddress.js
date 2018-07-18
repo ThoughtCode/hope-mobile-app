@@ -109,7 +109,10 @@ class CustomerAddress extends Component {
             })
           }
         </ScrollView>
-        <TouchableOpacity style={styles.jobs_value}>
+        <TouchableOpacity
+          style={styles.jobs_value}
+          onPress={() => this.props.navigation.navigate('CustomerNewAddress', {data: this.props.navigation.getParam('data')})}
+        >
           <Text style={styles.jobs_value_text}>Nueva Dirección</Text>
         </TouchableOpacity>
       </View>
