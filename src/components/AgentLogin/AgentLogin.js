@@ -8,11 +8,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  AsyncStorage,
   View
 } from 'react-native';
 
 import * as urls from '../../constants/api';
-
+import * as globals from '../../util/globals';
 const styles = require('./AgentLoginStyles');
 
 export default class AgentLogin extends React.Component {
@@ -58,7 +59,10 @@ export default class AgentLogin extends React.Component {
           return response;
         } else {
           response.json().then((data) => {
-            this.props.navigation.navigate('AgentDashboard', { data });
+            AsyncStorage.setItem("access_token",data.agent.data.attributes.access_token,()=>{
+              globals.access_token = data.agent.data.attributes.access_token
+              this.props.navigation.navigate('AgentDashboard', { data });
+            })
           });
         }
       }).catch((error) => this.setState({ errorMessage: error.message }));

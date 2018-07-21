@@ -18,14 +18,21 @@
   "jest": {
     "preset": "jest-expo"
   },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
+  },
   "dependencies": {
     "expo": "^26.0.0",
+    "moment": "^2.22.2",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.0",
     "react-native-banner-carousel": "^1.0.3",
     "react-native-collapsible": "^0.12.0",
     "react-native-modal-datetime-picker": "^5.1.0",
     "react-native-radio-buttons-group": "^1.0.7",
+    "react-native-star-rating": "^1.0.9",
     "react-navigation": "^1.5.11",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0"
