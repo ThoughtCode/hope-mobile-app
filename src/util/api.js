@@ -83,15 +83,15 @@ async function request(onResponse, data, type, returnType, isHeaderRequired, fea
             console.log("onResponse error");
             onResponse.error(responseJSON);
         }
-        if (onResponse.complete) {
-            console.log("onResponse complete");
-            onResponse.complete();
-        }
+        // if (onResponse.complete) {
+        //     console.log("onResponse complete");
+        //     onResponse.complete();
+        // }
     } catch (error) {
         console.log("onResponse catch error " + error);
-        if (onResponse.complete) {
-            console.log("onResponse catch complete");
-            onResponse.complete();
-        }
+        // if (onResponse.complete) {
+        //     console.log("onResponse catch complete");
+        //     onResponse.complete();
+        // }
     }
 }

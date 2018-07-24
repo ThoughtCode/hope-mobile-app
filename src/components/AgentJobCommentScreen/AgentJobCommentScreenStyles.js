@@ -50,6 +50,12 @@ module.exports = StyleSheet.create({
   },
   subText:{
     fontSize:14,fontFamily:"helvetica",color:'lightgray'
-  }
+  },
+  opinionsView:{
+    flexDirection:'row',alignItems:'center',justifyContent:'center',marginVertical:5
+  },
+  opinionsText:{
+    fontSize:16,marginLeft:10,color:'gray',fontFamily : 'helvetica'
+  },
 
 });

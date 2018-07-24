@@ -72,7 +72,7 @@ export default class AgentJobCommentScreen extends Component {
                         starSize={18}
                         fullStarColor={'gray'}/>
                 </View>
-                <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text>
+                <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text> 
             </View>
         )
     }
@@ -87,7 +87,7 @@ export default class AgentJobCommentScreen extends Component {
         return(
             <SafeAreaView style={styles.container}>
                 <View>
-                <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
+                    <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
                     <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
                     <View style={styles.profileView}>
                         {(this.state.jobData.customer.avatar.url != null)?
@@ -98,15 +98,39 @@ export default class AgentJobCommentScreen extends Component {
                     </View>
                     <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
                         <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.jobData.customer.first_name + " "+this.state.jobData.customer.last_name}</Text>
-                        <View style={{flexDirection:'row'}}>
-                            {(this.state.jobData.customer.email != null) ? <View style={{flexDirection:'row'}}><MaterialCommunityIcons name={"email"} size={18} /> <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.email || ""}</Text></View> : null}
-                            {(this.state.jobData.customer.cell_phone != null) ? <View style={{flexDirection:'row'}}><MaterialCommunityIcons name={"credit-card-plus"} size={18} /> <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.cell_phone || ""}</Text></View> : null}
+
+                        <View style={styles.opinionsView}>
+                            <StarRating
+                                disabled={true}
+                                emptyStar={'ios-star-outline'}
+                                fullStar={'ios-star'}
+                                halfStar={'ios-star-half'}
+                                iconSet={'Ionicons'}
+                                maxStars={5}
+                                rating={5}
+                                starSize={20}
+                                fullStarColor={'gray'}
+                            />
+                            <Text style={styles.opinionsText}>{this.state.jobData.agent_rewiews_count+" opiniones"}</Text>
                         </View>
+                        <View style={{flexDirection:'row'}}>
+                            {(this.state.jobData.customer.email != null) ?
+                            <View style={{flexDirection:'row'}}>
+                                <View><MaterialCommunityIcons name={"email"} size={18} /></View>
+                                <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.email || ""}</Text>
+                            </View> : null}
+                            {(this.state.jobData.customer.cell_phone != null) ?
+                            <View style={{flexDirection:'row'}}>
+                                <View><MaterialCommunityIcons name={"credit-card-plus"} size={18} /></View>
+                                <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.cell_phone || ""}</Text> 
+                            </View> : null}
+                        </View>
+                        
                     </View>
                     <View style={styles.topTitleView}>
                         <Text style={styles.mainTitleText}>{"Detalles del Trabajo"}</Text>
                     </View>
-                </View>
+                </View> 
 
                 <FlatList 
                     data = {this.state.jobCommentList}
