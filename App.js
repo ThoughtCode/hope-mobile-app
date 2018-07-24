@@ -23,6 +23,7 @@ import CreateJob from "./src/components/CreateJob/CreateJob";
 
 import AgentJobListScreen from "./src/components/AgentJobListScreen/AgentJobListScreen";
 import AgentJobDetailScreen from "./src/components/AgentJobDetailScreen/AgentJobDetailScreen";
+import AgentJobCommentScreen from "./src/components/AgentJobCommentScreen/AgentJobCommentScreen";
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import Foundation from 'react-native-vector-icons/Foundation';
@@ -52,6 +53,7 @@ YellowBox.ignoreWarnings([
 const AgentDashboard = StackNavigator({
   AgentJobListScreen : { screen :AgentJobListScreen},
   AgentJobDetailScreen : { screen :AgentJobDetailScreen},
+  AgentJobCommentScreen : { screen :AgentJobCommentScreen},
 },{
   navigationOptions:{
     header : null

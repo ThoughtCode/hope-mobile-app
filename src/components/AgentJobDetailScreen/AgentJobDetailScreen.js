@@ -116,12 +116,14 @@ export default class AgentJobDetailScreen extends Component {
                 <View>
                     <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
                     <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
-                    <View style={styles.profileView}>
-                        <Image source={{uri : this.state.jobData.customer.avatar.url}} style={styles.profileImage} resizeMode={"cover"}/>
-                    </View>
-                    <View style={{alignItems:'center',justifyContent:'center'}}>
-                        <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.jobData.customer.first_name + " "+this.state.jobData.customer.last_name}</Text>
-                    </View>
+                    <TouchableOpacity onPress={()=> this.props.navigation.navigate("AgentJobCommentScreen",{jobData : this.props.navigation.state.params.jobData})}>
+                        <View style={styles.profileView}>
+                            <Image source={{uri : this.state.jobData.customer.avatar.url}} style={styles.profileImage} resizeMode={"cover"}/>
+                        </View>
+                        <View style={{alignItems:'center',justifyContent:'center'}}>
+                            <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.jobData.customer.first_name + " "+this.state.jobData.customer.last_name}</Text>
+                        </View>
+                    </TouchableOpacity>
                     <View style={styles.opinionsView}>
                         <StarRating
                             disabled={true}
