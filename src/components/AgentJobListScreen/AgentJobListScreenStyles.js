@@ -43,6 +43,8 @@ module.exports = StyleSheet.create({
   },
   subtextViewStyle:{
     flexDirection:'row',justifyContent:'space-between',alignItems:'center'
+  },
+  emptyText:{
+    fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'
   }
-
 });

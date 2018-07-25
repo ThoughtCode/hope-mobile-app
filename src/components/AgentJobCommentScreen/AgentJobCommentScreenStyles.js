@@ -57,5 +57,7 @@ module.exports = StyleSheet.create({
   opinionsText:{
     fontSize:16,marginLeft:10,color:'gray',fontFamily : 'helvetica'
   },
-
+  emptyText:{
+    fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'
+  }
 });

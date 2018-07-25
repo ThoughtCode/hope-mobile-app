@@ -10,7 +10,7 @@ const styles = require('./AgentJobListScreenStyles');
 const IMAGES = {
     TOP_BACKGROUND : require("../../../assets/img/topbg.png")
 }
-
+var _this = null;
 export default class AgentJobListScreen extends Component {
 
     //======================================================================
@@ -19,7 +19,7 @@ export default class AgentJobListScreen extends Component {
 
     constructor(props){
         super(props)
-
+        _this = this
         this.state = {
             jobList : []
         }
@@ -30,7 +30,15 @@ export default class AgentJobListScreen extends Component {
     //======================================================================
 
     componentDidMount(){
-        API.getJobs(this.getJobResponseData,"",true);
+        AgentJobListScreen.getJobsAPICall()
+    }
+
+    //======================================================================
+    // getJobsAPICall
+    //======================================================================
+
+    static getJobsAPICall(){
+        API.getJobs(_this.getJobResponseData,"",true);
     }
 
     //======================================================================
@@ -73,7 +81,7 @@ export default class AgentJobListScreen extends Component {
         data = item.item.attributes
         var description = ""
         var subDescription = ""
-        var total = 0
+        
         data.job_details.map((val,index)=>{
             if(val.service.type_service == "base"){
                 description += val.service.name
@@ -81,7 +89,6 @@ export default class AgentJobListScreen extends Component {
                 subDescription += val.service.name + " X " + val.service.time
                 subDescription += (data.job_details.length - 1 == index) ? "" : ", " 
             }
-            total += val.price_total
         })
         var date = Moment(data.started_at).format('MMM DD - hh:mm a')
         var location = data.property.data.attributes.p_street + ", " + data.property.data.attributes.s_street +", "+data.property.data.attributes.city
@@ -97,7 +104,7 @@ export default class AgentJobListScreen extends Component {
                         <View>
                             <Text style={[styles.textFont,{fontSize:12}]}>{subDescription}</Text>
                         </View>
-                        <Text style={[styles.textFont,{color:'rgb(0,121,189)',fontSize:20}]}>{total+" $"}</Text>
+                        <Text style={[styles.textFont,{color:'rgb(0,121,189)',fontSize:20}]}>{data.total+" $"}</Text>
                     </View>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <EvilIcons name={"location"} size={16} />
@@ -115,6 +122,18 @@ export default class AgentJobListScreen extends Component {
     ItemSeparatorComponent = () =>{
         return(
             <View style={{height:1,width:width,backgroundColor:'gray'}} />
+        )
+    }
+
+    //======================================================================
+    // ListEmptyComponent
+    //======================================================================
+
+    ListEmptyComponent = () =>{
+        return(
+            <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
+                <Text style={styles.emptyText}>{"No hay trabajos, regrese mas trade"}</Text>
+            </View>
         )
     }
 
@@ -139,6 +158,7 @@ export default class AgentJobListScreen extends Component {
                     renderItem = {this.renderItem}
                     ItemSeparatorComponent={this.ItemSeparatorComponent}
                     keyExtractor={(item)=>item.id.toString()}
+                    ListEmptyComponent={this.ListEmptyComponent}
                 />
             </SafeAreaView>
         )

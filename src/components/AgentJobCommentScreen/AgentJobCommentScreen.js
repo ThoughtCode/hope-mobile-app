@@ -15,6 +15,10 @@ const IMAGES = {
 
 export default class AgentJobCommentScreen extends Component {
     
+    //======================================================================
+    // constructor
+    //======================================================================
+
     constructor(props){
         super(props)
 
@@ -24,10 +28,18 @@ export default class AgentJobCommentScreen extends Component {
         }
     }
 
+    //======================================================================
+    // componentDidMount
+    //======================================================================
+
     componentDidMount(){
         console.log("Response data-->"+JSON.stringify(this.state.jobData.customer.hashed_id))
         API.getJobsComments(this.getJobCommentsResponseData,this.state.jobData.customer.hashed_id,true);
     }
+
+    //======================================================================
+    //getJobCommentsResponseData
+    //======================================================================
 
     getJobCommentsResponseData = {
         success: (response) => {
@@ -46,6 +58,10 @@ export default class AgentJobCommentScreen extends Component {
         complete: () => {
         }
     }
+
+    //======================================================================
+    //renderItem
+    //======================================================================
 
     renderItem = (item) =>{
         var data = item.item
@@ -77,11 +93,31 @@ export default class AgentJobCommentScreen extends Component {
         )
     }
 
+    //======================================================================
+    //ItemSeparatorComponent
+    //======================================================================
+
     ItemSeparatorComponent = () =>{
         return(
             <View style={{height:0.5,width:width,backgroundColor:'gray'}} />
         )
     }
+
+    //======================================================================
+    // ListEmptyComponent
+    //======================================================================
+
+    ListEmptyComponent = () =>{
+        return(
+            <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
+                <Text style={styles.emptyText}>{"Sin Comentarios"}</Text>
+            </View>
+        )
+    }
+
+    //======================================================================
+    // render
+    //======================================================================
 
     render(){
         return(
@@ -107,11 +143,11 @@ export default class AgentJobCommentScreen extends Component {
                                 halfStar={'ios-star-half'}
                                 iconSet={'Ionicons'}
                                 maxStars={5}
-                                rating={5}
+                                rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                                 starSize={20}
                                 fullStarColor={'gray'}
                             />
-                            <Text style={styles.opinionsText}>{this.state.jobData.agent_rewiews_count+" opiniones"}</Text>
+                            <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
                         </View>
                         <View style={{flexDirection:'row'}}>
                             {(this.state.jobData.customer.email != null) ?
@@ -128,7 +164,7 @@ export default class AgentJobCommentScreen extends Component {
                         
                     </View>
                     <View style={styles.topTitleView}>
-                        <Text style={styles.mainTitleText}>{"Detalles del Trabajo"}</Text>
+                        <Text style={styles.mainTitleText}>{"Comentarios de otros Agentes"}</Text>
                     </View>
                 </View> 
 
@@ -137,6 +173,7 @@ export default class AgentJobCommentScreen extends Component {
                     renderItem = {this.renderItem}
                     ItemSeparatorComponent={this.ItemSeparatorComponent}
                     keyExtractor={(item)=>item.id.toString()}
+                    ListEmptyComponent={this.ListEmptyComponent}
                 />
             </SafeAreaView>
         )

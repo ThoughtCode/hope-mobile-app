@@ -83,7 +83,7 @@ const AgentTabar = TabNavigator({
         tabBarIcon: ({ tintColor }) => (
             <View style={[styles.tabViewBox]}>
                 <Foundation name="shopping-bag" style={[styles.tabIcon]} size={iconHeight} color={tintColor} />
-                <Text style={[styles.tabText, { color: tintColor }]}>{"Home"}</Text>
+                <Text style={[styles.tabText, { color: tintColor }]}>{"Trabajos"}</Text>
             </View>
         )
     }
@@ -96,14 +96,14 @@ AgentDashboardd: {
       tabBarIcon: ({ tintColor }) => (
           <View style={[styles.tabViewBox]}>
               <Entypo name="user" style={[styles.tabIcon]} size={iconHeight} color={tintColor} />
-              <Text style={[styles.tabText, { color: tintColor }]}>{"Home"}</Text>
+              <Text style={[styles.tabText, { color: tintColor }]}>{"Perfil"}</Text>
           </View>
       )
   }
 },
 },{
   tabBarOptions: {
-      activeTintColor: 'gray',
+      activeTintColor: '#1e67a9',
       inactiveTintColor: 'gray',
       style: {
           backgroundColor: '#FFF',

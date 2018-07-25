@@ -5,6 +5,7 @@ const {height , width} = Dimensions.get('window')
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import StarRating from 'react-native-star-rating';
 import { API } from '../../util/api';
+import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
 
 const styles = require('./AgentJobDetailScreenStyles');
 
@@ -37,14 +38,15 @@ export default class AgentJobDetailScreen extends Component {
     }
 
     //======================================================================
-    // jobApplyResponse
+    // canApplyJobResponse
     //======================================================================
 
-    jobApplyResponse = {
+    canApplyJobResponse = {
         success: (response) => {
             try {
                 console.log("jobApplyResponse data-->"+JSON.stringify(response))
-                this.setState({isJobApply : !response.can_apply,isLoading:false})
+                
+                this.setState({isJobApply : response.can_apply,isLoading:false})
                 
             } catch (error) {
                 console.log('jobApplyResponse catch error ' + JSON.stringify(error));
@@ -78,6 +80,7 @@ export default class AgentJobDetailScreen extends Component {
             try {
                 console.log("jobApplyResponse data-->"+JSON.stringify(response))
                 this.setState({isJobApply : true},() =>{
+                    AgentJobListScreen.getJobsAPICall()
                     this.props.navigation.state.params.setRow(this.state.index)
                     Alert.alert("Hope",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
                 })
@@ -136,11 +139,11 @@ export default class AgentJobDetailScreen extends Component {
                             halfStar={'ios-star-half'}
                             iconSet={'Ionicons'}
                             maxStars={5}
-                            rating={5}
+                            rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                             starSize={20}
                             fullStarColor={'gray'}
                         />
-                        <Text style={styles.opinionsText}>{this.state.jobData.agent_rewiews_count+" opiniones"}</Text>
+                        <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
                     </View>
                     <View style={styles.topTitleView}>
                         <Text style={styles.mainTitleText}>{"Detalles del Trabajo"}</Text>
@@ -176,7 +179,7 @@ export default class AgentJobDetailScreen extends Component {
                     </ScrollView>
                 </View>
                 <TouchableOpacity onPress={this.tapJobApplyTap}>
-                    <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? '#0069a7': 'rgb(0,121,189)'}]}>
+                    <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
                         <Text style={[styles.titleText,{color:'#fff'}]}>{(this.state.isJobApply)? "Postulado" :"Aplicar"}</Text>
                     </View>
                 </TouchableOpacity>
