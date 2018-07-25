@@ -46,7 +46,7 @@ export default class AgentJobDetailScreen extends Component {
             try {
                 console.log("jobApplyResponse data-->"+JSON.stringify(response))
                 
-                this.setState({isJobApply : response.can_apply,isLoading:false})
+                this.setState({isJobApply : !response.can_apply,isLoading:false})
                 
             } catch (error) {
                 console.log('jobApplyResponse catch error ' + JSON.stringify(error));
@@ -178,7 +178,7 @@ export default class AgentJobDetailScreen extends Component {
                         </View>
                     </ScrollView>
                 </View>
-                <TouchableOpacity onPress={this.tapJobApplyTap}>
+                <TouchableOpacity onPress={this.tapJobApplyTap} disabled={this.state.isJobApply}>
                     <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
                         <Text style={[styles.titleText,{color:'#fff'}]}>{(this.state.isJobApply)? "Postulado" :"Aplicar"}</Text>
                     </View>
