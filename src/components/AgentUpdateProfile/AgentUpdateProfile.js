@@ -5,7 +5,6 @@ const {height , width} = Dimensions.get('window')
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as globals from '../../util/globals';
 import { API } from '../../util/api';
-import { KeyboardAwareView } from 'react-native-keyboard-aware-view'
 import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
 
 const styles = require('./AgentUpdateProfileStyles');
