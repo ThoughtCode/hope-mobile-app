@@ -21,6 +21,11 @@ import CustomerAddonService from './src/components/CustomerAddonService/Customer
 import CustomerNewAddress from './src/components/CustomerNewAddress/CustomerNewAddress';
 import CreateJob from "./src/components/CreateJob/CreateJob";
 
+import AgentTrabajosDashboard from "./src/components/AgentTrabajosDashboard/AgentTrabajosDashboard";
+import AgentProfile from "./src/components/AgentProfile/AgentProfile";
+import AgentUpdateProfile from "./src/components/AgentUpdateProfile/AgentUpdateProfile";
+import AgentUpdatePassword from "./src/components/AgentUpdatePassword/AgentUpdatePassword";
+
 import AgentJobListScreen from "./src/components/AgentJobListScreen/AgentJobListScreen";
 import AgentJobDetailScreen from "./src/components/AgentJobDetailScreen/AgentJobDetailScreen";
 import AgentJobCommentScreen from "./src/components/AgentJobCommentScreen/AgentJobCommentScreen";
@@ -60,7 +65,37 @@ const AgentDashboard = StackNavigator({
   }
 })
 
+//======================================================================
+// AgentTrabajos StackNavigator
+//======================================================================
+
+const AgentTrabajos = StackNavigator({
+  AgentTrabajosDashboard : { screen :AgentTrabajosDashboard},
+  AgentJobDetailScreen : { screen :AgentJobDetailScreen},
+  AgentJobCommentScreen : { screen :AgentJobCommentScreen},
+},{
+  navigationOptions:{
+    header : null
+  }
+})
+
+//======================================================================
+// Profile StackNavigator
+//======================================================================
+
+const ProfileStackNavigator = StackNavigator({
+  AgentProfile : { screen : AgentProfile },
+  AgentUpdateProfile : { screen : AgentUpdateProfile },
+  AgentUpdatePassword : { screen : AgentUpdatePassword }
+},{
+  navigationOptions:{
+    header : null
+  }
+})
+
+
 const iconHeight = 20;
+
 const AgentTabar = TabNavigator({
   AgentDashboard: {
       screen: AgentDashboard,
@@ -75,8 +110,8 @@ const AgentTabar = TabNavigator({
           )
       }
   },
-  AgentDashboards: {
-    screen: AgentDashboard,
+  Trabajos: {
+    screen: AgentTrabajos,
     navigationOptions: {
         borderBottomWidth: 0,
         tabBarLabel: 'Trabajos',
@@ -88,8 +123,8 @@ const AgentTabar = TabNavigator({
         )
     }
 },
-AgentDashboardd: {
-  screen: AgentDashboard,
+ProfileStackNavigator: {
+  screen: ProfileStackNavigator,
   navigationOptions: {
       borderBottomWidth: 0,
       tabBarLabel: 'Perfil',
@@ -146,7 +181,8 @@ const MainNavigator = SwitchNavigator({
   CustomerAddonService: {screen: CustomerAddonService},
   CustomerServiceType: {screen: CustomerServiceType},
   CustomerNewAddress: {screen: CustomerNewAddress},
-  initialRouteName: 'Home',
+},{
+  initialRouteName :"Home"
 });
 
 
@@ -162,12 +198,20 @@ export default class App extends React.Component {
   }
 
   async componentWillMount() {
-    AsyncStorage.getItem("access_token").then((value)=>{
-      if(value != null && value != undefined){
-        globals.access_token = value
-      }
+
+    AsyncStorage.multiGet(['password', 'access_token', 'first_name', 'last_name', 'email', 'cell_phone', 'avatar'],(error,value) =>{
+      
+      globals.password = value[0][1] || ""
+      globals.access_token = value[1][1] || ""
+      globals.first_name = value[2][1] || ""
+      globals.last_name = value[3][1] || ""
+      globals.email = value[4][1] || ""
+      globals.cell_phone = value[5][1] || ""
+      globals.avatar = value[6][1] || ""
+
       this.setState({isLoading : true,fontLoaded: true})
     })
+    
     await Expo.Font.loadAsync({
       'helvetica': require('./assets/fonts/HELR45W.ttf'),
     });

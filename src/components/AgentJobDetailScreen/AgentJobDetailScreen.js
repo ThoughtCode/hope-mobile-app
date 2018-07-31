@@ -80,7 +80,8 @@ export default class AgentJobDetailScreen extends Component {
             try {
                 console.log("jobApplyResponse data-->"+JSON.stringify(response))
                 this.setState({isJobApply : true},() =>{
-                    AgentJobListScreen.getJobsAPICall()
+                    // AgentJobListScreen.getJobsAPICall()
+                    // AgentJobListScreen.setRow(this.state.index)
                     this.props.navigation.state.params.setRow(this.state.index)
                     Alert.alert("Hope",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
                 })

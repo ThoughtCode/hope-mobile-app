@@ -15,5 +15,7 @@ export const NEXT_JOBS = "/api/v1/customers/jobs?status=nextjobs&current_page=1&
 export const PAST_JOBS = "/api/v1/customers/jobs?status=history&current_page=1&limit=4";
 export const PROPERTIES = "/api/v1/customers/properties/";
 export const JOBS = "/api/v1/agents/jobs";
-export const COMMENTS = "/api/v1/agents/customer/"
+export const COMMENTS = "/api/v1/agents/customer/";
+export const UPDATE_USER = "/api/v1/agents/update";
+export const UPDATE_PASSWORD = "/api/v1/agents/change_password";
 

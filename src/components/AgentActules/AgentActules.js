@@ -4,14 +4,15 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
 import { API } from '../../util/api';
 import Moment from 'moment';
-import JobList from "./_JobList";
-const styles = require('./AgentJobListScreenStyles');
+import JobList from "../AgentJobListScreen/_JobList";
+
+const styles = require('./AgentActulesStyles');
 
 const IMAGES = {
     TOP_BACKGROUND : require("../../../assets/img/topbg.png")
 }
 var _this = null;
-export default class AgentJobListScreen extends Component {
+export default class AgentActules extends Component {
 
     //======================================================================
     // constructor
@@ -21,7 +22,8 @@ export default class AgentJobListScreen extends Component {
         super(props)
         _this = this
         this.state = {
-            jobList : []
+            jobList : [],
+            type : props.type || ""
         }
     }
 
@@ -30,15 +32,15 @@ export default class AgentJobListScreen extends Component {
     //======================================================================
 
     componentDidMount(){
-        AgentJobListScreen.getJobsAPICall()
+        this.getJobsAPICall()
     }
 
     //======================================================================
     // getJobsAPICall
     //======================================================================
 
-    static getJobsAPICall(){
-        API.getJobs(_this.getJobResponseData,"",true);
+    getJobsAPICall(){
+        API.getJobs(_this.getJobResponseData,"/"+_this.state.type,true);
     }
 
     //======================================================================
@@ -62,16 +64,7 @@ export default class AgentJobListScreen extends Component {
         complete: () => {
         }
     }
-
-    //======================================================================
-    // navigateToDetail
-    //======================================================================
-
-    navigateToDetail = (item,setRow) =>{
-        this.props.navigation.navigate("AgentJobDetailScreen",{jobData: item.item,setRow: setRow,index: item.index})
-    }
     
-
     //======================================================================
     // render
     //======================================================================
@@ -79,16 +72,7 @@ export default class AgentJobListScreen extends Component {
     render(){
         return(
             <SafeAreaView style={styles.container}>
-                <View>
-                    <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage}/>
-                    <View style={styles.topTitleView}>
-                        <Text style={styles.mainTitleText}>{"Trabajos"}</Text>
-                        <View style={styles.filterView}>
-                            <Text style={styles.filterText}>{"Filtrar"}</Text>
-                        </View>
-                    </View>
-                </View>
-                <JobList jobList={this.state.jobList} navigateToDetail={this.navigateToDetail} setRow={this.setRow}/>
+                <JobList jobList={this.state.jobList} type={this.state.type} setRow={this.setRow} navigateToDetail={this.props.navigateToDetail}/>
             </SafeAreaView>
         )
     }

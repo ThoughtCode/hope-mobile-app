@@ -19,6 +19,16 @@ export const API = {
     getJobsComments: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.COMMENTS + data +'/reviews', buildHeader());
     },
+
+    updateUser: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, data, 'PUT', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.UPDATE_USER, buildHeader());
+    },
+
+    updatePassword: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, data, 'PUT', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.UPDATE_PASSWORD, buildHeader());
+    },
+
+    
 }
 
 export const buildHeader = (headerParams = {}) => {

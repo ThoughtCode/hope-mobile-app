@@ -59,10 +59,25 @@ export default class AgentLogin extends React.Component {
           return response;
         } else {
           response.json().then((data) => {
-            AsyncStorage.setItem("access_token",data.agent.data.attributes.access_token,()=>{
-              globals.access_token = data.agent.data.attributes.access_token
-              this.props.navigation.navigate('AgentDashboard', { data });
-            })
+
+            AsyncStorage.multiSet([["access_token",data.agent.data.attributes.access_token || ""],
+                                  ['first_name', data.agent.data.attributes.first_name || ""],
+                                  ['last_name', data.agent.data.attributes.last_name || ""],
+                                  ['email', data.agent.data.attributes.email || ""],
+                                  ['password', this.state.password || ""],
+                                  ['cell_phone', data.agent.data.attributes.cell_phone || ""],
+                                  ['avatar', data.agent.data.attributes.avatar.url || ""]],()=>{
+
+                                    globals.access_token = data.agent.data.attributes.access_token ||""
+                                    globals.first_name = data.agent.data.attributes.first_name || ""
+                                    globals.last_name = data.agent.data.attributes.last_name || ""
+                                    globals.email = data.agent.data.attributes.email || ""
+                                    globals.password = this.state.password || ""
+                                    globals.cell_phone = data.agent.data.attributes.cell_phone || ""
+                                    globals.avatar = data.agent.data.attributes.avatar.url || ""
+ 
+                                    this.props.navigation.navigate('AgentDashboard', { data });
+                                  })
           });
         }
       }).catch((error) => this.setState({ errorMessage: error.message }));
