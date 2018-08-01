@@ -126,9 +126,9 @@ export default class AgentProfile extends Component {
                 </View>
 
              
-                <TouchableOpacity onPress={this.tapJobApplyTap} disabled={this.state.isJobApply}>
-                    <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
-                        <Text style={[styles.titleText,{color:'#fff'}]}>{(this.state.isJobApply)? "Postulado" :"Cerrar Sesion"}</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("AgentLogin")}>
+                    <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:'rgb(0,121,189)'}]}>
+                        <Text style={[styles.titleText,{color:'#fff'}]}>{"Cerrar Sesion"}</Text>
                     </View>
                 </TouchableOpacity>
                 
