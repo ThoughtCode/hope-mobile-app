@@ -110,7 +110,7 @@ export default class AgentJobDetailScreen extends Component {
                 description += val.service.name
             }else{
                 subDescription += val.service.name + " X " + val.service.time
-                subDescription += (data.job_details.length - 1 == index) ? "" : ", " 
+                subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
             }
             total += val.price_total
         })
