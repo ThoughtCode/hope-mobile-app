@@ -25,7 +25,8 @@ export default class AgentProfile extends Component {
             firstName : globals.first_name,
             lastName : globals.last_name,
             avatar : globals.avatar,
-            isLoading : true
+            isLoading : true,
+            profilePhoto : null
         }
     }
 
@@ -53,7 +54,7 @@ export default class AgentProfile extends Component {
     renderItem = (item) =>{
         data = item.item
         return(
-            <TouchableOpacity onPress={()=> (item.index == 0) ? this.props.navigation.navigate("AgentUpdateProfile",{setData : this.setData}) : this.props.navigation.navigate("AgentUpdatePassword",{})}>
+            <TouchableOpacity onPress={()=> (item.index == 0) ? this.props.navigation.navigate("AgentUpdateProfile",{setData : this.setData,updatePhoto : this.updatePhoto}) : this.props.navigation.navigate("AgentUpdatePassword",{})}>
                 <View style={styles.renderRowView}>
                         <Text style={[styles.rowtitleText]}>{data.title}</Text>
                         <EvilIcons name={"chevron-right"} size={36} style={{color:"#1e67a9"}} />
@@ -84,6 +85,37 @@ export default class AgentProfile extends Component {
         )
     }
 
+    selectedPhoto = () => {
+        //Open Image Picker
+    
+        const options = {
+            quality: 0.8,
+            maxWidth: 500,
+            maxHeight: 500,
+        };
+    
+        ImagePicker.showImagePicker(options, (response) => {
+          console.log('Response = ', response);
+    
+            if (response.didCancel) {
+                console.log('User cancelled photo picker');
+            }else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }else {
+                let source = { uri: response.uri };
+                this.setState({
+                    profilePhoto: source
+                });
+            }
+        });
+    }
+
+   updatePhoto = () =>{
+       this.setState({avatar : globals.avatar})
+   }
+
     //======================================================================
     // render
     //======================================================================
@@ -96,21 +128,22 @@ export default class AgentProfile extends Component {
                     {/* <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} /> */}
                     <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
                         <View style={styles.profileView}>
-                            <TouchableOpacity disabled={true} onPress={()=> this.props.navigation.navigate("AgentJobCommentScreen",{jobData : this.props.navigation.state.params.jobData})}>
-                                {(this.state.avatar != "")?
-                                 <Image source={{uri : this.state.jobData.customer.avatar.url}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/profile_placehoder.png")}/>
-                                 :
-                                <Image source={require("../../../assets/img/profile_placehoder.png")} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/profile_placehoder.png")}/>}
-                            </TouchableOpacity>
+                            {(this.state.avatar != "")?
+                                <Image source={{uri : this.state.avatar +'?time=' + new Date()}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/profile_placehoder.png")}/>
+                                :
+                            //  <View style={{backgroundColor:"rgba(99,99,99,0.7)"}}>
+                            <TouchableOpacity onPress={() => this.selectedPhoto}>
+                                <Image source={require("../../../assets/img/profile_placehoder.png")} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/profile_placehoder.png")}/>
+                            </TouchableOpacity>}
                         </View>
-                        <TouchableOpacity disabled={true} onPress={()=> this.props.navigation.navigate("AgentJobCommentScreen",{jobData : this.props.navigation.state.params.jobData})}>
-                            <View style={{alignItems:'center',justifyContent:'center'}}>
-                                <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.firstName + " "+ this.state.lastName}</Text>
-                            </View>
-                        </TouchableOpacity>
+                        
+                        <View style={{alignItems:'center',justifyContent:'center'}}>
+                            <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.firstName + " "+ this.state.lastName}</Text>
+                        </View>
+                        
                     
                     <View style={styles.topTitleView}>
-                        <Text style={styles.mainTitleText}>{"Perfil de Usuario Agente"}</Text>
+                        <Text style={styles.mainTitleText}>{"Perfil de Agente"}</Text>
                     </View>
                 </View>
 

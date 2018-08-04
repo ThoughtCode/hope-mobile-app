@@ -18,12 +18,13 @@ export default class _JobList extends Component {
         super(props)
         _this = this
         this.state = {
-            jobList : props.jobList
+            jobList : props.jobList,
+            isOnRefresh : false
         }
     }
 
     componentWillReceiveProps(newProps){
-        this.setState({jobList : newProps.jobList})
+        this.setState({jobList : newProps.jobList,isOnRefresh:newProps.isOnRefresh})
     }
 
     //======================================================================
@@ -56,7 +57,7 @@ export default class _JobList extends Component {
         var date = Moment(data.started_at).format('MMM DD - hh:mm a')
         var location = data.property.data.attributes.p_street + ", " + data.property.data.attributes.s_street +", "+data.property.data.attributes.city
         return(
-            <TouchableOpacity onPress={()=> (this.props.type != null) ? AgentTrabajosDashboard.navigateToDetail(item,this.setRow) : this.props.navigateToDetail(item,this.setRow)}>
+            <TouchableOpacity onPress={()=> (this.props.type != null) ? AgentTrabajosDashboard.navigateToDetail(item,this.setRow,this.props.type) : this.props.navigateToDetail(item,this.setRow)}>
                 <View style={styles.renderRowView}>
                     <View style={styles.listTitleView}>
                         <Text style={styles.titleText}>{data.customer.first_name + " "+data.customer.last_name}</Text>
@@ -100,12 +101,22 @@ export default class _JobList extends Component {
         )
     }
 
+    //======================================================================
+    // ListEmptyComponent
+    //======================================================================
+
+    onRefresh = () =>{
+
+    }
+
     render(){
         return(
             <View>
                 <FlatList 
                     data = {this.props.jobList}
                     renderItem = {this.renderItem}
+                    refreshing={this.state.isOnRefresh}
+                    onRefresh={this.props.onRefresh}
                     ItemSeparatorComponent={this.ItemSeparatorComponent}
                     keyExtractor={(item)=>item.id.toString()}
                     ListEmptyComponent={this.ListEmptyComponent}

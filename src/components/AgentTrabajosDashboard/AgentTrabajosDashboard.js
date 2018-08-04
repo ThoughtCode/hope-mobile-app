@@ -41,8 +41,8 @@ export default class AgentTrabajosDashboard extends Component {
     // navigateToDetail
     //======================================================================
 
-    static navigateToDetail = (item,setRow) =>{
-        _this.props.navigation.navigate("AgentJobDetailScreen",{jobData: item.item,setRow:setRow,index: item.index})
+    static navigateToDetail = (item,setRow,type) =>{
+        _this.props.navigation.navigate("AgentJobDetailScreen",{jobData: item.item,setRow:setRow,index: item.index,type : type})
     }
 
     //======================================================================

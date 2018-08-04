@@ -26,7 +26,7 @@ module.exports = StyleSheet.create({
     height:80,width:80,borderRadius:40,backgroundColor:'#fff',alignSelf:'center',borderWidth:1,marginTop:-40,borderColor : '#fff'
   },
   profileImage:{
-    height:78,width:78,borderRadius:39
+    height:80,width:80,borderRadius:40
   },
   backButtonImage:{
     color:"#000",position:'absolute',top:20,left:20,zIndex:1,color : '#fff'

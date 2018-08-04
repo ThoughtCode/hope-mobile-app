@@ -21,7 +21,8 @@ export default class AgentJobListScreen extends Component {
         super(props)
         _this = this
         this.state = {
-            jobList : []
+            jobList : [],
+            isOnRefresh : false
         }
     }
 
@@ -42,6 +43,15 @@ export default class AgentJobListScreen extends Component {
     }
 
     //======================================================================
+    // onRefresh
+    //======================================================================
+
+    onRefresh = () =>{
+        this.setState({isOnRefresh : true})
+        API.getJobs(_this.getJobResponseData,"",true);
+    }
+
+    //======================================================================
     // getJobResponseData
     //======================================================================
 
@@ -50,7 +60,8 @@ export default class AgentJobListScreen extends Component {
             try {
                 console.log("Response data-->"+JSON.stringify(response.job.data))
                 this.setState({
-                    jobList : response.job.data
+                    jobList : response.job.data,
+                    isOnRefresh : false
                 })
             } catch (error) {
                 console.log('getJobResponseData catch error ' + JSON.stringify(error));
@@ -70,7 +81,6 @@ export default class AgentJobListScreen extends Component {
     navigateToDetail = (item,setRow) =>{
         this.props.navigation.navigate("AgentJobDetailScreen",{jobData: item.item,setRow: setRow,index: item.index})
     }
-    
 
     //======================================================================
     // render
@@ -88,7 +98,7 @@ export default class AgentJobListScreen extends Component {
                         </View>
                     </View>
                 </View>
-                <JobList jobList={this.state.jobList} navigateToDetail={this.navigateToDetail} setRow={this.setRow}/>
+                <JobList jobList={this.state.jobList} navigateToDetail={this.navigateToDetail} setRow={this.setRow} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh}/>
             </SafeAreaView>
         )
     }

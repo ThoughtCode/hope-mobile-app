@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions,SafeAreaView,Alert,TextInput,Keyboard, KeyboardAvoidingView, AsyncStorage} from 'react-native';
+import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions,SafeAreaView,Alert,TextInput,Keyboard, KeyboardAvoidingView, AsyncStorage, Modal} from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as globals from '../../util/globals';
 import { API } from '../../util/api';
 import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
-
+import { ImagePicker, Camera, Permissions  } from 'expo';
+import ImageUpload from '../../util/ImageUpload';
+import ActionSheet from 'react-native-actionsheet'
 const styles = require('./AgentUpdateProfileStyles');
 
 const IMAGES = {
@@ -27,7 +29,9 @@ export default class AgentProfile extends Component {
             lastName : globals.last_name,
             avatar : globals.avatar,
             email : globals.email,
-            phone : globals.cell_phone
+            phone : globals.cell_phone,
+            hasCameraPermission: null,
+            isCameraOpen : false
         }
     }
 
@@ -36,10 +40,12 @@ export default class AgentProfile extends Component {
     //======================================================================
 
     componentDidMount(){
-        
+        // const { status } = await Permissions.askAsync(Permissions.CAMERA);
+        // this.setState({ hasCameraPermission: status === 'granted' });
     }
 
     btnUpdateTap = () =>{
+        
         data = {
             "agent": {
                 "first_name": this.state.firstName,
@@ -48,6 +54,9 @@ export default class AgentProfile extends Component {
                 "cell_phone": this.state.phone,
               }
         } 
+        if(this.state.profilePhoto != null){
+            this.uploadPhoto()
+        }
         API.updateUser(this.updateUserResponse,data,true);
     }
 
@@ -61,7 +70,7 @@ export default class AgentProfile extends Component {
                 
                 console.log("updateUserResponse data-->"+JSON.stringify(response))
                 Alert.alert("Hope",response.message,[{text: 'OK', onPress: () => {
-
+                    this.props.navigation.state.params.updatePhoto()
                     AsyncStorage.multiSet([["access_token",response.agent.data.attributes.access_token || ""],
                     ['first_name', response.agent.data.attributes.first_name || ""],
                     ['last_name', response.agent.data.attributes.last_name || ""],
@@ -101,6 +110,78 @@ export default class AgentProfile extends Component {
     }
 
     //======================================================================
+    // selectedPhoto
+    //======================================================================
+
+    selectedPhoto = async (index) => {
+
+        if(index == 0){
+            const { status_camera } = await Permissions.askAsync(Permissions.CAMERA);
+            const { status_cameraRoll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        // this.setState({ hasCameraPermission: status === 'granted' });
+            // if(status_camera === 'granted' || status_cameraRoll === 'granted'){
+                let result = await ImagePicker.launchCameraAsync({
+                    allowsEditing: true,
+                    aspect: [4, 3],
+                });
+            
+                console.log(result);
+            
+                if (!result.cancelled) {
+                    this.setState({ profilePhoto: result.uri });
+                }
+            // }
+            
+        }else{
+            let result = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                aspect: [4, 3],
+                mediaTypes : "Images"
+              });
+          
+              console.log(result);
+          
+              if (!result.cancelled) {
+                this.setState({ profilePhoto: result.uri });
+            }
+        }
+        
+    }
+
+    //======================================================================
+    // cameraPhoto
+    //======================================================================
+
+    cameraPhoto = async () => {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA);
+        this.setState({ hasCameraPermission: status === 'granted' });
+    }
+
+    //======================================================================
+    // uploadPhoto
+    //======================================================================
+
+    uploadPhoto = () =>{
+        var filetype = this.state.profilePhoto.split(".").pop()
+        var profiePicture = {
+            uri: this.state.profilePhoto,
+            type: 'image/jpeg', // or photo.type image/jpg
+            name: 'profilepic.jpg',
+          }
+
+          var data = {
+            "avatar": profiePicture,
+          }
+      
+          console.log("Data-->"+JSON.stringify(data))
+          ImageUpload.imageUpload(profiePicture)
+    }
+
+    _onOpenActionSheet = () => {
+        this.ActionSheet.show();
+      }
+
+    //======================================================================
     // render
     //======================================================================
     
@@ -117,9 +198,16 @@ export default class AgentProfile extends Component {
                                 <View style={styles.profileView}>
                                     
                                     {(this.state.avatar != "")?
-                                        <Image source={{uri : this.state.jobData.customer.avatar.url}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/profile_placehoder.png")}/> 
+                                        <TouchableOpacity onPress={this._onOpenActionSheet}>
+                                            {(this.state.profilePhoto != null) ? <Image source={{uri : this.state.profilePhoto}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/camera.png")}/> 
+                                            :
+                                            <Image source={{uri : this.state.avatar+'?time=' + new Date()}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/profile_placehoder.png")}/> }
+                                        </TouchableOpacity>
                                         :
-                                        <Image source={require("../../../assets/img/profile_placehoder.png")} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/profile_placehoder.png")}/>}
+                                        <TouchableOpacity onPress={this._onOpenActionSheet}>
+                                            {(this.state.profilePhoto != null) ? <Image source={{uri : this.state.profilePhoto}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/camera.png")}/>
+                                            : <Image source={require("../../../assets/img/camera.png")} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/camera.png")}/>}
+                                        </TouchableOpacity>}
                                     
                                 </View>
                                 
@@ -196,8 +284,14 @@ export default class AgentProfile extends Component {
                                 </View>
                         </TouchableOpacity>
                 </KeyboardAvoidingView>            
+                <ActionSheet
+                    ref={o => this.ActionSheet = o}
+                    title={'Select avatar'}
+                    options={['Take Photo', 'Choose from Library', 'Cancel']}
+                    cancelButtonIndex={2}
+                    onPress={(index) => { this.selectedPhoto(index) }}
+                    />
             </SafeAreaView>
-        
         )
     }
 }

@@ -23,7 +23,8 @@ export default class AgentActules extends Component {
         _this = this
         this.state = {
             jobList : [],
-            type : props.type || ""
+            type : props.type || "",
+            isOnRefresh : false
         }
     }
 
@@ -44,6 +45,15 @@ export default class AgentActules extends Component {
     }
 
     //======================================================================
+    // onRefresh
+    //======================================================================
+
+    onRefresh = () =>{
+        this.setState({isOnRefresh : true})
+        API.getJobs(_this.getJobResponseData,"/"+_this.state.type,true);
+    }
+
+    //======================================================================
     // getJobResponseData
     //======================================================================
 
@@ -52,7 +62,8 @@ export default class AgentActules extends Component {
             try {
                 console.log("Response data-->"+JSON.stringify(response.job.data))
                 this.setState({
-                    jobList : response.job.data
+                    jobList : response.job.data,
+                    isOnRefresh : false
                 })
             } catch (error) {
                 console.log('getJobResponseData catch error ' + JSON.stringify(error));
@@ -72,7 +83,7 @@ export default class AgentActules extends Component {
     render(){
         return(
             <SafeAreaView style={styles.container}>
-                <JobList jobList={this.state.jobList} type={this.state.type} setRow={this.setRow} navigateToDetail={this.props.navigateToDetail}/>
+                <JobList jobList={this.state.jobList} type={this.state.type} setRow={this.setRow} navigateToDetail={this.props.navigateToDetail} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh}/>
             </SafeAreaView>
         )
     }

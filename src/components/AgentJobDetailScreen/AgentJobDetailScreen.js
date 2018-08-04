@@ -25,7 +25,8 @@ export default class AgentJobDetailScreen extends Component {
             jobData : props.navigation.state.params.jobData.attributes,
             index : props.navigation.state.params.index,
             isJobApply : false,
-            isLoading : true
+            isLoading : true,
+            type : props.navigation.state.params.type || null
         }
     }
 
@@ -179,11 +180,13 @@ export default class AgentJobDetailScreen extends Component {
                         </View>
                     </ScrollView>
                 </View>
+                {(this.state.type != "completed") ?
                 <TouchableOpacity onPress={this.tapJobApplyTap} disabled={this.state.isJobApply}>
                     <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
                         <Text style={[styles.titleText,{color:'#fff'}]}>{(this.state.isJobApply)? "Postulado" :"Aplicar"}</Text>
                     </View>
                 </TouchableOpacity>
+                : null}
                 
             </SafeAreaView>
         )

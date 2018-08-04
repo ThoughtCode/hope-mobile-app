@@ -43,7 +43,7 @@ module.exports = StyleSheet.create({
     color : "#fff"
   },
   renderRowView:{
-    marginHorizontal:20,paddingVertical:10
+    paddingHorizontal:20,paddingVertical:10,borderBottomWidth:1,borderBottomColor :'gray'
   },
   listTitleView:{
     flexDirection:'row',justifyContent:'space-between',alignItems:'center'
