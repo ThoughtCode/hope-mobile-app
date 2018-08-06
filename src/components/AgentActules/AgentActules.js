@@ -41,7 +41,7 @@ export default class AgentActules extends Component {
     //======================================================================
 
     getJobsAPICall(){
-        API.getJobs(_this.getJobResponseData,"/"+_this.state.type,true);
+        API.getJobs(this.getJobResponseData,"/"+this.state.type,true);
     }
 
     //======================================================================
@@ -50,7 +50,7 @@ export default class AgentActules extends Component {
 
     onRefresh = () =>{
         this.setState({isOnRefresh : true})
-        API.getJobs(_this.getJobResponseData,"/"+_this.state.type,true);
+        API.getJobs(this.getJobResponseData,"/"+this.state.type,true);
     }
 
     //======================================================================
@@ -71,8 +71,10 @@ export default class AgentActules extends Component {
         },
         error: (err) => {
             console.log('getJobResponseData error ' + JSON.stringify(err));
+            this.setState({isOnRefresh : false})
         },
         complete: () => {
+            this.setState({isOnRefresh : false})
         }
     }
     
