@@ -209,7 +209,7 @@ export default class AgentJobDetailScreen extends Component {
                 {(this.state.type != "completed") ?
                 <TouchableOpacity onPress={this.tapJobApplyTap} disabled={this.state.isJobApply}>
                     <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
-                        <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Clificar"}</Text>
+                        <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Calificar"}</Text>
                     </View>
                 </TouchableOpacity>
                 : null}
