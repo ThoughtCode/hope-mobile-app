@@ -152,8 +152,7 @@ export default class AgentProfile extends Component {
                         data = {[{title : "Mi cuenta",key : 'update_profile'},{title : "Contrasena",key : 'update_password'}]}
                         renderItem = {this.renderItem}
                         ItemSeparatorComponent={this.ItemSeparatorComponent}
-                        keyExtractor={(index)=>index.toString()}
-                        // keyExtractor={(item)=>item.id.toString()}
+                        keyExtractor={(item)=>item.key.toString()}
                         ListEmptyComponent={this.ListEmptyComponent}
                     />
                 </View>
