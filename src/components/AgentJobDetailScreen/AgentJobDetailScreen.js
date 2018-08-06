@@ -51,7 +51,7 @@ export default class AgentJobDetailScreen extends Component {
             try {
                 console.log("jobApplyResponse data-->"+JSON.stringify(response))
                 
-                this.setState({isJobReview : !response.can_review,isLoading:false})
+                this.setState({isJobReview : response.can_review,isLoading:false})
                 
             } catch (error) {
                 console.log('jobApplyResponse catch error ' + JSON.stringify(error));
