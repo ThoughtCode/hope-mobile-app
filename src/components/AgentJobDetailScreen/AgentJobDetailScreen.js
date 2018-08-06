@@ -25,6 +25,7 @@ export default class AgentJobDetailScreen extends Component {
             jobData : props.navigation.state.params.jobData.attributes,
             index : props.navigation.state.params.index,
             isJobApply : false,
+            isJobReview : false,
             isLoading : true,
             type : props.navigation.state.params.type || null
         }
@@ -36,10 +37,35 @@ export default class AgentJobDetailScreen extends Component {
 
     componentDidMount(){
         API.canApplyJob(this.canApplyJobResponse,"/"+this.props.navigation.state.params.jobData.id+"/can_apply",true);
+        if(this.state.type != null){
+            API.canReviewJob(this.canReviewJobResponse,"/"+this.props.navigation.state.params.jobData.id+"/can_review",true);
+        }
     }
 
     //======================================================================
-    // canApplyJobResponse
+    // canReviewJobResponse
+    //======================================================================
+
+    canReviewJobResponse = {
+        success: (response) => {
+            try {
+                console.log("jobApplyResponse data-->"+JSON.stringify(response))
+                
+                this.setState({isJobReview : !response.can_review,isLoading:false})
+                
+            } catch (error) {
+                console.log('jobApplyResponse catch error ' + JSON.stringify(error));
+            }
+        },
+        error: (err) => {
+            console.log('jobApplyResponse error ' + JSON.stringify(err));
+        },
+        complete: () => {
+        }
+    }
+
+    //======================================================================
+    // canReviewJobResponse
     //======================================================================
 
     canApplyJobResponse = {
@@ -47,7 +73,7 @@ export default class AgentJobDetailScreen extends Component {
             try {
                 console.log("jobApplyResponse data-->"+JSON.stringify(response))
                 
-                this.setState({isJobApply : !response.can_apply,isLoading:false})
+                this.setState({isJobApply  : !response.can_apply,isLoading:false})
                 
             } catch (error) {
                 console.log('jobApplyResponse catch error ' + JSON.stringify(error));
@@ -183,7 +209,7 @@ export default class AgentJobDetailScreen extends Component {
                 {(this.state.type != "completed") ?
                 <TouchableOpacity onPress={this.tapJobApplyTap} disabled={this.state.isJobApply}>
                     <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
-                        <Text style={[styles.titleText,{color:'#fff'}]}>{(this.state.isJobApply)? "Postulado" :"Aplicar"}</Text>
+                        <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Clificar"}</Text>
                     </View>
                 </TouchableOpacity>
                 : null}

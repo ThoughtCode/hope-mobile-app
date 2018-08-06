@@ -15,6 +15,10 @@ export const API = {
     canApplyJob: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.JOBS + data, buildHeader());
     },
+    
+    canReviewJob: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.JOBS + data, buildHeader());
+    },
 
     getJobsComments: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.COMMENTS + data +'/reviews', buildHeader());
