@@ -222,7 +222,7 @@ export default class AgentProfile extends Component {
                         </View>
                             
                             <View>
-                                <View style={{flex:1,marginHorizontal:20}}>
+                                <View style={{flex:1,marginHorizontal:20,marginBottom:20}}>
                                     <View style={styles.textInputVieW}>
                                         <Text style={styles.textInputTitleText}>{"Nombre"}</Text>
                                         <TextInput  ref={ref => (this.firtNameInput = ref)}

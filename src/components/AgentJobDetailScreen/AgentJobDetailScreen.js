@@ -105,7 +105,7 @@ export default class AgentJobDetailScreen extends Component {
     render(){
         var description = ""
         var subDescription = ""
-        var total = 0
+        
         this.state.jobData.job_details.map((val,index)=>{
             if(val.service.type_service == "base"){
                 description += val.service.name
@@ -113,7 +113,7 @@ export default class AgentJobDetailScreen extends Component {
                 subDescription += val.service.name + " X " + val.service.time
                 subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
             }
-            total += val.price_total
+        
         })
         var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
         return(
@@ -176,7 +176,7 @@ export default class AgentJobDetailScreen extends Component {
                         </View>
                         <View style={styles.renderRowView}>
                             <Text style={styles.titleText}>{"Precio"}</Text>
-                            <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{"$"+ total}</Text>
+                            <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{"$ "+ this.state.jobData.total}</Text>
                         </View>
                     </ScrollView>
                 </View>
