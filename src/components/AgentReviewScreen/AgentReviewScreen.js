@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions, SafeAreaView, TextInput, Keyboard} from 'react-native';
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import EvilIcons from '@expo/vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import StarRating from 'react-native-star-rating';
+import Ionicons from '@expo/vector-icons/Ionicons'
+import StarRating from '../../lib/react-native-star-rating';
 import { API } from '../../util/api';
 
 const styles = require('./AgentReviewScreenStyles');

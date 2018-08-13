@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, FlatList, Image, Dimensions,SafeAreaView} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import Ionicons from '@expo/vector-icons/Ionicons'
 
-import StarRating from 'react-native-star-rating';
+import StarRating from '../../lib/react-native-star-rating';
 const {height , width} = Dimensions.get('window')
 import { API } from '../../util/api';
 

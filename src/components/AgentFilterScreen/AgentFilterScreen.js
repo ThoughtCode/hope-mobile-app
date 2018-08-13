@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, Image, Dimensions,SafeAreaView, Slider} from 'react-native';
 
-import Octicons from 'react-native-vector-icons/Octicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Octicons from '@expo/vector-icons/Octicons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 const {height , width} = Dimensions.get('window')
 import { API } from '../../util/api';
 import Moment from 'moment';
@@ -31,10 +31,7 @@ export default class AgentFilterScreen extends Component {
             sliderValue: [0, 300],
             startData : null,
             endDate : null,
-            unvez : false,
-            semanal : false,
-            quinenal : false,
-            mensual : false,
+            frequency : null,
         }
     }
 
@@ -73,7 +70,10 @@ export default class AgentFilterScreen extends Component {
             url += "&date_to="+this.state.endDate
         }
         
-        url += "&frequency="+0
+        if(this.state.frequency != null){
+            url += "&frequency="+this.state.frequency
+        }
+            
         console.log("Filter URL-->"+url)
         this.props.navigation.state.params.setFilterData(url)
         this.props.navigation.goBack()
@@ -108,7 +108,7 @@ export default class AgentFilterScreen extends Component {
                         
                         <MultiSlider
                             values={[this.state.sliderValue[0], this.state.sliderValue[1]]}
-                            sliderLength={width - 20}
+                            sliderLength={width - 40}
                             onValuesChange={this.onValueChange}
                             min={0}
                             max={300}
@@ -118,7 +118,7 @@ export default class AgentFilterScreen extends Component {
                         />
 
                         <Text style={styles.mainTitleText}>{"Fecha del trabajo"}</Text>
-                        <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
+                        <View style={{flexDirection:'row',alignItems:'center',marginTop:15}}>
                             <Text style={styles.textStyle}>{"Desde"}</Text>
                             
                             <DatePicker
@@ -136,7 +136,7 @@ export default class AgentFilterScreen extends Component {
                                 />
                         </View>
 
-                        <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
+                        <View style={{flexDirection:'row',alignItems:'center',marginTop:10,marginLeft:5}}>
                             <Text style={styles.textStyle}>{"Hasta"}</Text>
                             
                             <DatePicker
@@ -154,25 +154,25 @@ export default class AgentFilterScreen extends Component {
                                 />
                         </View>
 
-                        <Text style={[styles.mainTitleText,{marginTop:10}]}>{"Frecuencia"}</Text>
+                        <Text style={[styles.mainTitleText,{marginTop:15}]}>{"Frecuencia"}</Text>
                         <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:5}}>
                             <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
-                                <FontAwesome name={(this.state.unvez) ? "check-square" : "square-o"} size={30} onPress={() => this.setState({unvez : !this.state.unvez})} />
+                                <FontAwesome name={(this.state.frequency == 0) ? "check-square" : "square-o"} size={30} onPress={() => this.setState({frequency : 0})} style={{color : 'gray'}} />
                                 <Text style={[styles.textStyle,{marginLeft:5}]}>{"Una vez"}</Text>
                             </View>
                             <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
-                                <FontAwesome name={(this.state.semanal) ? "check-square" : "square-o"} size={30} onPress={() => this.setState({semanal : !this.state.semanal})} />
+                                <FontAwesome name={(this.state.frequency == 1) ? "check-square" : "square-o"} size={30} onPress={() => this.setState({frequency : 1})} style={{color : 'gray'}} />
                                 <Text style={[styles.textStyle,{marginLeft:5}]}>{"Semanal"}</Text>
                             </View>
                         </View>
 
                         <View style={{flexDirection:'row',marginTop:10}}>
                             <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
-                                <FontAwesome name={(this.state.quinenal) ? "check-square" : "square-o"} size={30} onPress={() => this.setState({quinenal : !this.state.quinenal})} />
+                                <FontAwesome name={(this.state.frequency == 2) ? "check-square" : "square-o"} size={30} onPress={() => this.setState({frequency : 2})} style={{color : 'gray'}}/>
                                 <Text style={[styles.textStyle,{marginLeft:5}]}>{"Quinenal"}</Text>
                             </View>
                             <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
-                                <FontAwesome name={(this.state.mensual) ? "check-square" : "square-o"} size={30} onPress={() => this.setState({mensual : !this.state.mensual})} />
+                                <FontAwesome name={(this.state.frequency) == 3 ? "check-square" : "square-o"} size={30} onPress={() => this.setState({frequency : 3})} style={{color : 'gray'}}/>
                                 <Text style={[styles.textStyle,{marginLeft:5}]}>{"Mensual"}</Text>
                             </View>
                         </View>

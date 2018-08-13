@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions,SafeAreaView,Alert} from 'react-native';
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import EvilIcons from '@expo/vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import StarRating from 'react-native-star-rating';
+import Ionicons from '@expo/vector-icons/Ionicons'
+import StarRating from '../../lib/react-native-star-rating';
 import { API } from '../../util/api';
 import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
 
@@ -157,12 +157,12 @@ export default class AgentJobDetailScreen extends Component {
                     <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
                         <View style={styles.profileView}>
                             <TouchableOpacity onPress={()=> this.props.navigation.navigate("AgentJobCommentScreen",{jobData : this.props.navigation.state.params.jobData})}>
-                                <Image source={{uri : this.state.jobData.customer.avatar.url}} style={styles.profileImage} resizeMode={"cover"}/>
+                                <Image source={{uri : (this.state.jobData.customer && this.state.jobData.customer.avatar  && this.state.jobData.customer.avatar.url) ?  this.state.jobData.customer.avatar.url : null}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/profile_placehoder.png")}/>
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity onPress={()=> this.props.navigation.navigate("AgentJobCommentScreen",{jobData : this.props.navigation.state.params.jobData})}>
                             <View style={{alignItems:'center',justifyContent:'center'}}>
-                                <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.jobData.customer.first_name + " "+this.state.jobData.customer.last_name}</Text>
+                                <Text style={{fontSize:20,fontWeight:'600'}}>{ this.state.jobData.customer && this.state.jobData.customer.first_name  || "" + " "+ this.state.jobData.customer && this.state.jobData.customer.last_name || ""}</Text>
                             </View>
                         </TouchableOpacity>
                         
@@ -173,7 +173,7 @@ export default class AgentJobDetailScreen extends Component {
                             emptyStar={'ios-star-outline'}
                             fullStar={'ios-star'}
                             halfStar={'ios-star-half'}
-                            iconSet={'Ionicons'}
+                            iconSet={"Ionicons"}
                             maxStars={5}
                             rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                             starSize={20}

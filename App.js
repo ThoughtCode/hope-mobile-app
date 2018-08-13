@@ -32,8 +32,8 @@ import AgentJobCommentScreen from "./src/components/AgentJobCommentScreen/AgentJ
 import AgentReviewScreen from "./src/components/AgentReviewScreen/AgentReviewScreen";
 import AgentFilterScreen from "./src/components/AgentFilterScreen/AgentFilterScreen";
 
-import Entypo from 'react-native-vector-icons/Entypo';
-import Foundation from 'react-native-vector-icons/Foundation';
+import Entypo from '@expo/vector-icons/Entypo';
+import Foundation from '@expo/vector-icons/Foundation';
 
 import * as globals from './src/util/globals';
 // Don't show warnings about deprecation lifecycle methods on the App
@@ -204,22 +204,24 @@ export default class App extends React.Component {
 
   async componentWillMount() {
 
-    AsyncStorage.multiGet(['password', 'access_token', 'first_name', 'last_name', 'email', 'cell_phone', 'avatar'],(error,value) =>{
-      
-      globals.password = value[0][1] || ""
-      globals.access_token = value[1][1] || ""
-      globals.first_name = value[2][1] || ""
-      globals.last_name = value[3][1] || ""
-      globals.email = value[4][1] || ""
-      globals.cell_phone = value[5][1] || ""
-      globals.avatar = value[6][1] || ""
-
-      this.setState({isLoading : true,fontLoaded: true})
-    })
+      await Expo.Font.loadAsync({
+        'helvetica': require('./assets/fonts/HELR45W.ttf'),
+      })
+      AsyncStorage.multiGet(['password', 'access_token', 'first_name', 'last_name', 'email', 'cell_phone', 'avatar'],(error,value) =>{
     
-    await Expo.Font.loadAsync({
-      'helvetica': require('./assets/fonts/HELR45W.ttf'),
-    });
+        globals.password = value[0][1] || ""
+        globals.access_token = value[1][1] || ""
+        globals.first_name = value[2][1] || ""
+        globals.last_name = value[3][1] || ""
+        globals.email = value[4][1] || ""
+        globals.cell_phone = value[5][1] || ""
+        globals.avatar = value[6][1] || ""
+
+        this.setState({isLoading : true,fontLoaded: true})
+        
+      })
+      
+    // })
 
     this.setState({ fontLoaded: true });
   }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, Image, Dimensions,SafeAreaView} from 'react-native';
 
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import EvilIcons from '@expo/vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
 import { API } from '../../util/api';
 import Moment from 'moment';

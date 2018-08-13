@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions,SafeAreaView,Alert,FlatList} from 'react-native';
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import EvilIcons from '@expo/vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Ionicons from '@expo/vector-icons/Ionicons'
 import * as globals from '../../util/globals';
 import { API } from '../../util/api';
 import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
