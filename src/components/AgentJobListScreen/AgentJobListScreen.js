@@ -22,7 +22,8 @@ export default class AgentJobListScreen extends Component {
         _this = this
         this.state = {
             jobList : [],
-            isOnRefresh : false
+            isOnRefresh : false,
+            filterdata : null
         }
     }
 
@@ -39,7 +40,11 @@ export default class AgentJobListScreen extends Component {
     //======================================================================
 
     static getJobsAPICall(){
-        API.getJobs(_this.getJobResponseData,"",true);
+        var data =  ""
+        if(_this.state.filterdata != null){
+            data = _this.state.filterdata
+        }
+        API.getJobs(_this.getJobResponseData,data,true);
     }
 
     //======================================================================
@@ -48,7 +53,21 @@ export default class AgentJobListScreen extends Component {
 
     onRefresh = () =>{
         this.setState({isOnRefresh : true})
-        API.getJobs(_this.getJobResponseData,"",true);
+        var data =  ""
+        if(this.state.filterdata != null){
+            data = this.state.filterdata
+        }
+        API.getJobs(_this.getJobResponseData,data,true);
+    }
+
+    //======================================================================
+    // setFilterData
+    //======================================================================
+
+    setFilterData = (value) =>{
+        this.setState({
+            filterdata : value
+        },() => AgentJobListScreen.getJobsAPICall())
     }
 
     //======================================================================
@@ -60,10 +79,14 @@ export default class AgentJobListScreen extends Component {
             try {
                 console.log("Response data-->"+JSON.stringify(response.job.data))
                 this.setState({
-                    jobList : response.job.data,
+                    jobList : (response.job) ? response.job.data || [] : [],
                     isOnRefresh : false
                 })
             } catch (error) {
+                this.setState({
+                    jobList :  [],
+                    isOnRefresh : false
+                })
                 console.log('getJobResponseData catch error ' + JSON.stringify(error));
             }
         },
@@ -93,8 +116,18 @@ export default class AgentJobListScreen extends Component {
                     <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage}/>
                     <View style={styles.topTitleView}>
                         <Text style={styles.mainTitleText}>{"Trabajos"}</Text>
-                        <View style={styles.filterView}>
-                            <Text style={styles.filterText}>{"Filtrar"}</Text>
+
+                        <View style={{flexDirection:'row'}}>
+                            <View style={[styles.filterView,{marginRight:10}]}>
+                                <TouchableOpacity onPress={() => this.setState({filterdata : ""},()=> AgentJobListScreen.getJobsAPICall())}>
+                                    <Text style={styles.filterText}>{"Todos"}</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.filterView}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate("AgentFilterScreen",{setFilterData : this.setFilterData})}>
+                                    <Text style={styles.filterText}>{"Filtrar"}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </View>

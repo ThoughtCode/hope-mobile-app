@@ -24,7 +24,8 @@ export default class _JobList extends Component {
     }
 
     componentWillReceiveProps(newProps){
-        this.setState({jobList : newProps.jobList,isOnRefresh:newProps.isOnRefresh})
+        this.setState({jobList : newProps.jobList,isOnRefresh:newProps.isOnRefresh},this.forceUpdate())
+        console.log("JobList",newProps.jobList)
     }
 
     //======================================================================
@@ -60,7 +61,7 @@ export default class _JobList extends Component {
             <TouchableOpacity onPress={()=> (this.props.type != null) ? AgentTrabajosDashboard.navigateToDetail(item,this.setRow,this.props.type) : this.props.navigateToDetail(item,this.setRow)}>
                 <View style={styles.renderRowView}>
                     <View style={styles.listTitleView}>
-                        <Text style={styles.titleText}>{data.customer.first_name + " "+data.customer.last_name}</Text>
+                        <Text style={styles.titleText}>{(data.customer && data.customer.first_name) || "" + " "+ (data.customer && data.customer.last_name) || ""}</Text>
                         <Text style={[styles.textFont,{color:'rgb(0,121,189)'}]}>{date}</Text>
                     </View>
                     <Text style={[styles.textFont]}>{description}</Text>
@@ -120,6 +121,7 @@ export default class _JobList extends Component {
                     ItemSeparatorComponent={this.ItemSeparatorComponent}
                     keyExtractor={(item)=>item.id.toString()}
                     ListEmptyComponent={this.ListEmptyComponent}
+                    extraData={this.state.jobList}
                 />
             </View>
         )

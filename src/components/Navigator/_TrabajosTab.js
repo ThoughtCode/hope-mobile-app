@@ -4,11 +4,13 @@ import {SwitchNavigator, TabNavigator, TabBarBottom,StackNavigator} from 'react-
 import AgentActules from "../AgentActules/AgentActules";
 import AgentJobDetailScreen from "../AgentJobDetailScreen/AgentJobDetailScreen";
 import AgentJobCommentScreen from "../AgentJobCommentScreen/AgentJobCommentScreen";
+import AgentReviewScreen from "../AgentReviewScreen/AgentReviewScreen";
 
 const AgentDashboard = StackNavigator({
     AgentActules : { screen :AgentActules},
     AgentJobDetailScreen : { screen :AgentJobDetailScreen},
     AgentJobCommentScreen : { screen :AgentJobCommentScreen},
+    AgentReviewScreen : {screen : AgentReviewScreen}
 },{
     navigationOptions:{
       header : null

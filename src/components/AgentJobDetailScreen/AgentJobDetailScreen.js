@@ -99,6 +99,14 @@ export default class AgentJobDetailScreen extends Component {
     }
 
     //======================================================================
+    // tapReview
+    //======================================================================
+
+    tapReview = () =>{
+        this.props.navigation.navigate("AgentReviewScreen",{jobData : this.props.navigation.state.params.jobData})
+    }
+
+    //======================================================================
     // jobApplyResponse
     //======================================================================
 
@@ -207,7 +215,7 @@ export default class AgentJobDetailScreen extends Component {
                     </ScrollView>
                 </View>
                 {(this.state.type != "completed") ?
-                <TouchableOpacity onPress={this.tapJobApplyTap} disabled={this.state.isJobApply}>
+                <TouchableOpacity onPress={(!this.state.isJobReview) ? this.tapJobApplyTap : this.tapReview} disabled={this.state.isJobApply || this.state.isJobReview}>
                     <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
                         <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Calificar"}</Text>
                     </View>
