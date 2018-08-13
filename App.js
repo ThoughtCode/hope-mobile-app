@@ -29,6 +29,8 @@ import AgentUpdatePassword from "./src/components/AgentUpdatePassword/AgentUpdat
 import AgentJobListScreen from "./src/components/AgentJobListScreen/AgentJobListScreen";
 import AgentJobDetailScreen from "./src/components/AgentJobDetailScreen/AgentJobDetailScreen";
 import AgentJobCommentScreen from "./src/components/AgentJobCommentScreen/AgentJobCommentScreen";
+import AgentReviewScreen from "./src/components/AgentReviewScreen/AgentReviewScreen";
+import AgentFilterScreen from "./src/components/AgentFilterScreen/AgentFilterScreen";
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import Foundation from 'react-native-vector-icons/Foundation';
@@ -59,6 +61,8 @@ const AgentDashboard = StackNavigator({
   AgentJobListScreen : { screen :AgentJobListScreen},
   AgentJobDetailScreen : { screen :AgentJobDetailScreen},
   AgentJobCommentScreen : { screen :AgentJobCommentScreen},
+  AgentReviewScreen : { screen : AgentReviewScreen },
+  AgentFilterScreen : { screen : AgentFilterScreen }
 },{
   navigationOptions:{
     header : null
@@ -73,6 +77,7 @@ const AgentTrabajos = StackNavigator({
   AgentTrabajosDashboard : { screen :AgentTrabajosDashboard},
   AgentJobDetailScreen : { screen :AgentJobDetailScreen},
   AgentJobCommentScreen : { screen :AgentJobCommentScreen},
+  AgentReviewScreen : { screen : AgentReviewScreen }
 },{
   navigationOptions:{
     header : null
@@ -182,7 +187,7 @@ const MainNavigator = SwitchNavigator({
   CustomerServiceType: {screen: CustomerServiceType},
   CustomerNewAddress: {screen: CustomerNewAddress},
 },{
-  initialRouteName :"Home"
+  initialRouteName :"AgentTabar"
 });
 
 
