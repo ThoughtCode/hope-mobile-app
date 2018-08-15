@@ -223,7 +223,7 @@ export default class App extends React.Component {
       
     // })
 
-    this.setState({ fontLoaded: true });
+    // this.setState({ fontLoaded: true });
   }
   
   render() {

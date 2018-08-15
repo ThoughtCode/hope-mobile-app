@@ -32,11 +32,9 @@ export const API = {
         request(onResponse, data, 'PUT', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.UPDATE_PASSWORD, buildHeader());
     },
 
-    setReview: (onResponse, data, isHeaderRequired) => {
-        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_REVIEW, buildHeader());
-    },
-    
-    
+    setReview: (onResponse, data, job_id, isHeaderRequired) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_REVIEW + job_id + "/review", buildHeader());
+    },   
 }
 
 export const buildHeader = (headerParams = {}) => {

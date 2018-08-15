@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions, SafeAreaView, TextInput, Keyboard} from 'react-native';
+import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions, SafeAreaView, TextInput, Keyboard,Alert} from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -43,14 +43,14 @@ export default class AgentReviewScreen extends Component {
     tapJobReviewTap = () =>{
         if(this.state.comment != ""){
             data = {
-                review: { 
-                    "qualification": this.state.starCount,
-                    "comment": this.state.comment,
+                "review" : {
+                    "qualification" : this.state.starCount,
+                    "comment" : this.state.comment
                 },
-                "job_id": this.state.jobData.customer.hashed_id
+                "job_id" : this.state.jobData.customer.hashed_id
             }
             console.log("Data-->",data)
-            API.setReview(this.reviewJobResponse,data,true);
+            API.setReview(this.reviewJobResponse,data,this.props.navigation.state.params.jobData.id,true);
         }else{
             Alert.alert("Hope","Please enter comment")
         }
@@ -164,7 +164,7 @@ export default class AgentReviewScreen extends Component {
                                 fullStar={'ios-star'}
                                 halfStar={'ios-star-half'}
                                 iconSet={'Ionicons'}
-                                containerStyle = {{width : "50%"}}
+                                containerStyle = {{width : "30%"}}
                                 maxStars={5}
                                 rating={this.state.starCount}
                                 starSize={20}

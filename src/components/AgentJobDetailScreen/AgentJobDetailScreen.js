@@ -49,16 +49,16 @@ export default class AgentJobDetailScreen extends Component {
     canReviewJobResponse = {
         success: (response) => {
             try {
-                console.log("jobApplyResponse data-->"+JSON.stringify(response))
+                console.log("canReviewJobResponse data-->"+JSON.stringify(response))
                 
                 this.setState({isJobReview : response.can_review,isLoading:false})
                 
             } catch (error) {
-                console.log('jobApplyResponse catch error ' + JSON.stringify(error));
+                console.log('canReviewJobResponse catch error ' + JSON.stringify(error));
             }
         },
         error: (err) => {
-            console.log('jobApplyResponse error ' + JSON.stringify(err));
+            console.log('canReviewJobResponse error ' + JSON.stringify(err));
         },
         complete: () => {
         }
@@ -160,6 +160,7 @@ export default class AgentJobDetailScreen extends Component {
                                 <Image source={{uri : (this.state.jobData.customer && this.state.jobData.customer.avatar  && this.state.jobData.customer.avatar.url) ?  this.state.jobData.customer.avatar.url : null}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../assets/img/profile_placehoder.png")}/>
                             </TouchableOpacity>
                         </View>
+
                         <TouchableOpacity onPress={()=> this.props.navigation.navigate("AgentJobCommentScreen",{jobData : this.props.navigation.state.params.jobData})}>
                             <View style={{alignItems:'center',justifyContent:'center'}}>
                                 <Text style={{fontSize:20,fontWeight:'600'}}>{ this.state.jobData.customer && this.state.jobData.customer.first_name  || "" + " "+ this.state.jobData.customer && this.state.jobData.customer.last_name || ""}</Text>
@@ -215,7 +216,7 @@ export default class AgentJobDetailScreen extends Component {
                     </ScrollView>
                 </View>
                 {(this.state.type != "completed") ?
-                <TouchableOpacity onPress={(!this.state.isJobReview) ? this.tapJobApplyTap : this.tapReview} disabled={this.state.isJobApply || this.state.isJobReview}>
+                <TouchableOpacity onPress={(!this.state.isJobReview) ? this.tapJobApplyTap : this.tapReview} disabled={this.state.isJobApply && !this.state.isJobReview}>
                     <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
                         <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Calificar"}</Text>
                     </View>
