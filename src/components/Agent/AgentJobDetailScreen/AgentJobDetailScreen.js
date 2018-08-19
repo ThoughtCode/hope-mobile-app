@@ -214,16 +214,16 @@ export default class AgentJobDetailScreen extends Component {
                             <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{initialDate + " - "+ finishDate}</Text>
                         </View>
                         <View style={styles.renderRowView}>
-                            <Text style={styles.titleText}>{"Servicious Adicionales"}</Text>
+                            <Text style={styles.titleText}>{"Servicios Adicionales"}</Text>
                             <Text style={[styles.subText]}>{subDescription}</Text>
                         </View>
                         <View style={styles.renderRowView}>
-                            <Text style={styles.titleText}>{"Detalls a Considerar"}</Text>
+                            <Text style={styles.titleText}>{"Detalles a Considerar"}</Text>
                             <Text style={styles.subText}>{this.state.jobData.details}</Text>
                         </View>
 
                         <View style={[styles.renderRowView]}>
-                            <Text style={styles.titleText}>{"Vbicacion"}</Text>
+                            <Text style={styles.titleText}>{"Ubicación"}</Text>
                             <View style={{flexDirection:'row',alignItems:'center'}}> 
                                 <EvilIcons name={"location"} size={20} />
                                 <Text style={styles.subText}>{location}</Text>

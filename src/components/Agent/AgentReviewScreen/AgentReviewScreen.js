@@ -153,7 +153,7 @@ export default class AgentReviewScreen extends Component {
                 <View style={{flex:1,marginHorizontal:10}}>
                     <ScrollView>
                         <View style={styles.textInputVieW}>
-                            <Text style={styles.textInputTitleText}>{"Opinion sobre el cliente"}</Text>
+                            <Text style={styles.textInputTitleText}>{"Opinión sobre el cliente"}</Text>
                             <TextInput  ref={ref => (this.firtNameInput = ref)}
                                         underlineColorAndroid={"transparent"}
                                         style={styles.textInputStyle}
