@@ -1,21 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View,AppRegistry, AsyncStorage} from 'react-native';
 import {SwitchNavigator, TabNavigator, TabBarBottom,StackNavigator} from 'react-navigation';
-import AgentActules from "../AgentActules/AgentActules";
-import AgentJobDetailScreen from "../AgentJobDetailScreen/AgentJobDetailScreen";
-import AgentJobCommentScreen from "../AgentJobCommentScreen/AgentJobCommentScreen";
-import AgentReviewScreen from "../AgentReviewScreen/AgentReviewScreen";
-
-const AgentDashboard = StackNavigator({
-    AgentActules : { screen :AgentActules},
-    AgentJobDetailScreen : { screen :AgentJobDetailScreen},
-    AgentJobCommentScreen : { screen :AgentJobCommentScreen},
-    AgentReviewScreen : {screen : AgentReviewScreen}
-},{
-    navigationOptions:{
-      header : null
-    }
-})
+import AgentActules from "../Agent/AgentActules/AgentActules";
+import AgentJobDetailScreen from "../Agent/AgentJobDetailScreen/AgentJobDetailScreen";
+import AgentJobCommentScreen from "../Agent/AgentJobCommentScreen/AgentJobCommentScreen";
+import AgentReviewScreen from "../Agent/AgentReviewScreen/AgentReviewScreen";
   
 export default TrabajosTab = TabNavigator({
     AgentActules: {
