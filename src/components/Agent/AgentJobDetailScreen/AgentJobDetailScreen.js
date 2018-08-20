@@ -6,7 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import StarRating from '../../../lib/react-native-star-rating';
 import { API } from '../../../util/api';
 import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
-
+import Moment from 'moment';
 const styles = require('./AgentJobDetailScreenStyles');
 
 const IMAGES = {
@@ -151,6 +151,8 @@ export default class AgentJobDetailScreen extends Component {
             }
         
         })
+        var initialDate = Moment(this.state.jobData.started_at).utc().format('MMMM, DD - hh:mm a')
+        var finishDate = Moment(this.state.jobData.finished_at).utc().format('hh:mm a')
         var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
         return(
             <SafeAreaView style={styles.container}>
@@ -199,7 +201,10 @@ export default class AgentJobDetailScreen extends Component {
                     <ScrollView>
                         <View style={styles.renderRowView}>
                             <Text style={styles.titleText}>{"Tipo de trabajo"}</Text>
-                            <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{description}</Text>
+                            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                                <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{description}</Text>
+                                <Text>{initialDate +" - "+finishDate}</Text>
+                            </View>
                         </View>
                         <View style={styles.renderRowView}>
                             <Text style={styles.titleText}>{"Servicious Adicionales"}</Text>
