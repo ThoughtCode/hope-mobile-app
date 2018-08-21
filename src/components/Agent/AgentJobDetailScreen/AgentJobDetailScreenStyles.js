@@ -52,7 +52,7 @@ module.exports = StyleSheet.create({
     fontSize:20,fontWeight:'900',fontFamily:"helvetica"
   },
   subText:{
-    fontSize:14,fontFamily:"helvetica",color:'lightgray'
+    fontSize:14,fontFamily:"helvetica",color:'gray'
   }
 
 });

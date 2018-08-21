@@ -7,6 +7,7 @@ import StarRating from '../../../lib/react-native-star-rating';
 import { API } from '../../../util/api';
 import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
 import Moment from 'moment';
+
 const styles = require('./AgentJobDetailScreenStyles');
 
 const IMAGES = {
@@ -151,8 +152,13 @@ export default class AgentJobDetailScreen extends Component {
             }
         
         })
-        var initialDate = Moment(this.state.jobData.started_at).utc().format('MMMM, DD - hh:mm a')
-        var finishDate = Moment(this.state.jobData.finished_at).utc().format('hh:mm a')
+        // alert(Moment("2013-11-18").tz("America/Guayaquil").format('Z'))
+        // Momenr.setTimezone('+0500')
+        // var initialDate = Moment(new Date(this.state.jobData.started_at)).utc().format('MMMM, DD - hh:mm a')
+        // America/Guayaquil
+        // var finishDate = Moment(this.state.jobData.finished_at).zone(+5).format('hh:mm a')
+        var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
+        var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
         var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
         return(
             <SafeAreaView style={styles.container}>
@@ -201,10 +207,11 @@ export default class AgentJobDetailScreen extends Component {
                     <ScrollView>
                         <View style={styles.renderRowView}>
                             <Text style={styles.titleText}>{"Tipo de trabajo"}</Text>
-                            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                                <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{description}</Text>
-                                <Text>{initialDate +" - "+finishDate}</Text>
-                            </View>
+                            <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{description}</Text>
+                        </View>
+                        <View style={styles.renderRowView}>
+                            <Text style={styles.titleText}>{"Fecha"}</Text>
+                            <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{initialDate + " - "+ finishDate}</Text>
                         </View>
                         <View style={styles.renderRowView}>
                             <Text style={styles.titleText}>{"Servicious Adicionales"}</Text>
