@@ -125,5 +125,8 @@ module.exports = StyleSheet.create({
     width: 120,
     height: 110,
     top: 150
+  },
+  text_error: {
+    color: 'white'
   }
 });

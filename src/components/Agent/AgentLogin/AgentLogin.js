@@ -55,7 +55,7 @@ export default class AgentLogin extends React.Component {
         }),
       }).then((response) => {
         if (response.status === 401) {
-          this.setState({ errorMessage: "Verifique su usuario y su contraseña" });
+          this.setState({ errorMessage: <Text style={styles.text_error}>Verifique su usuario y su contraseña</Text> });
           return response;
         } else {
           response.json().then((data) => {

@@ -121,9 +121,9 @@ export default class AgentProfile extends Component {
     //======================================================================
 
    logout = () =>{
-       Alert.alert(globals.APP_NAME,"Are you sure want logout",[
+       Alert.alert(globals.APP_NAME,"¿Seguro que quieres desconectarte?",[
         {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Yes', onPress: () => {
+        {text: 'Si', onPress: () => {
             AsyncStorage.clear().then(()=>{
                 this.props.navigation.navigate("AgentLogin")
             })
