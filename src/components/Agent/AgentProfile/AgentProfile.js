@@ -80,7 +80,7 @@ export default class AgentProfile extends Component {
     ListEmptyComponent = () =>{
         return(
             <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
-                <Text style={styles.emptyText}>{"No hay trabajos, regrese mas trade"}</Text>
+                <Text style={styles.emptyText}>{"No hay trabajos, regrese más tarde"}</Text>
             </View>
         )
     }
@@ -121,9 +121,9 @@ export default class AgentProfile extends Component {
     //======================================================================
 
    logout = () =>{
-       Alert.alert(globals.APP_NAME,"Are you sure want logout",[
+       Alert.alert(globals.APP_NAME,"¿Seguro que quieres desconectarte?",[
         {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Yes', onPress: () => {
+        {text: 'Si', onPress: () => {
             AsyncStorage.clear().then(()=>{
                 this.props.navigation.navigate("AgentLogin")
             })
@@ -178,7 +178,7 @@ export default class AgentProfile extends Component {
              
                 <TouchableOpacity onPress={this.logout}>
                     <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:'rgb(0,121,189)'}]}>
-                        <Text style={[styles.titleText,{color:'#fff'}]}>{"Cerrar Sesion"}</Text>
+                        <Text style={[styles.titleText,{color:'#fff'}]}>{"Cerrar Sesión"}</Text>
                     </View>
                 </TouchableOpacity>
                 

@@ -97,7 +97,7 @@ export default class _JobList extends Component {
     ListEmptyComponent = () =>{
         return(
             <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
-                <Text style={styles.emptyText}>{"No hay trabajos, regrese mas trade"}</Text>
+                <Text style={styles.emptyText}>{"No hay trabajos, regrese más tarde"}</Text>
             </View>
         )
     }

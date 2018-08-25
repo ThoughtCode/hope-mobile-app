@@ -131,7 +131,7 @@ export default class AgentUpdatePassword extends Component {
                                 
                             
                             <View style={styles.topTitleView}>
-                                <Text style={styles.mainTitleText}>{"Actualizar Contrasena"}</Text>
+                                <Text style={styles.mainTitleText}>{"Actualizar Contraseña"}</Text>
                             </View>
                         </View>
 
@@ -141,7 +141,7 @@ export default class AgentUpdatePassword extends Component {
                                 <TextInput  ref={ref => (this.currentPasswordInput = ref)}
                                             underlineColorAndroid={"transparent"}
                                             style={styles.textInputStyle}
-                                            placeholder={"Current password"}
+                                            placeholder={"Contraseña actual"}
                                             placeholderTextColor={"gray"}
                                             value={this.state.currentPassword}
                                             onChangeText={(currentPassword) => this.setState({currentPassword : currentPassword})}
@@ -154,7 +154,7 @@ export default class AgentUpdatePassword extends Component {
                                 <TextInput  ref={ref => (this.newPasswordInput = ref)}
                                             underlineColorAndroid={"transparent"}
                                             style={styles.textInputStyle}
-                                            placeholder={"New password"}
+                                            placeholder={"Nueva contraseña"}
                                             placeholderTextColor={"gray"}
                                             value={this.state.newPassword}
                                             onChangeText={(newPassword) => this.setState({newPassword : newPassword})}
@@ -167,7 +167,7 @@ export default class AgentUpdatePassword extends Component {
                                 <TextInput  ref={ref => (this.confirmPasswordInput = ref)}
                                             underlineColorAndroid={"transparent"}
                                             style={styles.textInputStyle}
-                                            placeholder={"Confirm password"}
+                                            placeholder={"Confirme contraseña"}
                                             placeholderTextColor={"gray"}
                                             value={this.state.confirmPassword}
                                             onChangeText={(confirmPassword) => this.setState({confirmPassword : confirmPassword})}

@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "Hope App",
+    "name": "Noc Noc",
     "icon": "./assets/img/logo_azul.png",
     "version": "0.2.0",
-    "slug": "hope-app",
+    "slug": "noc-noc",
     "sdkVersion": "26.0.0",
     "ios": {
-      "bundleIdentifier": "com.hope.app"
+      "bundleIdentifier": "com.nocnoc.app"
     },
     "android": {
-      "package": "com.hope.app"
+      "package": "com.nocnoc.app"
     }
   }
 }
