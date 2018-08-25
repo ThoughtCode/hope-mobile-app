@@ -8,10 +8,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  AsyncStorage
 } from 'react-native';
 
 import * as urls from '../../../constants/api';
+import * as globals from '../../../util/globals';
 
 const styles = require('./AgentSignUpStyles');
 
@@ -41,6 +43,19 @@ export default class AgentSignUp extends Component {
       this.setState({errorMessage: "Las contraseñas no coinciden"})
     } else {
       signup_url = urls.BASE_URL + urls.AGENT_SIGNUP_URI;
+      console.log("Registration url",signup_url);
+      var data = {
+        "agent": {
+          "first_name": this.state.firstname,
+          "last_name": this.state.lastname,
+          "email": this.state.email,
+          "password": this.state.password,
+          "password_confirmation": this.state.password_confirmation,
+          "national_id": this.state.national_id,
+          "cell_phone": this.state.cell_phone,
+        }
+      }
+      console.log("Registration body",JSON.stringify(data));
       fetch(signup_url, {
         method: 'POST',
         headers: {
@@ -61,8 +76,29 @@ export default class AgentSignUp extends Component {
       })
         .then((response) => {
           if (response.status === 200) {
+            console.log("Registration response",response);
             response.json().then((data) => {
-              this.props.navigation.navigate('AgentDashboard', {data});
+              AsyncStorage.multiSet([["access_token",data.agent.data.attributes.access_token || ""],
+                                  ['first_name', data.agent.data.attributes.first_name || ""],
+                                  ['last_name', data.agent.data.attributes.last_name || ""],
+                                  ['email', data.agent.data.attributes.email || ""],
+                                  ['password', this.state.password || ""],
+                                  ['cell_phone', data.agent.data.attributes.cell_phone || ""],
+                                  ['status', data.agent.data.attributes.status || ""],
+                                  ['avatar', data.agent.data.attributes.avatar.url || ""]],()=>{
+
+                                    globals.access_token = data.agent.data.attributes.access_token ||""
+                                    globals.first_name = data.agent.data.attributes.first_name || ""
+                                    globals.last_name = data.agent.data.attributes.last_name || ""
+                                    globals.email = data.agent.data.attributes.email || ""
+                                    globals.password = this.state.password || ""
+                                    globals.cell_phone = data.agent.data.attributes.cell_phone || ""
+                                    globals.status = data.agent.data.attributes.status || ""
+                                    globals.avatar = data.agent.data.attributes.avatar.url || ""
+ 
+                                    this.props.navigation.navigate('AgentDashboard', { data });
+                                  })
+              
             });
           } else if (response.status === 422) {
             this.setState({errorMessage: "Ya existe un usuario con ese correo electrónico"});
@@ -224,7 +260,7 @@ export default class AgentSignUp extends Component {
                   />
                   <TextInput
                     style={styles.signup_input}
-                    onChangeText={(national_id) => this.setState({national_id})}
+                    onChangeText={(cell_phone) => this.setState({cell_phone})}
                     placeholder="CELULAR"
                     placeholderTextColor="#fff"
                     autoCapitalize="none"
