@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, FlatList, Image, Dimensions,SafeAreaView} from 'react-native';
+import {Text, TouchableOpacity, View, FlatList, Image, Dimensions,SafeAreaView, ActivityIndicator} from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
 import { API } from '../../../util/api';
@@ -19,13 +19,14 @@ export default class _JobList extends Component {
         _this = this
         this.state = {
             jobList : props.jobList,
-            isOnRefresh : false
+            isOnRefresh : false,
+            isLoading : props.isLoading || false
         }
     }
 
     componentWillReceiveProps(newProps){
-        this.setState({jobList : newProps.jobList,isOnRefresh:newProps.isOnRefresh},this.forceUpdate())
-        console.log("JobList",newProps.jobList)
+        this.setState({jobList : newProps.jobList,isOnRefresh:newProps.isOnRefresh,isLoading:newProps.isLoading || false},this.forceUpdate())
+        console.log("isLoading",newProps.isLoading)
     }
 
     //======================================================================
@@ -65,11 +66,14 @@ export default class _JobList extends Component {
                         <Text style={[styles.textFont,{color:'rgb(0,121,189)'}]}>{date}</Text>
                     </View>
                     <Text style={[styles.textFont]}>{description}</Text>
+                    <Text style={[styles.textFont]}>{description}</Text>
                     <View style={styles.subtextViewStyle}>
-                        <View>
+                        <View style={{flex:1}}>
                             <Text style={[styles.textFont,{fontSize:12}]}>{subDescription}</Text>
                         </View>
-                        <Text style={[styles.textFont,{color:'rgb(0,121,189)',fontSize:20}]}>{data.total+" $"}</Text>
+                        <View style={{flex:0.2}}>
+                            <Text style={[styles.textFont,{color:'rgb(0,121,189)',fontSize:20}]}>{"$"+data.total.toFixed(2)}</Text>
+                        </View>
                     </View>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <EvilIcons name={"location"} size={16} />
@@ -95,11 +99,23 @@ export default class _JobList extends Component {
     //======================================================================
 
     ListEmptyComponent = () =>{
-        return(
-            <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
-                <Text style={styles.emptyText}>{"No hay trabajos, regrese más tarde"}</Text>
-            </View>
-        )
+        if(this.props.jobList.length == 0){
+            return(
+                <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
+                    <Text style={styles.emptyText}>{"No hay trabajos, regrese más tarde"}</Text>
+                </View>
+            )
+        }else{
+            return null
+        }
+    }
+
+    //======================================================================
+    // FooterComponent
+    //======================================================================
+
+    ListFooterComponent = () =>{
+        return this.state.isLoading ? <ActivityIndicator size="large" color="#0000ff" animating={this.state.isLoading} /> : null
     }
 
     //======================================================================
@@ -119,9 +135,12 @@ export default class _JobList extends Component {
                     refreshing={this.state.isOnRefresh}
                     onRefresh={this.props.onRefresh}
                     ItemSeparatorComponent={this.ItemSeparatorComponent}
-                    keyExtractor={(item)=>item.id.toString()}
+                    keyExtractor={(item,index)=>index.toString()}
                     ListEmptyComponent={this.ListEmptyComponent}
-                    extraData={this.state.jobList}
+                    ListFooterComponent={this.ListFooterComponent}
+                    extraData={this.state}
+                    onEndReached={this.props.onEndReached}
+                    onEndReachedThreshold={0.5}
                 />
             </View>
         )

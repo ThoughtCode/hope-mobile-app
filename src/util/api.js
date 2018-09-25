@@ -35,6 +35,9 @@ export const API = {
     setReview: (onResponse, data, job_id, isHeaderRequired) => {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_REVIEW + job_id + "/review", buildHeader());
     },   
+    confirmPayment: (onResponse, data, job_id, isHeaderRequired) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_REVIEW + job_id + "/confirm_payment", buildHeader());
+    },   
 }
 
 export const buildHeader = (headerParams = {}) => {

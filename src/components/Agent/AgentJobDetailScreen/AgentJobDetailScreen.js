@@ -104,7 +104,46 @@ export default class AgentJobDetailScreen extends Component {
     //======================================================================
 
     tapReview = () =>{
-        this.props.navigation.navigate("AgentReviewScreen",{jobData : this.props.navigation.state.params.jobData})
+        Alert.alert("Hope","Antes de continuar.Confirm que tu trabajo se realizo con exito.",
+            [
+                {text: 'NO', onPress: () => this.props.navigation.navigate("AgentReviewScreen",{jobData : this.props.navigation.state.params.jobData}), style: 'cancel'},
+                {text: 'YES', onPress: () => this.tapConfirmPayment()},
+            ],
+              { cancelable: false }
+            )
+        
+    }
+
+    //======================================================================
+    // api call confirm Payment
+    //======================================================================
+
+    tapConfirmPayment(){
+        var data = {
+            "job" : {
+                "closed": true
+            }
+        }
+        API.confirmPayment(this.confirmPaymentJobResponse,data,"/"+this.props.navigation.state.params.jobData.id,true);
+    }
+
+    //======================================================================
+    // jobApplyResponse
+    //======================================================================
+
+    confirmPaymentJobResponse = {
+        success: (response) => {
+            try {
+                this.props.navigation.navigate("AgentReviewScreen",{jobData : this.props.navigation.state.params.jobData})
+            } catch (error) {
+                console.log('jobApplyResponse catch error ' + JSON.stringify(error));
+            }
+        },
+        error: (err) => {
+            console.log('jobApplyResponse error ' + JSON.stringify(err));
+        },
+        complete: () => {
+        }
     }
 
     //======================================================================

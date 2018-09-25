@@ -24,7 +24,10 @@ export default class AgentActules extends Component {
         this.state = {
             jobList : [],
             type : props.type || "",
-            isOnRefresh : false
+            isOnRefresh : false,
+            isPagination : true,
+            page : 1,
+            isAPICall : false
         }
     }
 
@@ -41,6 +44,7 @@ export default class AgentActules extends Component {
     //======================================================================
 
     getJobsAPICall(){
+        this.setState({isAPICall:true})
         API.getJobs(this.getJobResponseData,"/"+this.state.type,true);
     }
 
@@ -49,7 +53,7 @@ export default class AgentActules extends Component {
     //======================================================================
 
     onRefresh = () =>{
-        this.setState({isOnRefresh : true})
+        this.setState({isOnRefresh : true,isAPICall:true})
         API.getJobs(this.getJobResponseData,"/"+this.state.type,true);
     }
 
@@ -60,27 +64,61 @@ export default class AgentActules extends Component {
     getJobResponseData = {
         success: (response) => {
             try {
-                console.log("Response data-->"+JSON.stringify(response.job.data))
-                if(response.job && response.job.data){
+                if(this.state.isOnRefresh){
                     this.setState({
-                        jobList : response.job.data,
-                        isOnRefresh : false
+                        jobList : []
+                    },() =>{
+                        if(response.job && response.job.data){
+                            var newJobData = (response.job) ? [...this.state.jobList,...response.job.data] : this.state.jobList
+                            this.setState({
+                                jobList : newJobData || [],
+                                isOnRefresh : false,
+                                isAPICall : false,
+                                isPagination : (response.job) ? response.job.data.length == 0 ?  false : true : false
+                            })
+                        }else{
+                            this.setState({isOnRefresh : false,isAPICall : false,isPagination:false})    
+                        }
+
                     })
                 }else{
-                    this.setState({isOnRefresh : false})    
+                    if(response.job && response.job.data){
+                        var newJobData = (response.job) ? [...this.state.jobList,...response.job.data] : this.state.jobList
+                        this.setState({
+                            jobList : newJobData || [],
+                            isOnRefresh : false,
+                            isAPICall : false,
+                            isPagination : (response.job) ? response.job.data.length == 0 ?  false : true : false
+                        })
+                    }else{
+                        this.setState({isOnRefresh : false,isAPICall : false,isPagination:false})    
+                    }
                 }
                 
             } catch (error) {
                 console.log('getJobResponseData catch error ' + JSON.stringify(error));
-                this.setState({isOnRefresh : false})
+                this.setState({isOnRefresh : false,isAPICall : false,})
             }
         },
         error: (err) => {
             console.log('getJobResponseData error ' + JSON.stringify(err));
-            this.setState({isOnRefresh : false})
+            this.setState({isOnRefresh : false,isAPICall : false,})
         },
         complete: () => {
-            this.setState({isOnRefresh : false})
+            this.setState({isOnRefresh : false,isAPICall : false,})
+        }
+    }
+
+    //======================================================================
+    // onEndReached
+    //======================================================================
+
+    onEndReached = () =>{
+        if(this.state.isPagination && !this.state.isAPICall){
+            var data = "/"+this.state.type+"?current_page="+Number(this.state.page + 1)
+            this.setState({isAPICall : true,page : this.state.page + 1},() =>{
+                API.getJobs(this.getJobResponseData,data,true);
+            })
         }
     }
     
@@ -91,7 +129,7 @@ export default class AgentActules extends Component {
     render(){
         return(
             <SafeAreaView style={styles.container}>
-                <JobList jobList={this.state.jobList} type={this.state.type} setRow={this.setRow} navigateToDetail={this.props.navigateToDetail} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh}/>
+                <JobList isLoading={this.state.isAPICall} jobList={this.state.jobList} type={this.state.type} setRow={this.setRow} navigateToDetail={this.props.navigateToDetail} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh} onEndReached={this.onEndReached}/>
             </SafeAreaView>
         )
     }
