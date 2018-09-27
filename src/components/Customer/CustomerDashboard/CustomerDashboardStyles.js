@@ -37,8 +37,8 @@ module.exports = StyleSheet.create({
   trabajos_item :{
     width: Dimensions.get('window').width - 40,
     padding: 10,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    // alignItems: 'center',
+    // justifyContent: 'space-between',
     backgroundColor: 'white',
     shadowColor: 'lightgray',
     shadowOffset: { width: 1, height: 3 },
@@ -118,4 +118,28 @@ module.exports = StyleSheet.create({
   footer_item_text: {
     color: 'gray'
   },
+
+  mainTitleText:{
+    fontFamily:"helvetica",
+    fontSize: 18,
+    color : 'gray'  
+  },
+  renderRowView:{
+    paddingVertical:10
+  },
+  listTitleView:{
+    flexDirection:'row',justifyContent:'space-between',alignItems:'center'
+  },
+  titleText:{
+    fontSize:20,fontWeight:'600',fontFamily:"helvetica"
+  },
+  textFont:{
+    fontFamily:"helvetica"
+  },
+  subtextViewStyle:{
+    flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginVertical:5
+  },
+  emptyText:{
+    fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'
+  }
 });
