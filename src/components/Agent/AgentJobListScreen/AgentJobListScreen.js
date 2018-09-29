@@ -28,6 +28,7 @@ export default class AgentJobListScreen extends Component {
             page : 1,
             isAPICall : false
         }
+        this.onEndReachedCalledDuringMomentum = true;
     }
 
     //======================================================================
@@ -58,7 +59,7 @@ export default class AgentJobListScreen extends Component {
     //======================================================================
 
     onRefresh = () =>{
-        this.setState({isOnRefresh : true,isAPICall : true})
+        this.setState({isOnRefresh : true,isAPICall : true,page :1})
         var data =  ""
         if(this.state.filterdata != null){
             data = this.state.filterdata,
@@ -74,21 +75,29 @@ export default class AgentJobListScreen extends Component {
     //======================================================================
 
     onEndReached = () =>{
-        
-        if(this.state.isPagination && !this.state.isAPICall){
-            
-            var data =  ""
-            if(this.state.filterdata != null){
-                data += this.state.filterdata,
-                data += "&current_page="+Number(this.state.page + 1)
-            }else{
-                data += "?current_page="+Number(this.state.page + 1)
+        if(!this.onEndReachedCalledDuringMomentum){
+            if(this.state.isPagination && !this.state.isAPICall){
+                var data =  ""
+                if(this.state.filterdata != null){
+                    data += this.state.filterdata,
+                    data += "&current_page="+Number(this.state.page + 1)
+                }else{
+                    data += "?current_page="+Number(this.state.page + 1)
+                }
+                
+                this.setState({isAPICall : true,page : this.state.page + 1},() =>{
+                    API.getJobs(this.getJobResponseData,data,true);
+                })
             }
-            
-            this.setState({isAPICall : true,page : this.state.page + 1},() =>{
-                API.getJobs(this.getJobResponseData,data,true);
-            })
         }
+    }
+
+    //======================================================================
+    // onMomentumScrollBegin
+    //======================================================================
+
+    onMomentumScrollBegin = () =>{
+        this.onEndReachedCalledDuringMomentum = false;
     }
 
     //======================================================================
@@ -97,7 +106,9 @@ export default class AgentJobListScreen extends Component {
 
     setFilterData = (value) =>{
         this.setState({
-            filterdata : value
+            filterdata : value,
+            page : 1,
+            jobList : []
         },() => AgentJobListScreen.getJobsAPICall())
     }
 
@@ -193,7 +204,7 @@ export default class AgentJobListScreen extends Component {
                         </View>
                     </View>
                     <View style={{flex:1}}>
-                        <JobList isLoading={this.state.isAPICall} jobList={this.state.jobList} navigateToDetail={this.navigateToDetail} setRow={this.setRow} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh} onEndReached={this.onEndReached}/>
+                        <JobList isLoading={this.state.isAPICall} jobList={this.state.jobList} navigateToDetail={this.navigateToDetail} setRow={this.setRow} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh} onEndReached={this.onEndReached} onMomentumScrollBegin={this.onMomentumScrollBegin}/>
                     </View>
                 </SafeAreaView>
             )

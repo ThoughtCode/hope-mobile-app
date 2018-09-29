@@ -29,6 +29,7 @@ export default class AgentActules extends Component {
             page : 1,
             isAPICall : false
         }
+        this.onEndReachedCalledDuringMomentum = true;
     }
 
     //======================================================================
@@ -45,7 +46,7 @@ export default class AgentActules extends Component {
 
     getJobsAPICall(){
         this.setState({isAPICall:true})
-        API.getJobs(this.getJobResponseData,"/"+this.state.type,true);
+        API.getJobs(this.getJobResponseData,"/"+this.state.type+"?current_page=1",true);
     }
 
     //======================================================================
@@ -53,8 +54,8 @@ export default class AgentActules extends Component {
     //======================================================================
 
     onRefresh = () =>{
-        this.setState({isOnRefresh : true,isAPICall:true})
-        API.getJobs(this.getJobResponseData,"/"+this.state.type,true);
+        this.setState({isOnRefresh : true,isAPICall:true,page : 1})
+        API.getJobs(this.getJobResponseData,"/"+this.state.type+"?current_page=1",true);
     }
 
     //======================================================================
@@ -114,12 +115,22 @@ export default class AgentActules extends Component {
     //======================================================================
 
     onEndReached = () =>{
-        if(this.state.isPagination && !this.state.isAPICall){
-            var data = "/"+this.state.type+"?current_page="+Number(this.state.page + 1)
-            this.setState({isAPICall : true,page : this.state.page + 1},() =>{
-                API.getJobs(this.getJobResponseData,data,true);
-            })
+        if(!this.onEndReachedCalledDuringMomentum){
+            if(this.state.isPagination && !this.state.isAPICall){
+                var data = "/"+this.state.type+"?current_page="+Number(this.state.page + 1)
+                this.setState({isAPICall : true,page : this.state.page + 1},() =>{
+                    API.getJobs(this.getJobResponseData,data,true);
+                })
+            }
         }
+    }
+
+    //======================================================================
+    // onMomentumScrollBegin
+    //======================================================================
+
+    onMomentumScrollBegin = () =>{
+        this.onEndReachedCalledDuringMomentum = false;
     }
     
     //======================================================================
@@ -129,7 +140,7 @@ export default class AgentActules extends Component {
     render(){
         return(
             <SafeAreaView style={styles.container}>
-                <JobList isLoading={this.state.isAPICall} jobList={this.state.jobList} type={this.state.type} setRow={this.setRow} navigateToDetail={this.props.navigateToDetail} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh} onEndReached={this.onEndReached}/>
+                <JobList isLoading={this.state.isAPICall} jobList={this.state.jobList} type={this.state.type} setRow={this.setRow} navigateToDetail={this.props.navigateToDetail} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh} onEndReached={this.onEndReached} onMomentumScrollBegin={this.onMomentumScrollBegin}/>
             </SafeAreaView>
         )
     }

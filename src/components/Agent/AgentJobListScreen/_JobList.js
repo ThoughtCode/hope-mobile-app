@@ -140,7 +140,9 @@ export default class _JobList extends Component {
                     ListFooterComponent={this.ListFooterComponent}
                     extraData={this.state}
                     onEndReached={this.props.onEndReached}
-                    onEndReachedThreshold={0.5}
+                    onEndReachedThreshold={0.1}
+                    initialNumToRender={10}
+                    onMomentumScrollBegin={this.props.onMomentumScrollBegin}
                 />
             </View>
         )
