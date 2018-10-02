@@ -59,9 +59,10 @@ export default class CustomerLogin extends React.Component {
           return response;
         } else {
           response.json().then((data) => {
-            AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""]],()=>{
+            AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
               globals.access_token = data.customer.data.attributes.access_token ||""
-              this.props.navigation.navigate('CustomerDashboard', { data: data });
+              // this.props.navigation.navigate('CustomerTabbar', { data: data });
+              this.props.navigation.navigate('CustomerTabbar');
             })
             
           });

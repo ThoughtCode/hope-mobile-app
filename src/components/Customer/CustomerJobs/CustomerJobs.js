@@ -39,7 +39,7 @@ export default class CustomerJobs extends Component {
 
         </ScrollView>
 
-        <View style={styles.footer}>
+        {/* <View style={styles.footer}>
           <TouchableOpacity
             style={styles.footer_item}
             onPress={() => this.props.navigation.navigate('CustomerDashboard', {data: this.props.navigation.getParam('data')})}
@@ -79,7 +79,7 @@ export default class CustomerJobs extends Component {
               <Text style={styles.footer_item_text}>Profile</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
       </View>
     )
   }

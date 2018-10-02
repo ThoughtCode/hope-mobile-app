@@ -4,7 +4,8 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
+  AsyncStorage
 }
   from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
@@ -90,11 +91,14 @@ export default class CustomerDashboard extends Component {
   };
 
   componentDidMount() {
-    const data = this.props.navigation.getParam('data');
-    const authToken = data.customer.data.attributes.access_token;
-    this.getServicesTypes(authToken);
-    this.getNextJobs(authToken);
-    this.getPastJobs(authToken);
+      AsyncStorage.getItem("customerData").then((item) =>{
+        // const data = this.props.navigation.getParam('data');
+        const data = JSON.parse(item)
+        const authToken = data.customer.data.attributes.access_token;
+        this.getServicesTypes(authToken);
+        this.getNextJobs(authToken);
+        this.getPastJobs(authToken);
+      })
   }
 
   render() {
@@ -280,7 +284,7 @@ export default class CustomerDashboard extends Component {
               </ScrollView>
             </View>
           </ScrollView>
-          <View style={styles.footer}>
+          {/* <View style={styles.footer}>
             <View style={styles.footer_item}>
               <FontAwesome
                   name="home"
@@ -292,7 +296,7 @@ export default class CustomerDashboard extends Component {
             <View style={styles.footer_item}>
               <TouchableOpacity
                   style={styles.footer_item}
-                  onPress={() => this.props.navigation.navigate('CustomerJobs', {data: this.props.navigation.getParam('data')})}
+                  onPress={() => this.props.navigation.navigate('CustomerTrabajosDashboard', {data: this.props.navigation.getParam('data')})}
               >
                 <FontAwesome
                     name="briefcase"
@@ -313,7 +317,7 @@ export default class CustomerDashboard extends Component {
               />
               <Text style={styles.footer_item_text}>Profile</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
     );
   }

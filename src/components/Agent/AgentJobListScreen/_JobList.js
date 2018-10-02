@@ -5,6 +5,7 @@ const {height , width} = Dimensions.get('window')
 import { API } from '../../../util/api';
 import Moment from 'moment';
 import AgentTrabajosDashboard from "../AgentTrabajosDashboard/AgentTrabajosDashboard";
+import CustomerTrabajosDashboard from "../../Customer/CustomerTrabajosDashboard/CustomerTrabajosDashboard";
 const styles = require('./AgentJobListScreenStyles');
 
 var _this = null;
@@ -20,7 +21,8 @@ export default class _JobList extends Component {
         this.state = {
             jobList : props.jobList,
             isOnRefresh : false,
-            isLoading : props.isLoading || false
+            isLoading : props.isLoading || false,
+            isAgent : props.isAgent || false
         }
     }
 
@@ -37,6 +39,19 @@ export default class _JobList extends Component {
         var tempArray = this.state.jobList
         tempArray.splice(index,1);
         this.setState({jobList : tempArray})
+    }
+
+    onPressEvent(item){
+        if(this.state.isAgent){
+            if(this.props.type != null){
+                AgentTrabajosDashboard.navigateToDetail(item,this.setRow,this.props.type)
+            }else{
+                this.props.navigateToDetail(item,this.setRow)
+            }
+        }else{
+            CustomerTrabajosDashboard.navigateToDetail(item,this.setRow,this.props.type)
+        }
+        
     }
 
     //======================================================================
@@ -59,7 +74,7 @@ export default class _JobList extends Component {
         var date = Moment(data.started_at).format('MMM DD - hh:mm a')
         var location = data.property.data.attributes.p_street + ", " + data.property.data.attributes.s_street +", "+data.property.data.attributes.city
         return(
-            <TouchableOpacity onPress={()=> (this.props.type != null) ? AgentTrabajosDashboard.navigateToDetail(item,this.setRow,this.props.type) : this.props.navigateToDetail(item,this.setRow)}>
+            <TouchableOpacity onPress={() => this.onPressEvent(item)}>
                 <View style={styles.renderRowView}>
                     <View style={styles.listTitleView}>
                         <Text style={styles.titleText}>{(data.customer && data.customer.first_name) || "" + " "+ (data.customer && data.customer.last_name) || ""}</Text>

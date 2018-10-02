@@ -204,7 +204,7 @@ export default class AgentJobListScreen extends Component {
                         </View>
                     </View>
                     <View style={{flex:1}}>
-                        <JobList isLoading={this.state.isAPICall} jobList={this.state.jobList} navigateToDetail={this.navigateToDetail} setRow={this.setRow} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh} onEndReached={this.onEndReached} onMomentumScrollBegin={this.onMomentumScrollBegin}/>
+                        <JobList isAgent={true} isLoading={this.state.isAPICall} jobList={this.state.jobList} navigateToDetail={this.navigateToDetail} setRow={this.setRow} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh} onEndReached={this.onEndReached} onMomentumScrollBegin={this.onMomentumScrollBegin}/>
                     </View>
                 </SafeAreaView>
             )

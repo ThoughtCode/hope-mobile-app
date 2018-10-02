@@ -4,7 +4,8 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
+  AsyncStorage
 }
   from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
@@ -37,15 +38,26 @@ const SECTIONS = [
 export default class CustomerProfile extends Component {
   constructor(props) {
     super(props);
-    //   this.state = {
-    //     servicesTypes: [],
-    //     nextJobs: [],
-    //     pastJobs: []
-    //   };
+      this.state = {
+        // servicesTypes: [],
+        // nextJobs: [],
+        // pastJobs: []
+        data : null
+      };
     //   this.getServicesTypes = this.getServicesTypes.bind(this);
     //   this.getNextJobs = this.getNextJobs.bind(this);
     //   this.getPastJobs = this.getPastJobs.bind(this);
     this.signOutCustomer = this.signOutCustomer.bind(this);
+    
+  }
+
+  componentDidMount(){
+    AsyncStorage.getItem("customerData").then((item) =>{
+      // const data = this.state.data;
+      const data = JSON.parse(item)
+      this.setState({data : data})
+
+    })
   }
 
   signOutCustomer = (authToken) => {
@@ -86,6 +98,7 @@ export default class CustomerProfile extends Component {
   }
 
   render() {
+    if(this.state.data != null){
     return (
         <View style={styles.container}>
           <View style={styles.header}>
@@ -95,7 +108,7 @@ export default class CustomerProfile extends Component {
             <View style={styles.profile_picture_name_container}>
               <Image source={require('../../../../assets/img/customer_profile.png')} style={styles.profile_image}/>
               <Text style={styles.profile_name}>
-                {this.props.navigation.getParam('data').customer.data.attributes.first_name} {this.props.navigation.getParam('data').customer.data.attributes.last_name}
+                {this.state.data.customer.data.attributes.first_name} {this.state.data.customer.data.attributes.last_name}
               </Text>
             </View>
             <Accordion
@@ -105,7 +118,7 @@ export default class CustomerProfile extends Component {
             />
             <View style={styles.logout_container}>
               <TouchableOpacity style={styles.logout_button}
-                                onPress={() => this.signOutCustomer(this.props.navigation.getParam('data').customer.data.attributes.access_token)}>
+                                onPress={() => this.signOutCustomer(this.state.data.customer.data.attributes.access_token)}>
                 <Text style={styles.logout_button_text}>
                   Cerrar Sesión
                 </Text>
@@ -113,9 +126,9 @@ export default class CustomerProfile extends Component {
             </View>
           </ScrollView>
 
-          <View style={styles.footer}>
+          {/* <View style={styles.footer}>
             <TouchableOpacity style={styles.footer_item}
-                              onPress={() => this.props.navigation.navigate('CustomerDashboard', {data: this.props.navigation.getParam('data')})}>
+                              onPress={() => this.props.navigation.navigate('CustomerDashboard', {data: this.state.data})}>
               <FontAwesome
                   name="home"
                   size={24}
@@ -128,7 +141,7 @@ export default class CustomerProfile extends Component {
             <View style={styles.footer_item}>
               <TouchableOpacity
                   style={styles.footer_item}
-                  onPress={() => this.props.navigation.navigate('CustomerJobs', {data: this.props.navigation.getParam('data')})}
+                  onPress={() => this.props.navigation.navigate('CustomerJobs', {data: this.state.data})}
               >
                 <FontAwesome
                     name="briefcase"
@@ -141,7 +154,7 @@ export default class CustomerProfile extends Component {
             <View style={styles.footer_item}>
               <TouchableOpacity
                   style={styles.footer_item}
-                  onPress={() => this.props.navigation.navigate('CustomerProfile', {data: this.props.navigation.getParam('data')})}
+                  onPress={() => this.props.navigation.navigate('CustomerProfile', {data: this.state.data})}
               >
                 <FontAwesome
                     name="user"
@@ -151,8 +164,11 @@ export default class CustomerProfile extends Component {
                 <Text style={styles.footer_item_text}>Profile</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
         </View>
     );
+    }else{
+      return <View />
+    }
   }
 }

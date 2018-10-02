@@ -16,6 +16,8 @@ import CustomerBaseService from '../../components/Customer/CustomerBaseService/C
 import CustomerServiceType from '../../components/Customer/CustomerServiceType/CustomerServiceType';
 import CustomerAddonService from '../../components/Customer/CustomerAddonService/CustomerAddonService';
 import CustomerNewAddress from '../../components/Customer/CustomerNewAddress/CustomerNewAddress';
+import CustomerTrabajosDashboard from '../../components/Customer/CustomerTrabajosDashboard/CustomerTrabajosDashboard';
+import CustomerJobDetailScreen from '../../components/Customer/CustomerJobDetailScreen/CustomerJobDetailScreen';
 import CreateJob from "../../components/Customer/CreateJob/CreateJob";
 
 import AgentSignUp from '../../components/Agent/AgentSignup/AgentSignUp';
@@ -23,6 +25,7 @@ import AgentLogin from '../../components/Agent/AgentLogin/AgentLogin';
 import AgentResetPassword from '../../components/Agent/AgentResetPassword/AgentResetPassword';
 
 import AgentTabar from "./_AgentTabNavihator";
+import CustomerTabbar from "./_CustomerTabNavigator";
 
 export const MainNavigator = SwitchNavigator({
     Home: {screen: Home},
@@ -30,20 +33,23 @@ export const MainNavigator = SwitchNavigator({
     AgentLogin: {screen: AgentLogin},
     CustomerSignUp: {screen: CustomerSignUp},
     AgentSignUp: {screen: AgentSignUp},
-    CustomerDashboard: {screen: CustomerDashboard},
+    // CustomerDashboard: {screen: CustomerDashboard},
     // AgentDashboard: {screen: AgentDashboard},
     AgentTabar : { screen :AgentTabar},
-    CustomerResetPassword: {screen: CustomerResetPassword},
-    AgentResetPassword: {screen: AgentResetPassword},
-    CustomerProfile: {screen: CustomerProfile},
-    CustomerJobs: {screen: CustomerJobs},
-    CreateJob: {screen: CreateJob},
-    CustomerAddress: {screen: CustomerAddress},
-    CustomerDateTime: {screen: CustomerDateTime},
-    CustomerBaseService: {screen: CustomerBaseService},
-    CustomerAddonService: {screen: CustomerAddonService},
-    CustomerServiceType: {screen: CustomerServiceType},
-    CustomerNewAddress: {screen: CustomerNewAddress},
+    CustomerTabbar : {screen : CustomerTabbar},
+    // CustomerResetPassword: {screen: CustomerResetPassword},
+    // AgentResetPassword: {screen: AgentResetPassword},
+    // CustomerProfile: {screen: CustomerProfile},
+    // CustomerJobs: {screen: CustomerJobs},
+    // CreateJob: {screen: CreateJob},
+    // CustomerAddress: {screen: CustomerAddress},
+    // CustomerDateTime: {screen: CustomerDateTime},
+    // CustomerBaseService: {screen: CustomerBaseService},
+    // CustomerAddonService: {screen: CustomerAddonService},
+    // CustomerServiceType: {screen: CustomerServiceType},
+    // CustomerNewAddress: {screen: CustomerNewAddress},
+    // CustomerTrabajosDashboard :{ screen  : CustomerTrabajosDashboard},
+    // CustomerJobDetailScreen : {screen :CustomerJobDetailScreen}
   },{
     initialRouteName :"Home"
 });
@@ -54,20 +60,23 @@ export const AgentNavigator = SwitchNavigator({
     AgentLogin: {screen: AgentLogin},
     CustomerSignUp: {screen: CustomerSignUp},
     AgentSignUp: {screen: AgentSignUp},
-    CustomerDashboard: {screen: CustomerDashboard},
+    // CustomerDashboard: {screen: CustomerDashboard},
     // AgentDashboard: {screen: AgentDashboard},
     AgentTabar : { screen :AgentTabar},
-    CustomerResetPassword: {screen: CustomerResetPassword},
-    AgentResetPassword: {screen: AgentResetPassword},
-    CustomerProfile: {screen: CustomerProfile},
-    CustomerJobs: {screen: CustomerJobs},
-    CreateJob: {screen: CreateJob},
-    CustomerAddress: {screen: CustomerAddress},
-    CustomerDateTime: {screen: CustomerDateTime},
-    CustomerBaseService: {screen: CustomerBaseService},
-    CustomerAddonService: {screen: CustomerAddonService},
-    CustomerServiceType: {screen: CustomerServiceType},
-    CustomerNewAddress: {screen: CustomerNewAddress},
+    // CustomerTabbar : {screen : CustomerTabbar},
+    // CustomerResetPassword: {screen: CustomerResetPassword},
+    // AgentResetPassword: {screen: AgentResetPassword},
+    // CustomerProfile: {screen: CustomerProfile},
+    // CustomerJobs: {screen: CustomerJobs},
+    // CreateJob: {screen: CreateJob},
+    // CustomerAddress: {screen: CustomerAddress},
+    // CustomerDateTime: {screen: CustomerDateTime},
+    // CustomerBaseService: {screen: CustomerBaseService},
+    // CustomerAddonService: {screen: CustomerAddonService},
+    // CustomerServiceType: {screen: CustomerServiceType},
+    // CustomerNewAddress: {screen: CustomerNewAddress},
+    // CustomerTrabajosDashboard :{ screen  : CustomerTrabajosDashboard},
+    // CustomerJobDetailScreen : {screen :CustomerJobDetailScreen}
   },{
     initialRouteName :"AgentTabar"
 });
