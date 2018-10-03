@@ -151,7 +151,7 @@ export default class CustomerDashboard extends Component {
                           if(val.service.type_service == "base"){
                               description += val.service.name
                           }else{
-                              subDescription += val.service.name + " X " + val.service.time
+                              subDescription += val.service.name + " X " + val.value
                               subDescription += (job.attributes.job_details.length - 1 == index) ? "" : ", " 
                           }
                       })
@@ -160,12 +160,13 @@ export default class CustomerDashboard extends Component {
 
                     return (
                         <View key={job.id} style={styles.trabajos_item}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerJobDetailScreen",{jobData:job})} >
                           <View style={styles.renderRowView}>
                             <View style={styles.listTitleView}>
                               <Text style={styles.titleText}>{job.attributes.job_details[0].service.name || ""}</Text>
                               <Text style={[styles.textFont, { color: 'rgb(0,121,189)',fontSize:18 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
                             </View>
-                            <Text style={{color:'rgb(0,121,189)',fontSize:18}}>{end_date}</Text>
+                            <Text style={{color:'rgb(0,121,189)',fontSize:14}} numberOfLines={1}>{end_date}</Text>
                             {/* <Text style={[styles.textFont]}>{description}</Text>
                             <Text style={[styles.textFont]}>{description}</Text> */}
                             <View style={styles.subtextViewStyle}>
@@ -192,6 +193,7 @@ export default class CustomerDashboard extends Component {
                                    style={styles.trabajos_avatar_image}/>
                           </View>
                           <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text> */}
+                          </TouchableOpacity>
                         </View>
                     );
                   })
@@ -220,7 +222,7 @@ export default class CustomerDashboard extends Component {
                         if(val.service.type_service == "base"){
                             description += val.service.name
                         }else{
-                            subDescription += val.service.name + " X " + val.service.time
+                            subDescription += val.service.name + " X " + val.value
                             subDescription += (job.attributes.job_details.length - 1 == index) ? "" : ", " 
                         }
                     })
@@ -229,38 +231,40 @@ export default class CustomerDashboard extends Component {
 
                   return (
                       <View key={job.id} style={styles.trabajos_item}>
-                        <View style={styles.renderRowView}>
-                          <View style={styles.listTitleView}>
-                            <Text style={styles.titleText}>{job.attributes.job_details[0].service.name || ""}</Text>
-                            <Text style={[styles.textFont, { color: 'rgb(0,121,189)',fontSize:18 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
-                          </View>
-                          <Text style={{color:'rgb(0,121,189)',fontSize:18}}>{end_date}</Text>
-                          {/* <Text style={[styles.textFont]}>{description}</Text>
-                          <Text style={[styles.textFont]}>{description}</Text> */}
-                          <View style={styles.subtextViewStyle}>
-                            <View style={{ flex: 1 }}>
-                              <Text style={[styles.textFont, { fontSize: 12 }]}>{subDescription}</Text>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerJobDetailScreen",{jobData:job})} >
+                          <View style={styles.renderRowView}>
+                            <View style={styles.listTitleView}>
+                              <Text style={styles.titleText}>{job.attributes.job_details[0].service.name || ""}</Text>
+                              <Text style={[styles.textFont, { color: 'rgb(0,121,189)',fontSize:18 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
                             </View>
-                            {/* <View style={{ flex: 0.2 }}>
-                              <Text style={[styles.textFont, { color: 'rgb(0,121,189)', fontSize: 20 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
-                            </View> */}
+                            <Text style={{color:'rgb(0,121,189)',fontSize:14}} numberOfLines={1}po>{end_date}</Text>
+                            {/* <Text style={[styles.textFont]}>{description}</Text>
+                            <Text style={[styles.textFont]}>{description}</Text> */}
+                            <View style={styles.subtextViewStyle}>
+                              <View style={{ flex: 1 }}>
+                                <Text style={[styles.textFont, { fontSize: 12 }]}>{subDescription}</Text>
+                              </View>
+                              {/* <View style={{ flex: 0.2 }}>
+                                <Text style={[styles.textFont, { color: 'rgb(0,121,189)', fontSize: 20 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
+                              </View> */}
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                              <EvilIcons name={"location"} size={16} />
+                              <Text style={[styles.textFont, { marginLeft: 5, fontSize: 12, fontWeight:'bold' }]}>{location}</Text>
+                            </View>
                           </View>
-                          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <EvilIcons name={"location"} size={16} />
-                            <Text style={[styles.textFont, { marginLeft: 5, fontSize: 12, fontWeight:'bold' }]}>{location}</Text>
+                          {/* <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
+                          <Text style={styles.trabajos_item_date}>
+                            {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
+                          </Text>
+                          <View style={styles.trabajos_avatars_container}>
+                            <Image source={require('../../../../assets/img/profile_avatar1.png')}
+                                  style={styles.trabajos_avatar_image}/>
+                            <Image source={require('../../../../assets/img/profile_avatar2.png')}
+                                  style={styles.trabajos_avatar_image}/>
                           </View>
-                        </View>
-                        {/* <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
-                        <Text style={styles.trabajos_item_date}>
-                          {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
-                        </Text>
-                        <View style={styles.trabajos_avatars_container}>
-                          <Image source={require('../../../../assets/img/profile_avatar1.png')}
-                                 style={styles.trabajos_avatar_image}/>
-                          <Image source={require('../../../../assets/img/profile_avatar2.png')}
-                                 style={styles.trabajos_avatar_image}/>
-                        </View>
-                        <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text> */}
+                          <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text> */}
+                        </TouchableOpacity>
                       </View>
                   );
                 })

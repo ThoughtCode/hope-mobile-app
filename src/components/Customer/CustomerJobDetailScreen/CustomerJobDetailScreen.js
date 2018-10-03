@@ -160,6 +160,11 @@ export default class CustomerJobDetailScreen extends Component {
                         starSize={18}
                         fullStarColor={'gray'}/>
                 </View>
+                <View style={{flexDirection:'row',justifyContent:'space-between',marginLeft:40}}>
+                    <Text style={{color:'gray'}}>{data.attributes.agent.data.attributes.rewiews_count+" Trabajos Completados"}</Text>
+                    <Text style={{color:'gray'}}>{data.attributes.agent.data.attributes.rewiews_count+" Opiniones"}</Text>
+                </View>
+
                 {/* <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text>  */}
                 {/* <Text style={styles.subText} numberOfLines={0}>{"This is Duumey conetecr of Agent Adta skkcv  nfxl"}</Text>  */}
                 <TouchableOpacity onPress={() => this.agentContract(data.id)} >
@@ -185,10 +190,10 @@ export default class CustomerJobDetailScreen extends Component {
         var subDescription = ""
         this.state.jobData.job_details.map((val,index)=>{
             if(val.service.type_service == "base"){
-                description += val.service.name
+                // description += val.service.name
             }else{
-                subDescription += val.service.name + " X " + val.service.time
-                subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
+                subDescription += val.service.name + " X " + val.value
+                // subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
             }
         
         })
@@ -255,10 +260,10 @@ export default class CustomerJobDetailScreen extends Component {
 
                         <Collapsible collapsed={this.state.isCallapseOpen}>
                             <View >
-                                <View style={styles.renderRowView}>
+                                {/* <View style={styles.renderRowView}>
                                     <Text style={styles.titleText}>{"Tipo de trabajo"}</Text>
                                     <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{description}</Text>
-                                </View>
+                                </View> */}
                                 <View style={styles.renderRowView}>
                                     <Text style={styles.titleText}>{"Fecha"}</Text>
                                     <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{initialDate + " - "+ finishDate}</Text>
@@ -281,7 +286,7 @@ export default class CustomerJobDetailScreen extends Component {
                                 </View>
                                 <View style={styles.renderRowView}>
                                     <Text style={styles.titleText}>{"Precio"}</Text>
-                                    <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{"$ "+ this.state.jobData.total}</Text>
+                                    <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{"$ "+ this.state.jobData.total.toFixed(2)}</Text>
                                 </View>
                             </View>
                         </Collapsible>

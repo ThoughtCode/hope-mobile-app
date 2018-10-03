@@ -69,13 +69,13 @@ export default class AgentJobCommentScreen extends Component {
             <View style={styles.renderRowView}>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
                     <View style={styles.userImageView} >
-                        {(data.attributes.owner.data.attributes.avatar.url != null)?
-                            <Image source={{uri : data.attributes.owner.data.attributes.avatar.url || ""}} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> 
+                        {(data.attributes.my_reviews.data.attributes.reviewee_avatar.url != null)?
+                            <Image source={{uri : data.attributes.my_reviews.data.attributes.reviewee_avatar.url || ""}} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> 
                         :
                         <Image source={require("../../../../assets/img/profile_placehoder.png")} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>}
                     </View>
                     <View style={{flex:1}}>
-                        <Text style={styles.titleText}>{data.attributes.owner.data.attributes.first_name + " "+ data.attributes.owner.data.attributes.last_name}</Text>
+                        <Text style={styles.titleText}>{data.attributes.my_reviews.data.attributes.reviewee_first_name + " "+ data.attributes.my_reviews.data.attributes.reviewee_last_name}</Text>
                     </View>
                     <StarRating
                         disabled={true}
@@ -84,7 +84,7 @@ export default class AgentJobCommentScreen extends Component {
                         halfStar={'ios-star-half'}
                         iconSet={'Ionicons'}
                         maxStars={5}
-                        rating={data.attributes.owner.data.attributes.rewiews_average}
+                        rating={data.attributes.my_reviews.data.attributes.rewiews_average}
                         starSize={18}
                         fullStarColor={'gray'}/>
                 </View>
@@ -147,7 +147,8 @@ export default class AgentJobCommentScreen extends Component {
                                 halfStar={'ios-star-half'}
                                 iconSet={'Ionicons'}
                                 maxStars={5}
-                                rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
+                                // rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
+                                rating={3}
                                 starSize={20}
                                 fullStarColor={'gray'}
                             />

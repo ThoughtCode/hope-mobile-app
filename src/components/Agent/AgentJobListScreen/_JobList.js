@@ -86,7 +86,7 @@ export default class _JobList extends Component {
                         <View style={{flex:1}}>
                             <Text style={[styles.textFont,{fontSize:12}]}>{subDescription}</Text>
                         </View>
-                        <View style={{flex:0.2}}>
+                        <View style={{flex:0.25}}>
                             <Text style={[styles.textFont,{color:'rgb(0,121,189)',fontSize:20}]}>{"$"+data.total.toFixed(2)}</Text>
                         </View>
                     </View>
