@@ -206,7 +206,7 @@ export default class CustomerJobDetailScreen extends Component {
                     <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
                     <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
                         <View style={styles.profileView}>
-                            <TouchableOpacity onPress={()=> this.props.navigation.navigate("AgentJobCommentScreen",{jobData : this.props.navigation.state.params.jobData})}>
+                            {/* <TouchableOpacity onPress={()=> this.props.navigation.navigate("AgentJobCommentScreen",{jobData : this.props.navigation.state.params.jobData})}> */}
                                 {(this.state.jobData.customer && this.state.jobData.customer.avatar  && this.state.jobData.customer.avatar.url) ?
                                     <Image source={{uri :  this.state.jobData.customer.avatar.url}} style={styles.profileImage} resizeMode={"cover"}/>
                                     :
@@ -214,14 +214,14 @@ export default class CustomerJobDetailScreen extends Component {
                                         <Text style={{color:'#fff'}}>{initials}</Text>
                                     </View> 
                                 }
-                            </TouchableOpacity>
+                            {/* </TouchableOpacity> */}
                         </View>
 
-                        <TouchableOpacity onPress={()=> this.props.navigation.navigate("AgentJobCommentScreen",{jobData : this.props.navigation.state.params.jobData})}>
+                        {/* <TouchableOpacity onPress={()=> this.props.navigation.navigate("AgentJobCommentScreen",{jobData : this.props.navigation.state.params.jobData})}> */}
                             <View style={{alignItems:'center',justifyContent:'center'}}>
                                 <Text style={{fontSize:20,fontWeight:'600'}}>{ name}</Text>
                             </View>
-                        </TouchableOpacity>
+                        {/* </TouchableOpacity> */}
                         
                     {/* </TouchableOpacity> */}
                     <View style={styles.opinionsView}>
