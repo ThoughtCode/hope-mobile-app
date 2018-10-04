@@ -186,7 +186,7 @@ export default class AgentJobDetailScreen extends Component {
             if(val.service.type_service == "base"){
                 description += val.service.name
             }else{
-                subDescription += val.service.name + " X " + val.service.time
+                subDescription += val.service.name + " X " + val.value
                 subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
             }
         
@@ -270,7 +270,7 @@ export default class AgentJobDetailScreen extends Component {
                         </View>
                         <View style={styles.renderRowView}>
                             <Text style={styles.titleText}>{"Precio"}</Text>
-                            <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{"$ "+ this.state.jobData.total}</Text>
+                            <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{"$ "+ this.state.jobData.total.toFixed(2)}</Text>
                         </View>
                     </ScrollView>
                 </View>
