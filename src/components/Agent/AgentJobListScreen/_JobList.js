@@ -67,7 +67,7 @@ export default class _JobList extends Component {
             if(val.service.type_service == "base"){
                 description += val.service.name
             }else{
-                subDescription += val.service.name + " X " + val.service.time
+                subDescription += val.service.name + " X " + val.value
                 subDescription += (data.job_details.length - 1 == index) ? "" : ", " 
             }
         })
@@ -80,7 +80,6 @@ export default class _JobList extends Component {
                         <Text style={styles.titleText}>{(data.customer && data.customer.first_name) || "" + " "+ (data.customer && data.customer.last_name) || ""}</Text>
                         <Text style={[styles.textFont,{color:'rgb(0,121,189)'}]}>{date}</Text>
                     </View>
-                    <Text style={[styles.textFont]}>{description}</Text>
                     <Text style={[styles.textFont]}>{description}</Text>
                     <View style={styles.subtextViewStyle}>
                         <View style={{flex:1}}>
