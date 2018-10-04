@@ -84,7 +84,7 @@ export default class AgentJobCommentScreen extends Component {
                         halfStar={'ios-star-half'}
                         iconSet={'Ionicons'}
                         maxStars={5}
-                        rating={data.attributes.my_reviews.data.attributes.rewiews_average}
+                        rating={data.attributes.qualification}
                         starSize={18}
                         fullStarColor={'gray'}/>
                 </View>
@@ -147,8 +147,7 @@ export default class AgentJobCommentScreen extends Component {
                                 halfStar={'ios-star-half'}
                                 iconSet={'Ionicons'}
                                 maxStars={5}
-                                // rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
-                                rating={3}
+                                rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                                 starSize={20}
                                 fullStarColor={'gray'}
                             />
