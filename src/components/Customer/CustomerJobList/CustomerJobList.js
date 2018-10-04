@@ -4,15 +4,15 @@ import EvilIcons from '@expo/vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
 import { API } from '../../../util/api';
 import Moment from 'moment';
-import JobList from "../AgentJobListScreen/_JobList";
+import JobList from "../../Agent/AgentJobListScreen/_JobList";
 
-const styles = require('./AgentActulesStyles');
+const styles = require('./CustomerJobListStyles');
 
 const IMAGES = {
     TOP_BACKGROUND : require("../../../../assets/img/topbg.png"),
 }
 var _this = null;
-export default class AgentActules extends Component {
+export default class CustomerJobList extends Component {
 
     //======================================================================
     // constructor
@@ -46,7 +46,7 @@ export default class AgentActules extends Component {
 
     getJobsAPICall(){
         this.setState({isAPICall:true})
-        API.getJobs(this.getJobResponseData,"/"+this.state.type+"?current_page=1",true);
+        API.getCustomerJobs(this.getJobResponseData,"/"+this.state.type+"?current_page=1",true);
     }
 
     //======================================================================
@@ -55,7 +55,7 @@ export default class AgentActules extends Component {
 
     onRefresh = () =>{
         this.setState({isOnRefresh : true,isAPICall:true,page : 1})
-        API.getJobs(this.getJobResponseData,"/"+this.state.type+"?current_page=1",true);
+        API.getCustomerJobs(this.getJobResponseData,"/"+this.state.type+"?current_page=1",true);
     }
 
     //======================================================================
@@ -140,7 +140,7 @@ export default class AgentActules extends Component {
     render(){
         return(
             <SafeAreaView style={styles.container}>
-                <JobList isAgent={true} isLoading={this.state.isAPICall} jobList={this.state.jobList} type={this.state.type} setRow={this.setRow} navigateToDetail={this.props.navigateToDetail} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh} onEndReached={this.onEndReached} onMomentumScrollBegin={this.onMomentumScrollBegin}/>
+                <JobList isAgent={false} isLoading={this.state.isAPICall} jobList={this.state.jobList} type={this.state.type} setRow={this.setRow} navigateToDetail={this.props.navigateToDetail} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh} onEndReached={this.onEndReached} onMomentumScrollBegin={this.onMomentumScrollBegin}/>
             </SafeAreaView>
         )
     }

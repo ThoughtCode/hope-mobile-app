@@ -8,11 +8,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  AsyncStorage
 } from 'react-native';
 
 import * as urls from '../../../constants/api';
-
+import * as globals from '../../../util/globals';
 const styles = require('./CustomerLoginStyles');
 
 export default class CustomerLogin extends React.Component {
@@ -58,7 +59,12 @@ export default class CustomerLogin extends React.Component {
           return response;
         } else {
           response.json().then((data) => {
-            this.props.navigation.navigate('CustomerDashboard', { data: data });
+            AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
+              globals.access_token = data.customer.data.attributes.access_token ||""
+              // this.props.navigation.navigate('CustomerTabbar', { data: data });
+              this.props.navigation.navigate('CustomerTabbar');
+            })
+            
           });
         }
       }).catch((error) => this.setState({ errorMessage: error.message }));

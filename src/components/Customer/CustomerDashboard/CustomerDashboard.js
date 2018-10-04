@@ -4,14 +4,15 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
+  AsyncStorage
 }
   from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
 
 import * as urls from '../../../constants/api';
-
-
+import EvilIcons from '@expo/vector-icons/EvilIcons'
+import Moment from 'moment';
 const styles = require('./CustomerDashboardStyles');
 
 export default class CustomerDashboard extends Component {
@@ -25,6 +26,7 @@ export default class CustomerDashboard extends Component {
     this.getServicesTypes = this.getServicesTypes.bind(this);
     this.getNextJobs = this.getNextJobs.bind(this);
     this.getPastJobs = this.getPastJobs.bind(this);
+    
   }
 
   // signOutCustomer = (authToken) => {
@@ -89,11 +91,14 @@ export default class CustomerDashboard extends Component {
   };
 
   componentDidMount() {
-    const data = this.props.navigation.getParam('data');
-    const authToken = data.customer.data.attributes.access_token;
-    this.getServicesTypes(authToken);
-    this.getNextJobs(authToken);
-    this.getPastJobs(authToken);
+      AsyncStorage.getItem("customerData").then((item) =>{
+        // const data = this.props.navigation.getParam('data');
+        const data = JSON.parse(item)
+        const authToken = data.customer.data.attributes.access_token;
+        this.getServicesTypes(authToken);
+        this.getNextJobs(authToken);
+        this.getPastJobs(authToken);
+      })
   }
 
   render() {
@@ -113,7 +118,7 @@ export default class CustomerDashboard extends Component {
                   this.state.servicesTypes.map((serviceType) => {
                     return (
                         <View key={serviceType.id} style={styles.servicios_item}>
-                          <Image source={require('../../../../assets/img/servicios_1.png')}
+                          <Image source={{uri : serviceType.attributes.image.url}}
                                  style={styles.servicios_item_image}
                           />
                           <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
@@ -133,11 +138,51 @@ export default class CustomerDashboard extends Component {
               >
                 {
                   this.state.nextJobs.map((job) => {
-                    const date = new Date(job.attributes.started_at), locale = "es-ES",
+                    // const date = new Date(job.attributes.started_at), locale = "es-ES",
+                    //     month = date.toLocaleString(locale, {month: "long"});
+                      //  var start_date = Moment.utc(new Date(job.attributes.started_at)).utcOffset(-5).format('ddd MMM, DD - hh:mm a YYYY') 
+                       const date = new Date(job.attributes.started_at), locale = "es-ES",
                         month = date.toLocaleString(locale, {month: "long"});
+                        var end_date = month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"
+                      //  var end_date = Moment.utc(new Date(job.attributes.finished_at)).utcOffset(-5).format('DD YYYY - hh:mm') 
+                        var description = ""
+                        var subDescription = ""
+                        job.attributes.job_details.map((val,index)=>{
+                          if(val.service.type_service == "base"){
+                              description += val.service.name
+                          }else{
+                              subDescription += val.service.name + " X " + val.value
+                              subDescription += (job.attributes.job_details.length - 1 == index) ? "" : ", " 
+                          }
+                      })
+                      // var date = Moment(data.started_at).format('MMM DD - hh:mm a')
+                      var location = job.attributes.property.data.attributes.name + " "+ job.attributes.property.data.attributes.p_street + ", " + job.attributes.property.data.attributes.s_street +", "+job.attributes.property.data.attributes.city
+
                     return (
                         <View key={job.id} style={styles.trabajos_item}>
-                          <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerJobDetailScreen",{jobData:job})} >
+                          <View style={styles.renderRowView}>
+                            <View style={styles.listTitleView}>
+                              <Text style={styles.titleText}>{job.attributes.job_details[0].service.name || ""}</Text>
+                              <Text style={[styles.textFont, { color: 'rgb(0,121,189)',fontSize:18 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
+                            </View>
+                            <Text style={{color:'rgb(0,121,189)',fontSize:14}} numberOfLines={1}>{end_date}</Text>
+                            {/* <Text style={[styles.textFont]}>{description}</Text>
+                            <Text style={[styles.textFont]}>{description}</Text> */}
+                            <View style={styles.subtextViewStyle}>
+                              <View style={{ flex: 1 }}>
+                                <Text style={[styles.textFont, { fontSize: 12 }]}>{subDescription}</Text>
+                              </View>
+                              {/* <View style={{ flex: 0.2 }}>
+                                <Text style={[styles.textFont, { color: 'rgb(0,121,189)', fontSize: 20 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
+                              </View> */}
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                              <EvilIcons name={"location"} size={16} />
+                              <Text style={[styles.textFont, { marginLeft: 5, fontSize: 12, fontWeight:'bold' }]}>{location}</Text>
+                            </View>
+                          </View>
+                          {/* <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
                           <Text style={styles.trabajos_item_date}>
                             {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
                           </Text>
@@ -147,7 +192,8 @@ export default class CustomerDashboard extends Component {
                             <Image source={require('../../../../assets/img/profile_avatar2.png')}
                                    style={styles.trabajos_avatar_image}/>
                           </View>
-                          <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text>
+                          <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text> */}
+                          </TouchableOpacity>
                         </View>
                     );
                   })
@@ -163,27 +209,86 @@ export default class CustomerDashboard extends Component {
               >
                 {
                   this.state.pastJobs.map((job) => {
-                    const date = new Date(job.attributes.started_at), locale = "es-ES",
-                        month = date.toLocaleString(locale, {month: "long"});
-                    return (
-                        <View key={job.id} style={styles.trabajos_item}>
-                          <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
+                    // const date = new Date(job.attributes.started_at), locale = "es-ES",
+                    //     month = date.toLocaleString(locale, {month: "long"});
+                      //  var start_date = Moment.utc(new Date(job.attributes.started_at)).utcOffset(-5).format('ddd MMM, DD - hh:mm a YYYY') 
+                      const date = new Date(job.attributes.started_at), locale = "es-ES",
+                      month = date.toLocaleString(locale, {month: "long"});
+                      var end_date = month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"
+                    //  var end_date = Moment.utc(new Date(job.attributes.finished_at)).utcOffset(-5).format('DD YYYY - hh:mm') 
+                      var description = ""
+                      var subDescription = ""
+                      job.attributes.job_details.map((val,index)=>{
+                        if(val.service.type_service == "base"){
+                            description += val.service.name
+                        }else{
+                            subDescription += val.service.name + " X " + val.value
+                            subDescription += (job.attributes.job_details.length - 1 == index) ? "" : ", " 
+                        }
+                    })
+                    // var date = Moment(data.started_at).format('MMM DD - hh:mm a')
+                    var location = job.attributes.property.data.attributes.name + " "+ job.attributes.property.data.attributes.p_street + ", " + job.attributes.property.data.attributes.s_street +", "+job.attributes.property.data.attributes.city
+
+                  return (
+                      <View key={job.id} style={styles.trabajos_item}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerJobDetailScreen",{jobData:job})} >
+                          <View style={styles.renderRowView}>
+                            <View style={styles.listTitleView}>
+                              <Text style={styles.titleText}>{job.attributes.job_details[0].service.name || ""}</Text>
+                              <Text style={[styles.textFont, { color: 'rgb(0,121,189)',fontSize:18 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
+                            </View>
+                            <Text style={{color:'rgb(0,121,189)',fontSize:14}} numberOfLines={1}po>{end_date}</Text>
+                            {/* <Text style={[styles.textFont]}>{description}</Text>
+                            <Text style={[styles.textFont]}>{description}</Text> */}
+                            <View style={styles.subtextViewStyle}>
+                              <View style={{ flex: 1 }}>
+                                <Text style={[styles.textFont, { fontSize: 12 }]}>{subDescription}</Text>
+                              </View>
+                              {/* <View style={{ flex: 0.2 }}>
+                                <Text style={[styles.textFont, { color: 'rgb(0,121,189)', fontSize: 20 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
+                              </View> */}
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                              <EvilIcons name={"location"} size={16} />
+                              <Text style={[styles.textFont, { marginLeft: 5, fontSize: 12, fontWeight:'bold' }]}>{location}</Text>
+                            </View>
+                          </View>
+                          {/* <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
                           <Text style={styles.trabajos_item_date}>
                             {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
                           </Text>
                           <View style={styles.trabajos_avatars_container}>
-                            <Image source={require('../../../../assets/img/profile_avatar3.png')}
-                                   style={styles.trabajos_avatar_image}/>
+                            <Image source={require('../../../../assets/img/profile_avatar1.png')}
+                                  style={styles.trabajos_avatar_image}/>
+                            <Image source={require('../../../../assets/img/profile_avatar2.png')}
+                                  style={styles.trabajos_avatar_image}/>
                           </View>
-                          <Text style={styles.trabajos_item_footer}>Realizado exitosamente</Text>
-                        </View>
-                    );
-                  })
+                          <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text> */}
+                        </TouchableOpacity>
+                      </View>
+                  );
+                })
+                  //   const date = new Date(job.attributes.started_at), locale = "es-ES",
+                  //       month = date.toLocaleString(locale, {month: "long"});
+                  //   return (
+                  //       <View key={job.id} style={styles.trabajos_item}>
+                  //         <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
+                  //         <Text style={styles.trabajos_item_date}>
+                  //           {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
+                  //         </Text>
+                  //         <View style={styles.trabajos_avatars_container}>
+                  //           <Image source={require('../../../../assets/img/profile_avatar3.png')}
+                  //                  style={styles.trabajos_avatar_image}/>
+                  //         </View>
+                  //         <Text style={styles.trabajos_item_footer}>Realizado exitosamente</Text>
+                  //       </View>
+                  //   );
+                  // })
                 }
               </ScrollView>
             </View>
           </ScrollView>
-          <View style={styles.footer}>
+          {/* <View style={styles.footer}>
             <View style={styles.footer_item}>
               <FontAwesome
                   name="home"
@@ -195,7 +300,7 @@ export default class CustomerDashboard extends Component {
             <View style={styles.footer_item}>
               <TouchableOpacity
                   style={styles.footer_item}
-                  onPress={() => this.props.navigation.navigate('CustomerJobs', {data: this.props.navigation.getParam('data')})}
+                  onPress={() => this.props.navigation.navigate('CustomerTrabajosDashboard', {data: this.props.navigation.getParam('data')})}
               >
                 <FontAwesome
                     name="briefcase"
@@ -216,7 +321,7 @@ export default class CustomerDashboard extends Component {
               />
               <Text style={styles.footer_item_text}>Profile</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
     );
   }
