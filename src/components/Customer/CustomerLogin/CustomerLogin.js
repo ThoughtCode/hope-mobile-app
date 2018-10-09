@@ -38,6 +38,8 @@ export default class CustomerLogin extends React.Component {
   }
 
   signInCustomer = () => {
+    // alert("customer-->",this.state.email +" === "+this.state.password)
+    this.setState({ errorMessage: '' });
     if (this.state.email === '') {
       Alert.alert(
         'Error de validación',
