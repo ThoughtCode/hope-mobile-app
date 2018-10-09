@@ -42,7 +42,7 @@ export default class CustomerJobDetailScreen extends Component {
     //======================================================================
 
     componentDidMount(){
-        
+        this.setState({isCallapseOpen : true})
     }
 
     //======================================================================
@@ -176,6 +176,14 @@ export default class CustomerJobDetailScreen extends Component {
         )
     }
 
+    ListEmptyComponent =() =>{
+        return(
+            <View style={{alignItems:'center',justifyContent:'center'}}>
+                <Text>{"No hay agentes postulados"}</Text>
+            </View>
+        )
+    }    
+
     //======================================================================
     // render
     //======================================================================
@@ -253,7 +261,7 @@ export default class CustomerJobDetailScreen extends Component {
 
                         <TouchableOpacity activeOpacity = { 0.7 } onPress = {() => this.setState({isCallapseOpen : !this.state.isCallapseOpen})}>
                             <View style={{padding:10,backgroundColor:'gray',flexDirection:'row',justifyContent:'space-between'}}>
-                                <Text>{"Detalles del trabajo"}</Text>
+                                {/* <Text>{"Detalles del trabajo"}</Text> */}
                                 <Entypo name={(this.state.isCallapseOpen) ? "chevron-down" : "chevron-up"} color={"#fff"} size={25} />
                             </View>
                         </TouchableOpacity>
@@ -302,6 +310,7 @@ export default class CustomerJobDetailScreen extends Component {
                             <FlatList
                                 data={this.state.jobData.proposals.data || []}
                                 renderItem={this.renderItem}
+                                ListEmptyComponent={this.ListEmptyComponent}
                             />
                         </Collapsible>
 
