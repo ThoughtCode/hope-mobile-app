@@ -10,7 +10,7 @@ import {
   from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
 import Accordion from 'react-native-collapsible/Accordion';
-
+import * as globals from '../../../util/globals';
 import * as urls from '../../../constants/api';
 
 
@@ -35,6 +35,10 @@ const SECTIONS = [
   }
 ];
 
+const IMAGES = {
+  TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
+}
+
 export default class CustomerProfile extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +46,8 @@ export default class CustomerProfile extends Component {
         // servicesTypes: [],
         // nextJobs: [],
         // pastJobs: []
-        data : null
+        data : null,
+        avatar : globals.avatar,
       };
     //   this.getServicesTypes = this.getServicesTypes.bind(this);
     //   this.getNextJobs = this.getNextJobs.bind(this);
@@ -52,10 +57,12 @@ export default class CustomerProfile extends Component {
   }
 
   componentDidMount(){
+    
     AsyncStorage.getItem("customerData").then((item) =>{
       // const data = this.state.data;
       const data = JSON.parse(item)
       this.setState({data : data})
+      console.log("Customer data-->",item)
 
     })
   }
@@ -97,25 +104,85 @@ export default class CustomerProfile extends Component {
     );
   }
 
+  updatePhoto = () =>{
+    this.setState({avatar : globals.avatar})
+  }
+
+  setData = () =>{
+    this.setState({
+        firstName : globals.first_name,
+        lastName : globals.last_name,
+        avatar : globals.avatar,
+    })
+}
+
   render() {
     if(this.state.data != null){
+      var initials = this.state.data.customer.data.attributes.first_name.charAt(0)
+      initials += this.state.data.customer.data.attributes.last_name.charAt(0) || ""
     return (
         <View style={styles.container}>
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <Text style={styles.header_title}>Perfil</Text>
-          </View>
+          </View> */}
           <ScrollView contentContainerStyle={styles.main_content}>
             <View style={styles.profile_picture_name_container}>
-              <Image source={require('../../../../assets/img/customer_profile.png')} style={styles.profile_image}/>
+              <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
+              {/* <Image source={require('../../../../assets/img/customer_profile.png')} style={styles.profile_image}/> */}
+              {( this.state.avatar && this.state.avatar != "")?
+                <Image source={{ uri: this.state.avatar + '?time=' + new Date() }} style={styles.profile_image} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")} />
+                :
+                //  <View style={{backgroundColor:"rgba(99,99,99,0.7)"}}>
+                <View style={[styles.profile_image, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center',width:100,borderRadius:50 }]} >
+                    <Text style={{ color: '#fff' }}>{initials}</Text>
+                </View>
+                } 
               <Text style={styles.profile_name}>
                 {this.state.data.customer.data.attributes.first_name} {this.state.data.customer.data.attributes.last_name}
               </Text>
             </View>
-            <Accordion
+            {/* <Accordion
                 sections={SECTIONS}
                 renderHeader={this._renderHeader}
                 renderContent={this._renderContent}
-            />
+            /> */}
+            <View style={{backgroundColor:'rgb(237,235,237)',paddingHorizontal:20,paddingVertical:10}}>
+              <Text>{"Perfil de Cliente"}</Text>
+            </View>
+            <View style={{flex:1}}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdateProfile",{updatePhoto : this.updatePhoto,setData : this.setData})}>
+                <View style={styles.accordion_header}>
+                  <Text style={styles.accordion_header_title}>{"Mi cuenta"}</Text>
+                  <FontAwesome
+                    name="chevron-right"
+                    size={24}
+                    color='#2478AE'
+                  />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdatePassword")}>
+                <View style={styles.accordion_header}>
+                  <Text style={styles.accordion_header_title}>{"Contrasena"}</Text>
+                  <FontAwesome
+                    name="chevron-right"
+                    size={24}
+                    color='#2478AE'
+                  />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdateProperties")}>
+                <View style={styles.accordion_header}>
+                  <Text style={styles.accordion_header_title}>{"Propiedades"}</Text>
+                  <FontAwesome
+                    name="chevron-right"
+                    size={24}
+                    color='#2478AE'
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
             <View style={styles.logout_container}>
               <TouchableOpacity style={styles.logout_button}
                                 onPress={() => this.signOutCustomer(this.state.data.customer.data.attributes.access_token)}>
