@@ -4,11 +4,19 @@ import * as APILIST from '../constants/api';
 import * as globals from '../util/globals';
 class ImageUpload{
 
-  imageUpload(profiePicture){
+  imageUpload(profiePicture,isAgent){
 
     var formData = new FormData();
-    formData.append("[agent][avatar]",profiePicture);
-    fetch(APILIST.BASE_URL + APILIST.UPDATE_PROFILE_PIC,{
+    
+
+    var API = APILIST.CUSTOMERS_PROFILE
+    if(isAgent){
+      formData.append("[agent][avatar]",profiePicture);
+      API = APILIST.UPDATE_PROFILE_PIC
+    }else{
+      formData.append("[customer][avatar]",profiePicture);
+    }
+    fetch(APILIST.BASE_URL + API,{
       method : "PUT",
       headers : {
         'Accept': 'application/json',
@@ -21,9 +29,14 @@ class ImageUpload{
     .then((responseJson) => {
       console.log("Register Profile pic Response-->"+JSON.stringify(responseJson));
       // AsyncStorage.multiSet([["access_token",response.agent.data.attributes.access_token || ""],
-      AsyncStorage.setItem('avatar', responseJson.agent.data.attributes.avatar.url || "").then(()=>{
-        globals.avatar = responseJson.agent.data.attributes.avatar.url || ""
-      })
+      if(isAgent){
+        AsyncStorage.setItem('avatar', responseJson.agent.data.attributes.avatar.url || "").then(()=>{
+          globals.avatar = responseJson.agent.data.attributes.avatar.url || ""
+        })
+      }else{
+        globals.avatar = responseJson.customer.data.attributes.avatar.url || ""
+      }
+      
     })
     .catch((error) => {
       console.error(error);

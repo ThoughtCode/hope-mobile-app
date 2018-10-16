@@ -16,8 +16,10 @@ import CustomerNewAddress from '../../components/Customer/CustomerNewAddress/Cus
 import CustomerTrabajosDashboard from '../../components/Customer/CustomerTrabajosDashboard/CustomerTrabajosDashboard';
 import CustomerJobDetailScreen from '../../components/Customer/CustomerJobDetailScreen/CustomerJobDetailScreen';
 import CreateJob from "../../components/Customer/CreateJob/CreateJob";
-
-
+import CustomerUpdateProfile from "../../components/Customer/CustomerUpdateProfile/CustomerUpdateProfile";
+import CustomerUpdateProperties from "../../components/Customer/CustomerUpdateProperties/CustomerUpdateProperties";
+import CreateProperties from "../../components/Customer/CreateProperties/CreateProperties";
+import CustomerUpdatePassword from "../../components/Customer/CustomerUpdatePassword/CustomerUpdatePassword";
 
 import Entypo from '@expo/vector-icons/Entypo';
 import Foundation from '@expo/vector-icons/Foundation';
@@ -94,6 +96,10 @@ const ProfileStackNavigator = StackNavigator({
     CustomerTrabajosDashboard : { screen : CustomerTrabajosDashboard },
     CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
     CreateJob : { screen : CreateJob },
+    CustomerUpdateProfile : { screen : CustomerUpdateProfile },
+    CustomerUpdateProperties : { screen : CustomerUpdateProperties },
+    CreateProperties : { screen : CreateProperties },
+    CustomerUpdatePassword : { screen : CustomerUpdatePassword }
 },{
   navigationOptions:{
     header : null,

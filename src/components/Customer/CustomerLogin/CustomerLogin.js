@@ -37,6 +37,7 @@ export default class CustomerLogin extends React.Component {
   }
 
   signInCustomer = () => {
+    this.setState({ errorMessage: '', spinner: true });
     if (this.state.email === '') {
       this.setState({ errorMessage: "El campo de correo no puede estar vacío" })
     } else if (this.state.password === '') {

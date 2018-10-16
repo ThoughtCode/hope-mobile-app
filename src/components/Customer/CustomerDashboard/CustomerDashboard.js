@@ -11,7 +11,8 @@ import {
 import {FontAwesome} from '@expo/vector-icons';
 
 import * as urls from '../../../constants/api';
-import EvilIcons from '@expo/vector-icons/EvilIcons'
+import EvilIcons from '@expo/vector-icons/EvilIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import Moment from 'moment';
 const styles = require('./CustomerDashboardStyles');
 import * as globals from '../../../util/globals';
@@ -73,6 +74,7 @@ export default class CustomerDashboard extends Component {
     }).then((response) => response.json()).then((data) => {
       let nextJobs = data.job.data;
       this.setState({nextJobs});
+      console.log("NextJob-->",JSON.stringify(nextJobs))
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
@@ -151,7 +153,7 @@ export default class CustomerDashboard extends Component {
                               <Text style={[styles.textFont, { marginLeft: 5, fontSize: 12, fontWeight:'bold' }]}>{location}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                              <EvilIcons name={"location"} size={16} />
+                              <Ionicons name={"md-time"} size={16} />
                               <Text style={{fontSize:14}} numberOfLines={1}>{end_date}</Text>
                             </View>
 
@@ -251,7 +253,7 @@ export default class CustomerDashboard extends Component {
                               <Text style={[styles.textFont, { marginLeft: 5, fontSize: 12, fontWeight:'bold' }]}>{location}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                              <EvilIcons name={"location"} size={16} />
+                              <Ionicons name={"md-time"} size={16} />
                               <Text style={{fontSize:14}} numberOfLines={1}>{end_date}</Text>
                             </View>
 
@@ -308,10 +310,10 @@ export default class CustomerDashboard extends Component {
     )
   }
 
-  noJobview() {
+  noJobview(data = "") {
     return(
       <View style={{alignItems:'center',justifyContent:'center',padding:20}}>
-        <Text>{"No Job Available"}</Text>
+        <Text>{"No "+ data +" Job Available"}</Text>
       </View>
     )
   }
@@ -345,7 +347,7 @@ export default class CustomerDashboard extends Component {
             </View>
 
             {(this.state.nextJobs.length > 0) ?  this.renderPastJobs() : this.noJobview()}
-            {(this.state.pastJobs.length > 0) ? this.renderPreviousJobs() : this.noJobview()}
+            {(this.state.pastJobs.length > 0) ? this.renderPreviousJobs() : this.noJobview("past")}
             
           </ScrollView>
           {/* <View style={styles.footer}>
