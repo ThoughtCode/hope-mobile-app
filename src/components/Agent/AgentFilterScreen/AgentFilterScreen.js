@@ -123,7 +123,7 @@ export default class AgentFilterScreen extends Component {
                             
                             <DatePicker
                                 style={{flex:1,marginLeft:10}}
-                                date={this.state.date}
+                                date={this.state.startData || new Date()}
                                 mode="date"
                                 placeholder=""
                                 format="YYYY-MM-DD"
@@ -132,7 +132,7 @@ export default class AgentFilterScreen extends Component {
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 iconComponent={<Octicons name={"calendar"} size ={30} style={{color:'gray', position:'absolute', left : 10, borderRightWidth: 1, paddingRight:5}} />}
-                                onDateChange={(date) => {this.setState({date: date})}}
+                                onDateChange={(date) => {this.setState({startData: date})}}
                                 />
                         </View>
 
@@ -141,7 +141,7 @@ export default class AgentFilterScreen extends Component {
                             
                             <DatePicker
                                 style={{flex:1,marginLeft : 10}}
-                                date={this.state.date}
+                                date={this.state.endDate || new Date()}
                                 mode="date"
                                 placeholder=""
                                 format="YYYY-MM-DD"
@@ -150,7 +150,7 @@ export default class AgentFilterScreen extends Component {
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 iconComponent={<Octicons name={"calendar"} size ={30} style={{color:'gray', position:'absolute', left : 10, borderRightWidth: 1, paddingRight:5}} />}
-                                onDateChange={(date) => {this.setState({date: date})}}
+                                onDateChange={(date) => {this.setState({endDate: date})}}
                                 />
                         </View>
 
