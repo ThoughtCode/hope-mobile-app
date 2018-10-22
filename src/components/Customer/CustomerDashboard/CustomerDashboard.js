@@ -145,9 +145,9 @@ export default class CustomerDashboard extends Component {
                               <Text style={styles.titleText}>{job.attributes.job_details[0].service.name || ""}</Text>
                               <Text style={[styles.textFont, {fontSize:26}]}>{"$" + job.attributes.total.toFixed(2)}</Text>
                             </View>
-                            <View style={styles.listTitleView}>
+                            {/* <View style={styles.listTitleView}>
                               <Text style={styles.titleText}>{job.attributes.job_details[0].service.name || ""}</Text>
-                            </View>
+                            </View> */}
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                               <EvilIcons name={"location"} size={16} />
                               <Text style={[styles.textFont, { marginLeft: 5, fontSize: 12, fontWeight:'bold' }]}>{location}</Text>
@@ -245,9 +245,9 @@ export default class CustomerDashboard extends Component {
                               <Text style={styles.titleText}>{job.attributes.job_details[0].service.name || ""}</Text>
                               <Text style={[styles.textFont, {fontSize:26 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
                             </View>
-                            <View style={styles.listTitleView}>
+                            {/* <View style={styles.listTitleView}>
                               <Text style={styles.titleText}>{job.attributes.job_details[0].service.name || ""}</Text>
-                            </View>
+                            </View> */}
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                               <EvilIcons name={"location"} size={16} />
                               <Text style={[styles.textFont, { marginLeft: 5, fontSize: 12, fontWeight:'bold' }]}>{location}</Text>

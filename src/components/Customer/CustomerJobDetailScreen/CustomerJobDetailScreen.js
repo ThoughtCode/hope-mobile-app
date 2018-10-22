@@ -261,7 +261,7 @@ export default class CustomerJobDetailScreen extends Component {
 
                         <TouchableOpacity activeOpacity = { 0.7 } onPress = {() => this.setState({isCallapseOpen : !this.state.isCallapseOpen})}>
                             <View style={{padding:10,backgroundColor:'gray',flexDirection:'row',justifyContent:'space-between'}}>
-                                {/* <Text>{"Detalles del trabajo"}</Text> */}
+                                <Text>{"Detalles del trabajo"}</Text>
                                 <Entypo name={(this.state.isCallapseOpen) ? "chevron-down" : "chevron-up"} color={"#fff"} size={25} />
                             </View>
                         </TouchableOpacity>
