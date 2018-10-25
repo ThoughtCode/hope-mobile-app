@@ -74,6 +74,14 @@ export const API = {
     getNeightborhoods: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_NEIGHTBORHOODS + data + "/neightborhoods", buildHeader());
     },
+
+    jobDetail: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_JOBS + data, buildHeader());
+    },
+
+    setCustomerReview: (onResponse, data, job_id, isHeaderRequired) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_CUSTERMER_REVIEW + job_id + "/review", buildHeader());
+    },   
     
     
     

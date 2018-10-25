@@ -29,6 +29,7 @@ export const CUSTOMERS_PROFILE = "/api/v1/customers/update";
 export const CUSTOMERS_PASSWORD = "/api/v1/customers/change_password";
 export const GET_CITY = "/api/v1/customers/cities";
 export const GET_NEIGHTBORHOODS = "/api/v1/customers/cities/";
+export const SET_CUSTERMER_REVIEW = "/api/v1/customers/jobs/";
 
 
 
