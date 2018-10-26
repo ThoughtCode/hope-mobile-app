@@ -376,7 +376,7 @@ export default class CustomerJobDetailScreen extends Component {
                                     {/* <Text style={styles.subText} numberOfLines={0}>{"This is Duumey conetecr of Agent Adta skkcv  nfxl"}</Text>  */}
                                     <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerReviewScreen",{jobData : this.props.navigation.state.params.jobData})} >
                                         <View style={{backgroundColor:'rgb(7,225,43)',marginHorizontal:10,alignItems:'center',justifyContent:'center',paddingVertical:7,marginTop:10}}>
-                                            <Text style={[styles.titleText,{color:'#fff'}]}>{"Calificar agente"}</Text>
+                                            <Text style={[styles.titleText,{color:'#fff'}]}>{"Contratado"}</Text>
                                         </View>
                                     </TouchableOpacity>
                                 </View>
