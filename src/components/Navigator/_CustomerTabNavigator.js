@@ -21,6 +21,7 @@ import CustomerUpdateProperties from "../../components/Customer/CustomerUpdatePr
 import CreateProperties from "../../components/Customer/CreateProperties/CreateProperties";
 import CustomerUpdatePassword from "../../components/Customer/CustomerUpdatePassword/CustomerUpdatePassword";
 import CustomerReviewScreen from "../../components/Customer/CustomerReviewScreen/CustomerReviewScreen";
+import CustomerAgentReviewScreen from "../../components/Customer/CustomerAgentReviewScreen/CustomerAgentReviewScreen";
 
 import Entypo from '@expo/vector-icons/Entypo';
 import Foundation from '@expo/vector-icons/Foundation';
@@ -46,6 +47,7 @@ const HomeDashboard = StackNavigator({
     CustomerTrabajosDashboard : { screen : CustomerTrabajosDashboard },
     CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
     CustomerReviewScreen : { screen : CustomerReviewScreen },
+    CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
     CreateJob : { screen : CreateJob },
   },{
     navigationOptions:{
@@ -73,6 +75,7 @@ const CustomerTrabajos = StackNavigator({
     CustomerNewAddress : { screen : CustomerNewAddress },
     CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
     CustomerReviewScreen : { screen : CustomerReviewScreen },
+    CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
     CreateJob : { screen : CreateJob },
 },{
   navigationOptions:{
@@ -104,6 +107,7 @@ const ProfileStackNavigator = StackNavigator({
     CreateProperties : { screen : CreateProperties },
     CustomerUpdatePassword : { screen : CustomerUpdatePassword },
     CustomerReviewScreen : { screen : CustomerReviewScreen },
+    CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
 },{
   navigationOptions:{
     header : null,
