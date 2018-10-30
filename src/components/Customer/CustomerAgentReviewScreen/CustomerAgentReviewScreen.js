@@ -27,7 +27,8 @@ export default class CustomerAgentReviewScreen extends Component {
             jobData : (props.navigation.state.params.isHired) ? props.navigation.state.params.jobData : props.navigation.state.params.jobData.attributes.agent.data.attributes,
             // jobCommentList : []
             // jobCommentList : props.navigation.state.params.jobData && props.navigation.state.params.jobData.attributes && props.navigation.state.params.jobData.attributes.agent && props.navigation.state.params.jobData.attributes.agent.data || props.navigation.state.params.jobData.attributes.agent.data.attributes || props.navigation.state.params.jobData.attributes.agent.data.attributes.rewiews || []
-            jobCommentList : (props.navigation.state.params.isHired) ? props.navigation.state.params.reviews && props.navigation.state.params.reviews.data || [] : props.navigation.state.params.jobData.attributes.agent.data.attributes.rewiews.data || []
+            jobCommentList : (props.navigation.state.params.isHired) ? props.navigation.state.params.reviews && props.navigation.state.params.reviews.data || [] : props.navigation.state.params.jobData.attributes.agent.data.attributes.rewiews.data || [],
+            review : props.navigation.state.params.review && props.navigation.state.params.review
         }
     }
 
@@ -151,11 +152,11 @@ export default class CustomerAgentReviewScreen extends Component {
                                 halfStar={'ios-star-half'}
                                 iconSet={'Ionicons'}
                                 maxStars={5}
-                                rating={this.state.jobData.rewiews_average}
+                                rating={this.state.review}
                                 starSize={20}
                                 fullStarColor={'gray'}
                             />
-                            <Text style={styles.opinionsText}>{this.state.jobData.rewiews_count+" opiniones"}</Text>
+                            <Text style={styles.opinionsText}>{(this.state.isHired) ? this.state.jobCommentList.length+" opiniones" : this.state.jobData.rewiews_count+" opiniones"}</Text>
                         </View>
                         <View style={{flexDirection:'row'}}>
                             {(this.state.jobData.email != null) ?
