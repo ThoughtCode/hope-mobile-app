@@ -179,7 +179,7 @@ export default class CustomerJobDetailScreen extends Component {
                         <Image source={require("../../../../assets/img/profile_placehoder.png")} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>}
                     </View>
                     <View style={{flex:1}}>
-                        <Text onPress={() => this.props.navigation.navigate("CustomerAgentReviewScreen",{isHired : false,jobData : data })} style={styles.titleText}>{data.attributes.agent.data.attributes.first_name + " "+ data.attributes.agent.data.attributes.last_name}</Text>
+                        <Text onPress={() => this.props.navigation.navigate("CustomerAgentReviewScreen",{isHired : false,jobData : data, review : data.attributes.agent.data.attributes.rewiews_average })} style={styles.titleText}>{data.attributes.agent.data.attributes.first_name + " "+ data.attributes.agent.data.attributes.last_name}</Text>
                         {/* <Text style={styles.titleText}>{"Ravi Joshi"}</Text> */}
                     </View>
                     <StarRating
@@ -352,7 +352,7 @@ export default class CustomerJobDetailScreen extends Component {
                                             <Image source={require("../../../../assets/img/profile_placehoder.png")} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>}
                                         </View>
                                         <View style={{flex:1}}>
-                                            <Text onPress={() => this.props.navigation.navigate("CustomerAgentReviewScreen",{isHired : true ,jobData : this.state.jobData.agent, reviews : this.state.jobData.agent_rewiews  })} style={styles.titleText}>{this.state.jobData.agent.first_name + " "+ this.state.jobData.agent.last_name}</Text>
+                                            <Text onPress={() => this.props.navigation.navigate("CustomerAgentReviewScreen",{isHired : true ,jobData : this.state.jobData.agent, reviews : this.state.jobData.agent_rewiews , review : this.state.jobData.agent_rewiews_average })} style={styles.titleText}>{this.state.jobData.agent.first_name + " "+ this.state.jobData.agent.last_name}</Text>
                                             {/* <Text style={styles.titleText}>{"Ravi Joshi"}</Text> */}
                                         </View>
                                         <StarRating
@@ -362,7 +362,7 @@ export default class CustomerJobDetailScreen extends Component {
                                             halfStar={'ios-star-half'}
                                             iconSet={'Ionicons'}
                                             maxStars={5}
-                                            rating={this.state.jobData.agent.rewiews_average}
+                                            rating={this.state.jobData.agent_rewiews_average}
                                             // rating={3}
                                             starSize={18}
                                             fullStarColor={'gray'}/>
