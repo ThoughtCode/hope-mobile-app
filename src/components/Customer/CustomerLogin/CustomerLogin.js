@@ -9,7 +9,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  AsyncStorage
+  AsyncStorage,
+  Button
 } from 'react-native';
 
 import * as urls from '../../../constants/api';
@@ -54,22 +55,52 @@ export default class CustomerLogin extends React.Component {
           }
         }),
       }).then((response) => {
-        if (response.status === 401) {
-          this.setState({ errorMessage: <Text style={styles.text_error}>Verifique su usuario y su contraseña</Text> });
-          return response;
-        } else {
-          response.json().then((data) => {
-            AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
-              globals.access_token = data.customer.data.attributes.access_token ||""
-              // this.props.navigation.navigate('CustomerTabbar', { data: data });
-              this.props.navigation.navigate('CustomerTabbar');
-            })
-            
-          });
-        }
+        this._handleLoginResponse(response);
       }).catch((error) => this.setState({ errorMessage: error.message }));
     }
   };
+
+  facebookLogin = async () => {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('2057031764572769', {
+      permissions: ['email', 'public_profile'],
+    });
+    if (type === 'success') {
+      fbSigninURL = urls.STAGING_URL + urls.CUSTOMER_FACEBOOK_LOGIN;
+      fetch(fbSigninURL, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "customer": {
+            "facebook_access_token": token
+          }
+        }),
+      }).then((response) => {
+        this._handleLoginResponse(response);
+      }).catch((error) => this.setState({ errorMessage: error.message }));
+
+    }else{
+      alert('Something went wrong. Try again later!')
+    }
+  }
+
+  _handleLoginResponse = (response) => {
+    if (response.status === 401) {
+      this.setState({ errorMessage: <Text style={styles.text_error}>Verifique su usuario y su contraseña</Text> });
+      return response;
+    } else {
+      response.json().then((data) => {
+        AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
+          globals.access_token = data.customer.data.attributes.access_token ||""
+          // this.props.navigation.navigate('CustomerTabbar', { data: data });
+          this.props.navigation.navigate('CustomerTabbar');
+        })
+        
+      });
+    }
+  }
 
   render() {
     return (
@@ -150,6 +181,15 @@ export default class CustomerLogin extends React.Component {
               >
                 <Text style={styles.login_button_text}>
                   Entrar
+                </Text>
+              </TouchableOpacity>
+    
+              <TouchableOpacity
+                onPress={this.facebookLogin}
+                style={styles.fb_login_button}
+              >
+                <Text style={styles.fb_login_button_text}>
+                  Login with facebook
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity

@@ -98,6 +98,23 @@ module.exports = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 10
   },
+  fb_login_button: {
+    backgroundColor: '#4267b2',
+    borderRadius: 5,
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  fb_login_button_text: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: 1
+  },
   back_button: {
     marginTop: 20,
     width: 200,
