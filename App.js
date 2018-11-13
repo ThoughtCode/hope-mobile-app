@@ -11,6 +11,10 @@ import {YellowBox} from 'react-native';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import rootReducer from './src/reducers';
+import {
+  Notifications,
+} from 'expo';
+import registerForNotifications from './src/services/PushNotification';
 
 const store = createStore(rootReducer);
 store.subscribe(() => console.log('store', store.getState()));
@@ -30,9 +34,26 @@ export default class App extends React.Component {
     this.state = {
       fontLoaded: false,
       isLoading : true,
-      isAgentLogin : false
+      isAgentLogin : false,
+      notification: {},
     };
   }
+
+  componentDidMount() {
+    registerForNotifications();
+
+    // Handle notifications that are received or selected while the app
+    // is open. If the app was closed and then opened by tapping the
+    // notification (rather than just tapping the app icon to open it),
+    // this function will fire on the next tick after the app starts
+    // with the notification data.
+    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+  }
+
+  _handleNotification = (notification) => {
+    console.log(JSON.stringify(notification.data))
+    this.setState({notification: notification});
+  };
 
   async componentWillMount() {
 
@@ -60,6 +81,12 @@ export default class App extends React.Component {
   }
   
   render() {
+    if(this.state.notification) {
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Origin: {this.state.notification.origin}</Text>
+        <Text>Data: {JSON.stringify(this.state.notification.data)}</Text>
+      </View>
+    }
     if (this.state.fontLoaded) {
       if (this.state.isAgentLogin) {
         return (
