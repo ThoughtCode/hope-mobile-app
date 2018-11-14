@@ -334,12 +334,16 @@ export default class CustomerDashboard extends Component {
                 {
                   this.state.servicesTypes.map((serviceType) => {
                     return (
+                      
                         <View key={serviceType.id} style={styles.servicios_item}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerCleaning")}>
                           <Image source={{uri : serviceType.attributes.image.url}}
-                                 style={styles.servicios_item_image}
+                                style={styles.servicios_item_image}
                           />
                           <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
+                          </TouchableOpacity>
                         </View>
+                      
                     );
                   })
                 }

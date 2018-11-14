@@ -34,6 +34,7 @@
     "react-native": "0.54.0",
     "react-native-actionsheet": "^2.4.2",
     "react-native-banner-carousel": "^1.0.3",
+    "react-native-calendar-picker": "^5.22.0",
     "react-native-collapsible": "^0.12.0",
     "react-native-datepicker": "^1.7.2",
     "react-native-keyboard-aware-scroll-view": "^0.7.4",
