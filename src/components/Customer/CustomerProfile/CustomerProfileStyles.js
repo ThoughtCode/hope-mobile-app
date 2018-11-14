@@ -1,5 +1,6 @@
 const React = require('react-native');
 const { Dimensions, StyleSheet } = React;
+const { height , width} = Dimensions.get("window");
 
 module.exports = StyleSheet.create({
   container: {
@@ -7,6 +8,10 @@ module.exports = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     backgroundColor: '#fff'
+  },
+  topImage:{
+    height: width * 0.3,
+    width : width
   },
   header: {
     width: Dimensions.get('window').width,
@@ -26,14 +31,14 @@ module.exports = StyleSheet.create({
   },
   profile_picture_name_container: {
     width: Dimensions.get('window').width,
-    height: 160,
-    backgroundColor: '#FAFAFA',
+    // height: 160,
+    // backgroundColor: '#FAFAFA',
     borderColor: '#DDDCDC',
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
+    // borderTopWidth: 2,
+    // borderBottomWidth: 2,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   profile_name: {
     fontSize: 20,
@@ -41,7 +46,10 @@ module.exports = StyleSheet.create({
   },
   profile_image: {
     height: 100,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    marginTop : -50,
+    width:100,
+    borderRadius:50
   },
   accordion_header: {
     width: Dimensions.get('window').width,

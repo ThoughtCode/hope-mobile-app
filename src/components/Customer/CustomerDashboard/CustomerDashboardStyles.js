@@ -26,7 +26,7 @@ module.exports = StyleSheet.create({
   },
 
   section_trabajos_container: {
-    height: 200,
+    // height: 200,
     padding: 10,
     alignItems: 'flex-start',
   },
@@ -37,6 +37,7 @@ module.exports = StyleSheet.create({
   trabajos_item :{
     width: Dimensions.get('window').width - 40,
     padding: 10,
+    paddingTop:20,
     // alignItems: 'center',
     // justifyContent: 'space-between',
     backgroundColor: 'white',
@@ -131,7 +132,7 @@ module.exports = StyleSheet.create({
     flexDirection:'row',justifyContent:'space-between',alignItems:'center'
   },
   titleText:{
-    fontSize:20,fontWeight:'600',fontFamily:"helvetica"
+    fontSize:20,fontWeight:'900',fontFamily:"helvetica"
   },
   textFont:{
     fontFamily:"helvetica"
