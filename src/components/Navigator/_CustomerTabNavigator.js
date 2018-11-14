@@ -22,6 +22,12 @@ import CreateProperties from "../../components/Customer/CreateProperties/CreateP
 import CustomerUpdatePassword from "../../components/Customer/CustomerUpdatePassword/CustomerUpdatePassword";
 import CustomerReviewScreen from "../../components/Customer/CustomerReviewScreen/CustomerReviewScreen";
 import CustomerAgentReviewScreen from "../../components/Customer/CustomerAgentReviewScreen/CustomerAgentReviewScreen";
+import CustomerCleaning from "../../components/Customer/CustomerCleaning/CustomerCleaning";
+
+import ServiceDetail from "../../components/Customer/ServiceDetail/ServiceDetail";
+import Frequency from "../../components/Customer/Frequency/Frequency";
+import CalenderPick from "../../components/Customer/CalenderPick/CalenderPick";
+import DirectionScreen from "../../components/Customer/DirectionScreen/DirectionScreen";
 
 import Entypo from '@expo/vector-icons/Entypo';
 import Foundation from '@expo/vector-icons/Foundation';
@@ -48,7 +54,12 @@ const HomeDashboard = StackNavigator({
     CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
     CustomerReviewScreen : { screen : CustomerReviewScreen },
     CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
+    CustomerCleaning : { screen : CustomerCleaning },
     CreateJob : { screen : CreateJob },
+    ServiceDetail : { screen : ServiceDetail },
+    Frequency : { screen : Frequency },
+    CalenderPick : { screen : CalenderPick },
+    DirectionScreen : { screen : DirectionScreen },
   },{
     navigationOptions:{
       header : null,
@@ -76,7 +87,12 @@ const CustomerTrabajos = StackNavigator({
     CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
     CustomerReviewScreen : { screen : CustomerReviewScreen },
     CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
+    CustomerCleaning : { screen : CustomerCleaning },
     CreateJob : { screen : CreateJob },
+    ServiceDetail : { screen : ServiceDetail },
+    Frequency : { screen : Frequency },
+    CalenderPick : { screen : CalenderPick },
+    DirectionScreen : { screen : DirectionScreen },
 },{
   navigationOptions:{
     header : null,
@@ -108,6 +124,11 @@ const ProfileStackNavigator = StackNavigator({
     CustomerUpdatePassword : { screen : CustomerUpdatePassword },
     CustomerReviewScreen : { screen : CustomerReviewScreen },
     CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
+    CustomerCleaning : { screen : CustomerCleaning },
+    ServiceDetail : { screen : ServiceDetail },
+    Frequency : { screen : Frequency },
+    CalenderPick : { screen : CalenderPick },
+    DirectionScreen : { screen : DirectionScreen },
 },{
   navigationOptions:{
     header : null,
