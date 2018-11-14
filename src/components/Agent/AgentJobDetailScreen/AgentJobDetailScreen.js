@@ -95,7 +95,7 @@ export default class AgentJobDetailScreen extends Component {
         if(!this.state.isJobApply){
             API.applyJob(this.jobApplyResponse,"/"+this.props.navigation.state.params.jobData.id+"/proposals",true);
         }else{
-            Alert.alert("Hope","Ya te has postulado para este trabajo")
+            Alert.alert("Noc Noc","Ya te has postulado para este trabajo")
         }
     }
 
@@ -104,10 +104,10 @@ export default class AgentJobDetailScreen extends Component {
     //======================================================================
 
     tapReview = () =>{
-        Alert.alert("Hope","Antes de continuar.Confirm que tu trabajo se realizo con exito.",
+        Alert.alert("Noc Noc","Antes de continuar.Confirm que tu trabajo se realizo con exito.",
             [
                 {text: 'NO', onPress: () => this.props.navigation.navigate("AgentReviewScreen",{jobData : this.props.navigation.state.params.jobData}), style: 'cancel'},
-                {text: 'YES', onPress: () => this.tapConfirmPayment()},
+                {text: 'SI', onPress: () => this.tapConfirmPayment()},
             ],
               { cancelable: false }
             )
@@ -158,7 +158,7 @@ export default class AgentJobDetailScreen extends Component {
                     // AgentJobListScreen.getJobsAPICall()
                     // AgentJobListScreen.setRow(this.state.index)
                     this.props.navigation.state.params.setRow(this.state.index)
-                    Alert.alert("Hope",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
+                    Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
                 })
                 
             } catch (error) {
@@ -186,7 +186,7 @@ export default class AgentJobDetailScreen extends Component {
             if(val.service.type_service == "base"){
                 description += val.service.name
             }else{
-                subDescription += val.service.name + " X " + val.value
+                subDescription += val.service.name + " x " + val.value
                 subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
             }
         
@@ -233,7 +233,7 @@ export default class AgentJobDetailScreen extends Component {
                             maxStars={5}
                             rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                             starSize={20}
-                            fullStarColor={'gray'}
+                            fullStarColor={'#ffd700'}
                         />
                         <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
                     </View>

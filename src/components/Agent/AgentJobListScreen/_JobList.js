@@ -67,7 +67,7 @@ export default class _JobList extends Component {
             if(val.service.type_service == "base"){
                 description += val.service.name
             }else{
-                subDescription += val.service.name + " X " + val.value
+                subDescription += val.service.name + " x " + val.value
                 subDescription += (data.job_details.length - 1 == index) ? "" : ", " 
             }
         })

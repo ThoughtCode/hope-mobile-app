@@ -79,7 +79,7 @@ module.exports = StyleSheet.create({
     height: 40,
     marginTop: 5,
     textAlign: 'left',
-    fontSize: 10,
+    fontSize: 12,
     color: '#fff',
     paddingLeft: 10
   },

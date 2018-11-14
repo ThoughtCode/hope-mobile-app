@@ -68,8 +68,8 @@ module.exports = StyleSheet.create({
   },
   logo_image: {
     position: 'absolute',
-    width: 120,
-    height: 110,
+    width: 150,
+    height: 140,
     top: 150
   },
   recover_password_text: {

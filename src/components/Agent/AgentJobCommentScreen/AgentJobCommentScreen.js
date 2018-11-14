@@ -86,7 +86,7 @@ export default class AgentJobCommentScreen extends Component {
                         maxStars={5}
                         rating={data.attributes.qualification}
                         starSize={18}
-                        fullStarColor={'gray'}/>
+                        fullStarColor={'#ffd700'}/>
                 </View>
                 <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text> 
             </View>
@@ -149,7 +149,7 @@ export default class AgentJobCommentScreen extends Component {
                                 maxStars={5}
                                 rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                                 starSize={20}
-                                fullStarColor={'gray'}
+                                fullStarColor={'#ffd700'}
                             />
                             <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
                         </View>

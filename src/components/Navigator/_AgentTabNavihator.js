@@ -70,11 +70,11 @@ export default AgentTabar = TabNavigator({
       screen: AgentDashboard,
       navigationOptions: {
           borderBottomWidth: 0,
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Inicio',
           tabBarIcon: ({ tintColor }) => (
               <View style={[styles.tabViewBox]}>
                   <Entypo name="home" style={[styles.tabIcon]} size={iconHeight} color={tintColor} />
-                  <Text style={[styles.tabText, { color: tintColor }]}>{"Home"}</Text>
+                  <Text style={[styles.tabText, { color: tintColor }]}>{"Inicio"}</Text>
               </View>
           )
       }
