@@ -90,7 +90,7 @@ export default class CustomerAgentReviewScreen extends Component {
                         maxStars={5}
                         rating={data.attributes.qualification || 0}
                         starSize={18}
-                        fullStarColor={'gray'}/>
+                        fullStarColor={'#ffd700'}/>
                 </View>
                 <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text> 
             </View>
@@ -154,7 +154,7 @@ export default class CustomerAgentReviewScreen extends Component {
                                 maxStars={5}
                                 rating={this.state.review}
                                 starSize={20}
-                                fullStarColor={'gray'}
+                                fullStarColor={'#ffd700'}
                             />
                             <Text style={styles.opinionsText}>{(this.state.isHired) ? this.state.jobCommentList.length+" opiniones" : this.state.jobData.rewiews_count+" opiniones"}</Text>
                         </View>

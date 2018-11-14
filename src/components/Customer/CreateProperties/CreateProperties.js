@@ -66,7 +66,7 @@ export default class CreateProperties extends Component {
                 
             } catch (error) {
                 console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("Hope",error.message)
+                Alert.alert("Noc Noc",error.message)
             }
         },
         error: (err) => {
@@ -102,13 +102,13 @@ export default class CreateProperties extends Component {
                 
                 console.log("create properties data-->"+JSON.stringify(response))
                 this.props.navigation.state.params.refresProperties()
-                Alert.alert("Hope",response.message,[{text: 'OK', onPress: () => {
+                Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => {
                         this.props.navigation.goBack()    
                 }}])
                 
             } catch (error) {
                 console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("Hope",error.message)
+                Alert.alert("Noc Noc",error.message)
             }
         },
         error: (err) => {
@@ -141,7 +141,7 @@ export default class CreateProperties extends Component {
                 
             } catch (error) {
                 console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("Hope",error.message)
+                Alert.alert("Noc Noc",error.message)
             }
         },
         error: (err) => {

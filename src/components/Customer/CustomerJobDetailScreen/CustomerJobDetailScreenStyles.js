@@ -10,16 +10,8 @@ module.exports = StyleSheet.create({
     height: width * 0.3,
     width : width
   },
-  topTitleView:{
-    flexDirection:'row',
-    justifyContent:"space-between",
-    paddingHorizontal:20,
-    paddingVertical:10,
-    backgroundColor:'rgb(240,240,240)',
-    alignItems:"center"
-  },
   mainTitleText:{
-    fontSize:16,fontWeight:'400',fontFamily:"helvetica",color:'gray'
+    fontSize:16,fontWeight:'400',fontFamily:"helvetica",color:'gray',
   },
   profileView:{
     height:80,width:80,borderRadius:40,backgroundColor:'#fff',alignSelf:'center',borderWidth:1,marginTop:-40,borderColor : '#fff'

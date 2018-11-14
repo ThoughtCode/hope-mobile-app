@@ -13,7 +13,7 @@ module.exports = StyleSheet.create({
     flex: 1,
   },
   agent_indicator: {
-    backgroundColor: '#fff',
+    backgroundColor: '#0069A7',
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     position: 'absolute',
@@ -23,7 +23,7 @@ module.exports = StyleSheet.create({
     paddingVertical: 5
   },
   agent_indicator_text: {
-    color: '#0069A7',
+    color: '#fff',
   },
   customer_login_action: {
     borderTopLeftRadius: 10,
@@ -79,7 +79,7 @@ module.exports = StyleSheet.create({
     height: 40,
     marginTop: 5,
     textAlign: 'left',
-    fontSize: 10,
+    fontSize: 12,
     color: '#fff',
     paddingLeft: 10
   },

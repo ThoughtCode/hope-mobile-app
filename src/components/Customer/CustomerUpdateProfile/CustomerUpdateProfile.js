@@ -79,7 +79,7 @@ export default class CustomerUpdateProfile extends Component {
             try {
                 console.log("updateUserResponse data-->"+JSON.stringify(response))
                 AsyncStorage.setItem("customerData",JSON.stringify(response))
-                Alert.alert("Hope",response.message,[{text: 'OK', onPress: () => {
+                Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => {
                     this.props.navigation.state.params.updatePhoto()
                     // AsyncStorage.multiSet([["access_token",response.agent.data.attributes.access_token || ""],
                     // ['first_name', response.agent.data.attributes.first_name || ""],
