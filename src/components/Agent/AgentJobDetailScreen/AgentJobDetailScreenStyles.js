@@ -33,6 +33,9 @@ module.exports = StyleSheet.create({
   opinionsView:{
     flexDirection:'row',alignItems:'center',justifyContent:'center',marginVertical:5
   },
+  cellPhone:{
+    alignItems:'center',justifyContent:'center',marginBottom:5
+  },
   opinionsText:{
     fontSize:16,marginLeft:10,color:'gray',fontFamily : 'helvetica'
   },

@@ -38,9 +38,9 @@ export default class AgentSignUp extends Component {
   signUpAgent = () => {
     this.setState({errorMessage: ''});
     if (this.state.email === '') {
-      this.setState({errorMessage: "El campo de correo no puede estar vacío"})
+      this.setState({errorMessage: <Text style={styles.text_error}>El campo de correo no puede estar vacío</Text>})
     } else if (this.state.password != this.state.password_confirmation) {
-      this.setState({errorMessage: "Las contraseñas no coinciden"})
+      this.setState({errorMessage: <Text style={styles.text_error}>Las contraseñas no coinciden</Text>})
     } else {
       signup_url = urls.BASE_URL + urls.AGENT_SIGNUP_URI;
       console.log("Registration url",signup_url);
@@ -101,7 +101,7 @@ export default class AgentSignUp extends Component {
               
             });
           } else if (response.status === 422) {
-            this.setState({errorMessage: "Ya existe un usuario con ese correo electrónico"});
+            this.setState({errorMessage: <Text style={styles.text_error}>Ya existe un usuario con ese correo electrónico</Text>});
           }
         })
         .catch((error) => this.setState({errorMessage: error.message}));

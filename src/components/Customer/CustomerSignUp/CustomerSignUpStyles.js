@@ -111,4 +111,7 @@ module.exports = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 10
   },
+  text_error: {
+    color: 'white'
+  }
 });

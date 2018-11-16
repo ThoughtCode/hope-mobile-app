@@ -116,5 +116,8 @@ module.exports = StyleSheet.create({
   logo_image: {
     width: 90,
     height: 84
+  },
+  text_error: {
+    color: 'white'
   }
 });

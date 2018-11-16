@@ -24,6 +24,7 @@ module.exports = StyleSheet.create({
   },
   customer_indicator_text: {
     color: '#0069A7',
+    fontSize: 18
   },
   agent_login_action: {
     borderTopLeftRadius: 10,
@@ -36,8 +37,7 @@ module.exports = StyleSheet.create({
     zIndex: 1
   },
   agent_login_action_text: {
-    color: '#fff',
-    fontSize: 10
+    color: '#fff'
   },
   login_container: {
     flex: 1,

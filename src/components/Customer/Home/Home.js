@@ -10,18 +10,18 @@ const BannerHeight = Dimensions.get('window').height;
 const images = [
   {
     src: require("../../../../assets/img/home_splash_1_opacity.jpg"),
-    description: "Feature 1",
-    subtitle: "Innovadores"
+    description: "LO HACEMOS POR TI",
+    subtitle: "Disfruta más tú vida"
   },
   {
     src: require("../../../../assets/img/home_splash_2_opacity.jpg"),
-    description: "Feature 2",
-    subtitle: "Rápidos"
+    description: "LO HACEMOS POR TI",
+    subtitle: "Los mejores profesionales"
   },
   {
     src: require("../../../../assets/img/home_splash_3_opacity.jpg"),
-    description: "Feature 3",
-    subtitle: "Seguros"
+    description: "LO HACEMOS POR TI",
+    subtitle: "Seguridad y calidad"
   }
 ];
 
