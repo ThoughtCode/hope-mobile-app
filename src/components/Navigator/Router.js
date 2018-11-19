@@ -51,8 +51,8 @@ export const MainNavigator = SwitchNavigator({
     // CustomerTrabajosDashboard :{ screen  : CustomerTrabajosDashboard},
     // CustomerJobDetailScreen : {screen :CustomerJobDetailScreen}
   },{
-    // initialRouteName :"Home"
-    initialRouteName :"CustomerTabbar"
+    initialRouteName :"Home"
+    // initialRouteName :"CustomerTabbar"
 });
 
 export const AgentNavigator = SwitchNavigator({
