@@ -161,23 +161,27 @@ export default class CustomerCleaning extends Component {
                                 <Entypo name={"location-pin"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                             </View>
                         </TouchableOpacity>
-
-                        <View style={styles.rowStyle}>
-                            <View style={styles.rowText}>
-                                <Text style={styles.titleText}>{"Detallens adicionales del trabajo"}</Text>
-                                <Text style={styles.subTitleText}>{"Information adicional del Servicio"}</Text>
+                        
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("AdditionalDetail")}>
+                            <View style={styles.rowStyle}>
+                                <View style={styles.rowText}>
+                                    <Text style={styles.titleText}>{"Detallens adicionales del trabajo"}</Text>
+                                    <Text style={styles.subTitleText}>{"Information adicional del Servicio"}</Text>
+                                </View>
+                                <MaterialIcons name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                             </View>
-                            <MaterialIcons name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
-                        </View>
-
-                        <View style={styles.rowStyle}>
-                            <View style={styles.rowText}>
-                                <Text style={styles.titleText}>{"Ingresa tu forma de Pago"}</Text>
-                                <Text style={{fontFamily:"helvetica",fontSize:18}}>{"N XXXX-1111 Exp. 9/2020"}</Text>
-                                <Text style={{fontFamily:"helvetica",fontSize:15}}>{"Nombre: Jose Castellanos"}</Text>
+                        </TouchableOpacity>
+                        
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen")}>
+                            <View style={styles.rowStyle}>
+                                <View style={styles.rowText}>
+                                    <Text style={styles.titleText}>{"Ingresa tu forma de Pago"}</Text>
+                                    <Text style={{fontFamily:"helvetica",fontSize:18}}>{"N XXXX-1111 Exp. 9/2020"}</Text>
+                                    <Text style={{fontFamily:"helvetica",fontSize:15}}>{"Nombre: Jose Castellanos"}</Text>
+                                </View>
+                                <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                             </View>
-                            <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={{paddingVertical:10,paddingHorizontal:15}}>
                             <Text style={{fontFamily:"helvetica",fontSize: 20, fontWeight:'bold',marginBottom:5,color : 'rgb(0,121,189)'}}>{"Total trabajo: 2.5$"}</Text>

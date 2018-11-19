@@ -182,6 +182,39 @@ export default class CustomerProfile extends Component {
                   />
                 </View>
               </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CommentListScreen")}>
+                <View style={styles.accordion_header}>
+                  <Text style={styles.accordion_header_title}>{"Comentarios"}</Text>
+                  <FontAwesome
+                    name="chevron-right"
+                    size={24}
+                    color='#2478AE'
+                  />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerProfileCardList")}>
+                <View style={styles.accordion_header}>
+                  <Text style={styles.accordion_header_title}>{"Metodo de pago"}</Text>
+                  <FontAwesome
+                    name="chevron-right"
+                    size={24}
+                    color='#2478AE'
+                  />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerBillingList")}>
+                <View style={styles.accordion_header}>
+                  <Text style={styles.accordion_header_title}>{"Detalles de facturacion"}</Text>
+                  <FontAwesome
+                    name="chevron-right"
+                    size={24}
+                    color='#2478AE'
+                  />
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={styles.logout_container}>
               <TouchableOpacity style={styles.logout_button}

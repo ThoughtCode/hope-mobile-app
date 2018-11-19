@@ -28,6 +28,15 @@ import ServiceDetail from "../../components/Customer/ServiceDetail/ServiceDetail
 import Frequency from "../../components/Customer/Frequency/Frequency";
 import CalenderPick from "../../components/Customer/CalenderPick/CalenderPick";
 import DirectionScreen from "../../components/Customer/DirectionScreen/DirectionScreen";
+import AddressForm from "../../components/Customer/AddressForm/AddressForm";
+import AdditionalDetail from "../../components/Customer/AdditionalDetail/AdditionalDetail";
+import CardListScreen from "../../components/Customer/CardListScreen/CardListScreen";
+import AddCardScreen from "../../components/Customer/AddCardScreen/AddCardScreen";
+import CommentListScreen from "../../components/Customer/CommentListScreen/CommentListScreen";
+import CustomerProfileCardList from "../../components/Customer/CustomerProfileCardList/CustomerProfileCardList";
+import CustomerProfileAddCard from "../../components/Customer/CustomerProfileAddCard/CustomerProfileAddCard";
+import CustomerBillingList from "../../components/Customer/CustomerBillingList/CustomerBillingList";
+import CustomerAddBillingScreen from "../../components/Customer/CustomerAddBillingScreen/CustomerAddBillingScreen";
 
 import Entypo from '@expo/vector-icons/Entypo';
 import Foundation from '@expo/vector-icons/Foundation';
@@ -60,6 +69,15 @@ const HomeDashboard = StackNavigator({
     Frequency : { screen : Frequency },
     CalenderPick : { screen : CalenderPick },
     DirectionScreen : { screen : DirectionScreen },
+    AddressForm : { screen : AddressForm },
+    AdditionalDetail : { screen : AdditionalDetail },
+    CardListScreen : { screen : CardListScreen },
+    AddCardScreen : { screen : AddCardScreen },
+    CommentListScreen : { screen : CommentListScreen },
+    CustomerProfileCardList : { screen : CustomerProfileCardList },
+    CustomerProfileAddCard : { screen : CustomerProfileAddCard },
+    CustomerBillingList : { screen : CustomerBillingList },
+    CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
   },{
     navigationOptions:{
       header : null,
@@ -93,6 +111,15 @@ const CustomerTrabajos = StackNavigator({
     Frequency : { screen : Frequency },
     CalenderPick : { screen : CalenderPick },
     DirectionScreen : { screen : DirectionScreen },
+    AddressForm : { screen : AddressForm },
+    AdditionalDetail : { screen : AdditionalDetail },
+    CardListScreen : { screen : CardListScreen },
+    AddCardScreen : { screen : AddCardScreen },
+    CommentListScreen : { screen : CommentListScreen },
+    CustomerProfileCardList : { screen : CustomerProfileCardList },
+    CustomerProfileAddCard : { screen : CustomerProfileAddCard },
+    CustomerBillingList : { screen : CustomerBillingList },
+    CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
 },{
   navigationOptions:{
     header : null,
@@ -129,6 +156,15 @@ const ProfileStackNavigator = StackNavigator({
     Frequency : { screen : Frequency },
     CalenderPick : { screen : CalenderPick },
     DirectionScreen : { screen : DirectionScreen },
+    AddressForm : { screen : AddressForm },
+    AdditionalDetail : { screen : AdditionalDetail },
+    CardListScreen : { screen : CardListScreen },
+    AddCardScreen : { screen : AddCardScreen },
+    CommentListScreen : { screen : CommentListScreen },
+    CustomerProfileCardList : { screen : CustomerProfileCardList },
+    CustomerProfileAddCard : { screen : CustomerProfileAddCard },
+    CustomerBillingList : { screen : CustomerBillingList },
+    CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
 },{
   navigationOptions:{
     header : null,

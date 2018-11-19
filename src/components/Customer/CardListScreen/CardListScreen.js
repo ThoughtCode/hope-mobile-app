@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import styles from './DirectionScreenStyles';
+import styles from './CardListScreenStyle';
 const {height , width} = Dimensions.get('window')
 const IMAGES = {
     TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
 }
-export default class DirectionScreen extends Component {
+export default class CardListScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -90,17 +90,10 @@ export default class DirectionScreen extends Component {
                 </View>
                 
                 <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AddressForm')}>
-                        <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Nueva Direccion"}</Text>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AddCardScreen')}>
+                        <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Agregar tarjeta"}</Text>
                     </TouchableOpacity>
                 </View>
-                {(this.state.data.length > 0) ? <View style={{ marginVertical:10 }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('thirdScreen')}>
-                        <View style={styles.buttonViewStyle}>
-                            <Text style={styles.buttonTextStyle}>Escoger</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View> : null}
             </View>
         );
     }
