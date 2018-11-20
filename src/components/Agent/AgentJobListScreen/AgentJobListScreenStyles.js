@@ -36,7 +36,7 @@ module.exports = StyleSheet.create({
     flexDirection:'row',justifyContent:'space-between',alignItems:'center'
   },
   titleText:{
-    fontSize:18,fontWeight:'600',fontFamily:"helvetica"
+    fontSize:18,fontWeight:'600',fontFamily:'helvetica',textAlign:'center',color:'#0069a7'
   },
   textFont:{
     fontFamily:"helvetica"
@@ -46,5 +46,14 @@ module.exports = StyleSheet.create({
   },
   emptyText:{
     fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'
+  },
+  logo_container: {
+    textAlign: 'center',
+    bottom: 10,
+    top: 10,
+  },
+  logo_image: {
+    height: 140,
+    width: 150,
   }
 });

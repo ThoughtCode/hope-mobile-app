@@ -6,13 +6,13 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import StarRating from '../../../lib/react-native-star-rating';
 import { API } from '../../../util/api';
 
-const styles = require('./AgentReviewScreenStyles');
+const styles = require('./CustomerReviewScreenStyles');
 
 const IMAGES = {
     TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
 }
 
-export default class AgentReviewScreen extends Component {
+export default class CustomerReviewScreen extends Component {
 
     //======================================================================
     // constructor
@@ -46,11 +46,11 @@ export default class AgentReviewScreen extends Component {
                 "review" : {
                     "qualification" : this.state.starCount,
                     "comment" : this.state.comment
-                },
-                "job_id" : this.state.jobData.customer.hashed_id
+                }
             }
+            // "job_id" : this.state.jobData.customer.hashed_id
             console.log("Data-->",data)
-            API.setReview(this.reviewJobResponse,data,this.props.navigation.state.params.jobData.id,true);
+            API.setCustomerReview(this.reviewJobResponse,data,this.props.navigation.state.params.jobData.id,true);
         }else{
             Alert.alert("Noc Noc","Please enter comment")
         }
@@ -75,7 +75,7 @@ export default class AgentReviewScreen extends Component {
         },
         error: (err) => {
             console.log('reviewJobResponse error ' + JSON.stringify(err));
-            Alert.alert("Noc Noc",response.message)
+            Alert.alert("Noc Noc",err.message)
         },
         complete: () => {
         }

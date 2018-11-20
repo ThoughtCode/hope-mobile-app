@@ -79,12 +79,6 @@ export default class CustomerSignUp extends Component {
           behaviour='padding'
           style={styles.fullSize}
         >
-          <View style={styles.logo_container}>
-            <Image
-              style={styles.logo_image}
-              source={require('../../../../assets/img/logo_blanco.png')}
-            />
-          </View>
           <View style={styles.customer_indicator}>
             <Text style={styles.customer_indicator_text}>
               Registro de Cliente
@@ -105,6 +99,12 @@ export default class CustomerSignUp extends Component {
             contentContainerStyle={styles.signup_container}
             keyboardShouldPersistTaps='never'
           >
+            <View style={styles.logo_container}>
+              <Image
+                style={styles.logo_image}
+                source={require('../../../../assets/img/logo_blanco.png')}
+              />
+            </View>
             <View style={styles.signup_form_container}>
               <Text>
                 {this.state.errorMessage}

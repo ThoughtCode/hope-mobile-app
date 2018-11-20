@@ -119,7 +119,7 @@ export default class CustomerJobList extends Component {
             if(this.state.isPagination && !this.state.isAPICall){
                 var data = "/"+this.state.type+"?current_page="+Number(this.state.page + 1)
                 this.setState({isAPICall : true,page : this.state.page + 1},() =>{
-                    API.getJobs(this.getJobResponseData,data,true);
+                    API.getCustomerJobs(this.getJobResponseData,data,true);
                 })
             }
         }

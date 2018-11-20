@@ -6,15 +6,14 @@ const {height , width} = Dimensions.get('window')
 import Ionicons from '@expo/vector-icons/Ionicons'
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
-import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
 
-const styles = require('./AgentUpdatePasswordStyles');
+const styles = require('./CustomerUpdatePasswordStyles');
 
 const IMAGES = {
     TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
 }
 
-export default class AgentUpdatePassword extends Component {
+export default class CustomerUpdatePassword extends Component {
 
     //======================================================================
     // constructor
@@ -25,12 +24,10 @@ export default class AgentUpdatePassword extends Component {
         this.state = {
             userData : null,
             isLoading : true,
-            firstName : globals.first_name,
-            lastName : globals.last_name,
-            avatar : globals.avatar,
             currentPassword : "",
             newPassword : "",
             confirmPassword : "",
+            avatar : globals.avatar
         }
     }
 
@@ -39,7 +36,12 @@ export default class AgentUpdatePassword extends Component {
     //======================================================================
 
     componentDidMount(){
-        
+        AsyncStorage.getItem("customerData").then((item) =>{
+            // const data = this.state.data;
+            const data = JSON.parse(item)
+            this.setState({userData : data})
+      
+          })
     }
 
     //======================================================================
@@ -51,13 +53,13 @@ export default class AgentUpdatePassword extends Component {
         if(this.state.currentPassword == globals.password){
             if(this.state.newPassword == this.state.confirmPassword){
                 data = {
-                    "agent": {
+                    "customer": {
                         "current_password": this.state.currentPassword,
                         "password": this.state.newPassword,
                         "password_confirmation": this.state.confirmPassword
                     }
                 }
-                API.updatePassword(this.updatePasswordResponse,data,true);
+                API.customerUpdatePassword(this.updatePasswordResponse,data,true);
             }else{
                 Alert.alert(globals.APP_NAME,"Mismatch new password")
             }
@@ -73,10 +75,10 @@ export default class AgentUpdatePassword extends Component {
     updatePasswordResponse = {
         success: (response) => {
             try {
-                console.log("jobApplyResponse data-->"+JSON.stringify(response))
+                // console.log("jobApplyResponse data-->"+JSON.stringify(response))
                 Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => {
                     AsyncStorage.clear().then(()=>{
-                        this.props.navigation.navigate("AgentLogin")
+                        this.props.navigation.navigate("CustomerLogin")
                     })
                 }}])
             } catch (error) {
@@ -103,8 +105,9 @@ export default class AgentUpdatePassword extends Component {
     //======================================================================
     
     render(){
-        var initials = globals.first_name.charAt(0) || "" 
-        initials += globals.last_name.charAt(0) || ""
+        if(this.state.userData != null){
+        var initials = this.state.userData.customer.data.attributes.first_name.charAt(0)
+        initials += this.state.userData.customer.data.attributes.last_name.charAt(0) || ""
         return(
             <SafeAreaView style={styles.container}>
                  <KeyboardAvoidingView
@@ -115,18 +118,18 @@ export default class AgentUpdatePassword extends Component {
                             <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
                             <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
                                 <View style={styles.profileView}>
-                                    
                                     {(this.state.avatar != "")?
-                                        <Image source={{uri : this.state.avatar+'?time=' + new Date()}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>
+                                        <Image source={{uri : this.state.avatar}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>
                                         :
                                         <View style={[styles.profileImage, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center' }]} >
                                             <Text style={{ color: '#fff' }}>{initials}</Text>
                                         </View>
                                     }
                                 </View>
+                                    
                                 
                                 <View style={{alignItems:'center',justifyContent:'center'}}>
-                                    <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.firstName + " "+ this.state.lastName}</Text>
+                                <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.userData.customer.data.attributes.first_name + " "+ this.state.userData.customer.data.attributes.last_name}</Text>
                                 </View>
                                 
                             
@@ -186,5 +189,8 @@ export default class AgentUpdatePassword extends Component {
                 </KeyboardAvoidingView>
             </SafeAreaView>
         )
+        }else{
+            return null
+        }
     }
 }

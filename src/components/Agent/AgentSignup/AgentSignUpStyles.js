@@ -19,17 +19,17 @@ module.exports = StyleSheet.create({
     borderRadius: 5
   },
   agent_indicator: {
-    backgroundColor: '#fff',
+    backgroundColor: '#0069A7',
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     position: 'absolute',
     top: 70,
     right: 0,
     paddingHorizontal: 25,
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   agent_indicator_text: {
-    color: '#0069A7',
+    color: '#fff',
   },
   customer_login_action: {
     borderTopLeftRadius: 10,
@@ -46,7 +46,7 @@ module.exports = StyleSheet.create({
     fontSize: 10
   },
   signup_form_container: {
-    marginTop: 70,
+    marginTop: 200,
     flex: 1,
     backgroundColor: 'transparent',
     alignItems: 'center',
@@ -71,7 +71,7 @@ module.exports = StyleSheet.create({
     height: 40,
     marginTop: 5,
     textAlign: 'left',
-    fontSize: 10,
+    fontSize: 12,
     color: '#fff',
     paddingLeft: 10
   },
@@ -87,6 +87,7 @@ module.exports = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
+    top: 20,
   },
   signup_button_text: {
     color: '#0069A7',
@@ -110,11 +111,10 @@ module.exports = StyleSheet.create({
   },
   logo_container: {
     position: 'absolute',
-    top: 70,
-    left: 50,
+    top: 120,
   },
   logo_image: {
-    width: 60,
-    height: 54,
+    width: 90,
+    height: 84
   }
 });

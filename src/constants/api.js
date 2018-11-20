@@ -1,8 +1,10 @@
-export const BASE_URL = "https://hopeec-production.herokuapp.com";
+export const BASE_URL = "https://hopeec-staging.herokuapp.com";
+export const STAGING_URL = "https://hopeec-staging.herokuapp.com";
 // export const BASE_URL = "http://localhost:3000";
 export const SIGNUP_URI = "/api/v1/customers/signup";
 export const AGENT_SIGNUP_URI = "/api/v1/agents/signup";
 export const CUSTOMER_SIGNIN = "/api/v1/customers/signin";
+export const CUSTOMER_FACEBOOK_LOGIN = "/api/v1/customers/facebook"
 export const AGENT_SIGNIN = "/api/v1/agents/signin";
 export const CUSTOMER_SIGNOUT = "/api/v1/customers/signout";
 export const AGENT_SIGNOUT = "/api/v1/agents/signout";
@@ -22,5 +24,9 @@ export const UPDATE_PROFILE_PIC = "/api/v1/agents/update";
 export const SET_REVIEW = "/api/v1/agents/jobs/";
 
 export const CUSTOMERS_JOBS = "/api/v1/customers/jobs";
-
-
+export const CUSTOMERS_PROPERTIES = "/api/v1/customers/properties";
+export const CUSTOMERS_PROFILE = "/api/v1/customers/update";
+export const CUSTOMERS_PASSWORD = "/api/v1/customers/change_password";
+export const GET_CITY = "/api/v1/customers/cities";
+export const GET_NEIGHTBORHOODS = "/api/v1/customers/cities/";
+export const SET_CUSTERMER_REVIEW = "/api/v1/customers/jobs/";

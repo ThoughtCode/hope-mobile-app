@@ -5,17 +5,16 @@ const {height , width} = Dimensions.get('window')
 import Ionicons from '@expo/vector-icons/Ionicons'
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
-import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
 import { ImagePicker, Camera, Permissions  } from 'expo';
 import ImageUpload from '../../../util/ImageUpload';
 import ActionSheet from 'react-native-actionsheet'
-const styles = require('./AgentUpdateProfileStyles');
+const styles = require('./CustomerUpdateProfileStyles');
 
 const IMAGES = {
     TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
 }
 
-export default class AgentProfile extends Component {
+export default class CustomerUpdateProfile extends Component {
 
     //======================================================================
     // constructor
@@ -31,7 +30,8 @@ export default class AgentProfile extends Component {
             email : globals.email,
             phone : globals.cell_phone,
             hasCameraPermission: null,
-            isCameraOpen : false
+            isCameraOpen : false,
+            userData : null
         }
     }
 
@@ -40,14 +40,24 @@ export default class AgentProfile extends Component {
     //======================================================================
 
     componentDidMount(){
-        // const { status } = await Permissions.askAsync(Permissions.CAMERA);
-        // this.setState({ hasCameraPermission: status === 'granted' });
+        AsyncStorage.getItem("customerData").then((item) =>{
+            // const data = this.state.data;
+            const data = JSON.parse(item)
+            this.setState({userData : data,
+                firstName : data.customer.data.attributes.first_name,
+                lastName : data.customer.data.attributes.last_name,
+                // avatar : data.customer.data.attributes.avatar.url,
+                email : data.customer.data.attributes.email,
+                phone : data.customer.data.attributes.cell_phone
+            })
+      
+        })
     }
 
     btnUpdateTap = () =>{
         
         data = {
-            "agent": {
+            "customer": {
                 "first_name": this.state.firstName,
                 "last_name": this.state.lastName,
                 "email": this.state.email,
@@ -57,7 +67,7 @@ export default class AgentProfile extends Component {
         if(this.state.profilePhoto != null){
             this.uploadPhoto()
         }
-        API.updateUser(this.updateUserResponse,data,true);
+        API.customerUpdateProfile(this.updateUserResponse,data,true);
     }
 
     //======================================================================
@@ -67,26 +77,26 @@ export default class AgentProfile extends Component {
     updateUserResponse = {
         success: (response) => {
             try {
-                
                 console.log("updateUserResponse data-->"+JSON.stringify(response))
+                AsyncStorage.setItem("customerData",JSON.stringify(response))
                 Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => {
                     this.props.navigation.state.params.updatePhoto()
-                    AsyncStorage.multiSet([["access_token",response.agent.data.attributes.access_token || ""],
-                    ['first_name', response.agent.data.attributes.first_name || ""],
-                    ['last_name', response.agent.data.attributes.last_name || ""],
-                    ['email', response.agent.data.attributes.email || ""],
-                    ['cell_phone', response.agent.data.attributes.cell_phone || ""],
-                    ['avatar', response.agent.data.attributes.avatar.url || ""]],()=>{
+                    // AsyncStorage.multiSet([["access_token",response.agent.data.attributes.access_token || ""],
+                    // ['first_name', response.agent.data.attributes.first_name || ""],
+                    // ['last_name', response.agent.data.attributes.last_name || ""],
+                    // ['email', response.agent.data.attributes.email || ""],
+                    // ['cell_phone', response.agent.data.attributes.cell_phone || ""],
+                    // ['avatar', response.agent.data.attributes.avatar.url || ""]],()=>{
 
-                        globals.access_token = response.agent.data.attributes.access_token ||""
-                        globals.first_name = response.agent.data.attributes.first_name || ""
-                        globals.last_name = response.agent.data.attributes.last_name || ""
-                        globals.email = response.agent.data.attributes.email || ""
-                        globals.cell_phone = response.agent.data.attributes.cell_phone || ""
-                        globals.avatar = response.agent.data.attributes.avatar.url || ""
-                        this.props.navigation.state.params.setData()
+                        globals.access_token = response.customer.data.attributes.access_token ||""
+                        globals.first_name = response.customer.data.attributes.first_name || ""
+                        globals.last_name = response.customer.data.attributes.last_name || ""
+                        globals.email = response.customer.data.attributes.email || ""
+                        globals.cell_phone = response.customer.data.attributes.cell_phone || ""
+                        globals.avatar = response.customer.data.attributes.avatar.url || ""
+                        // this.props.navigation.state.params.setData()
                         this.props.navigation.goBack()    
-                    })
+                    // })
                     
                 }}])
                 
@@ -170,11 +180,11 @@ export default class AgentProfile extends Component {
           }
 
           var data = {
-            "avatar": profiePicture,
+            "customer": profiePicture,
           }
       
           console.log("Data-->"+JSON.stringify(data))
-          ImageUpload.imageUpload(profiePicture,true)
+          ImageUpload.imageUpload(profiePicture,false)
     }
 
     _onOpenActionSheet = () => {
@@ -186,8 +196,10 @@ export default class AgentProfile extends Component {
     //======================================================================
     
     render(){
-        var initials = globals.first_name.charAt(0) || "" 
-        initials += globals.last_name.charAt(0) || ""
+        if(this.state.userData != null) {
+            var initials = this.state.userData.customer.data.attributes.first_name.charAt(0)
+            initials += this.state.userData.customer.data.attributes.last_name.charAt(0) || ""
+        
         return(
             <SafeAreaView style={styles.container}>
                 <KeyboardAvoidingView
@@ -197,13 +209,14 @@ export default class AgentProfile extends Component {
                         <View>
                             <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
                             <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
-                                <View style={styles.profileView}>
+                                
                                     
+                            <View style={styles.profileView}>
                                     {(this.state.avatar != "")?
                                         <TouchableOpacity onPress={this._onOpenActionSheet}>
                                             {(this.state.profilePhoto != null) ? <Image source={{uri : this.state.profilePhoto}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/camera.png")}/> 
                                             :
-                                            <Image source={{uri : this.state.avatar+'?time=' + new Date()}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> }
+                                            <Image source={{uri : this.state.avatar}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> }
                                         </TouchableOpacity>
                                         :
                                         <TouchableOpacity onPress={this._onOpenActionSheet}>
@@ -213,9 +226,10 @@ export default class AgentProfile extends Component {
                                                 <Text style={{ color: '#fff' }}>{initials}</Text>
                                             </View>
                                             }
-                                        </TouchableOpacity>}
-                                    
+                                    </TouchableOpacity>}
                                 </View>
+                                    
+                                
                                 
                                 <View style={{alignItems:'center',justifyContent:'center'}}>
                                     <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.firstName + " "+ this.state.lastName}</Text>
@@ -299,5 +313,8 @@ export default class AgentProfile extends Component {
                     />
             </SafeAreaView>
         )
+        }else{
+            return null
+        }
     }
 }

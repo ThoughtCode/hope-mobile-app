@@ -50,6 +50,41 @@ export const API = {
     agentContract: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_JOBS + data, buildHeader());
     },
+
+    customerProperties: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROPERTIES, buildHeader());
+    },
+
+    createProperties: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROPERTIES, buildHeader());
+    },
+
+    customerUpdateProfile: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, data, 'PUT', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROFILE, buildHeader());
+    },
+
+    customerUpdatePassword: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, data, 'PUT', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PASSWORD, buildHeader());
+    },
+
+    getCity: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_CITY, buildHeader());
+    },
+
+    getNeightborhoods: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_NEIGHTBORHOODS + data + "/neightborhoods", buildHeader());
+    },
+
+    jobDetail: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_JOBS + data, buildHeader());
+    },
+
+    setCustomerReview: (onResponse, data, job_id, isHeaderRequired) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_CUSTERMER_REVIEW + job_id + "/review", buildHeader());
+    },   
+    
+    
+    
 }
 
 export const buildHeader = (headerParams = {}) => {

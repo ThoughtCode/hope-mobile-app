@@ -10,8 +10,16 @@ module.exports = StyleSheet.create({
     height: width * 0.3,
     width : width
   },
+  topTitleView:{
+    flexDirection:'row',
+    justifyContent:"space-between",
+    paddingHorizontal:20,
+    paddingVertical:10,
+    backgroundColor:'rgb(240,240,240)',
+    alignItems:"center"
+  },
   mainTitleText:{
-    fontSize:16,fontWeight:'400',fontFamily:"helvetica",color:'gray',
+    fontSize:16,fontWeight:'400',fontFamily:"helvetica",color:'gray'
   },
   profileView:{
     height:80,width:80,borderRadius:40,backgroundColor:'#fff',alignSelf:'center',borderWidth:1,marginTop:-40,borderColor : '#fff'
@@ -44,22 +52,15 @@ module.exports = StyleSheet.create({
     fontSize:20,fontWeight:'900',fontFamily:"helvetica"
   },
   subText:{
-    fontSize:14,fontFamily:"helvetica",color:'gray'
+    fontSize:14,fontFamily:"helvetica",color:'lightgray'
   },
-  userImage:{
-    height:38,width:38,borderRadius:19
+  textInputVieW:{
+    marginTop:10
   },
-  userImageView:{
-    height:40,width:40,borderRadius:20,backgroundColor:'#fff',alignSelf:'center',marginRight:5
+  textInputTitleText:{
+    fontSize:18,fontWeight:'600',fontFamily:"helvetica",marginBottom:5
   },
-  profileView:{
-    height:80,width:80,borderRadius:40,backgroundColor:'#fff',alignSelf:'center',borderWidth:1,marginTop:-40,borderColor : '#fff'
+  textInputStyle:{
+    borderWidth:1,borderColor:'lightgray',borderRadius:5,height:40,paddingLeft:10
   },
-  renderRowView1:{
-    marginHorizontal:20,paddingVertical:10
-  },
-  
-  
-  
-
 });

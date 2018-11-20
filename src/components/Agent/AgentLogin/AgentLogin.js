@@ -34,6 +34,7 @@ export default class AgentLogin extends React.Component {
   }
 
   signInAgent = () => {
+    // alert("Agent-->",this.state.email +" === "+this.state.password)
     this.setState({ errorMessage: '' });
     if (this.state.email === '') {
       this.setState({ errorMessage: "El campo de correo no puede estar vacío" })

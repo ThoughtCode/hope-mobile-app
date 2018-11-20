@@ -11,17 +11,17 @@ const images = [
   {
     src: require("../../../../assets/img/home_splash_1_opacity.jpg"),
     description: "Feature 1",
-    subtitle: "Lorem ipsum dolor sit amet"
+    subtitle: "Innovadores"
   },
   {
     src: require("../../../../assets/img/home_splash_2_opacity.jpg"),
     description: "Feature 2",
-    subtitle: "Lorem ipsum dolor sit amet"
+    subtitle: "Rápidos"
   },
   {
     src: require("../../../../assets/img/home_splash_3_opacity.jpg"),
     description: "Feature 3",
-    subtitle: "Lorem ipsum dolor sit amet"
+    subtitle: "Seguros"
   }
 ];
 

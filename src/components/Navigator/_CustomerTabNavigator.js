@@ -16,8 +16,12 @@ import CustomerNewAddress from '../../components/Customer/CustomerNewAddress/Cus
 import CustomerTrabajosDashboard from '../../components/Customer/CustomerTrabajosDashboard/CustomerTrabajosDashboard';
 import CustomerJobDetailScreen from '../../components/Customer/CustomerJobDetailScreen/CustomerJobDetailScreen';
 import CreateJob from "../../components/Customer/CreateJob/CreateJob";
-
-
+import CustomerUpdateProfile from "../../components/Customer/CustomerUpdateProfile/CustomerUpdateProfile";
+import CustomerUpdateProperties from "../../components/Customer/CustomerUpdateProperties/CustomerUpdateProperties";
+import CreateProperties from "../../components/Customer/CreateProperties/CreateProperties";
+import CustomerUpdatePassword from "../../components/Customer/CustomerUpdatePassword/CustomerUpdatePassword";
+import CustomerReviewScreen from "../../components/Customer/CustomerReviewScreen/CustomerReviewScreen";
+import CustomerAgentReviewScreen from "../../components/Customer/CustomerAgentReviewScreen/CustomerAgentReviewScreen";
 
 import Entypo from '@expo/vector-icons/Entypo';
 import Foundation from '@expo/vector-icons/Foundation';
@@ -42,6 +46,8 @@ const HomeDashboard = StackNavigator({
     CustomerNewAddress : { screen : CustomerNewAddress },
     CustomerTrabajosDashboard : { screen : CustomerTrabajosDashboard },
     CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
+    CustomerReviewScreen : { screen : CustomerReviewScreen },
+    CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
     CreateJob : { screen : CreateJob },
   },{
     navigationOptions:{
@@ -68,6 +74,8 @@ const CustomerTrabajos = StackNavigator({
     CustomerAddonService : { screen : CustomerAddonService },
     CustomerNewAddress : { screen : CustomerNewAddress },
     CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
+    CustomerReviewScreen : { screen : CustomerReviewScreen },
+    CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
     CreateJob : { screen : CreateJob },
 },{
   navigationOptions:{
@@ -94,6 +102,12 @@ const ProfileStackNavigator = StackNavigator({
     CustomerTrabajosDashboard : { screen : CustomerTrabajosDashboard },
     CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
     CreateJob : { screen : CreateJob },
+    CustomerUpdateProfile : { screen : CustomerUpdateProfile },
+    CustomerUpdateProperties : { screen : CustomerUpdateProperties },
+    CreateProperties : { screen : CreateProperties },
+    CustomerUpdatePassword : { screen : CustomerUpdatePassword },
+    CustomerReviewScreen : { screen : CustomerReviewScreen },
+    CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
 },{
   navigationOptions:{
     header : null,
@@ -107,11 +121,11 @@ export default CustomerTabbar = TabNavigator({
       screen: HomeDashboard,
       navigationOptions: {
           borderBottomWidth: 0,
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Inicio',
           tabBarIcon: ({ tintColor }) => (
               <View style={[styles.tabViewBox]}>
                   <Entypo name="home" style={[styles.tabIcon]} size={iconHeight} color={tintColor} />
-                  <Text style={[styles.tabText, { color: tintColor }]}>{"Home"}</Text>
+                  <Text style={[styles.tabText, { color: tintColor }]}>{"Inicio"}</Text>
               </View>
           )
       }
