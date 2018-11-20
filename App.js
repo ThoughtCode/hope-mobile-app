@@ -34,8 +34,7 @@ export default class App extends React.Component {
     this.state = {
       fontLoaded: false,
       isLoading : true,
-      isAgentLogin : false,
-      notification: {},
+      isAgentLogin : false
     };
   }
 
@@ -52,7 +51,6 @@ export default class App extends React.Component {
 
   _handleNotification = (notification) => {
     console.log(JSON.stringify(notification.data))
-    this.setState({notification: notification});
   };
 
   async componentWillMount() {
@@ -96,12 +94,6 @@ export default class App extends React.Component {
   }
   
   render() {
-    if(this.state.notification) {
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Origin: {this.state.notification.origin}</Text>
-        <Text>Data: {JSON.stringify(this.state.notification.data)}</Text>
-      </View>
-    }
     if (this.state.fontLoaded) {
       if (this.state.isAgentLogin) {
         return (
