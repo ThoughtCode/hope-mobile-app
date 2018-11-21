@@ -22,6 +22,7 @@ export default class CustomerCleaning extends Component {
         super(props)
         _this = this
         this.state = {
+            serviceType : props.navigation.state.params.serviceType
         }
     }
 
@@ -122,7 +123,7 @@ export default class CustomerCleaning extends Component {
                         </View>
                     </View>
                     <View>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail")}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail",{serviceTypeID : this.state.serviceType.id})}>
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
                                     <Text style={styles.titleText}>{"Dettale del Servicio"}</Text>

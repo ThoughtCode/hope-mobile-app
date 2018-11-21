@@ -83,6 +83,9 @@ export const API = {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_CUSTERMER_REVIEW + job_id + "/review", buildHeader());
     },   
     
+    getServiceType: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_CUSTERMER_SERVICETYPE + data, buildHeader());
+    },
     
     
 }
