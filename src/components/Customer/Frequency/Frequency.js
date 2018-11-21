@@ -18,19 +18,19 @@ export default class Frequency extends Component {
             data: [
                 {
                     name: 'Una vez',
-                    description: 'AAAAAAAAA'
+                    description: 'Te visitaremos una sola vez en la fecha seleccionada'
                 },
                 {
                     name: 'Semanal',
-                    description: 'AAAAAAAAA'
+                    description: 'Te visitaremos semanaimente el dia que tu elijas'
                 },
                 {
                     name: 'Quincenal',
-                    description: 'AAAAAAAAA'
+                    description: 'Te visitaremos cada 15 dias el dia que tu elijas'
                 },
                 {
                     name: 'Mensual',
-                    description: 'AAAAAAAAA'
+                    description: 'Te Visitaremos mensualmente el dia que tu elijas'
                 }
             ]
         }
