@@ -10,6 +10,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from 'react-native-calendar-picker';
 import styles from './CalenderPickStyles';
+import Moment from 'moment';
 
 export default class CalenderPick extends Component {
     constructor(props) {
@@ -21,10 +22,17 @@ export default class CalenderPick extends Component {
     }
 
     onDateChange(date) {
+        var initialDate = Moment.utc(new Date(date)).format("DD [de] MMM [de] YYYY")
         this.setState({
-          selectedStartDate: date,
+          selectedStartDate: initialDate + " - 12:00H",
         });
-      }
+    }
+
+    onPress = () =>{
+        const { setDate } = this.props.navigation.state.params;
+        setDate(this.state.selectedStartDate)
+        this.props.navigation.goBack();
+    }
     
     render() {
         let { data, checked } = this.state;
@@ -44,7 +52,7 @@ export default class CalenderPick extends Component {
                 </View>
                 
                 <View style={{ marginVertical:10 }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('thirdScreen')}>
+                    <TouchableOpacity onPress={this.onPress}>
                         <View style={styles.buttonViewStyle}>
                             <Text style={styles.buttonTextStyle}>Escoger</Text>
                         </View>

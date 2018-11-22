@@ -22,7 +22,10 @@ export default class CustomerCleaning extends Component {
         super(props)
         _this = this
         this.state = {
-            serviceType : props.navigation.state.params.serviceType
+            serviceType : props.navigation.state.params.serviceType,
+            frequencyData: [],
+            selectedDate : null
+
         }
     }
 
@@ -32,6 +35,19 @@ export default class CustomerCleaning extends Component {
 
     componentDidMount(){
         // AgentJobListScreen.getJobsAPICall()
+    }
+
+
+    setFrequency = (frequencyData) =>{
+        this.setState({
+            frequencyData : frequencyData
+        })
+    }
+
+    setDate = (date) =>{
+        this.setState({
+            selectedDate : date 
+        })
     }
 
     //======================================================================
@@ -133,21 +149,27 @@ export default class CustomerCleaning extends Component {
                             </View>
                         </TouchableOpacity>
                         
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Frequency")}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Frequency",{setFrequency : this.setFrequency})}>
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
                                     <Text style={styles.titleText}>{"Frecuencia"}</Text>
-                                    <Text style={styles.subTitleText}>{"Unz vez"}</Text>
+                                    <View style={{flexDirection:'row'}}>
+                                        {this.state.frequencyData && this.state.frequencyData.map((item,index) =>{
+                                            return  <Text style={styles.subTitleText}>{(this.state.frequencyData.length -1 > index) ? item.name+ "," : item.name}</Text>
+                                            })
+                                        }
+                                    </View>
+                                    
                                 </View>
                                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                             </View>
                         </TouchableOpacity>
                         
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick")}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick",{setDate : this.setDate})}>
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
                                     <Text style={styles.titleText}>{"Fecha y Hora"}</Text>
-                                    <Text style={styles.subTitleText}>{"23 de mayo de 2018 - 12:00 H"}</Text>
+                                    {this.state.selectedDate && <Text style={styles.subTitleText}>{this.state.selectedDate.toString()}</Text>}
                                 </View>
                                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                             </View>

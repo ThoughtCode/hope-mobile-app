@@ -63,6 +63,10 @@ export const API = {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROPERTIES, buildHeader());
     },
 
+    updateProperties: (onResponse, data, isHeaderRequired,id) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROPERTIES + "/"+ id, buildHeader());
+    },
+
     customerUpdateProfile: (onResponse, data, isHeaderRequired) => {
         request(onResponse, data, 'PUT', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROFILE, buildHeader());
     },
