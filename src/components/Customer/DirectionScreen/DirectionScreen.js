@@ -11,6 +11,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './DirectionScreenStyles';
 const {height , width} = Dimensions.get('window')
+import { API } from '../../../util/api';
 const IMAGES = {
     TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
 }
@@ -35,26 +36,52 @@ export default class DirectionScreen extends Component {
         }
     }
 
-    handleChange = (index) => {
-        let checked = [...this.state.checked];
-        checked[index] = !checked[index];
-        this.setState({ checked });
+    componentDidMount(){
+        API.customerProperties(this.getAddressResponse,{},true);
+    }
+
+    //======================================================================
+    // jobApplyResponse
+    //======================================================================
+
+    getAddressResponse = {
+        success: (response) => {
+            try {
+                console.log("getAddressResponse data-->"+JSON.stringify(response))
+                response.property && response.property.data && this.setState({data : response.property.data})
+                
+            } catch (error) {
+                console.log('getAddressResponse catch error ' + JSON.stringify(error));
+            }
+        },
+        error: (err) => {
+            console.log('getAddressResponse error ' + JSON.stringify(err));
+        },
+        complete: () => {
+        }
+    }
+
+    refresProperties = () =>{
+        API.customerProperties(this.getAddressResponse,{},true);
     }
 
     renderRow = (item) =>{
+        let data = item.item
         return(
-            <View style={styles.childContainer}>
-                <Entypo name={"home"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => alert("onClick")} />
-                <View style={styles.itemView}>
-                    <Text>
-                        {item.item.name}
-                    </Text>
-                    <Text>
-                        {item.item.description}
-                    </Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("AddressForm",{propertyData:data,isUpdate : true,refresProperties : this.refresProperties})}>
+                <View style={styles.childContainer}>
+                    <Entypo name={"home"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => alert("onClick")} />
+                    <View style={styles.itemView}>
+                        <Text>
+                            {data.attributes.name || "Casa"}
+                        </Text>
+                        <Text>
+                            {data.attributes.number +" "+data.attributes.s_street + " "+data.attributes.p_street+" "+data.attributes.city}
+                        </Text>
+                    </View>
+                    <Entypo name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => alert("onClick")} />
                 </View>
-                <Entypo name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => alert("onClick")} />
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -90,7 +117,7 @@ export default class DirectionScreen extends Component {
                 </View>
                 
                 <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AddressForm')}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AddressForm',{refresProperties : this.refresProperties,isUpdate : false})}>
                         <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Nueva Direccion"}</Text>
                     </TouchableOpacity>
                 </View>

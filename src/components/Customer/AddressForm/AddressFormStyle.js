@@ -6,6 +6,9 @@ const AddressFormStyle = StyleSheet.create({
         marginTop: 20,
         backgroundColor: '#ffffff',
     },
+    backButtonImage:{
+        color:"#000",position:'absolute',top:20,left:20,zIndex:1,color : '#fff'
+      },
     bannerImageContainer: {
         height: 50, justifyContent: 'center', borderColor: '#000000', borderWidth: 2, margin: 10
     },
@@ -17,7 +20,7 @@ const AddressFormStyle = StyleSheet.create({
         fontSize: 20, color: '#ffffff', textAlign: 'center'
     },
     titleTextViewStyle: {
-        margin: 10, height: 50, backgroundColor: '#f0f0f0', justifyContent: 'center'
+        marginVertical: 10, height: 50, backgroundColor: '#f0f0f0', justifyContent: 'center'
     },
     titleTextStyle:
     {
