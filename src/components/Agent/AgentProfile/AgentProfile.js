@@ -150,7 +150,6 @@ export default class AgentProfile extends Component {
     render(){
         var initials = globals.first_name.charAt(0) || ""
         initials += globals.last_name.charAt(0) || ""
-        console.log(this.props, globals)
         return(
             <SafeAreaView style={styles.container}>
                 <View>

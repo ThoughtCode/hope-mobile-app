@@ -40,8 +40,7 @@ export default class AgentComment extends Component {
     //======================================================================
 
     componentDidMount(){
-      console.log(this.props)
-      console.log(this.state)
+        API.getAgentCommentsProfile(this.getAgentCommentsProfileResponseData,data,true);
     }
 
     //======================================================================
@@ -139,7 +138,7 @@ export default class AgentComment extends Component {
 
                         <View style={{flex:1,marginHorizontal:20}}>
                             <View style={styles.textInputVieW}>
-                                <Text style={styles.textInputTitleText}>{"José Castellanos"}</Text>
+                                <Text style={styles.textInputTitleText}>{"José Castellanoos"}</Text>
                                 <StarRating
                                     disabled={true}
                                     emptyStar={'ios-star-outline'}
