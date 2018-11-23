@@ -35,9 +35,9 @@ export const API = {
     },
 
     getAgentCommentsProfile: (onResponse, data, isHeaderRequired) => {
-        request(onResponse, data, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.AGENT_COMMENTS_PROFILE, buildHeader());
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.AGENT_COMMENTS_PROFILE +'/reviews', buildHeader());
     },
-
+    
     setReview: (onResponse, data, job_id, isHeaderRequired) => {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_REVIEW + job_id + "/review", buildHeader());
     },   
