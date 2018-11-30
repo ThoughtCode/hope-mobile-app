@@ -8,7 +8,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  AsyncStorage
 } from 'react-native';
 
 import * as urls from '../../../constants/api';
@@ -56,7 +57,8 @@ export default class CustomerSignUp extends Component {
       })
         .then((response) => {
           if (response.status === 200) {
-            response.json().then((data) => {
+            response.json().then(async (data) => {
+              await this._postMobilePushNotificationToken(data.customer.data.attributes.access_token);
               this.props.navigation.navigate('CustomerDashboard', {data});
             });
           } else if (response.status === 422) {
@@ -66,6 +68,36 @@ export default class CustomerSignUp extends Component {
         .catch((error) => this.setState({errorMessage: error.message}));
     }
   };
+
+  _getStorageValue = async (key) => {
+    var value = await AsyncStorage.getItem(key)
+    return value;
+  }  
+
+  _postMobilePushNotificationToken = async (authToken) => {
+    setMobileTokenUrl = urls.STAGING_URL + urls.SET_CUSTOMER_MOBILE_TOKEN;
+    let push_notification = await this._getStorageValue('PushNotificationToken')
+    console.log('PushNotificationToken:' + push_notification)
+    fetch(setMobileTokenUrl, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authToken}`
+      },
+      body: JSON.stringify({
+        "customer": {
+          "mobile_push_token": push_notification,
+        }
+      })
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then(async (data) => {
+          console.log(data)
+        });
+      }
+    }).catch((error) => console.log('token not saved'));
+  }   
 
   render() {
     return (

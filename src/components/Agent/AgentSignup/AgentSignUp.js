@@ -77,7 +77,8 @@ export default class AgentSignUp extends Component {
         .then((response) => {
           if (response.status === 200) {
             console.log("Registration response",response);
-            response.json().then((data) => {
+            response.json().then(async (data) => {
+              await this._postMobilePushNotificationToken(data.agent.data.attributes.access_token);
               AsyncStorage.multiSet([["access_token",data.agent.data.attributes.access_token || ""],
                                   ['first_name', data.agent.data.attributes.first_name || ""],
                                   ['last_name', data.agent.data.attributes.last_name || ""],
@@ -109,6 +110,36 @@ export default class AgentSignUp extends Component {
 
 
   };
+
+  _getStorageValue = async (key) => {
+    var value = await AsyncStorage.getItem(key)
+    return value;
+  }  
+
+  _postMobilePushNotificationToken = async (authToken) => {
+    setMobileTokenUrl = urls.STAGING_URL + urls.SET_CUSTOMER_MOBILE_TOKEN;
+    let push_notification = await this._getStorageValue('PushNotificationToken')
+    console.log('PushNotificationToken:' + push_notification)
+    fetch(setMobileTokenUrl, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authToken}`
+      },
+      body: JSON.stringify({
+        "customer": {
+          "mobile_push_token": push_notification,
+        }
+      })
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then(async (data) => {
+          console.log(data)
+        });
+      }
+    }).catch((error) => console.log('token not saved'));
+  }  
 
   render() {
     return (
