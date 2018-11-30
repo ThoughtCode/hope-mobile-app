@@ -117,7 +117,7 @@ export default class AgentSignUp extends Component {
   }  
 
   _postMobilePushNotificationToken = async (authToken) => {
-    setMobileTokenUrl = urls.STAGING_URL + urls.SET_CUSTOMER_MOBILE_TOKEN;
+    setMobileTokenUrl = urls.STAGING_URL + urls.SET_AGENT_MOBILE_TOKEN;
     let push_notification = await this._getStorageValue('PushNotificationToken')
     console.log('PushNotificationToken:' + push_notification)
     fetch(setMobileTokenUrl, {
