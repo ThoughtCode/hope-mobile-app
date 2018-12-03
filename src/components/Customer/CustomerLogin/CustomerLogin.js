@@ -39,9 +39,9 @@ export default class CustomerLogin extends React.Component {
   signInCustomer = () => {
     this.setState({ errorMessage: '', spinner: true });
     if (this.state.email === '') {
-      this.setState({ errorMessage: "El campo de correo no puede estar vacío" })
+      this.setState({ errorMessage: <Text style={styles.text_error}>El campo de correo no puede estar vacío</Text> })
     } else if (this.state.password === '') {
-      this.setState({ errorMessage: "Por favor ingrese su contraseña" })
+      this.setState({ errorMessage: <Text style={styles.text_error}>Por favor ingrese su contraseña</Text> })
     } else {
       signinURL = urls.BASE_URL + urls.CUSTOMER_SIGNIN;
       fetch(signinURL, {
@@ -138,7 +138,6 @@ export default class CustomerLogin extends React.Component {
             <ScrollView
               contentContainerStyle={styles.login_container}
               keyboardShouldPersistTaps='never'
-              scrollEnabled={false}
             >
               <View style={styles.login_form_container}>
                 <Text>

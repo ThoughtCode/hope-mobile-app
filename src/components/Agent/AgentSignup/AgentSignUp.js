@@ -30,9 +30,35 @@ export default class AgentSignUp extends Component {
       national_id: "",
       cell_phone: "",
       birthday: "",
-      errorMessage: ''
+      errorMessage: '',
+      length_national: {
+        maxLength: 0,
+      },
+      length: {
+        maxLength: 0,
+      }
     };
     this.signUpAgent = this.signUpAgent.bind(this);
+    this.validateInputNational = this.validateInputNational.bind(this);
+    this.validateInput = this.validateInput.bind(this);
+  }
+
+  keypressed = (e) => {
+    console.log(e)
+  }
+
+  validateInputNational = (e) => {
+    console.log(e)
+    var national_id = e.national_id
+    var ml = this.state.length_national.maxLength + 1
+    this.setState({national_id, length_national:{maxLength: ml}})
+  }
+  
+  validateInput = (e) => {
+    console.log(e)
+    var cell_phone = e.cell_phone
+    var ml = this.state.length.maxLength + 1
+    this.setState({cell_phone, length:{maxLength: ml}})
   }
 
   signUpAgent = () => {
@@ -111,16 +137,16 @@ export default class AgentSignUp extends Component {
   };
 
   render() {
+    console.log(this.state.length_national.maxLength)
+    console.log(this.state.length.maxLength)
     return (
       <ImageBackground
-        style={{
-          flex: 1,
-        }}
+        style={{ flex: 1, }}
         source={require("../../../../assets/img/home_splash_3.jpg")}
       >
         <KeyboardAvoidingView
-          behaviour='padding'
           style={styles.fullSize}
+          behaviour='padding'
         >
           <View style={styles.agent_indicator}>
             <Text style={styles.agent_indicator_text}>
@@ -141,6 +167,7 @@ export default class AgentSignUp extends Component {
           <ScrollView
             contentContainerStyle={styles.sign_up_container}
             keyboardShouldPersistTaps='never'
+            scrollEnabled={true}
           >
             <View style={styles.logo_container}>
               <Image
@@ -244,14 +271,18 @@ export default class AgentSignUp extends Component {
                   />
                   <TextInput
                     style={styles.signup_input}
-                    onChangeText={(national_id) => this.setState({national_id})}
+                    onChangeText={(national_id) => this.validateInputNational({national_id})}
+                    // onChangeText={(national_id) => this.setState({national_id})}
                     placeholder="CÉDULA"
                     placeholderTextColor="#fff"
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
                     keyboardType="numeric"
+                    maxLength = {10}
+                    onKeyPress = {this.keypressed}
                   />
                 </View>
+                {(this.state.length_national.maxLength <= 9) ? <Text style={{color: 'white', textAlign: "center", fontSize: 8 }}>El campo de tener 10 caracteres</Text> : <Text></Text>}
                 <View style={styles.signup_input_container}>
                   <FontAwesome
                     name="mobile-phone"
@@ -260,14 +291,18 @@ export default class AgentSignUp extends Component {
                   />
                   <TextInput
                     style={styles.signup_input}
-                    onChangeText={(cell_phone) => this.setState({cell_phone})}
+                    onChangeText={(cell_phone) => this.validateInput({cell_phone})}
+                    // onChangeText={(cell_phone) => this.setState({cell_phone})}
                     placeholder="CELULAR"
                     placeholderTextColor="#fff"
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
                     keyboardType="phone-pad"
+                    maxLength = {10}
+                    minLength = {9}
                   />
                 </View>
+                {(this.state.length.maxLength <= 9) ? <Text style={{color: 'white', textAlign: "center", fontSize: 8 }}>El campo de tener 10 caracteres</Text> : <Text></Text>}
               </View>
             </View>
             <TouchableOpacity
