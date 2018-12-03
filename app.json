@@ -9,7 +9,11 @@
       "bundleIdentifier": "com.nocnoc.app"
     },
     "android": {
-      "package": "com.nocnoc.app"
+      "package": "com.nocnoc.app",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "INTERNET"
+      ]
     }
   }
 }
