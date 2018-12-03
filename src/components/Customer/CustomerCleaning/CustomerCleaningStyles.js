@@ -32,5 +32,13 @@ module.exports = StyleSheet.create({
   },
   iconStyle :{
     marginHorizontal:10,alignSelf:'center'
-  }
+  },
+  childContainer: {
+    margin: 10, flexDirection: 'row', alignItems: 'center',borderBottomWidth:1,borderBottomColor:'lightgray'
+  },
+  itemView:{
+    margin:10,
+    flexDirection:'column',
+    flex:1
+  },
 });

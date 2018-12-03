@@ -95,6 +95,13 @@ export const API = {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_CUSTERMER_SERVICETYPE + data, buildHeader());
     },
     
+    setAddCard: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.ADD_CARD  , buildHeader());
+    },   
+
+    getCardLists: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_CARD_LIST , buildHeader());
+    },
     
 }
 

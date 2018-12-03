@@ -31,5 +31,9 @@ export const CUSTOMERS_PASSWORD = "/api/v1/customers/change_password";
 export const GET_CITY = "/api/v1/customers/cities";
 export const GET_NEIGHTBORHOODS = "/api/v1/customers/cities/";
 export const SET_CUSTERMER_REVIEW = "/api/v1/customers/jobs/";
-export const SET_CUSTOMER_MOBILE_TOKEN = "/api/v1/customers/add_mobile_token";
-export const SET_AGENT_MOBILE_TOKEN = "/api/v1/agents/add_mobile_token";
+export const GET_CUSTERMER_SERVICETYPE = "/api/v1/customers/service_types/";
+export const ADD_CARD = "/api/v1/customers/add_card";
+export const GET_CARD_LIST="/api/v1/customers/credit_cards";
+
+
+
