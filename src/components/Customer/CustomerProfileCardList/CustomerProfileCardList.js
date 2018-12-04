@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, FlatList, Image, Dimensions,SafeAreaView} from 'react-native';
+import {Text, TouchableOpacity, View, FlatList, Image, Dimensions,SafeAreaView,AsyncStorage} from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import Ionicons from '@expo/vector-icons/Ionicons'
-
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import StarRating from '../../../lib/react-native-star-rating';
 const {height , width} = Dimensions.get('window')
+import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
 
 const styles = require('./CustomerProfileCardListStyle');
@@ -23,8 +24,9 @@ export default class CustomerProfileCardList extends Component {
         super(props)
         
         this.state = {
-            cardList : [],
-            
+            cardListData : [],
+            avatar : globals.avatar,
+            data : null
         }
     }
 
@@ -33,30 +35,51 @@ export default class CustomerProfileCardList extends Component {
     //======================================================================
 
     componentDidMount(){
-        console.log("Response data-->"+JSON.stringify(this.state.cardList))
-        // API.getJobsComments(this.getJobCommentsResponseData,this.state.jobData.customer.hashed_id,true);
+        AsyncStorage.getItem("customerData").then((item) =>{
+            // const data = this.state.data;
+            const data = JSON.parse(item)
+            this.setState({data : data})
+            console.log("Customer data-->",item)
+      
+          })
+        this.getCardList()   
     }
 
     //======================================================================
-    //getJobCommentsResponseData
+    //cardListsResponseData
     //======================================================================
 
-    getJobCommentsResponseData = {
+    cardListsResponseData = {
         success: (response) => {
             try {
-                console.log("Response data-->"+JSON.stringify(response.review.data))
+                console.log("Response data-->" + JSON.stringify(response.payment.data))
+
+                let temCardList = response.payment.data.map((item) => {
+                    item.isChecked = false;
+                    return item
+                })
                 this.setState({
-                    jobCommentList : response.review.data
+                    cardListData: temCardList
                 })
             } catch (error) {
-                console.log('getJobResponseData catch error ' + JSON.stringify(error));
+                console.log('getCardResponseData catch error ' + JSON.stringify(error));
             }
         },
         error: (err) => {
-            console.log('getJobResponseData error ' + JSON.stringify(err));
+            console.log('getCardResponseData error ' + JSON.stringify(err));
         },
         complete: () => {
         }
+    }
+
+    selectCatdTap(index){
+        let cardData = this.state.cardListData;
+        let newCardList = cardData.map((x) => {x.isChecked = false; return x})
+        let selectedObject = newCardList[index];
+        selectedObject.isChecked = !selectedObject.isChecked
+        newCardList.slice(selectedObject,index);
+        this.setState({ cardListData : newCardList });
+        console.log("CradList-->",JSON.stringify(newCardList))
     }
 
     //======================================================================
@@ -65,18 +88,28 @@ export default class CustomerProfileCardList extends Component {
 
     renderItem = (item) =>{
         var data = item.item
-        return(
-            <View style={styles.renderRowView}>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <View style={styles.userImageView} >
-                        <Image source={require("../../../../assets/img/profile_placehoder.png")} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>
-                    </View>
-                    <View style={{flex:1}}>
-                        <Text style={styles.titleText}>{data.attributes.owner.data.attributes.first_name + " "+ data.attributes.owner.data.attributes.last_name}</Text>
+        return (
+            <TouchableOpacity onPress={() => this.selectCatdTap(item.index)}>
+                <View style={styles.childContainer}>
+                    <FontAwesome name={(data.isChecked) ? "check-square" : "square-o"} size={30} onPress={() => this.selectCatdTap(item.index)} style={{ color: '#1F68A9' }}  />
+                    <View style={styles.itemView}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <FontAwesome name={"cc-visa"} size={20} color={"rgb(0,121,189)"} style={styles.iconStyle} />
+                            <Text style={{ flex: 0.6 }}>
+                                {item.item.attributes.number}
+                            </Text>
+                            <Text style={{ flex: 0.4 }}>
+                                {"Exp." + item.item.attributes.expiry_month + "/" + item.item.attributes.expiry_year}
+                            </Text>
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text>
+                                {"Nombre : " + item.item.attributes.holder_name}
+                            </Text>
+                        </View>
                     </View>
                 </View>
-                <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text> 
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -102,53 +135,58 @@ export default class CustomerProfileCardList extends Component {
         )
     }
 
+    getCardList = ()=>{
+        API.getCardLists(this.cardListsResponseData, {}, true);
+    }
+
     //======================================================================
     // render
     //======================================================================
 
     render(){
-        // var initials = this.state.jobData.first_name && this.state.jobData.first_name.charAt(0)
-        // initials +=  this.state.jobData.last_name && this.state.jobData.last_name.charAt(0)
-        var initials = "JS"
-        return(
-            <SafeAreaView style={styles.container}>
-                <View>
-                    <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
-                    <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
-                    
-                    <View style={styles.profileView}>
-                        {(this.state.jobData && this.state.jobData.avatar && this.state.jobData.avatar.url) ?
-                            <Image source={{ uri: this.state.jobData.avatar.url }} style={styles.profileImage} resizeMode={"cover"} />
-                            :
-                            <View style={[styles.profileImage, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center' }]} >
-                                <Text style={{ color: '#fff' }}>{initials}</Text>
-                            </View>
-                        }
+        if(this.state.data != null){
+            var initials = this.state.data.customer.data.attributes.first_name.charAt(0)
+            initials += this.state.data.customer.data.attributes.last_name.charAt(0) || ""
+            return(
+                <SafeAreaView style={styles.container}>
+                    <View>
+                        <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
+                        <View style={styles.profile_picture_name_container}>
+                            <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"} />
+                            {(this.state.avatar && this.state.avatar != "") ?
+                                <Image source={{ uri: this.state.avatar + '?time=' + new Date() }} style={styles.profile_image} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")} />
+                                :
+                                <View style={[styles.profile_image, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center', width: 100, borderRadius: 50 }]} >
+                                    <Text style={{ color: '#fff' }}>{initials}</Text>
+                                </View>
+                            }
+                            {this.state.data && <Text style={styles.profile_name}>
+                                {this.state.data.customer.data.attributes.first_name} {this.state.data.customer.data.attributes.last_name}
+                            </Text>}
+                        </View>
+                        <View style={styles.topTitleView}>
+                            <Text style={styles.mainTitleText}>{"Comentarios"}</Text>
+                        </View>
+                    </View> 
+                    <View style={{flex:1}}>
+                        <FlatList 
+                            data = {this.state.cardListData}
+                            renderItem = {this.renderItem}
+                            ItemSeparatorComponent={this.ItemSeparatorComponent}
+                            keyExtractor={(item)=>item.id.toString()}
+                            ListEmptyComponent={this.ListEmptyComponent}
+                        />
                     </View>
                     <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
-                        {/* <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.jobData.first_name + " "+this.state.jobData.last_name}</Text> */}
-                        <Text style={{fontSize:20,fontWeight:'600'}}>{"Jose Castellanows"}</Text>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerProfileAddCard',{getCardList : this.getCardList})}>
+                            <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Agregar nueva tarjeta"}</Text>
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.topTitleView}>
-                        <Text style={styles.mainTitleText}>{"Comentarios"}</Text>
-                    </View>
-                </View> 
-                <View style={{flex:1}}>
-                    <FlatList 
-                        data = {this.state.cardList}
-                        renderItem = {this.renderItem}
-                        ItemSeparatorComponent={this.ItemSeparatorComponent}
-                        keyExtractor={(item)=>item.id.toString()}
-                        ListEmptyComponent={this.ListEmptyComponent}
-                    />
-                </View>
-                <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerProfileAddCard')}>
-                        <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Agregar nueva tarjeta"}</Text>
-                    </TouchableOpacity>
-                </View>
-                
-            </SafeAreaView>
-        )
+                    
+                </SafeAreaView>
+            )
+        }else{
+            return null
+        }
     }
 }

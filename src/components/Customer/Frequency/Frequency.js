@@ -40,7 +40,8 @@ export default class Frequency extends Component {
     }
 
     handleChange = (index) => {
-        let checkedData = this.state.data;
+        let tempCheckedData = this.state.data;
+        let checkedData = tempCheckedData.map((x) => { x.isSelected = false; return x; })
         let selectedObject = checkedData[index];
         selectedObject.isSelected = !selectedObject.isSelected
         checkedData.slice(selectedObject,index);

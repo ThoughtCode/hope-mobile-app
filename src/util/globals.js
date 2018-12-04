@@ -1,5 +1,5 @@
 export const APP_NAME = "Noc Noc"
-export var access_token = '09d6d2f4f474cd034477f33e61d085fb'
+export var access_token = ''
 export var first_name = null
 export var last_name = null
 export var email = null

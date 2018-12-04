@@ -59,5 +59,35 @@ module.exports = StyleSheet.create({
   },
   emptyText:{
     fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'
-  }
+  },
+  childContainer: {
+    margin: 10, flexDirection: 'row', alignItems: 'center'
+  },
+  itemView:{
+      margin:10,
+      flexDirection:'column',
+      flex:1
+  },
+  profile_picture_name_container: {
+    width: Dimensions.get('window').width,
+    // height: 160,
+    // backgroundColor: '#FAFAFA',
+    borderColor: '#DDDCDC',
+    // borderTopWidth: 2,
+    // borderBottomWidth: 2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  profile_name: {
+    fontSize: 20,
+    fontWeight: '600'
+  },
+  profile_image: {
+    height: 100,
+    resizeMode: 'contain',
+    marginTop : -50,
+    width:100,
+    borderRadius:50
+  },
 });
