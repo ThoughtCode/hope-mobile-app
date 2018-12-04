@@ -21,7 +21,6 @@ export default class AgentJobCommentScreen extends Component {
 
     constructor(props){
         super(props)
-
         this.state = {
             jobData : props.navigation.state.params.jobData.attributes,
             jobCommentList : []

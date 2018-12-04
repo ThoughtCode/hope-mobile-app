@@ -30,17 +30,41 @@ export default class AgentSignUp extends Component {
       national_id: "",
       cell_phone: "",
       birthday: "",
-      errorMessage: ''
+      errorMessage: '',
+      length_national: {
+        maxLength: 0,
+      },
+      length: {
+        maxLength: 0,
+      }
     };
     this.signUpAgent = this.signUpAgent.bind(this);
+    this.validateInputNational = this.validateInputNational.bind(this);
+    this.validateInput = this.validateInput.bind(this);
+  }
+
+  keypressed = (e) => {
+    console.log(e)
+  }
+
+  validateInputNational = (e) => {
+    var national_id = e.national_id
+    var ml = this.state.length_national.maxLength + 1
+    this.setState({national_id, length_national:{maxLength: ml}})
+  }
+  
+  validateInput = (e) => {
+    var cell_phone = e.cell_phone
+    var ml = this.state.length.maxLength + 1
+    this.setState({cell_phone, length:{maxLength: ml}})
   }
 
   signUpAgent = () => {
     this.setState({errorMessage: ''});
     if (this.state.email === '') {
-      this.setState({errorMessage: "El campo de correo no puede estar vacío"})
+      this.setState({errorMessage: <Text style={styles.text_error}>El campo de correo no puede estar vacío</Text>})
     } else if (this.state.password != this.state.password_confirmation) {
-      this.setState({errorMessage: "Las contraseñas no coinciden"})
+      this.setState({errorMessage: <Text style={styles.text_error}>Las contraseñas no coinciden</Text>})
     } else {
       signup_url = urls.BASE_URL + urls.AGENT_SIGNUP_URI;
       console.log("Registration url",signup_url);
@@ -102,7 +126,7 @@ export default class AgentSignUp extends Component {
               
             });
           } else if (response.status === 422) {
-            this.setState({errorMessage: "Ya existe un usuario con ese correo electrónico"});
+            this.setState({errorMessage: <Text style={styles.text_error}>Ya existe un usuario con ese correo electrónico</Text>});
           }
         })
         .catch((error) => this.setState({errorMessage: error.message}));
@@ -144,14 +168,12 @@ export default class AgentSignUp extends Component {
   render() {
     return (
       <ImageBackground
-        style={{
-          flex: 1,
-        }}
+        style={{ flex: 1, }}
         source={require("../../../../assets/img/home_splash_3.jpg")}
       >
         <KeyboardAvoidingView
-          behaviour='padding'
           style={styles.fullSize}
+          behaviour='padding'
         >
           <View style={styles.agent_indicator}>
             <Text style={styles.agent_indicator_text}>
@@ -172,6 +194,7 @@ export default class AgentSignUp extends Component {
           <ScrollView
             contentContainerStyle={styles.sign_up_container}
             keyboardShouldPersistTaps='never'
+            scrollEnabled={true}
           >
             <View style={styles.logo_container}>
               <Image
@@ -275,14 +298,18 @@ export default class AgentSignUp extends Component {
                   />
                   <TextInput
                     style={styles.signup_input}
-                    onChangeText={(national_id) => this.setState({national_id})}
+                    onChangeText={(national_id) => this.validateInputNational({national_id})}
+                    // onChangeText={(national_id) => this.setState({national_id})}
                     placeholder="CÉDULA"
                     placeholderTextColor="#fff"
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
                     keyboardType="numeric"
+                    maxLength = {10}
+                    onKeyPress = {this.keypressed}
                   />
                 </View>
+                {/* {(this.state.length_national.maxLength <= 9) ? <Text style={{color: 'white', textAlign: "center", fontSize: 8 }}>El campo de tener 10 caracteres</Text> : <Text></Text>} */}
                 <View style={styles.signup_input_container}>
                   <FontAwesome
                     name="mobile-phone"
@@ -291,14 +318,18 @@ export default class AgentSignUp extends Component {
                   />
                   <TextInput
                     style={styles.signup_input}
-                    onChangeText={(cell_phone) => this.setState({cell_phone})}
+                    onChangeText={(cell_phone) => this.validateInput({cell_phone})}
+                    // onChangeText={(cell_phone) => this.setState({cell_phone})}
                     placeholder="CELULAR"
                     placeholderTextColor="#fff"
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
                     keyboardType="phone-pad"
+                    maxLength = {10}
+                    minLength = {9}
                   />
                 </View>
+                {/* {(this.state.length.maxLength <= 9) ? <Text style={{color: 'white', textAlign: "center", fontSize: 8 }}>El campo de tener 10 caracteres</Text> : <Text></Text>} */}
               </View>
             </View>
             <TouchableOpacity

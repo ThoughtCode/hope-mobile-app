@@ -77,7 +77,7 @@ export default class _JobList extends Component {
             <TouchableOpacity onPress={() => this.onPressEvent(item)}>
                 <View style={styles.renderRowView}>
                     <View style={styles.listTitleView}>
-                        <Text style={styles.titleText}>{(data.customer && data.customer.first_name) || "" + " "+ (data.customer && data.customer.last_name) || ""}</Text>
+                        <Text style={styles.titleText}>{(data.customer && data.customer.first_name) + " "+ (data.customer && data.customer.last_name)}</Text>
                         <Text style={[styles.textFont,{color:'rgb(0,121,189)'}]}>{date}</Text>
                     </View>
                     <Text style={[styles.textFont]}>{description}</Text>

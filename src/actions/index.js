@@ -4,6 +4,7 @@ export const SET_SERVICE_TYPE = 'SET_SERVICE_TYPE';
 export const SET_SERVICES = 'SET_SERVICES';
 export const SET_BASE_SERVICE = 'SET_BASE_SERVICE';
 export const SET_ADDON_SERVICE = 'SET_ADDON_SERVICE';
+export const SET_COMMENTS_AGENT_PROFILE = 'SET_COMMENTS_AGENT_PROFILE'
 
 export function setProperty(property) {
   return {
@@ -44,5 +45,12 @@ export function setAddonService(addonService) {
   return {
     type: SET_ADDON_SERVICE,
     addonService
+  }
+}
+
+export function setCommentsAgentProfile(commentsAgentProfile) {
+  return {
+    type: SET_COMMENTS_AGENT_PROFILE,
+    commentsAgentProfile
   }
 }

@@ -20,6 +20,7 @@ export const JOBS = "/api/v1/agents/jobs";
 export const COMMENTS = "/api/v1/agents/customer/";
 export const UPDATE_USER = "/api/v1/agents/update";
 export const UPDATE_PASSWORD = "/api/v1/agents/change_password";
+export const AGENT_COMMENTS_PROFILE = "/api/v1/agents";
 export const UPDATE_PROFILE_PIC = "/api/v1/agents/update";
 export const SET_REVIEW = "/api/v1/agents/jobs/";
 

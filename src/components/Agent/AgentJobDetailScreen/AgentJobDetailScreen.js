@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions,SafeAreaView,Alert} from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
-import Ionicons from '@expo/vector-icons/Ionicons'
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import StarRating from '../../../lib/react-native-star-rating';
 import { API } from '../../../util/api';
 import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
@@ -179,7 +180,7 @@ export default class AgentJobDetailScreen extends Component {
     render(){
         var description = ""
         var subDescription = ""
-        var name = this.state.jobData.customer && this.state.jobData.customer.first_name  || "" + " "+ this.state.jobData.customer && this.state.jobData.customer.last_name || ""
+        var name = this.state.jobData.customer && this.state.jobData.customer.first_name + " " + this.state.jobData.customer.last_name 
         var initials = this.state.jobData.customer && this.state.jobData.customer.first_name.charAt(0)
         initials +=  this.state.jobData.customer && this.state.jobData.customer.last_name.charAt(0)
         this.state.jobData.job_details.map((val,index)=>{
@@ -199,7 +200,7 @@ export default class AgentJobDetailScreen extends Component {
         var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
         var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
         var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
-        return(
+				return(
             <SafeAreaView style={styles.container}>
                 <View>
                     <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
@@ -235,7 +236,20 @@ export default class AgentJobDetailScreen extends Component {
                             starSize={20}
                             fullStarColor={'#ffd700'}
                         />
-                        <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
+                        <Text style={styles.opinionsText}>
+                          {this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}
+                        </Text>
+                    </View>
+                    <View style={[styles.cellPhone,{flexDirection:'row'}]}>
+                      {(this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone != null) ?
+                      <View style={{flexDirection:'row'}}>
+                        <Text>
+                          {(!this.state.isJobReview) ? (this.state.isJobApply)? <MaterialCommunityIcons name={"credit-card-plus"} size={18} /> || "" : "" : <MaterialCommunityIcons name={"credit-card-plus"} size={18} /> || "" }
+                        </Text>
+                        <Text style={[styles.subText,{marginHorizontal:5}]}>
+                          {(!this.state.isJobReview) ? (this.state.isJobApply)? this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || "" : "" : this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || "" }
+                        </Text>
+                      </View>: null}
                     </View>
                     <View style={styles.topTitleView}>
                         <Text style={styles.mainTitleText}>{"Detalles del Trabajo"}</Text>

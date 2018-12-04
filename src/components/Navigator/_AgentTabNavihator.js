@@ -6,6 +6,7 @@ import AgentTrabajosDashboard from "../../components/Agent/AgentTrabajosDashboar
 import AgentProfile from "../../components/Agent/AgentProfile/AgentProfile";
 import AgentUpdateProfile from "../../components/Agent/AgentUpdateProfile/AgentUpdateProfile";
 import AgentUpdatePassword from "../../components/Agent/AgentUpdatePassword/AgentUpdatePassword";
+import AgentComment from "../../components/Agent/AgentScreenComment/AgentComment";
 import AgentJobListScreen from "../../components/Agent/AgentJobListScreen/AgentJobListScreen";
 import AgentJobDetailScreen from "../../components/Agent/AgentJobDetailScreen/AgentJobDetailScreen";
 import AgentJobCommentScreen from "../../components/Agent/AgentJobCommentScreen/AgentJobCommentScreen";
@@ -33,7 +34,7 @@ const AgentDashboard = StackNavigator({
       header : null
     }
   })
-  
+
 
 //======================================================================
 // AgentTrabajos StackNavigator
@@ -57,7 +58,8 @@ const AgentTrabajos = StackNavigator({
 const ProfileStackNavigator = StackNavigator({
   AgentProfile : { screen : AgentProfile },
   AgentUpdateProfile : { screen : AgentUpdateProfile },
-  AgentUpdatePassword : { screen : AgentUpdatePassword }
+  AgentUpdatePassword : { screen : AgentUpdatePassword },
+  AgentComment : { screen : AgentComment }
 },{
   navigationOptions:{
     header : null

@@ -5,7 +5,8 @@ import {
   SET_SERVICE_TYPE,
   SET_SERVICES,
   SET_BASE_SERVICE,
-  SET_ADDON_SERVICE
+  SET_ADDON_SERVICE,
+  SET_COMMENTS_AGENT_PROFILE
 } from "../actions";
 
 function property(state = [], action) {
@@ -62,13 +63,23 @@ function addonService(state = [], action) {
   }
 }
 
+function commentsAgentProfile(state = [], action) {
+  switch (action.type) {
+    case SET_COMMENTS_AGENT_PROFILE:
+      return action.commentsAgentProfile;
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   property,
   date,
   serviceType,
   services,
   baseService,
-  addonService
+  addonService,
+  commentsAgentProfile
 });
 
 export default rootReducer;

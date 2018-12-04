@@ -35,7 +35,6 @@ export default class AgentProfile extends Component {
     //======================================================================
 
     componentDidMount(){
-        
     }
 
     setData = () =>{
@@ -46,6 +45,18 @@ export default class AgentProfile extends Component {
         })
     }
 
+    //======================================================================
+    // handleView in rerirection route
+    //======================================================================
+    handleView = (item) => {
+      if (item.key == "update_profile") {
+        this.props.navigation.navigate("AgentUpdateProfile",{setData : this.setData,updatePhoto : this.updatePhoto})
+      } else if (item.key == "update_password") {
+        this.props.navigation.navigate("AgentUpdatePassword",{})
+      } else if (item.key == "comment") {
+        this.props.navigation.navigate("AgentComment",{})
+      }
+    }
 
     //======================================================================
     // renderItem
@@ -54,7 +65,7 @@ export default class AgentProfile extends Component {
     renderItem = (item) =>{
         data = item.item
         return(
-            <TouchableOpacity onPress={()=> (item.index == 0) ? this.props.navigation.navigate("AgentUpdateProfile",{setData : this.setData,updatePhoto : this.updatePhoto}) : this.props.navigation.navigate("AgentUpdatePassword",{})}>
+            <TouchableOpacity onPress={()=> this.handleView(item.item)}>
                 <View style={styles.renderRowView}>
                         <Text style={[styles.rowtitleText]}>{data.title}</Text>
                         <EvilIcons name={"chevron-right"} size={36} style={{color:"#1e67a9"}} />
@@ -87,16 +98,16 @@ export default class AgentProfile extends Component {
 
     selectedPhoto = () => {
         //Open Image Picker
-    
+
         const options = {
             quality: 0.8,
             maxWidth: 500,
             maxHeight: 500,
         };
-    
+
         ImagePicker.showImagePicker(options, (response) => {
           console.log('Response = ', response);
-    
+
             if (response.didCancel) {
                 console.log('User cancelled photo picker');
             }else if (response.error) {
@@ -135,9 +146,9 @@ export default class AgentProfile extends Component {
     //======================================================================
     // render
     //======================================================================
-    
+
     render(){
-        var initials = globals.first_name.charAt(0) || "" 
+        var initials = globals.first_name.charAt(0) || ""
         initials += globals.last_name.charAt(0) || ""
         return(
             <SafeAreaView style={styles.container}>
@@ -152,22 +163,22 @@ export default class AgentProfile extends Component {
                             <View style={[styles.profileImage, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center' }]} >
                                 <Text style={{ color: '#fff' }}>{initials}</Text>
                             </View>
-                            } 
+                            }
                         </View>
-                        
+
                         <View style={{alignItems:'center',justifyContent:'center'}}>
                             <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.firstName + " "+ this.state.lastName}</Text>
                         </View>
-                        
-                    
+
+
                     <View style={styles.topTitleView}>
                         <Text style={styles.mainTitleText}>{"Perfil de Agente"}</Text>
                     </View>
                 </View>
 
                 <View style={{flex:1}}>
-                    <FlatList 
-                        data = {[{title : "Mi cuenta",key : 'update_profile'},{title : "Contrasena",key : 'update_password'}]}
+                    <FlatList
+                        data = {[{title : "Mi cuenta",key : 'update_profile'},{title : "Contrasena",key : 'update_password'},{title : "Comentarios",key : 'comment'}]}
                         renderItem = {this.renderItem}
                         ItemSeparatorComponent={this.ItemSeparatorComponent}
                         keyExtractor={(item)=>item.key.toString()}
@@ -175,13 +186,13 @@ export default class AgentProfile extends Component {
                     />
                 </View>
 
-             
+
                 <TouchableOpacity onPress={this.logout}>
                     <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:'rgb(0,121,189)'}]}>
                         <Text style={[styles.titleText,{color:'#fff'}]}>{"Cerrar Sesión"}</Text>
                     </View>
                 </TouchableOpacity>
-                
+
             </SafeAreaView>
         )
     }
