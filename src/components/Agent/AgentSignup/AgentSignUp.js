@@ -48,14 +48,12 @@ export default class AgentSignUp extends Component {
   }
 
   validateInputNational = (e) => {
-    console.log(e)
     var national_id = e.national_id
     var ml = this.state.length_national.maxLength + 1
     this.setState({national_id, length_national:{maxLength: ml}})
   }
   
   validateInput = (e) => {
-    console.log(e)
     var cell_phone = e.cell_phone
     var ml = this.state.length.maxLength + 1
     this.setState({cell_phone, length:{maxLength: ml}})
@@ -137,8 +135,6 @@ export default class AgentSignUp extends Component {
   };
 
   render() {
-    console.log(this.state.length_national.maxLength)
-    console.log(this.state.length.maxLength)
     return (
       <ImageBackground
         style={{ flex: 1, }}
@@ -282,7 +278,7 @@ export default class AgentSignUp extends Component {
                     onKeyPress = {this.keypressed}
                   />
                 </View>
-                {(this.state.length_national.maxLength <= 9) ? <Text style={{color: 'white', textAlign: "center", fontSize: 8 }}>El campo de tener 10 caracteres</Text> : <Text></Text>}
+                {/* {(this.state.length_national.maxLength <= 9) ? <Text style={{color: 'white', textAlign: "center", fontSize: 8 }}>El campo de tener 10 caracteres</Text> : <Text></Text>} */}
                 <View style={styles.signup_input_container}>
                   <FontAwesome
                     name="mobile-phone"
@@ -302,7 +298,7 @@ export default class AgentSignUp extends Component {
                     minLength = {9}
                   />
                 </View>
-                {(this.state.length.maxLength <= 9) ? <Text style={{color: 'white', textAlign: "center", fontSize: 8 }}>El campo de tener 10 caracteres</Text> : <Text></Text>}
+                {/* {(this.state.length.maxLength <= 9) ? <Text style={{color: 'white', textAlign: "center", fontSize: 8 }}>El campo de tener 10 caracteres</Text> : <Text></Text>} */}
               </View>
             </View>
             <TouchableOpacity
