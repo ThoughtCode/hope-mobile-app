@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, TextInput, Image, Dimensions,SafeAreaView} from 'react-native';
+import {Text, TouchableOpacity, View, TextInput, Image, Dimensions,SafeAreaView,Alert} from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
@@ -24,6 +24,11 @@ export default class CustomerProfileAddCard extends Component {
         
         this.state = {
             cardList : [],
+            name: '',
+            number: '',
+            month: '',
+            cvc: '',
+            year: ''
             
         }
     }
@@ -34,20 +39,16 @@ export default class CustomerProfileAddCard extends Component {
 
     componentDidMount(){
         console.log("Response data-->"+JSON.stringify(this.state.cardList))
-        // API.getJobsComments(this.getJobCommentsResponseData,this.state.jobData.customer.hashed_id,true);
     }
 
-    //======================================================================
-    //getJobCommentsResponseData
-    //======================================================================
-
-    getJobCommentsResponseData = {
+    addCardDataResponseData = {
         success: (response) => {
             try {
-                console.log("Response data-->"+JSON.stringify(response.review.data))
-                this.setState({
-                    jobCommentList : response.review.data
-                })
+                Alert.alert("Hope",response.message,[
+                    {text: 'OK', onPress: () => this.props.navigation.goBack()},
+                ])
+                this.props.navigation.state.params.getCardList();
+                console.log("Response data-->" + JSON.stringify(response))
             } catch (error) {
                 console.log('getJobResponseData catch error ' + JSON.stringify(error));
             }
@@ -56,6 +57,39 @@ export default class CustomerProfileAddCard extends Component {
             console.log('getJobResponseData error ' + JSON.stringify(err));
         },
         complete: () => {
+        }
+    }
+
+    validation() {
+        if (this.state.name === "") {
+            console.log("Enter Name")
+        }
+        else if (this.state.number === "") {
+            console.log("Enter Number")
+        }
+        else if (this.state.month === "") {
+            console.log("Enter Month")
+        }
+        else if (this.state.year === "") {
+            console.log("Enter Year")
+        }
+        else if (this.state.cvc === "") {
+            console.log("Enter CVC")
+        }
+        else {
+            console.log("Sucess")
+            var data = {
+                payment: {
+                    "holder_name": this.state.name,
+                    "card_type": "vi",
+                    "number": this.state.number,
+                    "token": "9209405777683805561",
+                    "status": "valid",
+                    "expiry_month": this.state.month,
+                    "expiry_year": this.state.year
+                }
+            }
+            API.setAddCard(this.addCardDataResponseData, data, true);
         }
     }
 
@@ -103,16 +137,16 @@ export default class CustomerProfileAddCard extends Component {
                             style={styles.textInputStyle}
                             onChangeText={(text) => this.setState({name : text})} />
                         </View>
-                    <Text style={styles.textStyle}>{"Numero de tarjeta"}</Text>
+                    <Text style={styles.textStyle}>{"Numero de Completo"}</Text>
                     <View style={styles.textInputStyleContainer}>
                         <TextInput
                             ref={input => {
                                 this.textInput = input
                             }}
                             underlineColorAndroid='transparent'
-                            placeholder='Name'
+                            placeholder='Card Number'
                             style={styles.textInputStyle}
-                            onChangeText={(text) => this.setState({name : text})} />
+                            onChangeText={(text) => this.setState({number : text})} />
                     </View>
                     <View style={{flexDirection:'row'}}> 
                         <View style={{flex:1}}>
@@ -123,9 +157,9 @@ export default class CustomerProfileAddCard extends Component {
                                         this.textInput = input
                                     }}
                                     underlineColorAndroid='transparent'
-                                    placeholder='Name'
+                                    placeholder='mes'
                                     style={styles.textInputStyle}
-                                    onChangeText={(text) => this.setState({name : text})} />
+                                    onChangeText={(text) => this.setState({month : text})} />
                             </View>
                         </View>
                         <View style={{flex:1}}>
@@ -136,9 +170,9 @@ export default class CustomerProfileAddCard extends Component {
                                         this.textInput = input
                                     }}
                                     underlineColorAndroid='transparent'
-                                    placeholder='Name'
+                                    placeholder='ano'
                                     style={styles.textInputStyle}
-                                    onChangeText={(text) => this.setState({name : text})} />
+                                    onChangeText={(text) => this.setState({year : text})} />
                             </View>
                         </View>     
                         <View style={{flex:1}}>
@@ -149,16 +183,16 @@ export default class CustomerProfileAddCard extends Component {
                                         this.textInput = input
                                     }}
                                     underlineColorAndroid='transparent'
-                                    placeholder='Name'
+                                    placeholder='cvc'
                                     style={styles.textInputStyle}
-                                    onChangeText={(text) => this.setState({name : text})} />
+                                    onChangeText={(text) => this.setState({cvc : text})} />
                             </View>
                         </View>
                     </View>
                 </View>
                 
                 <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                    <TouchableOpacity onPress={() => this.validation()}>
                         <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Agregar tarjeta"}</Text>
                     </TouchableOpacity>
                 </View>

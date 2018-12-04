@@ -25,8 +25,10 @@ export default class CustomerCleaning extends Component {
         this.state = {
             serviceType: props.navigation.state.params.serviceType,
             frequencyData: [],
-            selectedDate: null,
+            selectedDate: Moment.utc(new Date()).format("DD [de] MMM [de] YYYY") + " - 12:00H",
             cardData : null,
+            directionData : null,
+            additionalData : null
 
         }
     }
@@ -57,6 +59,19 @@ export default class CustomerCleaning extends Component {
             cardData: cardData
         })
     }
+
+    setDirection = (directionData) => {
+        this.setState({
+            directionData: directionData
+        })
+    }
+
+    setAdditionalInfo = (additionalData) => {
+        this.setState({
+            additionalData: additionalData
+        })
+    }
+
 
     //======================================================================
     // onRefresh
@@ -184,21 +199,21 @@ export default class CustomerCleaning extends Component {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("DirectionScreen")}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("DirectionScreen",{setDirection : this.setDirection})}>
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
                                     <Text style={styles.titleText}>{"Direccion"}</Text>
-                                    <Text style={styles.subTitleText}>{"2603 La floresta, Quito Ecuador"}</Text>
+                                    {this.state.directionData && <Text style={styles.subTitleText}>{this.state.directionData.attributes.number +" "+this.state.directionData.attributes.s_street + " "+this.state.directionData.attributes.p_street+" "+this.state.directionData.attributes.city}</Text>}
                                 </View>
                                 <Entypo name={"location-pin"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("AdditionalDetail")}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("AdditionalDetail",{setAdditionalInfo : this.setAdditionalInfo})}>
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
                                     <Text style={styles.titleText}>{"Detallens adicionales del trabajo"}</Text>
-                                    <Text style={styles.subTitleText}>{"Information adicional del Servicio"}</Text>
+                                    {this.state.additionalData && <Text style={styles.subTitleText}>{this.state.additionalData}</Text>}
                                 </View>
                                 <MaterialIcons name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                             </View>

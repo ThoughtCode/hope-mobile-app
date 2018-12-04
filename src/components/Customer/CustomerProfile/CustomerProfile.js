@@ -128,11 +128,9 @@ export default class CustomerProfile extends Component {
           <ScrollView contentContainerStyle={styles.main_content}>
             <View style={styles.profile_picture_name_container}>
               <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
-              {/* <Image source={require('../../../../assets/img/customer_profile.png')} style={styles.profile_image}/> */}
               {( this.state.avatar && this.state.avatar != "")?
                 <Image source={{ uri: this.state.avatar + '?time=' + new Date() }} style={styles.profile_image} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")} />
                 :
-                //  <View style={{backgroundColor:"rgba(99,99,99,0.7)"}}>
                 <View style={[styles.profile_image, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center',width:100,borderRadius:50 }]} >
                     <Text style={{ color: '#fff' }}>{initials}</Text>
                 </View>

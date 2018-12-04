@@ -34,7 +34,7 @@ module.exports = StyleSheet.create({
     marginHorizontal:10,alignSelf:'center'
   },
   childContainer: {
-    margin: 10, flexDirection: 'row', alignItems: 'center',borderBottomWidth:1,borderBottomColor:'lightgray'
+    margin: 10, flexDirection: 'row', alignItems: 'center'
   },
   itemView:{
     margin:10,
