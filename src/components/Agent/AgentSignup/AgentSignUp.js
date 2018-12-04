@@ -128,7 +128,7 @@ export default class AgentSignUp extends Component {
         'Authorization': `Token ${authToken}`
       },
       body: JSON.stringify({
-        "customer": {
+        "agent": {
           "mobile_push_token": push_notification,
         }
       })
