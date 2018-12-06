@@ -152,19 +152,20 @@ export default class AgentJobCommentScreen extends Component {
                             />
                             <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
                         </View>
-                        <View style={{flexDirection:'row'}}>
-                            {(this.state.jobData.customer.email != null) ?
-                            <View style={{flexDirection:'row'}}>
-                                <View><MaterialCommunityIcons name={"email"} size={18} /></View>
-                                <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.email || ""}</Text>
-                            </View> : null}
-                            {(this.state.jobData.customer.cell_phone != null) ?
-                            <View style={{flexDirection:'row'}}>
-                                <View><MaterialCommunityIcons name={"credit-card-plus"} size={18} /></View>
-                                <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.cell_phone || ""}</Text> 
-                            </View> : null}
-                        </View>
-                        
+                        {(this.state.jobData.status != "accepted") ? <Text></Text> :
+                          <View style={{flexDirection:'row'}}>
+                              {(this.state.jobData.customer.email != null) ?
+                              <View style={{flexDirection:'row'}}>
+                                  <View><MaterialCommunityIcons name={"email"} size={18} /></View>
+                                  <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.email || ""}</Text>
+                              </View> : null}
+                              {(this.state.jobData.customer.cell_phone != null) ?
+                              <View style={{flexDirection:'row'}}>
+                                  <View><MaterialCommunityIcons name={"credit-card-plus"} size={18} /></View>
+                                  <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.cell_phone || ""}</Text> 
+                              </View> : null}
+                          </View>
+                        }
                     </View>
                     <View style={styles.topTitleView}>
                         <Text style={styles.mainTitleText}>{"Comentarios de otros Agentes"}</Text>

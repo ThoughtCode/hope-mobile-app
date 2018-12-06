@@ -240,17 +240,19 @@ export default class AgentJobDetailScreen extends Component {
                           {this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}
                         </Text>
                     </View>
-                    <View style={[styles.cellPhone,{flexDirection:'row'}]}>
-                      {(this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone != null) ?
-                      <View style={{flexDirection:'row'}}>
-                        <Text>
-                          {(!this.state.isJobReview) ? (this.state.isJobApply)? <MaterialCommunityIcons name={"credit-card-plus"} size={18} /> || "" : "" : <MaterialCommunityIcons name={"credit-card-plus"} size={18} /> || "" }
-                        </Text>
-                        <Text style={[styles.subText,{marginHorizontal:5}]}>
-                          {(!this.state.isJobReview) ? (this.state.isJobApply)? this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || "" : "" : this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || "" }
-                        </Text>
-                      </View>: null}
-                    </View>
+                    {(this.state.jobData.status != "accepted") ? <Text></Text> : 
+                      <View style={[styles.cellPhone,{flexDirection:'row'}]}>
+                        {(this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone != null) ?
+                        <View style={{flexDirection:'row'}}>
+                          <Text>
+                            {(!this.state.isJobReview) ? (this.state.isJobApply)? <MaterialCommunityIcons name={"credit-card-plus"} size={18} /> || "" : "" : <MaterialCommunityIcons name={"credit-card-plus"} size={18} /> || "" }
+                          </Text>
+                          <Text style={[styles.subText,{marginHorizontal:5}]}>
+                            {(!this.state.isJobReview) ? (this.state.isJobApply)? this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || "" : "" : this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || "" }
+                          </Text>
+                        </View>: null}
+                      </View>
+                    }
                     <View style={styles.topTitleView}>
                         <Text style={styles.mainTitleText}>{"Detalles del Trabajo"}</Text>
                     </View>
