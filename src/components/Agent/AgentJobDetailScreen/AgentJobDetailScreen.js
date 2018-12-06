@@ -156,17 +156,17 @@ export default class AgentJobDetailScreen extends Component {
             try {
                 console.log("jobApplyResponse data-->"+JSON.stringify(response))
                 this.setState({isJobApply : true},() =>{
-                    // AgentJobListScreen.getJobsAPICall()
-                    // AgentJobListScreen.setRow(this.state.index)
-                    this.props.navigation.state.params.setRow(this.state.index)
-                    Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
+                  // AgentJobListScreen.getJobsAPICall()
+                  // AgentJobListScreen.setRow(this.state.index)
+                  this.props.navigation.state.params.setRow(this.state.index)
+                  Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
                 })
-                
-            } catch (error) {
-                console.log('jobApplyResponse catch error ' + JSON.stringify(error));
-            }
-        },
-        error: (err) => {
+              } catch (error) {
+                console.log('catch (error)','jobApplyResponse catch error ' + JSON.stringify(error));
+              }
+            },
+            error: (err) => {
+            Alert.alert("Noc Noc", JSON.stringify(err.message))  
             console.log('jobApplyResponse error ' + JSON.stringify(err));
         },
         complete: () => {
