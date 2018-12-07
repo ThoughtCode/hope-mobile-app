@@ -59,13 +59,55 @@ export default class AgentSignUp extends Component {
     this.setState({cell_phone, length:{maxLength: ml}})
   }
 
+  validateEmail = email => {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  validateFields = () => {
+    let valid = true;
+
+    if (this.state.firstname.length === 0) {
+      valid = false;
+      this.setState({ errorMessage: 'El nombre no puede estar vacío' });
+      return valid;
+    }
+    if (this.state.lastname.length === 0) {
+      valid = false;
+      this.setState({ errorMessage: 'El apellido no puede estar vacío' });
+      return valid;
+    }
+    if (this.validateEmail(this.state.email) === false) {
+      valid = false;
+      this.setState({ errorMessage: 'El correo ingresado no es válido' });
+      return valid;
+    }
+    if (this.state.password.length < 6 || this.state.password_confirmation.length < 6) {
+      valid = false;
+      this.setState({ errorMessage: 'La contraseña es demasiado corta' });
+      return valid;
+    }
+    if (this.state.password !== this.state.password_confirmation) {
+      valid = false;
+      this.setState({ errorMessage: 'Las contraseñas no coinciden' });
+      return valid;
+    }
+    if (this.state.national_id.length !== 10) {
+      valid = false;
+      this.setState({ errorMessage: 'El número de cédula debe tener 10 caracteres' });
+      return valid;
+    }
+    if (this.state.cell_phone.length !== 10) {
+      valid = false;
+      this.setState({ errorMessage: 'El número celular debe tener 10 caracteres' });
+      return valid;
+    }
+    return valid;
+  };
+
   signUpAgent = () => {
     this.setState({errorMessage: ''});
-    if (this.state.email === '') {
-      this.setState({errorMessage: <Text style={styles.text_error}>El campo de correo no puede estar vacío</Text>})
-    } else if (this.state.password != this.state.password_confirmation) {
-      this.setState({errorMessage: <Text style={styles.text_error}>Las contraseñas no coinciden</Text>})
-    } else {
+    if (this.validateFields()) {
       signup_url = urls.BASE_URL + urls.AGENT_SIGNUP_URI;
       console.log("Registration url",signup_url);
       var data = {
@@ -131,8 +173,6 @@ export default class AgentSignUp extends Component {
         })
         .catch((error) => this.setState({errorMessage: error.message}));
     }
-
-
   };
 
   _getStorageValue = async (key) => {
