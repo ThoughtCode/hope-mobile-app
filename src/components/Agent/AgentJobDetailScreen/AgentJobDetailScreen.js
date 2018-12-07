@@ -290,12 +290,17 @@ export default class AgentJobDetailScreen extends Component {
                         </View>
                     </ScrollView>
                 </View>
-                {(this.state.type != "completed") ?
+                {console.log(this.state.type)}
+                {(this.state.type != "completed") ? (this.state.type != "accepted") ?
                 <TouchableOpacity onPress={(!this.state.isJobReview) ? this.tapJobApplyTap : this.tapReview} disabled={this.state.isJobApply && !this.state.isJobReview}>
-                    <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
-                        <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Calificar"}</Text>
-                    </View>
+                  <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
+                    <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Calificar"}</Text>
+                  </View>
                 </TouchableOpacity>
+                :
+                <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor: 'rgb(0,121,189)'}]}>
+                  <Text style={[styles.titleText,{color:'#fff'}]}>Contratado</Text>
+                </View>
                 : null}
                 
             </SafeAreaView>
