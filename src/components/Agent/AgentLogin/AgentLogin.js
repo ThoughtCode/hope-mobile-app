@@ -39,7 +39,8 @@ export default class AgentLogin extends React.Component {
     if (this.state.email === '') {
       Alert.alert(
         'Error de validación',
-        'El campo de correo no puede estar vacío'[
+        'El campo de correo no puede estar vacío',
+        [
           { text: 'OK', onPress: () => console.log('El campo de correo no puede estar vacío') }
         ],
         { cancelable: false }
@@ -47,7 +48,8 @@ export default class AgentLogin extends React.Component {
     } else if (this.state.password === '') {
       Alert.alert(
         'Error de validación',
-        'Por favor ingrese su contraseña'[
+        'Por favor ingrese su contraseña',
+        [
           { text: 'OK', onPress: () => console.log('Por favor ingrese su contraseña') }
         ],
         { cancelable: false }

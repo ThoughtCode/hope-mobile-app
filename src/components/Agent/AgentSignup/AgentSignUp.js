@@ -28,7 +28,6 @@ export default class AgentSignUp extends Component {
       national_id: '',
       cell_phone: '',
       birthday: '',
-      errorMessage: '',
       length_national: {
         maxLength: 0
       },
@@ -67,44 +66,57 @@ export default class AgentSignUp extends Component {
 
     if (this.state.firstname.length === 0) {
       valid = false;
-      this.setState({ errorMessage: 'El nombre no puede estar vacío' });
+      Alert.alert('Error de validación', 'El nombre no puede estar vacío', [{ text: 'OK' }], {
+        cancelable: false
+      });
       return valid;
     }
     if (this.state.lastname.length === 0) {
       valid = false;
-      this.setState({ errorMessage: 'El apellido no puede estar vacío' });
+      Alert.alert('Error de validación', 'El apellido no puede estar vacío', [{ text: 'OK' }], {
+        cancelable: false
+      });
       return valid;
     }
     if (this.validateEmail(this.state.email) === false) {
       valid = false;
-      this.setState({ errorMessage: 'El correo ingresado no es válido' });
+      Alert.alert('Error de validación', 'El correo ingresado no es válido', [{ text: 'OK' }], {
+        cancelable: false
+      });
       return valid;
     }
     if (this.state.password.length < 6) {
       valid = false;
-      this.setState({ errorMessage: 'La contraseña es demasiado corta' });
+      Alert.alert('Error de validación', 'La contraseña es demasiado corta', [{ text: 'OK' }], {
+        cancelable: false
+      });
       return valid;
     }
     if (this.state.password !== this.state.password_confirmation) {
       valid = false;
-      this.setState({ errorMessage: 'Las contraseñas no coinciden' });
+      Alert.alert('Error de validación', 'Las contraseñas no coinciden', [{ text: 'OK' }], {
+        cancelable: false
+      });
       return valid;
     }
     if (this.state.national_id.length !== 10) {
       valid = false;
-      this.setState({ errorMessage: 'El número de cédula debe tener 10 caracteres' });
+      Alert.alert('Error de validación', 'El número de cédula debe tener 10 caracteres', [{ text: 'OK' }], {
+        cancelable: false
+      });
       return valid;
     }
     if (this.state.cell_phone.length !== 10) {
       valid = false;
-      this.setState({ errorMessage: 'El número celular debe tener 10 caracteres' });
+      Alert.alert('Error de validación', 'El número celular debe tener 10 caracteres', [{ text: 'OK' }], {
+        cancelable: false
+      });
       return valid;
     }
     return valid;
   };
 
   signUpAgent = () => {
-    this.setState({ errorMessage: '' });
     if (this.validateFields()) {
       signup_url = urls.BASE_URL + urls.AGENT_SIGNUP_URI;
       console.log('Registration url', signup_url);
@@ -169,23 +181,17 @@ export default class AgentSignUp extends Component {
               );
             });
           } else if (response.status === 422) {
-            this.setState({
-              errorMessage: (
-                <Text style={styles.text_error}>
-                  Ya existe un usuario con ese correo electrónico
-                </Text>
-              )
-            });
+            Alert.alert(
+              'Usuario duplicado',
+              'Ya existe un usuario con ese correo electrónico',
+              [{ text: 'OK' }],
+              { cancelable: false }
+            );
           }
         })
-        .catch(error => this.setState({ errorMessage: error.message }));
-    } else {
-      Alert.alert(
-        'Error de validación',
-        `${this.state.errorMessage}`,
-        [{ text: 'OK', onPress: () => this.setState({ errorMessage: '' }) }],
-        { cancelable: false }
-      );
+        .catch(error =>
+          Alert.alert('Usuario duplicado', error.message, [{ text: 'OK' }], { cancelable: false })
+        );
     }
   };
 
