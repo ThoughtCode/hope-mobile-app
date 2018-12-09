@@ -79,7 +79,6 @@ export default class CustomerLogin extends React.Component {
   };
 
   facebookLogin = async () => {
-    this.setState({ errorMessage: '' });
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('2057031764572769', {
       permissions: ['email', 'public_profile']
     });
@@ -101,7 +100,7 @@ export default class CustomerLogin extends React.Component {
         .then(response => {
           this._handleLoginResponse(response);
         })
-        .catch(error => this.setState({ errorMessage: error.message, spinner: false }));
+        .catch(error => this.setState({ spinner: false }, Alert.alert('Error de autenticación', error.message, [{ text: 'OK' }], { cancelable: false })));
     } else {
       this.setState({ spinner: false });
       alert('Something went wrong. Try again later!');
