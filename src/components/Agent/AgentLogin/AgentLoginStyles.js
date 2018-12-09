@@ -48,13 +48,14 @@ module.exports = StyleSheet.create({
   },
   login_form_container: {
     flex: 1,
+    top: 250,
     alignItems: 'center',
     justifyContent: 'center',
   },
   login_actions_container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-end'
   },
   input_container: {
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -121,7 +122,6 @@ module.exports = StyleSheet.create({
     textAlignVertical: 'center'
   },
   logo_image: {
-    position: 'absolute',
     width: 120,
     height: 110,
     top: 150
