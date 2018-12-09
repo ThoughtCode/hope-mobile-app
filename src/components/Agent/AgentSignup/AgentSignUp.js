@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {FontAwesome} from '@expo/vector-icons';
 import {
+  Alert,
   Image,
   ImageBackground,
   KeyboardAvoidingView,
@@ -82,7 +83,7 @@ export default class AgentSignUp extends Component {
       this.setState({ errorMessage: 'El correo ingresado no es válido' });
       return valid;
     }
-    if (this.state.password.length < 6 || this.state.password_confirmation.length < 6) {
+    if (this.state.password.length < 6) {
       valid = false;
       this.setState({ errorMessage: 'La contraseña es demasiado corta' });
       return valid;
@@ -172,6 +173,15 @@ export default class AgentSignUp extends Component {
           }
         })
         .catch((error) => this.setState({errorMessage: error.message}));
+    } else {
+      Alert.alert(
+        'Error de validación',
+        `${this.state.errorMessage}`,
+        [
+          {text: 'OK', onPress: () => this.setState({errorMessage: ''})}
+        ],
+        { cancelable: false }
+      )
     }
   };
 
@@ -243,9 +253,6 @@ export default class AgentSignUp extends Component {
               />
             </View>
             <View style={styles.signup_form_container}>
-              <Text>
-                {this.state.errorMessage}
-              </Text>
               <View style={styles.input_container}>
                 <View style={styles.signup_input_container_border}>
                   <FontAwesome

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import {
+  Alert,
   Image,
   ImageBackground,
   KeyboardAvoidingView,
@@ -22,7 +23,6 @@ export default class AgentLogin extends React.Component {
     this.state = {
       email: '',
       password: '',
-      errorMessage: ''
     };
     this.signInAgent = this.signInAgent.bind(this);
   }
@@ -34,12 +34,24 @@ export default class AgentLogin extends React.Component {
   }
 
   signInAgent = () => {
-    // alert("Agent-->",this.state.email +" === "+this.state.password)
-    this.setState({ errorMessage: '' });
     if (this.state.email === '') {
-      this.setState({ errorMessage: <Text style={styles.text_error}>El campo de correo no puede estar vacío</Text> })
+      Alert.alert(
+        'Error de validación',
+        'El campo de correo no puede estar vacío'
+        [
+          {text: 'OK', onPress: () => console.log('El campo de correo no puede estar vacío')}
+        ],
+        { cancelable: false }
+      )
     } else if (this.state.password === '') {
-      this.setState({ errorMessage: <Text style={styles.text_error}>Por favor ingrese su contraseña</Text> })
+      Alert.alert(
+        'Error de validación',
+        'Por favor ingrese su contraseña'
+        [
+          {text: 'OK', onPress: () => console.log('Por favor ingrese su contraseña')}
+        ],
+        { cancelable: false }
+      )
     } else {
       signinURL = urls.BASE_URL + urls.AGENT_SIGNIN;
       fetch(signinURL, {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import {
+  Alert,
   Image,
   ImageBackground,
   KeyboardAvoidingView,
@@ -24,7 +25,6 @@ export default class CustomerLogin extends React.Component {
     this.state = {
       email: '',
       password: '',
-      errorMessage: '',
       spinner: false
     };
     this.signInUser = this.signInCustomer.bind(this);
@@ -37,11 +37,24 @@ export default class CustomerLogin extends React.Component {
   }
 
   signInCustomer = () => {
-    this.setState({ errorMessage: '', spinner: true });
     if (this.state.email === '') {
-      this.setState({ errorMessage: <Text style={styles.text_error}>El campo de correo no puede estar vacío</Text> , spinner: false})
+      Alert.alert(
+        'Error de validación',
+        'El campo de correo no puede estar vacío'
+        [
+          {text: 'OK', onPress: () => console.log('El campo de correo no puede estar vacío')}
+        ],
+        { cancelable: false }
+      )
     } else if (this.state.password === '') {
-      this.setState({ errorMessage: <Text style={styles.text_error}>Por favor ingrese su contraseña</Text> , spinner: false })
+      Alert.alert(
+        'Error de validación',
+        'Por favor ingrese su contraseña'
+        [
+          {text: 'OK', onPress: () => console.log('Por favor ingrese su contraseña')}
+        ],
+        { cancelable: false }
+      )
     } else {
       signinURL = urls.BASE_URL + urls.CUSTOMER_SIGNIN;
       fetch(signinURL, {

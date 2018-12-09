@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {FontAwesome} from '@expo/vector-icons';
 import {
+  Alert,
   Image,
   ImageBackground,
   KeyboardAvoidingView,
@@ -31,13 +32,46 @@ export default class CustomerSignUp extends Component {
     this.signUpCustomer = this.signUpCustomer.bind(this);
   }
 
+  validateEmail = email => {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  validateFields = () => {
+    let valid = true;
+
+    if (this.state.firstname.length === 0) {
+      valid = false;
+      this.setState({ errorMessage: 'El nombre no puede estar vacío' });
+      return valid;
+    }
+    if (this.state.lastname.length === 0) {
+      valid = false;
+      this.setState({ errorMessage: 'El apellido no puede estar vacío' });
+      return valid;
+    }
+    if (this.validateEmail(this.state.email) === false) {
+      valid = false;
+      this.setState({ errorMessage: 'El correo ingresado no es válido' });
+      return valid;
+    }
+    if (this.state.password.length < 6 ) {
+      valid = false;
+      this.setState({ errorMessage: 'La contraseña es demasiado corta' });
+      return valid;
+    }
+    if (this.state.password !== this.state.password_confirmation) {
+      valid = false;
+      this.setState({ errorMessage: 'Las contraseñas no coinciden' });
+      return valid;
+    }
+    
+    return valid;
+  };
+
   signUpCustomer = () => {
     this.setState({errorMessage: ''});
-    if (this.state.email === '') {
-      this.setState({errorMessage: <Text style={styles.text_error}>El campo de correo no puede estar vacío</Text>})
-    } else if (this.state.password != this.state.password_confirmation) {
-      this.setState({errorMessage: <Text style={styles.text_error}>Las contraseñas no coinciden</Text>})
-    } else {
+    if (this.validateFields()) {
       signup_url = urls.BASE_URL + urls.SIGNUP_URI;
       fetch(signup_url, {
         method: 'POST',
@@ -66,6 +100,15 @@ export default class CustomerSignUp extends Component {
           }
         })
         .catch((error) => this.setState({errorMessage: error.message}));
+    } else {
+      Alert.alert(
+        'Error de validación',
+        `${this.state.errorMessage}`,
+        [
+          {text: 'OK', onPress: () => this.setState({errorMessage: ''})}
+        ],
+        { cancelable: false }
+      )
     }
   };
 
@@ -138,9 +181,6 @@ export default class CustomerSignUp extends Component {
               />
             </View>
             <View style={styles.signup_form_container}>
-              <Text>
-                {this.state.errorMessage}
-              </Text>
               <View style={styles.input_container}>
                 <View style={styles.signup_input_container_border}>
                   <FontAwesome
