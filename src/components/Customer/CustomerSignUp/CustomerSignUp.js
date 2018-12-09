@@ -5,7 +5,6 @@ import {
   AsyncStorage,
   Image,
   ImageBackground,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -243,9 +242,7 @@ export default class CustomerSignUp extends Component {
           </View>
         </KeyboardAwareScrollView>
 
-        <View
-          style={styles.signup_actions}
-        >
+        <View style={styles.signup_actions}>
           <TouchableOpacity onPress={this.signUpCustomer} style={styles.signup_button}>
             <Text style={styles.signup_button_text}>REGISTRAR</Text>
           </TouchableOpacity>

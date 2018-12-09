@@ -5,7 +5,6 @@ import {
   AsyncStorage,
   Image,
   ImageBackground,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
