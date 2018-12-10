@@ -16,6 +16,12 @@ export default class AdditionalDetail extends Component {
             detailText : ''            
         }
     }
+
+    onPress = () =>{
+        const {setAdditionalInfo} = this.props.navigation.state.params
+        setAdditionalInfo(this.state.detailText)
+        this.props.navigation.goBack()
+    }
     
     render() {
         let { data, checked } = this.state;
@@ -23,7 +29,7 @@ export default class AdditionalDetail extends Component {
             <View style={styles.container}>
                 <View style ={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginVertical:10,borderBottomWidth:1,borderBottomColor:'lightgray'}}>
                     <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
-                    <Text style={{fontSize:24,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}}>{"Elige la frecuencia."}</Text>
+                    <Text style={{fontSize:24,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}}>{"DETALLES ADICIONALES."}</Text>
                 </View>
                 <View style={{flex:1}}>
                     <TextInput
@@ -37,7 +43,7 @@ export default class AdditionalDetail extends Component {
                         onChangeText={(text) => this.setState({detailText : text})} />
                 </View>
                 <View style={{ marginVertical:10 }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('thirdScreen')}>
+                    <TouchableOpacity onPress={this.onPress}>
                         <View style={styles.buttonViewStyle}>
                             <Text style={styles.buttonTextStyle}>{"Gaurdar"}</Text>
                         </View>

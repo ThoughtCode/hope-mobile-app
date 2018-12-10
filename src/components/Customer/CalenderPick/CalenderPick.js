@@ -4,19 +4,22 @@ import {
     View,
     TouchableOpacity,
     FlatList,
-    CheckBox
+    CheckBox,
+    TimePickerAndroid
 } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from 'react-native-calendar-picker';
 import styles from './CalenderPickStyles';
 import Moment from 'moment';
+// import { TimePickerAndroid  } from 'expo';
 
 export default class CalenderPick extends Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedStartDate: null,
+            time : new Date().getHours() + " : "+ new Date().getMinutes()
         }
         this.onDateChange = this.onDateChange.bind(this);
     }
@@ -24,13 +27,32 @@ export default class CalenderPick extends Component {
     onDateChange(date) {
         var initialDate = Moment.utc(new Date(date)).format("DD [de] MMM [de] YYYY")
         this.setState({
-          selectedStartDate: initialDate + " - 12:00H",
+          selectedStartDate: initialDate
         });
+    }
+
+    async onTimechage(){
+        try {
+            const { action, hour, minute } = await TimePickerAndroid.open({
+                hour: 14,
+                minute: 0,
+                is24Hour: true, // Will display '2 PM'
+            });
+            if (action !== TimePickerAndroid.dismissedAction) {
+                // Selected hour (0-23), minute (0-59)
+                this.setState({time : hour + " : "+minute})
+            }
+        } catch ({ code, message }) {
+
+            console.warn('Cannot open time picker', message);
+        }
     }
 
     onPress = () =>{
         const { setDate } = this.props.navigation.state.params;
-        setDate(this.state.selectedStartDate)
+        let selectedDate = this.state.selectedStartDate;
+        selectedDate += " - "+this.state.time+"H",
+        setDate(selectedDate)
         this.props.navigation.goBack();
     }
     
@@ -47,7 +69,7 @@ export default class CalenderPick extends Component {
                         onDateChange={this.onDateChange}
                     />
                     <View style={{flex:0.3,alignItems:'center',justifyContent:'center'}}>
-                        <Text style={{fontSize:28,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}}>{"12:00 hrs"}</Text>
+                        <Text style={{fontSize:28,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}} onPress={() => this.onTimechage()}>{this.state.time+" hrs"}</Text>
                     </View>
                 </View>
                 

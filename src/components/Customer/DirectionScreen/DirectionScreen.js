@@ -65,10 +65,15 @@ export default class DirectionScreen extends Component {
         API.customerProperties(this.getAddressResponse,{},true);
     }
 
+    setDirection(data){
+        this.props.navigation.state.params.setDirection(data)
+        this.props.navigation.goBack()
+    }
+
     renderRow = (item) =>{
         let data = item.item
         return(
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("AddressForm",{propertyData:data,isUpdate : true,refresProperties : this.refresProperties})}>
+            <TouchableOpacity onPress={() => this.setDirection(data)}>
                 <View style={styles.childContainer}>
                     <Entypo name={"home"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => alert("onClick")} />
                     <View style={styles.itemView}>
@@ -79,7 +84,7 @@ export default class DirectionScreen extends Component {
                             {data.attributes.number +" "+data.attributes.s_street + " "+data.attributes.p_street+" "+data.attributes.city}
                         </Text>
                     </View>
-                    <Entypo name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => alert("onClick")} />
+                    <Entypo name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => this.props.navigation.navigate("AddressForm",{propertyData:data,isUpdate : true,refresProperties : this.refresProperties})} />
                 </View>
             </TouchableOpacity>
         )
