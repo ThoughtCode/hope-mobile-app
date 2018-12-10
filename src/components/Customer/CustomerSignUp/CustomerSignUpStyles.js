@@ -15,19 +15,15 @@ module.exports = StyleSheet.create({
     justifyContent: 'space-between',
   },
   signup_form_container: {
-    marginTop: 110,
     flex: 1,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center'
   },
-  logo_container: {
-    position: 'absolute',
-    top: 120,
-  },
   logo_image: {
     width: 90,
-    height: 84
+    height: 84,
+    marginBottom: 20
   },
   customer_indicator: {
     backgroundColor: '#fff',
@@ -82,6 +78,11 @@ module.exports = StyleSheet.create({
     fontSize: 12,
     color: '#fff',
     paddingLeft: 10
+  },
+  signup_actions: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   signup_button: {
     backgroundColor: '#fff',
