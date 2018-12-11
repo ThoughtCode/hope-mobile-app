@@ -84,7 +84,7 @@ export default class AgentJobListScreen extends Component {
                 }else{
                     data += "?current_page="+Number(this.state.page + 1)
                 }
-                
+
                 this.setState({isAPICall : true,page : this.state.page + 1},() =>{
                     API.getJobs(this.getJobResponseData,data,true);
                 })
@@ -119,14 +119,14 @@ export default class AgentJobListScreen extends Component {
     getJobResponseData = {
         success: (response) => {
             try {
-                
+
                 if(this.state.isOnRefresh){
                     this.setState({
                         jobList : []
                     },() =>{
                         var newJobData = (response.job) ? [...this.state.jobList,...response.job.data] : this.state.jobList
                         // console.log("New JobData-->",JSON.stringify(newJobData))
-                        
+
                         this.setState({
                             jobList : newJobData || [],
                             isOnRefresh : false,
@@ -144,7 +144,7 @@ export default class AgentJobListScreen extends Component {
                         isPagination : (response.job) ? response.job.data.length == 0 ?  false : true : false
                     })
                 }
-                
+
             } catch (error) {
                 this.setState({
                     jobList :  [],
@@ -188,7 +188,7 @@ export default class AgentJobListScreen extends Component {
                         <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage}/>
                         <View style={styles.topTitleView}>
                             <Text style={styles.mainTitleText}>{"Trabajos"}</Text>
-    
+
                             <View style={{flexDirection:'row'}}>
                                 <View style={[styles.filterView,{marginRight:10}]}>
                                     <TouchableOpacity onPress={() => this.setState({filterdata : ""},()=> AgentJobListScreen.getJobsAPICall())}>
@@ -215,9 +215,16 @@ export default class AgentJobListScreen extends Component {
                     <View>
                         <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
                     </View>
-                    <View style={{ marginHorizontal: 20, marginTop:30 }}>
-                        <Text style={styles.titleText}>{"Hola, "+name}</Text>
-                        <Text style={[styles.textFont, { fontSize: 16,marginTop:20 }]}>{"En este momento estamos evaluando tu postulacion, nuestro equipo de Noc Noc se contactara contigo"}</Text>
+                    <View style={{ marginHorizontal: 20, marginTop:30}}>
+                      <Text style={styles.titleText}>{"Hola, "+name}</Text>
+                      <Text style={[styles.textFont, { fontSize:16,marginTop:20,color:"#0069a7", textAlign:"center" }]}>{"Estamos evaluando tu postulación."}</Text>
+                      <Text style={styles.logo_container}>
+                        <Image
+                          style={styles.logo_image}
+                          source={require('../../../../assets/img/logo_azul.png')}
+                        />
+                      </Text>
+                      <Text style={[styles.textFont, { fontSize:16,marginTop:20,color:"#0069a7", textAlign:"center" }]}>{"Muy pronto nos pondremos en contacto contigo"}</Text>
                     </View>
                 </SafeAreaView>
             )

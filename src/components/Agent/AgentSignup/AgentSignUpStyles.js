@@ -1,5 +1,5 @@
 const React = require('react-native');
-const {Dimensions, StyleSheet} = React;
+const { Dimensions, StyleSheet } = React;
 
 module.exports = StyleSheet.create({
   fullSize: {
@@ -12,14 +12,14 @@ module.exports = StyleSheet.create({
   sign_up_container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   input_container: {
     backgroundColor: 'rgba(0,0,0,0.5)',
     borderRadius: 5
   },
   agent_indicator: {
-    backgroundColor: '#fff',
+    backgroundColor: '#0069A7',
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     position: 'absolute',
@@ -29,7 +29,7 @@ module.exports = StyleSheet.create({
     paddingVertical: 5
   },
   agent_indicator_text: {
-    color: '#0069A7',
+    color: '#fff'
   },
   customer_login_action: {
     borderTopLeftRadius: 10,
@@ -46,19 +46,18 @@ module.exports = StyleSheet.create({
     fontSize: 10
   },
   signup_form_container: {
-    marginTop: 70,
     flex: 1,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center'
   },
   signup_input_container_border: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderColor: '#fff',
-      borderBottomWidth: 1,
-      paddingLeft: 20
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#fff',
+    borderBottomWidth: 1,
+    paddingLeft: 20
   },
   signup_input_container: {
     flexDirection: 'row',
@@ -71,14 +70,14 @@ module.exports = StyleSheet.create({
     height: 40,
     marginTop: 5,
     textAlign: 'left',
-    fontSize: 10,
+    fontSize: 12,
     color: '#fff',
     paddingLeft: 10
   },
-  sign_up_actions_container: {
-    backgroundColor: '#fff',
+  signup_actions: {
     alignItems: 'center',
     justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   signup_button: {
     backgroundColor: '#fff',
@@ -87,6 +86,7 @@ module.exports = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
+    top: 20
   },
   signup_button_text: {
     color: '#0069A7',
@@ -108,13 +108,12 @@ module.exports = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 10
   },
-  logo_container: {
-    position: 'absolute',
-    top: 70,
-    left: 50,
-  },
   logo_image: {
-    width: 60,
-    height: 54,
+    width: 90,
+    height: 84,
+    marginBottom: 20
+  },
+  text_error: {
+    color: 'white'
   }
 });

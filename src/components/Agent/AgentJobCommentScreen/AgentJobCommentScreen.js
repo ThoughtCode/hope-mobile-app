@@ -21,7 +21,6 @@ export default class AgentJobCommentScreen extends Component {
 
     constructor(props){
         super(props)
-
         this.state = {
             jobData : props.navigation.state.params.jobData.attributes,
             jobCommentList : []
@@ -86,7 +85,7 @@ export default class AgentJobCommentScreen extends Component {
                         maxStars={5}
                         rating={data.attributes.qualification}
                         starSize={18}
-                        fullStarColor={'gray'}/>
+                        fullStarColor={'#ffd700'}/>
                 </View>
                 <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text> 
             </View>
@@ -149,23 +148,24 @@ export default class AgentJobCommentScreen extends Component {
                                 maxStars={5}
                                 rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                                 starSize={20}
-                                fullStarColor={'gray'}
+                                fullStarColor={'#ffd700'}
                             />
                             <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
                         </View>
-                        <View style={{flexDirection:'row'}}>
-                            {(this.state.jobData.customer.email != null) ?
-                            <View style={{flexDirection:'row'}}>
-                                <View><MaterialCommunityIcons name={"email"} size={18} /></View>
-                                <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.email || ""}</Text>
-                            </View> : null}
-                            {(this.state.jobData.customer.cell_phone != null) ?
-                            <View style={{flexDirection:'row'}}>
-                                <View><MaterialCommunityIcons name={"credit-card-plus"} size={18} /></View>
-                                <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.cell_phone || ""}</Text> 
-                            </View> : null}
-                        </View>
-                        
+                        {(this.state.jobData.status != "accepted") ? <Text></Text> :
+                          <View style={{flexDirection:'row'}}>
+                              {(this.state.jobData.customer.email != null) ?
+                              <View style={{flexDirection:'row'}}>
+                                  <View><MaterialCommunityIcons name={"email"} size={18} /></View>
+                                  <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.email || ""}</Text>
+                              </View> : null}
+                              {(this.state.jobData.customer.cell_phone != null) ?
+                              <View style={{flexDirection:'row'}}>
+                                  <View><MaterialCommunityIcons name={"credit-card-plus"} size={18} /></View>
+                                  <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.customer.cell_phone || ""}</Text> 
+                              </View> : null}
+                          </View>
+                        }
                     </View>
                     <View style={styles.topTitleView}>
                         <Text style={styles.mainTitleText}>{"Comentarios de otros Agentes"}</Text>

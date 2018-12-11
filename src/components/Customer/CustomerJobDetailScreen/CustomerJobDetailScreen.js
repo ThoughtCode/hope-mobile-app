@@ -73,7 +73,7 @@ export default class CustomerJobDetailScreen extends Component {
         },
         error: (err) => {
             console.log('jobApplyResponse error ' + JSON.stringify(err));
-            Alert.alert("Hope",err.message)
+            Alert.alert("Noc Noc",err.message)
         },
         complete: () => {
         }
@@ -192,7 +192,7 @@ export default class CustomerJobDetailScreen extends Component {
                         rating={data.attributes.agent.data.attributes.rewiews_average}
                         // rating={3}
                         starSize={18}
-                        fullStarColor={'gray'}/>
+                        fullStarColor={'#ffd700'}/>
                 </View>
                 <View style={{flexDirection:'row',justifyContent:'space-between',marginLeft:40}}>
                     <Text style={{color:'gray'}}>{data.attributes.agent.data.attributes.rewiews_count+" Trabajos Completados"}</Text>
@@ -234,7 +234,7 @@ export default class CustomerJobDetailScreen extends Component {
             if(val.service.type_service == "base"){
                 // description += val.service.name
             }else{
-                subDescription += val.service.name + " X " + val.value
+                subDescription += val.service.name + " x " + val.value
                 // subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
             }
         
@@ -281,12 +281,9 @@ export default class CustomerJobDetailScreen extends Component {
                             maxStars={5}
                             rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                             starSize={20}
-                            fullStarColor={'gray'}
+                            fullStarColor={'#ffd700'}
                         />
                         <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
-                    </View>
-                    <View style={styles.topTitleView}>
-                        <Text style={styles.mainTitleText}>{"Detalles del Trabajo"}</Text>
                     </View>
                 </View>
 
@@ -294,9 +291,9 @@ export default class CustomerJobDetailScreen extends Component {
                     <ScrollView>
 
                         <TouchableOpacity activeOpacity = { 0.7 } onPress = {() => this.setState({isCallapseOpen : !this.state.isCallapseOpen})}>
-                            <View style={{padding:10,backgroundColor:'gray',flexDirection:'row',justifyContent:'space-between'}}>
-                                <Text>{"Detalles del trabajo"}</Text>
-                                <Entypo name={(this.state.isCallapseOpen) ? "chevron-down" : "chevron-up"} color={"#fff"} size={25} />
+                            <View style={{padding:10,backgroundColor:'rgb(240,240,240)',flexDirection:'row',justifyContent:'space-between'}}>
+                                <Text style={styles.mainTitleText}>{"Detalles del trabajo"}</Text>
+                                <Entypo name={(this.state.isCallapseOpen) ? "chevron-up" : "chevron-down"} color={"gray"} size={25} />
                             </View>
                         </TouchableOpacity>
 
@@ -365,7 +362,7 @@ export default class CustomerJobDetailScreen extends Component {
                                             rating={this.state.jobData.agent_rewiews_average}
                                             // rating={3}
                                             starSize={18}
-                                            fullStarColor={'gray'}/>
+                                            fullStarColor={'#ffd700'}/>
                                     </View>
                                     <View style={{flexDirection:'row',justifyContent:'space-between',marginLeft:40}}>
                                         <Text style={{color:'gray'}}>{this.state.jobData.agent_rewiews_count+" Trabajos Completados"}</Text>

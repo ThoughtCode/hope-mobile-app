@@ -139,7 +139,7 @@ export default class AgentActules extends Component {
 
     render(){
         return(
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={{flex:1}}>
                 <JobList isAgent={true} isLoading={this.state.isAPICall} jobList={this.state.jobList} type={this.state.type} setRow={this.setRow} navigateToDetail={this.props.navigateToDetail} onRefresh={this.onRefresh} isOnRefresh={this.state.isOnRefresh} onEndReached={this.onEndReached} onMomentumScrollBegin={this.onMomentumScrollBegin}/>
             </SafeAreaView>
         )

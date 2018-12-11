@@ -13,7 +13,7 @@ module.exports = StyleSheet.create({
     flex: 1,
   },
   agent_indicator: {
-    backgroundColor: '#fff',
+    backgroundColor: '#0069A7',
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     position: 'absolute',
@@ -23,7 +23,8 @@ module.exports = StyleSheet.create({
     paddingVertical: 5
   },
   agent_indicator_text: {
-    color: '#0069A7',
+    color: '#fff',
+    fontSize: 18
   },
   customer_login_action: {
     borderTopLeftRadius: 10,
@@ -36,8 +37,7 @@ module.exports = StyleSheet.create({
     zIndex: 1
   },
   customer_login_action_text: {
-    color: '#fff',
-    fontSize: 10
+    color: '#fff'
   },
   login_container: {
     flex: 1,
@@ -48,13 +48,14 @@ module.exports = StyleSheet.create({
   },
   login_form_container: {
     flex: 1,
+    top: 250,
     alignItems: 'center',
     justifyContent: 'center',
   },
   login_actions_container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-end'
   },
   input_container: {
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -79,7 +80,7 @@ module.exports = StyleSheet.create({
     height: 40,
     marginTop: 5,
     textAlign: 'left',
-    fontSize: 10,
+    fontSize: 12,
     color: '#fff',
     paddingLeft: 10
   },
@@ -121,7 +122,6 @@ module.exports = StyleSheet.create({
     textAlignVertical: 'center'
   },
   logo_image: {
-    position: 'absolute',
     width: 120,
     height: 110,
     top: 150

@@ -52,7 +52,7 @@ export default class CustomerReviewScreen extends Component {
             console.log("Data-->",data)
             API.setCustomerReview(this.reviewJobResponse,data,this.props.navigation.state.params.jobData.id,true);
         }else{
-            Alert.alert("Hope","Please enter comment")
+            Alert.alert("Noc Noc","Please enter comment")
         }
         
     }
@@ -67,7 +67,7 @@ export default class CustomerReviewScreen extends Component {
                 console.log("reviewJobResponse data-->"+JSON.stringify(response))
                 
                 // this.setState({isJobReview : response.can_review,isLoading:false})
-                Alert.alert("Hope",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
+                Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
                 
             } catch (error) {
                 console.log('reviewJobResponse catch error ' + JSON.stringify(error));
@@ -75,7 +75,7 @@ export default class CustomerReviewScreen extends Component {
         },
         error: (err) => {
             console.log('reviewJobResponse error ' + JSON.stringify(err));
-            Alert.alert("Hope",err.message)
+            Alert.alert("Noc Noc",err.message)
         },
         complete: () => {
         }

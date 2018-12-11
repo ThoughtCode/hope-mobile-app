@@ -7,7 +7,8 @@ module.exports = StyleSheet.create({
     height: Dimensions.get('window').height,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)'
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    zIndex: 1000
   },
   image_background: {
     flex: 1,
@@ -24,6 +25,7 @@ module.exports = StyleSheet.create({
   },
   customer_indicator_text: {
     color: '#0069A7',
+    fontSize: 18
   },
   agent_login_action: {
     borderTopLeftRadius: 10,
@@ -36,25 +38,18 @@ module.exports = StyleSheet.create({
     zIndex: 1
   },
   agent_login_action_text: {
-    color: '#fff',
-    fontSize: 10
-  },
-  login_container: {
-    flex: 1,
-    top: 270,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    color: '#fff'
   },
   login_form_container: {
     flex: 1,
+    top: 250,
     alignItems: 'center',
     justifyContent: 'center',
   },
   login_actions_container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-end'
   },
   input_container: {
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -79,7 +74,7 @@ module.exports = StyleSheet.create({
     height: 40,
     marginTop: 5,
     textAlign: 'left',
-    fontSize: 10,
+    fontSize: 12,
     color: '#fff',
     paddingLeft: 10
   },
@@ -97,6 +92,23 @@ module.exports = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     letterSpacing: 10
+  },
+  fb_login_button: {
+    backgroundColor: '#4267b2',
+    borderRadius: 5,
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  fb_login_button_text: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: 1
   },
   back_button: {
     marginTop: 20,
@@ -121,7 +133,6 @@ module.exports = StyleSheet.create({
     textAlignVertical: 'center'
   },
   logo_image: {
-    position: 'absolute',
     width: 120,
     height: 110,
     top: 150

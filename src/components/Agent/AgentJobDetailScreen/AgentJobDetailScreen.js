@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions,SafeAreaView,Alert} from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
-import Ionicons from '@expo/vector-icons/Ionicons'
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import StarRating from '../../../lib/react-native-star-rating';
 import { API } from '../../../util/api';
 import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
@@ -95,7 +96,7 @@ export default class AgentJobDetailScreen extends Component {
         if(!this.state.isJobApply){
             API.applyJob(this.jobApplyResponse,"/"+this.props.navigation.state.params.jobData.id+"/proposals",true);
         }else{
-            Alert.alert("Hope","Ya te has postulado para este trabajo")
+            Alert.alert("Noc Noc","Ya te has postulado para este trabajo")
         }
     }
 
@@ -104,10 +105,10 @@ export default class AgentJobDetailScreen extends Component {
     //======================================================================
 
     tapReview = () =>{
-        Alert.alert("Hope","Antes de continuar.Confirm que tu trabajo se realizo con exito.",
+        Alert.alert("Noc Noc","Antes de continuar.Confirm que tu trabajo se realizo con exito.",
             [
                 {text: 'NO', onPress: () => this.props.navigation.navigate("AgentReviewScreen",{jobData : this.props.navigation.state.params.jobData}), style: 'cancel'},
-                {text: 'YES', onPress: () => this.tapConfirmPayment()},
+                {text: 'SI', onPress: () => this.tapConfirmPayment()},
             ],
               { cancelable: false }
             )
@@ -155,17 +156,17 @@ export default class AgentJobDetailScreen extends Component {
             try {
                 console.log("jobApplyResponse data-->"+JSON.stringify(response))
                 this.setState({isJobApply : true},() =>{
-                    // AgentJobListScreen.getJobsAPICall()
-                    // AgentJobListScreen.setRow(this.state.index)
-                    this.props.navigation.state.params.setRow(this.state.index)
-                    Alert.alert("Hope",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
+                  // AgentJobListScreen.getJobsAPICall()
+                  // AgentJobListScreen.setRow(this.state.index)
+                  this.props.navigation.state.params.setRow(this.state.index)
+                  Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
                 })
-                
-            } catch (error) {
-                console.log('jobApplyResponse catch error ' + JSON.stringify(error));
-            }
-        },
-        error: (err) => {
+              } catch (error) {
+                console.log('catch (error)','jobApplyResponse catch error ' + JSON.stringify(error));
+              }
+            },
+            error: (err) => {
+            Alert.alert("Noc Noc", JSON.stringify(err.message))  
             console.log('jobApplyResponse error ' + JSON.stringify(err));
         },
         complete: () => {
@@ -179,14 +180,14 @@ export default class AgentJobDetailScreen extends Component {
     render(){
         var description = ""
         var subDescription = ""
-        var name = this.state.jobData.customer && this.state.jobData.customer.first_name  || "" + " "+ this.state.jobData.customer && this.state.jobData.customer.last_name || ""
+        var name = this.state.jobData.customer && this.state.jobData.customer.first_name + " " + this.state.jobData.customer.last_name 
         var initials = this.state.jobData.customer && this.state.jobData.customer.first_name.charAt(0)
         initials +=  this.state.jobData.customer && this.state.jobData.customer.last_name.charAt(0)
         this.state.jobData.job_details.map((val,index)=>{
             if(val.service.type_service == "base"){
                 description += val.service.name
             }else{
-                subDescription += val.service.name + " X " + val.value
+                subDescription += val.service.name + " x " + val.value
                 subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
             }
         
@@ -199,7 +200,7 @@ export default class AgentJobDetailScreen extends Component {
         var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
         var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
         var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
-        return(
+				return(
             <SafeAreaView style={styles.container}>
                 <View>
                     <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
@@ -233,10 +234,25 @@ export default class AgentJobDetailScreen extends Component {
                             maxStars={5}
                             rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                             starSize={20}
-                            fullStarColor={'gray'}
+                            fullStarColor={'#ffd700'}
                         />
-                        <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
+                        <Text style={styles.opinionsText}>
+                          {this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}
+                        </Text>
                     </View>
+                    {(this.state.jobData.status != "accepted") ? <Text></Text> : 
+                      <View style={[styles.cellPhone,{flexDirection:'row'}]}>
+                        {(this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone != null) ?
+                        <View style={{flexDirection:'row'}}>
+                          <Text>
+                            {(!this.state.isJobReview) ? (this.state.isJobApply)? <MaterialCommunityIcons name={"credit-card-plus"} size={18} /> || "" : "" : <MaterialCommunityIcons name={"credit-card-plus"} size={18} /> || "" }
+                          </Text>
+                          <Text style={[styles.subText,{marginHorizontal:5}]}>
+                            {(!this.state.isJobReview) ? (this.state.isJobApply)? this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || "" : "" : this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || "" }
+                          </Text>
+                        </View>: null}
+                      </View>
+                    }
                     <View style={styles.topTitleView}>
                         <Text style={styles.mainTitleText}>{"Detalles del Trabajo"}</Text>
                     </View>
@@ -274,12 +290,17 @@ export default class AgentJobDetailScreen extends Component {
                         </View>
                     </ScrollView>
                 </View>
-                {(this.state.type != "completed") ?
+                {console.log(this.state.type)}
+                {(this.state.type != "completed") ? (this.state.type != "accepted") ?
                 <TouchableOpacity onPress={(!this.state.isJobReview) ? this.tapJobApplyTap : this.tapReview} disabled={this.state.isJobApply && !this.state.isJobReview}>
-                    <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
-                        <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Calificar"}</Text>
-                    </View>
+                  <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
+                    <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Calificar"}</Text>
+                  </View>
                 </TouchableOpacity>
+                :
+                <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor: 'rgb(0,121,189)'}]}>
+                  <Text style={[styles.titleText,{color:'#fff'}]}>Contratado</Text>
+                </View>
                 : null}
                 
             </SafeAreaView>
