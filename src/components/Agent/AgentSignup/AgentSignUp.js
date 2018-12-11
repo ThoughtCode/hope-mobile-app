@@ -36,25 +36,7 @@ export default class AgentSignUp extends Component {
       }
     };
     this.signUpAgent = this.signUpAgent.bind(this);
-    this.validateInputNational = this.validateInputNational.bind(this);
-    this.validateInput = this.validateInput.bind(this);
   }
-
-  keypressed = e => {
-    console.log(e);
-  };
-
-  validateInputNational = e => {
-    var national_id = e.national_id;
-    var ml = this.state.length_national.maxLength + 1;
-    this.setState({ national_id, length_national: { maxLength: ml } });
-  };
-
-  validateInput = e => {
-    var cell_phone = e.cell_phone;
-    var ml = this.state.length.maxLength + 1;
-    this.setState({ cell_phone, length: { maxLength: ml } });
-  };
 
   validateEmail = email => {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -99,6 +81,7 @@ export default class AgentSignUp extends Component {
       });
       return valid;
     }
+    console.log(this.state.national_id.length)
     if (this.state.national_id.length !== 10) {
       valid = false;
       Alert.alert('Error de validación', 'El número de cédula debe tener 10 caracteres', [{ text: 'OK' }], {
@@ -326,8 +309,6 @@ export default class AgentSignUp extends Component {
                   autoCapitalize="none"
                   underlineColorAndroid="transparent"
                   keyboardType="numeric"
-                  maxLength={10}
-                  onKeyPress={this.keypressed}
                 />
               </View>
               <View style={styles.signup_input_container}>
@@ -340,8 +321,6 @@ export default class AgentSignUp extends Component {
                   autoCapitalize="none"
                   underlineColorAndroid="transparent"
                   keyboardType="phone-pad"
-                  maxLength={10}
-                  minLength={9}
                 />
               </View>
             </View>
