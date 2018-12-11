@@ -38,6 +38,8 @@ export default class CustomerLogin extends React.Component {
   }
 
   signInCustomer = () => {
+    // alert("customer-->",this.state.email +" === "+this.state.password)
+    this.setState({ errorMessage: '' });
     if (this.state.email === '') {
       Alert.alert(
         'Error de validación',
@@ -69,102 +71,37 @@ export default class CustomerLogin extends React.Component {
             email: this.state.email,
             password: this.state.password
           }
-        })
-      })
-        .then(response => {
-          this._handleLoginResponse(response);
-        })
-        .catch(error => this.setState({ errorMessage: error.message, spinner: false }));
-    }
-  };
+        }),
+      }).then((response) => {
+        if (response.status === 401) {
+          this.setState({ errorMessage: <Text style={styles.text_error}>Verifique su usuario y su contraseña</Text> });
+          return response;
+        } else {
+          response.json().then((data) => {
+            globals.password = this.state.password
+            AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
+              globals.access_token = data.customer.data.attributes.access_token ||""
 
-  facebookLogin = async () => {
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('2057031764572769', {
-      permissions: ['email', 'public_profile']
-    });
-    if (type === 'success') {
-      this.setState({ spinner: true });
-      fbSigninURL = urls.STAGING_URL + urls.CUSTOMER_FACEBOOK_LOGIN;
-      fetch(fbSigninURL, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          customer: {
-            facebook_access_token: token
-          }
-        })
-      })
-        .then(response => {
-          this._handleLoginResponse(response);
-        })
-        .catch(error => this.setState({ spinner: false }, Alert.alert('Error de autenticación', error.message, [{ text: 'OK' }], { cancelable: false })));
-    } else {
-      this.setState({ spinner: false });
-      alert('Something went wrong. Try again later!');
-    }
-  };
-
-  _handleLoginResponse = async response => {
-    if (response.status === 401) {
-      this.setState({
-        errorMessage: <Text style={styles.text_error}>Verifique su usuario y su contraseña</Text>,
-        spinner: false
-      });
-      return response;
-    } else {
-      response.json().then(async data => {
-        await this._postMobilePushNotificationToken(data.customer.data.attributes.access_token);
-        AsyncStorage.multiSet(
-          [
-            ['access_token', data.customer.data.attributes.access_token || ''],
-            ['customerData', JSON.stringify(data)]
-          ],
-          () => {
-            globals.access_token = data.customer.data.attributes.access_token || '';
-            // this.props.navigation.navigate('CustomerTabbar', { data: data });
-            this.props.navigation.navigate('CustomerTabbar');
-          }
-        );
-      });
-    }
-  };
-
-  _getStorageValue = async key => {
-    var value = await AsyncStorage.getItem(key);
-    return value;
-  };
-
-  _postMobilePushNotificationToken = async authToken => {
-    setMobileTokenUrl = urls.STAGING_URL + urls.SET_CUSTOMER_MOBILE_TOKEN;
-    let push_notification = await this._getStorageValue('PushNotificationToken');
-    console.log('PushNotificationToken:' + push_notification);
-    fetch(setMobileTokenUrl, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Token ${authToken}`
-      },
-      body: JSON.stringify({
-        customer: {
-          mobile_push_token: push_notification
-        }
-      })
-    })
-      .then(response => {
-        if (response.status === 200) {
-          response.json().then(async data => {
-            console.log(data);
+              globals.first_name = data.customer.data.attributes.first_name || ""
+              globals.last_name = data.customer.data.attributes.last_name || ""
+              globals.email = data.customer.data.attributes.email || ""
+              globals.password = this.state.password || ""
+              globals.cell_phone = data.customer.data.attributes.cell_phone || ""
+              globals.status = data.customer.data.attributes.status || ""
+              globals.avatar = data.customer.data.attributes.avatar.url || ""
+              
+              // this.props.navigation.navigate('CustomerTabbar', { data: data });
+              this.props.navigation.navigate('CustomerTabbar');
+            })
+            
           });
         }
       })
       .catch(error => console.log('token not saved'));
   };
+}
 
-  render() {
+  render(){
     return (
       <ImageBackground
         style={styles.image_background}
@@ -245,6 +182,6 @@ export default class CustomerLogin extends React.Component {
           </View>
         </KeyboardAwareScrollView>
       </ImageBackground>
-    );
+    )
   }
 }

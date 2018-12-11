@@ -36,6 +36,8 @@ export default class AgentLogin extends React.Component {
   }
 
   signInAgent = () => {
+    // alert("Agent-->",this.state.email +" === "+this.state.password)
+    this.setState({ errorMessage: '' });
     if (this.state.email === '') {
       Alert.alert(
         'Error de validación',

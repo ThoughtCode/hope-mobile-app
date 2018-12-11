@@ -128,11 +128,9 @@ export default class CustomerProfile extends Component {
           <ScrollView contentContainerStyle={styles.main_content}>
             <View style={styles.profile_picture_name_container}>
               <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
-              {/* <Image source={require('../../../../assets/img/customer_profile.png')} style={styles.profile_image}/> */}
               {( this.state.avatar && this.state.avatar != "")?
                 <Image source={{ uri: this.state.avatar + '?time=' + new Date() }} style={styles.profile_image} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")} />
                 :
-                //  <View style={{backgroundColor:"rgba(99,99,99,0.7)"}}>
                 <View style={[styles.profile_image, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center',width:100,borderRadius:50 }]} >
                     <Text style={{ color: '#fff' }}>{initials}</Text>
                 </View>
@@ -175,6 +173,39 @@ export default class CustomerProfile extends Component {
               <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdateProperties")}>
                 <View style={styles.accordion_header}>
                   <Text style={styles.accordion_header_title}>{"Propiedades"}</Text>
+                  <FontAwesome
+                    name="chevron-right"
+                    size={24}
+                    color='#2478AE'
+                  />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CommentListScreen")}>
+                <View style={styles.accordion_header}>
+                  <Text style={styles.accordion_header_title}>{"Comentarios"}</Text>
+                  <FontAwesome
+                    name="chevron-right"
+                    size={24}
+                    color='#2478AE'
+                  />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerProfileCardList")}>
+                <View style={styles.accordion_header}>
+                  <Text style={styles.accordion_header_title}>{"Metodo de pago"}</Text>
+                  <FontAwesome
+                    name="chevron-right"
+                    size={24}
+                    color='#2478AE'
+                  />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerBillingList")}>
+                <View style={styles.accordion_header}>
+                  <Text style={styles.accordion_header_title}>{"Detalles de facturacion"}</Text>
                   <FontAwesome
                     name="chevron-right"
                     size={24}

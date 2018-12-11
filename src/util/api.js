@@ -63,6 +63,10 @@ export const API = {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROPERTIES, buildHeader());
     },
 
+    updateProperties: (onResponse, data, isHeaderRequired,id) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROPERTIES + "/"+ id, buildHeader());
+    },
+
     customerUpdateProfile: (onResponse, data, isHeaderRequired) => {
         request(onResponse, data, 'PUT', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROFILE, buildHeader());
     },
@@ -87,7 +91,17 @@ export const API = {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_CUSTERMER_REVIEW + job_id + "/review", buildHeader());
     },   
     
+    getServiceType: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_CUSTERMER_SERVICETYPE + data, buildHeader());
+    },
     
+    setAddCard: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.ADD_CARD  , buildHeader());
+    },   
+
+    getCardLists: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_CARD_LIST , buildHeader());
+    },
     
 }
 

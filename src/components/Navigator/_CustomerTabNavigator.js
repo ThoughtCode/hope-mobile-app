@@ -22,7 +22,22 @@ import CreateProperties from "../../components/Customer/CreateProperties/CreateP
 import CustomerUpdatePassword from "../../components/Customer/CustomerUpdatePassword/CustomerUpdatePassword";
 import CustomerReviewScreen from "../../components/Customer/CustomerReviewScreen/CustomerReviewScreen";
 import CustomerAgentReviewScreen from "../../components/Customer/CustomerAgentReviewScreen/CustomerAgentReviewScreen";
+import CustomerCleaning from "../../components/Customer/CustomerCleaning/CustomerCleaning";
 
+import ServiceDetail from "../../components/Customer/ServiceDetail/ServiceDetail";
+import Frequency from "../../components/Customer/Frequency/Frequency";
+import CalenderPick from "../../components/Customer/CalenderPick/CalenderPick";
+import DirectionScreen from "../../components/Customer/DirectionScreen/DirectionScreen";
+import AddressForm from "../../components/Customer/AddressForm/AddressForm";
+import AdditionalDetail from "../../components/Customer/AdditionalDetail/AdditionalDetail";
+import CardListScreen from "../../components/Customer/CardListScreen/CardListScreen";
+import AddCardScreen from "../../components/Customer/AddCardScreen/AddCardScreen";
+import CommentListScreen from "../../components/Customer/CommentListScreen/CommentListScreen";
+import CustomerProfileCardList from "../../components/Customer/CustomerProfileCardList/CustomerProfileCardList";
+import CustomerProfileAddCard from "../../components/Customer/CustomerProfileAddCard/CustomerProfileAddCard";
+import CustomerBillingList from "../../components/Customer/CustomerBillingList/CustomerBillingList";
+import CustomerAddBillingScreen from "../../components/Customer/CustomerAddBillingScreen/CustomerAddBillingScreen";
+import PaymentScreen from "../Customer/PaymentScreen/Payment"
 import Entypo from '@expo/vector-icons/Entypo';
 import Foundation from '@expo/vector-icons/Foundation';
 
@@ -48,7 +63,22 @@ const HomeDashboard = StackNavigator({
     CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
     CustomerReviewScreen : { screen : CustomerReviewScreen },
     CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
+    CustomerCleaning : { screen : CustomerCleaning },
     CreateJob : { screen : CreateJob },
+    ServiceDetail : { screen : ServiceDetail },
+    Frequency : { screen : Frequency },
+    CalenderPick : { screen : CalenderPick },
+    DirectionScreen : { screen : DirectionScreen },
+    AddressForm : { screen : AddressForm },
+    AdditionalDetail : { screen : AdditionalDetail },
+    CardListScreen : { screen : CardListScreen },
+    AddCardScreen : { screen : AddCardScreen },
+    CommentListScreen : { screen : CommentListScreen },
+    CustomerProfileCardList : { screen : CustomerProfileCardList },
+    CustomerProfileAddCard : { screen : CustomerProfileAddCard },
+    CustomerBillingList : { screen : CustomerBillingList },
+    CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
+    PaymentScreen : { screen : PaymentScreen },
   },{
     navigationOptions:{
       header : null,
@@ -76,7 +106,22 @@ const CustomerTrabajos = StackNavigator({
     CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
     CustomerReviewScreen : { screen : CustomerReviewScreen },
     CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
+    CustomerCleaning : { screen : CustomerCleaning },
     CreateJob : { screen : CreateJob },
+    ServiceDetail : { screen : ServiceDetail },
+    Frequency : { screen : Frequency },
+    CalenderPick : { screen : CalenderPick },
+    DirectionScreen : { screen : DirectionScreen },
+    AddressForm : { screen : AddressForm },
+    AdditionalDetail : { screen : AdditionalDetail },
+    CardListScreen : { screen : CardListScreen },
+    AddCardScreen : { screen : AddCardScreen },
+    CommentListScreen : { screen : CommentListScreen },
+    CustomerProfileCardList : { screen : CustomerProfileCardList },
+    CustomerProfileAddCard : { screen : CustomerProfileAddCard },
+    CustomerBillingList : { screen : CustomerBillingList },
+    CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
+    PaymentScreen : { screen : PaymentScreen },
 },{
   navigationOptions:{
     header : null,
@@ -108,6 +153,21 @@ const ProfileStackNavigator = StackNavigator({
     CustomerUpdatePassword : { screen : CustomerUpdatePassword },
     CustomerReviewScreen : { screen : CustomerReviewScreen },
     CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
+    CustomerCleaning : { screen : CustomerCleaning },
+    ServiceDetail : { screen : ServiceDetail },
+    Frequency : { screen : Frequency },
+    CalenderPick : { screen : CalenderPick },
+    DirectionScreen : { screen : DirectionScreen },
+    AddressForm : { screen : AddressForm },
+    AdditionalDetail : { screen : AdditionalDetail },
+    CardListScreen : { screen : CardListScreen },
+    AddCardScreen : { screen : AddCardScreen },
+    CommentListScreen : { screen : CommentListScreen },
+    CustomerProfileCardList : { screen : CustomerProfileCardList },
+    CustomerProfileAddCard : { screen : CustomerProfileAddCard },
+    CustomerBillingList : { screen : CustomerBillingList },
+    CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
+    PaymentScreen : { screen : PaymentScreen },
 },{
   navigationOptions:{
     header : null,
