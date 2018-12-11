@@ -74,6 +74,13 @@ module.exports = StyleSheet.create({
     color: '#fff',
     paddingLeft: 10
   },
+  signup_input_container_cell: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 20,
+    marginBottom: 30
+  },
   signup_actions: {
     alignItems: 'center',
     justifyContent: 'flex-end',

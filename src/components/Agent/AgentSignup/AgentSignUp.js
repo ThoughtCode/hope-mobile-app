@@ -213,7 +213,7 @@ export default class AgentSignUp extends Component {
   render() {
     return (
       <ImageBackground
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}
         source={require('../../../../assets/img/home_splash_3.jpg')}
       >
         <KeyboardAwareScrollView
@@ -311,7 +311,7 @@ export default class AgentSignUp extends Component {
                   keyboardType="numeric"
                 />
               </View>
-              <View style={styles.signup_input_container}>
+              <View style={styles.signup_input_container_cell}>
                 <FontAwesome name="mobile-phone" size={40} color="#fff" />
                 <TextInput
                   style={styles.signup_input}
