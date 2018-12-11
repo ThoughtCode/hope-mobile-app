@@ -319,8 +319,8 @@ export default class AgentSignUp extends Component {
                 <FontAwesome name="id-card" size={24} color="#fff" />
                 <TextInput
                   style={styles.signup_input}
-                  onChangeText={national_id => this.validateInputNational({ national_id })}
-                  // onChangeText={(national_id) => this.setState({national_id})}
+                  // onChangeText={national_id => this.validateInputNational({ national_id })}
+                  onChangeText={(national_id) => this.setState({national_id})}
                   placeholder="CÉDULA"
                   placeholderTextColor="#fff"
                   autoCapitalize="none"
@@ -334,7 +334,7 @@ export default class AgentSignUp extends Component {
                 <FontAwesome name="mobile-phone" size={40} color="#fff" />
                 <TextInput
                   style={styles.signup_input}
-                  onChangeText={cell_phone => this.validateInput({ cell_phone })}
+                  onChangeText={cell_phone => this.setState({ cell_phone })}
                   placeholder="CELULAR"
                   placeholderTextColor="#fff"
                   autoCapitalize="none"
