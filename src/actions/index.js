@@ -5,6 +5,7 @@ export const SET_SERVICES = 'SET_SERVICES';
 export const SET_BASE_SERVICE = 'SET_BASE_SERVICE';
 export const SET_ADDON_SERVICE = 'SET_ADDON_SERVICE';
 export const SET_COMMENTS_AGENT_PROFILE = 'SET_COMMENTS_AGENT_PROFILE'
+export const SET_COMMENTS_CUSTOMER_PROFILE = 'SET_COMMENTS_CUSTOMER_PROFILE'
 
 export function setProperty(property) {
   return {
@@ -52,5 +53,12 @@ export function setCommentsAgentProfile(commentsAgentProfile) {
   return {
     type: SET_COMMENTS_AGENT_PROFILE,
     commentsAgentProfile
+  }
+}
+
+export function setCommentsCustomerProfile(commentsCustomerProfile) {
+  return {
+    type: SET_COMMENTS_CUSTOMER_PROFILE,
+    commentsCustomerProfile
   }
 }
