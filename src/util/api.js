@@ -102,6 +102,10 @@ export const API = {
     getCardLists: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_CARD_LIST , buildHeader());
     },
+
+    getCustomerCommentsProfile: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMER_COMMENTS_PROFILE +'/reviews', buildHeader());
+    },
     
 }
 

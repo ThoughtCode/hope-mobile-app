@@ -59,5 +59,14 @@ module.exports = StyleSheet.create({
   },
   emptyText:{
     fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'
-  }
+  },
+  textInputVieW:{
+    flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginVertical:5,marginTop:10
+  },
+  textInputTitleText:{
+    fontSize:18,fontWeight:'600',fontFamily:"helvetica",marginBottom:5
+  },
+  textInputCommentText:{
+    fontSize:14,fontWeight:'400',fontFamily:"helvetica",marginBottom:5
+  },
 });
