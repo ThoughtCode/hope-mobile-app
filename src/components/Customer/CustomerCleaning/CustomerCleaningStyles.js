@@ -41,4 +41,7 @@ module.exports = StyleSheet.create({
     flexDirection:'column',
     flex:1
   },
+  backButtonImage:{
+    color:"#000",position:'absolute',top:20,left:20,zIndex:1,color : '#fff'
+  },
 });
