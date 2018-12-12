@@ -7,6 +7,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 const { height, width } = Dimensions.get('window')
 import { API } from '../../../util/api';
 import Moment from 'moment';
+import Ionicons from '@expo/vector-icons/Ionicons'
 const styles = require('./CustomerCleaningStyles');
 import * as globals from '../../../util/globals';
 const IMAGES = {
@@ -151,43 +152,45 @@ export default class CustomerCleaning extends Component {
     //======================================================================
 
     render() {
-
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>
                     <View>
-                        <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
-                        <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 50, width: width }}>
-                            <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>{"Limpieza de casa"}</Text>
-                        </View>
+                      <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
+                      <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
+                      <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 50, width: width }}>
+                        <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica', marginLeft:20 }}>{this.state.serviceType.attributes.name}</Text>
+                      </View>
                     </View>
 
                     <View style={{flex:1}}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", { serviceTypeID: this.state.serviceType.id })}>
-                            <View style={styles.rowStyle}>
-                                <View style={styles.rowText}>
-                                    <Text style={styles.titleText}>{"Dettale del Servicio"}</Text>
-                                    <Text style={styles.subTitleText}>{"Sala x1, Habitacion "}</Text>
-                                </View>
-                                <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
-                            </View>
-                        </TouchableOpacity>
+                      <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", { serviceTypeID: this.state.serviceType.id })}>
+                        <View style={styles.rowStyle}>
+                          <View style={styles.rowText}>
+                            <Text style={styles.titleText}>{"Detalles del Servicio"}</Text>
+                            <Text style={styles.subTitleText}>{"Seleccione servicios"}</Text>
+                          </View>
+                          <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
+                        </View>
+                      </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Frequency", { setFrequency: this.setFrequency })}>
-                            <View style={styles.rowStyle}>
-                                <View style={styles.rowText}>
-                                    <Text style={styles.titleText}>{"Frecuencia"}</Text>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        {this.state.frequencyData && this.state.frequencyData.map((item, index) => {
-                                            return <Text style={styles.subTitleText}>{(this.state.frequencyData.length - 1 > index) ? item.name + "," : item.name}</Text>
-                                        })
-                                        }
-                                    </View>
-
-                                </View>
-                                <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
-                            </View>
-                        </TouchableOpacity>
+                      <TouchableOpacity onPress={() => this.props.navigation.navigate("Frequency", { setFrequency: this.setFrequency })}>
+                        <View style={styles.rowStyle}>
+                          <View style={styles.rowText}>
+                            <Text style={styles.titleText}>{"Frecuencia"}</Text>
+                            {console.log('------->', this.state)}
+                            {(this.state.frequencyData == "") ? (<Text style={styles.subTitleText}>{"Seleccione Frecuencia"}</Text>) : (
+                              <View style={{ flexDirection: 'row' }}>
+                                {this.state.frequencyData && this.state.frequencyData.map((item, index) => {
+                                  return <Text style={styles.subTitleText}>{(this.state.frequencyData.length - 1 > index) ? item.name + "," : item.name}</Text>
+                                })
+                                }
+                              </View>
+                            )}
+                          </View>
+                          <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
+                        </View>
+                      </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { setDate: this.setDate })}>
                             <View style={styles.rowStyle}>
@@ -202,7 +205,7 @@ export default class CustomerCleaning extends Component {
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("DirectionScreen",{setDirection : this.setDirection})}>
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
-                                    <Text style={styles.titleText}>{"Direccion"}</Text>
+                                    <Text style={styles.titleText}>{"Dirección"}</Text>
                                     {this.state.directionData && <Text style={styles.subTitleText}>{this.state.directionData.attributes.number +" "+this.state.directionData.attributes.s_street + " "+this.state.directionData.attributes.p_street+" "+this.state.directionData.attributes.city}</Text>}
                                 </View>
                                 <Entypo name={"location-pin"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
@@ -212,7 +215,7 @@ export default class CustomerCleaning extends Component {
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("AdditionalDetail",{setAdditionalInfo : this.setAdditionalInfo})}>
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
-                                    <Text style={styles.titleText}>{"Detallens adicionales del trabajo"}</Text>
+                                    <Text style={styles.titleText}>{"Detalles adicionales del trabajo"}</Text>
                                     {this.state.additionalData && <Text style={styles.subTitleText}>{this.state.additionalData}</Text>}
                                 </View>
                                 <MaterialIcons name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
@@ -222,7 +225,7 @@ export default class CustomerCleaning extends Component {
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{setCard : this.setCard})}>
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
-                                    <Text style={styles.titleText}>{"Ingresa tu forma de Pago"}</Text>
+                                    <Text style={styles.titleText}>{"Ingresa tú forma de Pago"}</Text>
                                     
                                     {this.state.cardData && <View style={styles.childContainer}>
                                         <View style={styles.itemView}>
@@ -246,15 +249,43 @@ export default class CustomerCleaning extends Component {
                                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                             </View>
                         </TouchableOpacity>
+
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{setCard : this.setCard})}>
+                          <View style={styles.rowStyle}>
+                            <View style={styles.rowText}>
+                              <Text style={styles.titleText}>{"Detalles de facturación"}</Text>
+                                
+                              {/* {this.state.cardData && <View style={styles.childContainer}>
+                                <View style={styles.itemView}>
+                                  <View style={{ flexDirection: 'row' }}>
+                                    <FontAwesome name={"cc-visa"} size={20} color={"rgb(0,121,189)"}  />
+                                    <Text style={{ flex: 0.6 }}>
+                                      {this.state.cardData.attributes.number}
+                                    </Text>
+                                    <Text style={{ flex: 0.4 }}>
+                                      {"Exp." + this.state.cardData.attributes.expiry_month + "/" + this.state.cardData.attributes.expiry_year}
+                                    </Text>
+                                  </View>
+                                  <View style={{ flexDirection: 'row' }}>
+                                    <Text>
+                                      {"Nombre : " + this.state.cardData.attributes.holder_name}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>} */}
+                            </View>
+                            <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
+                          </View>
+                        </TouchableOpacity>
                     </View>
                     <View>
-                        <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
-                            <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: 2.5$"}</Text>
-                        </View>
+                      <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
+                        <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: 2.5$"}</Text>
+                      </View>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("PaymentScreen")} style={{ backgroundColor: 'rgb(0,121,189)', paddingVertical: 15, alignItems: 'center', justifyContent: 'center' }}>
-                            <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', color: '#fff' }}>{"Solicitar servicio"}</Text>
-                        </TouchableOpacity>
+                      <TouchableOpacity onPress={() => this.props.navigation.navigate("PaymentScreen")} style={{ backgroundColor: 'rgb(0,121,189)', paddingVertical: 15, alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', color: '#fff' }}>{"Solicitar servicio"}</Text>
+                      </TouchableOpacity>
                     </View>
                 </ScrollView>
             </SafeAreaView>
