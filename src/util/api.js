@@ -1,5 +1,3 @@
-import React from 'react';
-import { Alert, AsyncStorage } from 'react-native';
 import * as APILIST from '../constants/api.js';
 import * as globals from '../util/globals';
 export const API = {
@@ -105,6 +103,10 @@ export const API = {
 
     getCustomerCommentsProfile: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMER_COMMENTS_PROFILE +'/reviews', buildHeader());
+    },
+
+    getInvoiceDetails: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.INVOICE_DETAILS, buildHeader());
     },
     
 }

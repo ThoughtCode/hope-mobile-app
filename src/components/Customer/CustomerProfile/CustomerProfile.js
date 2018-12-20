@@ -205,7 +205,7 @@ export default class CustomerProfile extends Component {
 
               <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerBillingList")}>
                 <View style={styles.accordion_header}>
-                  <Text style={styles.accordion_header_title}>{"Detalles de facturacion"}</Text>
+                  <Text style={styles.accordion_header_title}>{"Detalles de facturación"}</Text>
                   <FontAwesome
                     name="chevron-right"
                     size={24}

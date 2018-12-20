@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, FlatList, Image, Dimensions,SafeAreaView} from 'react-native';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import {Text, TouchableOpacity, View, FlatList, Image, Dimensions,SafeAreaView,AsyncStorage} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons'
-
+import Entypo from '@expo/vector-icons/Entypo';
 import StarRating from '../../../lib/react-native-star-rating';
+import * as globals from '../../../util/globals';
 const {height , width} = Dimensions.get('window')
 import { API } from '../../../util/api';
 
@@ -15,147 +15,171 @@ const IMAGES = {
 
 export default class CustomerBillingList extends Component {
     
-    //======================================================================
-    // constructor
-    //======================================================================
+  //======================================================================
+  // constructor
+  //======================================================================
 
-    constructor(props){
-        super(props)
-        
-        this.state = {
-            billingList : [],
-            
-        }
+  constructor(props){
+    super(props) 
+    this.state = {
+      invoicesList : [],
+      data : [],
+      userData : null,
+      firstName : globals.first_name,
+      lastName : globals.last_name,
+      avatar : globals.avatar,
     }
+  }
 
-    //======================================================================
-    // componentDidMount
-    //======================================================================
+  //======================================================================
+  // componentDidMount
+  //======================================================================
+  
+  componentDidMount(){
+    console.log("Response data-->"+JSON.stringify(this.state.invoicesList))
+    AsyncStorage.getItem("customerData").then((item) =>{
+      const data = JSON.parse(item)
+      this.setState({userData : data})
+    })
+    API.getInvoiceDetails(this.getInvoiceDetailsResponseData,{},true);
+  }
 
-    componentDidMount(){
-        console.log("Response data-->"+JSON.stringify(this.state.billingList))
-        // API.getJobsComments(this.getJobCommentsResponseData,this.state.jobData.customer.hashed_id,true);
+  refresComments = () =>{
+    API.getInvoiceDetails(this.getInvoiceDetailsResponseData,{},true);
+  }
+
+  //======================================================================
+  //getInvoiceDetailsResponseData
+  //======================================================================
+
+  getInvoiceDetailsResponseData = {
+    success: (response) => {
+      try {
+        console.log("Response data-->"+JSON.stringify(response))
+        this.setState({
+          invoicesList : response.invoice_detail.data
+        })
+      } catch (error) {
+        console.log('getInvoiceDetailsResponseData catch error ' + JSON.stringify(error));
+      }
+    },
+    error: (err) => {
+      console.log('getInvoiceDetailsResponseData error ' + JSON.stringify(err));
+    },
+    complete: () => {
     }
+  }
 
-    //======================================================================
-    //getJobCommentsResponseData
-    //======================================================================
+  //======================================================================
+  //handleChange
+  //======================================================================
+  
+  handleChange = (index) => {
+    console.log(index)
+    this.props.navigation.navigate('CustomerAddBillingScreen')
+    // let tempCheckedData = this.state.data;
+    // let checkedData = tempCheckedData.map((x) => { x.isSelected = false; return x; })
+    // let selectedObject = checkedData[index];
+    // selectedObject.isSelected = !selectedObject.isSelected
+    // checkedData.slice(selectedObject,index);
+    // this.setState({ data : checkedData });
+  }
 
-    getJobCommentsResponseData = {
-        success: (response) => {
-            try {
-                console.log("Response data-->"+JSON.stringify(response.review.data))
-                this.setState({
-                    jobCommentList : response.review.data
-                })
-            } catch (error) {
-                console.log('getJobResponseData catch error ' + JSON.stringify(error));
-            }
-        },
-        error: (err) => {
-            console.log('getJobResponseData error ' + JSON.stringify(err));
-        },
-        complete: () => {
-        }
-    }
+  //======================================================================
+  //renderItem
+  //======================================================================
 
-    //======================================================================
-    //renderItem
-    //======================================================================
+  renderItem = (item) =>{
+    var data = item.item
+    console.log('------------>',data)
+    return(
+      <View style={styles.renderRowView}>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
+          <View style={{flex:1}}>
+            <Text style={styles.subText} numberOfLines={0}><Text style={{color:'#000'}}>Razon social: </Text>{data.attributes.social_reason}</Text> 
+            <Text style={styles.subText} numberOfLines={0}><Text style={{color:'#000'}}>N° de Identificatión: </Text>{data.attributes.identification}</Text> 
+          </View>
+          <Entypo name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => this.props.navigation.navigate('CustomerEditBillingScreen')} />
+        </View>
+      </View>
+    )
+  }
 
-    renderItem = (item) =>{
-        var data = item.item
-        return(
-            <View style={styles.renderRowView}>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <View style={styles.userImageView} >
-                        <Image source={require("../../../../assets/img/profile_placehoder.png")} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>
-                    </View>
-                    <View style={{flex:1}}>
-                        <Text style={styles.titleText}>{data.attributes.owner.data.attributes.first_name + " "+ data.attributes.owner.data.attributes.last_name}</Text>
-                    </View>
-                </View>
-                <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text> 
-            </View>
-        )
-    }
+  //======================================================================
+  //ItemSeparatorComponent
+  //======================================================================
 
-    //======================================================================
-    //ItemSeparatorComponent
-    //======================================================================
+  ItemSeparatorComponent = () =>{
+    return(
+      <View style={{height:0.5,width:width,backgroundColor:'gray'}} />
+    )
+  }
 
-    ItemSeparatorComponent = () =>{
-        return(
-            <View style={{height:0.5,width:width,backgroundColor:'gray'}} />
-        )
-    }
+  //======================================================================
+  // ListEmptyComponent
+  //======================================================================
 
-    //======================================================================
-    // ListEmptyComponent
-    //======================================================================
-
-    ListEmptyComponent = () =>{
-        return(
-            <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
-                <Text style={styles.emptyText}>{"Sin Comentarios"}</Text>
-            </View>
-        )
-    }
+  ListEmptyComponent = () =>{
+    return(
+      <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
+        <Text style={styles.emptyText}>{"Sin detalles de facturación"}</Text>
+      </View>
+    )
+  }
 
     //======================================================================
     // render
     //======================================================================
 
     render(){
-        // var initials = this.state.jobData.first_name && this.state.jobData.first_name.charAt(0)
-        // initials +=  this.state.jobData.last_name && this.state.jobData.last_name.charAt(0)
-        var initials = "JS"
-        return(
-            <SafeAreaView style={styles.container}>
-                <View>
-                    <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
-                    <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
-                    
-                    <View style={styles.profileView}>
-                        {(this.state.jobData && this.state.jobData.avatar && this.state.jobData.avatar.url) ?
-                            <Image source={{ uri: this.state.jobData.avatar.url }} style={styles.profileImage} resizeMode={"cover"} />
-                            :
-                            <View style={[styles.profileImage, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center' }]} >
-                                <Text style={{ color: '#fff' }}>{initials}</Text>
-                            </View>
-                        }
-                    </View>
-                    <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
-                        {/* <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.jobData.first_name + " "+this.state.jobData.last_name}</Text> */}
-                        <Text style={{fontSize:20,fontWeight:'600'}}>{"Jose Castellanows"}</Text>
-                    </View>
-                    <View style={styles.topTitleView}>
-                        <Text style={styles.mainTitleText}>{"Detalles de facturacion"}</Text>
-                    </View>
-                </View> 
-                <View style={{flex:1}}>
-                    <FlatList 
-                        data = {this.state.billingList}
-                        renderItem = {this.renderItem}
-                        ItemSeparatorComponent={this.ItemSeparatorComponent}
-                        keyExtractor={(item)=>item.id.toString()}
-                        ListEmptyComponent={this.ListEmptyComponent}
-                    />
+      console.log(this.state.invoicesList)
+      var initial = this.state.firstName && this.state.firstName.charAt(0)
+      initial +=  this.state.lastName && this.state.lastName.charAt(0)
+      var initials = initial
+      return(
+        <SafeAreaView style={styles.container}>
+          <View>
+            <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
+            <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
+            
+            <View style={styles.profileView}>
+              {(this.state.avatar != null) ?
+                <Image source={{ uri: this.state.avatar }} style={styles.profileImage} resizeMode={"cover"} />
+                :
+                <View style={[styles.profileImage, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center' }]} >
+                  <Text style={{ color: '#fff' }}>{initials}</Text>
                 </View>
-                <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerAddBillingScreen')}>
-                        <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Agregar nueva facturacion"}</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ marginVertical:10 }}>
-                    <TouchableOpacity onPress={() => alert("Seleccionar")}>
-                        <View style={styles.buttonViewStyle}>
-                            <Text style={styles.buttonTextStyle}>{"Seleccionar"}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View> 
-                
-            </SafeAreaView>
-        )
+              }
+            </View>
+            <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
+              <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.firstName + " " + this.state.lastName}</Text>
+            </View>
+            <View style={styles.topTitleView}>
+              <Text style={styles.mainTitleText}>{"Detalles de facturación"}</Text>
+            </View>
+          </View> 
+          <View style={{flex:1}}>
+            <FlatList
+              data = {this.state.invoicesList}
+              renderItem = {this.renderItem}
+              ItemSeparatorComponent={this.ItemSeparatorComponent}
+              keyExtractor={(item)=>item.id.toString()}
+              ListEmptyComponent={this.ListEmptyComponent}
+            />
+          </View>
+          <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerAddBillingScreen', {data: this.state.invoicesList})}>
+              <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Agregar nueva facturacion"}</Text>
+            </TouchableOpacity>
+          </View>
+          {/* <View style={{ marginVertical:10 }}>
+            <TouchableOpacity onPress={() => alert("Seleccionar")}>
+              <View style={styles.buttonViewStyle}>
+                <Text style={styles.buttonTextStyle}>{"Seleccionar"}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>  */}
+        </SafeAreaView>
+      )
     }
 }

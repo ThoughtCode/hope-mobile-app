@@ -37,6 +37,7 @@ import CustomerProfileCardList from "../../components/Customer/CustomerProfileCa
 import CustomerProfileAddCard from "../../components/Customer/CustomerProfileAddCard/CustomerProfileAddCard";
 import CustomerBillingList from "../../components/Customer/CustomerBillingList/CustomerBillingList";
 import CustomerAddBillingScreen from "../../components/Customer/CustomerAddBillingScreen/CustomerAddBillingScreen";
+import CustomerEditBillingScreen from "../../components/Customer/CustomerEditBillingScreen/CustomerEditBillingScreen";
 import PaymentScreen from "../Customer/PaymentScreen/Payment"
 import Entypo from '@expo/vector-icons/Entypo';
 import Foundation from '@expo/vector-icons/Foundation';
@@ -78,6 +79,7 @@ const HomeDashboard = StackNavigator({
     CustomerProfileAddCard : { screen : CustomerProfileAddCard },
     CustomerBillingList : { screen : CustomerBillingList },
     CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
+    CustomerEditBillingScreen : { screen : CustomerEditBillingScreen },
     PaymentScreen : { screen : PaymentScreen },
   },{
     navigationOptions:{
@@ -121,6 +123,7 @@ const CustomerTrabajos = StackNavigator({
     CustomerProfileAddCard : { screen : CustomerProfileAddCard },
     CustomerBillingList : { screen : CustomerBillingList },
     CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
+    CustomerEditBillingScreen : { screen : CustomerEditBillingScreen },
     PaymentScreen : { screen : PaymentScreen },
 },{
   navigationOptions:{
@@ -167,6 +170,7 @@ const ProfileStackNavigator = StackNavigator({
     CustomerProfileAddCard : { screen : CustomerProfileAddCard },
     CustomerBillingList : { screen : CustomerBillingList },
     CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
+    CustomerEditBillingScreen : { screen : CustomerEditBillingScreen },
     PaymentScreen : { screen : PaymentScreen },
 },{
   navigationOptions:{
