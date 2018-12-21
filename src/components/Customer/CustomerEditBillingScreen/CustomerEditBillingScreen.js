@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, TextInput, Image, Dimensions,SafeAreaView,Picker, ScrollView} from 'react-native';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import {Text, TouchableOpacity, View, TextInput, Image, Dimensions,SafeAreaView,ScrollView, Picker, Icon, FlatList} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons'
 import * as globals from '../../../util/globals';
-import StarRating from '../../../lib/react-native-star-rating';
 const {height , width} = Dimensions.get('window')
-import { API } from '../../../util/api';
 
 const styles = require('./CustomerEditBillingScreenStyle');
 
@@ -20,7 +17,7 @@ export default class CustomerAddBillingScreen extends Component {
   //======================================================================
 
   constructor(props){
-    super(props) 
+    super(props)
     this.state = {
       city : [
         {attributes : { name : "AAA"}},
@@ -29,14 +26,30 @@ export default class CustomerAddBillingScreen extends Component {
         {attributes : { name : "DDD"}},
         {attributes : { name : "EEE"}},
       ],
+      data : this.props.navigation.state.params.data,
       firstName : globals.first_name,
       lastName : globals.last_name,
       avatar : globals.avatar,
+      razonSocial : '',
+      identification : '',
+      nIdentification : '',
+      email : globals.email,
+      address : '',
+      cellPhone : globals.cell_phone,
+      selected : "Consumidor Final",
+      valueType : ""
     }
   }
 
+  onValueChange(value) {
+    this.setState({
+      selected: value,
+      valueType: value
+    });
+  }
+
   //======================================================================
-  // componentDidMount
+  // componentDidMount getInvoiceDetails
   //======================================================================
 
   componentDidMount(){
@@ -44,41 +57,27 @@ export default class CustomerAddBillingScreen extends Component {
   }
 
   //======================================================================
-  //getJobCommentsResponseData
-  //======================================================================
-
-  getJobCommentsResponseData = {
-    success: (response) => {
-      try {
-        console.log("Response data-->"+JSON.stringify(response.review.data))
-        this.setState({
-          jobCommentList : response.review.data
-        })
-      } catch (error) {
-        console.log('getJobResponseData catch error ' + JSON.stringify(error));
-      }
-    },
-    error: (err) => {
-      console.log('getJobResponseData error ' + JSON.stringify(err));
-    },
-    complete: () => {
-    }
-  }
-
-    
-  //======================================================================
   // render
   //======================================================================
 
   render(){
-    // var initials = this.state.jobData.first_name && this.state.jobData.first_name.charAt(0)
-    // initials +=  this.state.jobData.last_name && this.state.jobData.last_name.charAt(0)
-    var initials = "JS"
+    var d = this.state.data
+    var data = d[0]["attributes"]
+    console.log("---------------------->", data.identification_type)
+    var type = ""
+    if(data.identification_type == "consumidor_final"){
+      type = "Consumidor Final"
+    } else if(data.identification_type == "cedula"){
+      type = "Cedula"
+    }
+    var initial = this.state.firstName && this.state.firstName.charAt(0)
+    initial +=  this.state.lastName && this.state.lastName.charAt(0)
+    var initials = initial
     return(
       <SafeAreaView style={styles.container}>
         <View>
           <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
-          <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>
+          <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} resizeMode={"cover"} resizeMethod={"auto"}/>  
           <View style={styles.profileView}>
             {(this.state.avatar != null) ?
               <Image source={{ uri: this.state.avatar }} style={styles.profileImage} resizeMode={"cover"} />
@@ -95,115 +94,124 @@ export default class CustomerAddBillingScreen extends Component {
             <Text style={styles.mainTitleText}>{"Detalles de facturación"}</Text>
           </View>
         </View> 
-        <ScrollView>  
-          <View style={{flex:1}}>
+        <View style={{flex:1}}>
+          <ScrollView>
             <View style={{flexDirection:'row',marginVertical:5}}>
               <View style={styles.textStyle}>
                 <Text>{"Razon Social:"}</Text>
               </View>
               <View style={styles.textInputStyleContainer}>
                 <TextInput
-                  ref={input => {
-                    this.textInput = input
-                  }}
-                  underlineColorAndroid='transparent'
-                  placeholder='Name'
-                  value={"Jose Castellanows"}
+                  ref={input => { this.razonSocial = input }}
                   style={styles.textInputStyle}
-                  onChangeText={(text) => this.setState({name : text})} />
+                  underlineColorAndroid='transparent'
+                  placeholder='Razon Social'
+                  value={data.social_reason}
+                  onChangeText={(razonSocial) => this.setState({razonSocial : razonSocial})}
+                  returnKeyType={"next"}
+                  onSubmitEditing={() => this.setFocus("identification")} />
               </View>
             </View>
             <View style={{flexDirection:'row',marginVertical:5}}>
-                <View style={styles.textStyle}>
-                  <Text>{"Identification:"}</Text>
-                </View>
-                <View style={styles.textInputStyleContainer}>
-                  {(this.state.city && this.state.city.length > 0) ?
-                    <Picker
-                      selectedValue={this.state.language}
-                      style={{ height: 50, width: width - 20 }}
-                      onValueChange={(itemValue, itemIndex) => this.selectCity(itemIndex)}>
-                      <Picker.Item label={"Cuidad"} value={"Cuidad"} key={-1} />
-                      { this.state.city.map((item, key)=>{
-                          return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
-                      })}
-                    </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{"Cedula"}</Text>
-                  }
-                </View>
+              <View style={styles.textStyle}>
+                <Text>{"Identificatión:"}</Text>
+              </View>
+              <View style={styles.textInputStyleContainer}>
+                {/* <TextInput
+                  ref={input => { this.identification = input }}
+                  style={styles.textInputStyle}
+                  underlineColorAndroid='transparent'
+                  placeholder='Identificación'
+                  value={data.identification_type}
+                  onChangeText={(identification) => this.setState({identification : identification})}
+                  returnKeyType={"next"}
+                  onSubmitEditing={() => this.setFocus("nIdentification")} /> */}
+                  <Picker
+                    mode="dropdown"
+                    iosHeader="Select your SIM"
+                    iosIcon={<Icon name="ios-arrow-down-outline" />}
+                    style={{ width: undefined }}
+                    selectedValue={this.state.selected}
+                    onValueChange={this.onValueChange.bind(this)}
+                  >
+                    <Picker.Item
+                      label={(type == "Consumidor Final" || "Cedula") ? ("Consumidor Final" , "Cedula") : ('')}
+                      value={(type ==  "Cedula" || "Cedula") ? ("Consumidor Final" , "Cedula") : ('')}
+                    />
+                  </Picker>
+              </View>
             </View>
             <View style={{flexDirection:'row',marginVertical:5}}>
               <View style={styles.textStyle}>
-                <Text>{"N de identification:"}</Text>
+                <Text>{"N° de identification:"}</Text>
               </View>
               <View style={styles.textInputStyleContainer}>
                 <TextInput
-                  ref={input => {
-                    this.textInput = input
-                  }}
-                  underlineColorAndroid='transparent'
-                  placeholder='Name'
-                  value={"092837546er"}
+                  ref={input => { this.nIdentification = input }}
                   style={styles.textInputStyle}
-                  onChangeText={(text) => this.setState({name : text})} />
+                  underlineColorAndroid='transparent'
+                  placeholder='N° de identification:'
+                  value={data.identification}
+                  onChangeText={(nIdentification) => this.setState({nIdentification : nIdentification})}
+                  returnKeyType={"next"}
+                  onSubmitEditing={() => this.setFocus("email")} />
               </View>
-            </View>
-            <View style={{flexDirection:'row',marginVertical:5}}>
-                <View style={styles.textStyle}>
-                    <Text>{"Correo electronico:"}</Text>
-                </View>
-                <View style={styles.textInputStyleContainer}>
-                  <TextInput
-                    ref={input => {
-                      this.textInput = input
-                    }}
-                    underlineColorAndroid='transparent'
-                    placeholder='Name'
-                    value={"rj.ravi111@gmail.com"}
-                    style={styles.textInputStyle}
-                    onChangeText={(text) => this.setState({name : text})} />
-                </View>
-            </View>
-            <View style={{flexDirection:'row',marginVertical:5}}>
-                <View style={styles.textStyle}>
-                    <Text>{"Dirccion:"}</Text>
-                </View>
-                <View style={styles.textInputStyleContainer}>
-                  <TextInput
-                    ref={input => {
-                      this.textInput = input
-                    }}
-                    underlineColorAndroid='transparent'
-                    placeholder='Name'
-                    value={"la floresst"}
-                    style={styles.textInputStyle}
-                    onChangeText={(text) => this.setState({name : text})} />
-                </View>
             </View>
             <View style={{flexDirection:'row',marginVertical:5}}>
               <View style={styles.textStyle}>
-                      <Text>{"Tefefono:"}</Text>
-                  </View>
+                <Text>{"Correo electrónico:"}</Text>
+              </View>
               <View style={styles.textInputStyleContainer}>
-                    <TextInput
-                      ref={input => {
-                        this.textInput = input
-                      }}
-                      underlineColorAndroid='transparent'
-                      placeholder='Name'
-                      value={"+93742364 8783"}
-                      style={styles.textInputStyle}
-                      onChangeText={(text) => this.setState({name : text})} />
-                  </View>
+                <TextInput
+                  ref={input => { this.email = input }}
+                  style={styles.textInputStyle}
+                  underlineColorAndroid='transparent'
+                  placeholder='Correo electrónico'
+                  value={data.email}
+                  onChangeText={(email) => this.setState({email : email})}
+                  returnKeyType={"next"}
+                  onSubmitEditing={() => this.setFocus("address")} />
+              </View>
             </View>
-          </View>
-        </ScrollView>
+            <View style={{flexDirection:'row',marginVertical:5}}>
+              <View style={styles.textStyle}>
+                <Text>{"Dirccion:"}</Text>
+              </View>
+              <View style={styles.textInputStyleContainer}>
+                <TextInput
+                  ref={input => { this.address = input }}
+                  style={styles.textInputStyle}
+                  underlineColorAndroid='transparent'
+                  placeholder='Dirccion:'
+                  value={data.address}
+                  onChangeText={(address) => this.setState({address : address})}
+                  returnKeyType={"next"}
+                  onSubmitEditing={() => this.setFocus("cellPhone")} />
+              </View>
+            </View>
+            <View style={{flexDirection:'row',marginVertical:5}}>
+                <View style={styles.textStyle}>
+                  <Text>{"Teléfono:"}</Text>
+                </View>
+                <View style={styles.textInputStyleContainer}>
+                    <TextInput
+                      ref={input => { this.cellPhone = input}}
+                      style={styles.textInputStyle}
+                      underlineColorAndroid='transparent'
+                      placeholder='Teléfono:'
+                      value={data.telephone}
+                      onChangeText={(cellPhone) => this.setState({cellPhone : cellPhone})} />
+                  </View>
+              </View>
+          </ScrollView>
+        </View>
         <View style={{ marginVertical:10 }}>
           <TouchableOpacity onPress={() => alert("Editar")}>
-              <View style={styles.buttonViewStyle}>
-                <Text style={styles.buttonTextStyle}>{"Editar"}</Text>
-              </View>
-            </TouchableOpacity>
-        </View>
+            <View style={styles.buttonViewStyle}>
+              <Text style={styles.buttonTextStyle}>{"Editar"}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>     
       </SafeAreaView>
     )
   }

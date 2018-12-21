@@ -78,10 +78,11 @@ export default class CustomerAddBillingScreen extends Component {
 
   render(){
     var d = this.state.data
+    var data = d[0]["attributes"]
+    console.log("---------------------->", data.social_reason)
     var initial = this.state.firstName && this.state.firstName.charAt(0)
     initial +=  this.state.lastName && this.state.lastName.charAt(0)
     var initials = initial
-    console.log(d[0]["attributes"])
     return(
       <SafeAreaView style={styles.container}>
         <View>

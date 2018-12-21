@@ -91,7 +91,6 @@ export default class CustomerBillingList extends Component {
 
   renderItem = (item) =>{
     var data = item.item
-    console.log('------------>',data)
     return(
       <View style={styles.renderRowView}>
         <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -99,7 +98,7 @@ export default class CustomerBillingList extends Component {
             <Text style={styles.subText} numberOfLines={0}><Text style={{color:'#000'}}>Razon social: </Text>{data.attributes.social_reason}</Text> 
             <Text style={styles.subText} numberOfLines={0}><Text style={{color:'#000'}}>N° de Identificatión: </Text>{data.attributes.identification}</Text> 
           </View>
-          <Entypo name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => this.props.navigation.navigate('CustomerEditBillingScreen')} />
+          <Entypo name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => this.props.navigation.navigate('CustomerEditBillingScreen', {data: this.state.invoicesList})} />
         </View>
       </View>
     )
