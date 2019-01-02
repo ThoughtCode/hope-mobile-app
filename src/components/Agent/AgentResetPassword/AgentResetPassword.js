@@ -215,7 +215,7 @@ export default class AgentResetPassword extends Component {
                 {this.state.recoverButtonText}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerLogin')}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('AgentLogin')}>
               <Text style={styles.login_button}>
                 Regresar
               </Text>

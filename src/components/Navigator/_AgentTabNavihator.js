@@ -4,9 +4,12 @@ import {SwitchNavigator, TabNavigator, TabBarBottom,StackNavigator} from 'react-
 
 import AgentTrabajosDashboard from "../../components/Agent/AgentTrabajosDashboard/AgentTrabajosDashboard";
 import AgentProfile from "../../components/Agent/AgentProfile/AgentProfile";
+import AgentResetPassword from "../../components/Agent/AgentResetPassword/AgentResetPassword"
 import AgentUpdateProfile from "../../components/Agent/AgentUpdateProfile/AgentUpdateProfile";
 import AgentUpdatePassword from "../../components/Agent/AgentUpdatePassword/AgentUpdatePassword";
 import AgentComment from "../../components/Agent/AgentScreenComment/AgentComment";
+import AgentCalendar from "../../components/Agent/AgentScreenCalendar/AgentCalendar";
+import AgentReport from "../../components/Agent/AgentScreenReport/AgentReport";
 import AgentJobListScreen from "../../components/Agent/AgentJobListScreen/AgentJobListScreen";
 import AgentJobDetailScreen from "../../components/Agent/AgentJobDetailScreen/AgentJobDetailScreen";
 import AgentJobCommentScreen from "../../components/Agent/AgentJobCommentScreen/AgentJobCommentScreen";
@@ -29,6 +32,7 @@ const AgentDashboard = StackNavigator({
     AgentJobCommentScreen : { screen :AgentJobCommentScreen},
     AgentReviewScreen : { screen : AgentReviewScreen },
     AgentFilterScreen : { screen : AgentFilterScreen },
+    AgentResetPassword : { screen : AgentResetPassword },
   },{
     navigationOptions:{
       header : null
@@ -59,7 +63,9 @@ const ProfileStackNavigator = StackNavigator({
   AgentProfile : { screen : AgentProfile },
   AgentUpdateProfile : { screen : AgentUpdateProfile },
   AgentUpdatePassword : { screen : AgentUpdatePassword },
-  AgentComment : { screen : AgentComment }
+  AgentComment : { screen : AgentComment },
+  AgentCalendar : { screen : AgentCalendar },
+  AgentReport : { screen : AgentReport }
 },{
   navigationOptions:{
     header : null

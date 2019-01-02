@@ -30,6 +30,7 @@ export default class AgentProfile extends Component {
             avatar : globals.avatar,
             email : globals.email,
             phone : globals.cell_phone,
+            birthday : globals.birthday,
             hasCameraPermission: null,
             isCameraOpen : false
         }
@@ -52,11 +53,13 @@ export default class AgentProfile extends Component {
                 "last_name": this.state.lastName,
                 "email": this.state.email,
                 "cell_phone": this.state.phone,
+                "birthday": this.state.birthday
               }
         } 
         if(this.state.profilePhoto != null){
             this.uploadPhoto()
         }
+        console.log(data)
         API.updateUser(this.updateUserResponse,data,true);
     }
 
@@ -69,13 +72,15 @@ export default class AgentProfile extends Component {
             try {
                 
                 console.log("updateUserResponse data-->"+JSON.stringify(response))
-                Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => {
+                console.log("Aqui ------------->",response.agent.data.attributes)
+                Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {
                     this.props.navigation.state.params.updatePhoto()
                     AsyncStorage.multiSet([["access_token",response.agent.data.attributes.access_token || ""],
                     ['first_name', response.agent.data.attributes.first_name || ""],
                     ['last_name', response.agent.data.attributes.last_name || ""],
                     ['email', response.agent.data.attributes.email || ""],
                     ['cell_phone', response.agent.data.attributes.cell_phone || ""],
+                    ['birthday', response.agent.data.attributes.birthday || ""],
                     ['avatar', response.agent.data.attributes.avatar.url || ""]],()=>{
 
                         globals.access_token = response.agent.data.attributes.access_token ||""
@@ -83,6 +88,7 @@ export default class AgentProfile extends Component {
                         globals.last_name = response.agent.data.attributes.last_name || ""
                         globals.email = response.agent.data.attributes.email || ""
                         globals.cell_phone = response.agent.data.attributes.cell_phone || ""
+                        globals.birthday = response.agent.data.attributes.birthday || ""
                         globals.avatar = response.agent.data.attributes.avatar.url || ""
                         this.props.navigation.state.params.setData()
                         this.props.navigation.goBack()    
@@ -188,6 +194,7 @@ export default class AgentProfile extends Component {
     render(){
         var initials = globals.first_name.charAt(0) || "" 
         initials += globals.last_name.charAt(0) || ""
+        console.log(globals)
         return(
             <SafeAreaView style={styles.container}>
                 <KeyboardAvoidingView
@@ -277,6 +284,18 @@ export default class AgentProfile extends Component {
                                                     placeholderTextColor={"gray"}
                                                     value={this.state.phone}
                                                     onChangeText={(phone) => this.setState({phone : phone})}
+                                                    returnKeyType={"next"}
+                                                    onSubmitEditing={() => this.setFocus("birthday")} />
+                                    </View>
+                                    <View style={styles.textInputVieW}>
+                                        <Text style={styles.textInputTitleText}>{"Cumpleaños"}</Text>
+                                        <TextInput  ref={ref => (this.birthday = ref)}
+                                                    underlineColorAndroid={"transparent"}
+                                                    style={styles.textInputStyle}
+                                                    placeholder={"AAAA-MM-DD"}
+                                                    placeholderTextColor={"gray"}
+                                                    value={this.state.birthday}
+                                                    onChangeText={(birthday) => this.setState({birthday : birthday})}
                                                     returnKeyType={"done"}
                                                     onSubmitEditing={() => Keyboard.dismiss()} />
                                     </View>
@@ -292,8 +311,8 @@ export default class AgentProfile extends Component {
                 </KeyboardAvoidingView>            
                 <ActionSheet
                     ref={o => this.ActionSheet = o}
-                    title={'Select avatar'}
-                    options={['Take Photo', 'Choose from Library', 'Cancel']}
+                    title={'Seleccionar imagen'}
+                    options={['Tomar foto', 'Elige de la galeria', 'Cancelar']}
                     cancelButtonIndex={2}
                     onPress={(index) => { this.selectedPhoto(index) }}
                     />

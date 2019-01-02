@@ -44,7 +44,7 @@ export default class CustomerProfileAddCard extends Component {
     addCardDataResponseData = {
         success: (response) => {
             try {
-                Alert.alert("Hope",response.message,[
+                Alert.alert("NOC NOC",response.message,[
                     {text: 'OK', onPress: () => this.props.navigation.goBack()},
                 ])
                 this.props.navigation.state.params.getCardList();

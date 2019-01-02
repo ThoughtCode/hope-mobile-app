@@ -32,7 +32,7 @@ export default class AddCardScreen extends Component {
     addCardDataResponseData = {
         success: (response) => {
             try {
-                Alert.alert("Hope",response.message)
+                Alert.alert("NOC NOC",response.message)
                 console.log("Response data-->" + JSON.stringify(response))
                 // this.setState({
                 //     jobCommentList: response.review.data

@@ -170,11 +170,11 @@ export default class CustomerSignUp extends Component {
               <Text style={styles.agent_login_action_text}>Registrarse como agente</Text>
             </TouchableOpacity>
           </View>
+          <Image
+            style={styles.logo_image}
+            source={require('../../../../assets/img/logo_blanco.gif')}
+          />
           <View style={styles.signup_form_container}>
-            <Image
-              style={styles.logo_image}
-              source={require('../../../../assets/img/logo_blanco.png')}
-            />
             <View style={styles.input_container}>
               <View style={styles.signup_input_container_border}>
                 <FontAwesome name="user" size={32} color="#fff" />

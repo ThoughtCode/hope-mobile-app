@@ -29,7 +29,8 @@ module.exports = StyleSheet.create({
     paddingVertical: 5
   },
   agent_indicator_text: {
-    color: '#fff'
+    color: '#fff',
+    fontSize: 20
   },
   customer_login_action: {
     borderTopLeftRadius: 10,
@@ -43,7 +44,7 @@ module.exports = StyleSheet.create({
   },
   customer_login_action_text: {
     color: '#fff',
-    fontSize: 10
+    fontSize: 18
   },
   signup_form_container: {
     flex: 1,
@@ -116,9 +117,10 @@ module.exports = StyleSheet.create({
     letterSpacing: 10
   },
   logo_image: {
-    width: 90,
-    height: 84,
-    marginBottom: 20
+    width: 95,
+    height: 85,
+    top: 60,
+    right: 140
   },
   text_error: {
     color: 'white'

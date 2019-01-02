@@ -88,7 +88,7 @@ export default class AddressForm extends React.Component {
                 
             } catch (error) {
                 console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("Hope",error.message)
+                Alert.alert("NOC NOC",error.message)
             }
         },
         error: (err) => {
@@ -120,7 +120,7 @@ export default class AddressForm extends React.Component {
                 
             } catch (error) {
                 console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("Hope",error.message)
+                Alert.alert("NOC NOC",error.message)
             }
         },
         error: (err) => {
@@ -159,13 +159,13 @@ export default class AddressForm extends React.Component {
             try {
                 console.log("create properties data-->"+JSON.stringify(response))
                 this.props.navigation.state.params.refresProperties()
-                Alert.alert("Hope",response.message,[{text: 'OK', onPress: () => {
+                Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {
                         this.props.navigation.goBack()    
                 }}])
                 
             } catch (error) {
                 console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("Hope",error.message)
+                Alert.alert("NOC NOC",error.message)
             }
         },
         error: (err) => {

@@ -166,7 +166,7 @@ export default class CustomerAgentReviewScreen extends Component {
                             </View> : null}
                             {(this.state.jobData.cell_phone != null) ?
                             <View style={{flexDirection:'row'}}>
-                                <View><MaterialCommunityIcons name={"credit-card-plus"} size={18} /></View>
+                                <View><MaterialCommunityIcons name={"phone"} size={18} /></View>
                                 <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.cell_phone || ""}</Text> 
                             </View> : null}
                         </View>

@@ -156,6 +156,10 @@ export default class AgentLogin extends React.Component {
           enableOnAndroid={true}
           contentContainerStyle={styles.fullSize}
         >
+          <Image
+            style={styles.logo_image}
+            source={require('../../../../assets/img/logo_blanco.gif')}
+          />
           <View style={styles.agent_indicator}>
             <Text style={styles.agent_indicator_text}>AGENTE</Text>
           </View>
@@ -164,10 +168,6 @@ export default class AgentLogin extends React.Component {
               <Text style={styles.customer_login_action_text}>Entrar como cliente</Text>
             </TouchableOpacity>
           </View>
-          <Image
-            style={styles.logo_image}
-            source={require('../../../../assets/img/logo_blanco.png')}
-          />
           <View style={styles.login_form_container}>
             <View style={styles.input_container}>
               <View style={styles.input_container_user}>

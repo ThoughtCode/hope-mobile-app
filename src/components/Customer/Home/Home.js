@@ -10,18 +10,18 @@ const BannerHeight = Dimensions.get('window').height;
 const images = [
   {
     src: require("../../../../assets/img/home_splash_1_opacity.jpg"),
-    description: "LO HACEMOS POR TI",
-    subtitle: "Disfruta más tú vida"
+    description: "Disfruta más tú vida",
+    subtitle: "LO HACEMOS POR TI"
   },
   {
     src: require("../../../../assets/img/home_splash_2_opacity.jpg"),
-    description: "LO HACEMOS POR TI",
-    subtitle: "Los mejores profesionales"
+    description: "Los mejores profesionales",
+    subtitle: "LO HACEMOS POR TI"
   },
   {
     src: require("../../../../assets/img/home_splash_3_opacity.jpg"),
-    description: "LO HACEMOS POR TI",
-    subtitle: "Seguridad y calidad"
+    description: "Seguridad y calidad",
+    subtitle: "LO HACEMOS POR TI"
   }
 ];
 
@@ -51,7 +51,7 @@ export default class Home extends Component {
             {images.map((image, index) => this.renderPage(image, index))}
           </Carousel>
         </View>
-        <Image style={ styles.logo_image } source={ require('../../../../assets/img/logo_blanco.png')} />
+        <Image style={ styles.logo_image } source={ require('../../../../assets/img/logo_blanco.gif')} />
         <View style={styles.actions_container}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('CustomerSignUp')}
@@ -64,7 +64,7 @@ export default class Home extends Component {
             onPress={() => this.props.navigation.navigate('CustomerLogin')}
           >
             <View style={styles.login_button_container}>
-              <Text style={styles.action_buttons}>LOGIN</Text>
+              <Text style={styles.action_buttons}>INICIAR SESIÓN</Text>
             </View>
           </TouchableOpacity>
           
