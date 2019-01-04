@@ -61,7 +61,7 @@ class CustomerAddress extends Component {
             <Text style={styles.jobs_header}>
               Direcciones
             </Text>
-            <Image source={require('../../../../assets/img/logo_blanco.png')} style={styles.logo_image}/>
+            <Image source={require('../../../../assets/img/logo_blanco.gif')} style={styles.logo_image}/>
           </View>
         </ImageBackground>
 

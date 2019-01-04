@@ -1,5 +1,3 @@
-import React from 'react';
-import { Alert, AsyncStorage } from 'react-native';
 import * as APILIST from '../constants/api.js';
 import * as globals from '../util/globals';
 export const API = {
@@ -9,6 +7,10 @@ export const API = {
     getJobs: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.JOBS + data, buildHeader());
     },
+
+    getJobsAccepted: (onResponse, data, isHeaderRequired) => {
+      request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.JOBS_ACCEPTED + data, buildHeader());
+  },
 
     applyJob: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.JOBS + data, buildHeader());
@@ -37,13 +39,17 @@ export const API = {
     getAgentCommentsProfile: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.AGENT_COMMENTS_PROFILE +'/reviews', buildHeader());
     },
+
+    getAgentReportProfile: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.AGENT_REPORT_PROFILE + data, buildHeader());
+    },
     
     setReview: (onResponse, data, job_id, isHeaderRequired) => {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_REVIEW + job_id + "/review", buildHeader());
     },   
     confirmPayment: (onResponse, data, job_id, isHeaderRequired) => {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_REVIEW + job_id + "/confirm_payment", buildHeader());
-    },   
+    },
 
     //Customers API
 

@@ -17,10 +17,12 @@ export const NEXT_JOBS = "/api/v1/customers/jobs?status=nextjobs&current_page=1&
 export const PAST_JOBS = "/api/v1/customers/jobs?status=history&current_page=1&limit=4";
 export const PROPERTIES = "/api/v1/customers/properties/";
 export const JOBS = "/api/v1/agents/jobs";
+export const JOBS_ACCEPTED = "/api/v1/agents/jobs/accepted?date_from=<datetime>&date_to=<datetime>&min_price=<number>&max_price=<number>&frequency=<number[0|1|2|3]>&current_page=<integer>"
 export const COMMENTS = "/api/v1/agents/customer/";
 export const UPDATE_USER = "/api/v1/agents/update";
 export const UPDATE_PASSWORD = "/api/v1/agents/change_password";
 export const AGENT_COMMENTS_PROFILE = "/api/v1/agents";
+export const AGENT_REPORT_PROFILE = "/api/v1/agents/jobs/reports?&current_page=<integer>"
 export const UPDATE_PROFILE_PIC = "/api/v1/agents/update";
 export const SET_REVIEW = "/api/v1/agents/jobs/";
 

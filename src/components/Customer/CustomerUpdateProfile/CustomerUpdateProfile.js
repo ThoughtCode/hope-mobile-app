@@ -79,7 +79,7 @@ export default class CustomerUpdateProfile extends Component {
             try {
                 console.log("updateUserResponse data-->"+JSON.stringify(response))
                 AsyncStorage.setItem("customerData",JSON.stringify(response))
-                Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => {
+                Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {
                     this.props.navigation.state.params.updatePhoto()
                     // AsyncStorage.multiSet([["access_token",response.agent.data.attributes.access_token || ""],
                     // ['first_name', response.agent.data.attributes.first_name || ""],
@@ -306,8 +306,8 @@ export default class CustomerUpdateProfile extends Component {
                 </KeyboardAvoidingView>            
                 <ActionSheet
                     ref={o => this.ActionSheet = o}
-                    title={'Select avatar'}
-                    options={['Take Photo', 'Choose from Library', 'Cancel']}
+                    title={'Seleccionar imagen'}
+                    options={['Tomar foto', 'Elige de la galeria', 'Cancelar']}
                     cancelButtonIndex={2}
                     onPress={(index) => { this.selectedPhoto(index) }}
                     />

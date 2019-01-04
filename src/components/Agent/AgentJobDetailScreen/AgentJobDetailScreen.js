@@ -6,7 +6,6 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import StarRating from '../../../lib/react-native-star-rating';
 import { API } from '../../../util/api';
-import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
 import Moment from 'moment';
 
 const styles = require('./AgentJobDetailScreenStyles');
@@ -24,7 +23,7 @@ export default class AgentJobDetailScreen extends Component {
     constructor(props){
         super(props)
         this.state = {
-            jobData : props.navigation.state.params.jobData.attributes,
+            jobData : props.navigation.state.params.jobData.attributes || props.item,
             index : props.navigation.state.params.index,
             isJobApply : false,
             isJobReview : false,
@@ -96,7 +95,7 @@ export default class AgentJobDetailScreen extends Component {
         if(!this.state.isJobApply){
             API.applyJob(this.jobApplyResponse,"/"+this.props.navigation.state.params.jobData.id+"/proposals",true);
         }else{
-            Alert.alert("Noc Noc","Ya te has postulado para este trabajo")
+            Alert.alert("NOC NOC","Ya te has postulado para este trabajo")
         }
     }
 
@@ -105,7 +104,7 @@ export default class AgentJobDetailScreen extends Component {
     //======================================================================
 
     tapReview = () =>{
-        Alert.alert("Noc Noc","Antes de continuar.Confirm que tu trabajo se realizo con exito.",
+        Alert.alert("NOC NOC","Antes de continuar. Confirmas que tú trabajo se realizo con exito.",
             [
                 {text: 'NO', onPress: () => this.props.navigation.navigate("AgentReviewScreen",{jobData : this.props.navigation.state.params.jobData}), style: 'cancel'},
                 {text: 'SI', onPress: () => this.tapConfirmPayment()},
@@ -159,14 +158,14 @@ export default class AgentJobDetailScreen extends Component {
                   // AgentJobListScreen.getJobsAPICall()
                   // AgentJobListScreen.setRow(this.state.index)
                   this.props.navigation.state.params.setRow(this.state.index)
-                  Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
+                  Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
                 })
               } catch (error) {
                 console.log('catch (error)','jobApplyResponse catch error ' + JSON.stringify(error));
               }
             },
             error: (err) => {
-            Alert.alert("Noc Noc", JSON.stringify(err.message))  
+            Alert.alert("NOC NOC", JSON.stringify(err.message))  
             console.log('jobApplyResponse error ' + JSON.stringify(err));
         },
         complete: () => {
@@ -197,6 +196,9 @@ export default class AgentJobDetailScreen extends Component {
         // var initialDate = Moment(new Date(this.state.jobData.started_at)).utc().format('MMMM, DD - hh:mm a')
         // America/Guayaquil
         // var finishDate = Moment(this.state.jobData.finished_at).zone(+5).format('hh:mm a')
+        if(this.state.jobData.finished_recurrency_at == !null){
+            var finisRecurrency = Moment(new Date(this.state.jobData.finished_recurrency_at)).utcOffset(-5).format('hh:mm a')
+        }
         var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
         var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
         var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
@@ -245,7 +247,7 @@ export default class AgentJobDetailScreen extends Component {
                         {(this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone != null) ?
                         <View style={{flexDirection:'row'}}>
                           <Text>
-                            {(!this.state.isJobReview) ? (this.state.isJobApply)? <MaterialCommunityIcons name={"credit-card-plus"} size={18} /> || "" : "" : <MaterialCommunityIcons name={"credit-card-plus"} size={18} /> || "" }
+                            {(!this.state.isJobReview) ? (this.state.isJobApply)? <MaterialCommunityIcons name={"phone"} size={18} /> || "" : "" : <MaterialCommunityIcons name={"phone"} size={18} /> || "" }
                           </Text>
                           <Text style={[styles.subText,{marginHorizontal:5}]}>
                             {(!this.state.isJobReview) ? (this.state.isJobApply)? this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || "" : "" : this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || "" }
@@ -266,7 +268,7 @@ export default class AgentJobDetailScreen extends Component {
                         </View>
                         <View style={styles.renderRowView}>
                             <Text style={styles.titleText}>{"Fecha"}</Text>
-                            <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{initialDate + " - "+ finishDate}</Text>
+                            <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{initialDate + " - "+ ((this.state.jobData.finished_recurrency_at == !null) ? (finisRecurrency):(finishDate))}</Text>
                         </View>
                         <View style={styles.renderRowView}>
                             <Text style={styles.titleText}>{"Servicios Adicionales"}</Text>
@@ -290,17 +292,13 @@ export default class AgentJobDetailScreen extends Component {
                         </View>
                     </ScrollView>
                 </View>
-                {console.log(this.state.type)}
-                {(this.state.type != "completed") ? (this.state.type != "accepted") ?
-                <TouchableOpacity onPress={(!this.state.isJobReview) ? this.tapJobApplyTap : this.tapReview} disabled={this.state.isJobApply && !this.state.isJobReview}>
-                  <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
-                    <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Calificar"}</Text>
-                  </View>
-                </TouchableOpacity>
-                :
-                <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor: 'rgb(0,121,189)'}]}>
-                  <Text style={[styles.titleText,{color:'#fff'}]}>Contratado</Text>
-                </View>
+                {console.log(this.state.isJobReview)}
+                {(this.state.type != "completed") ?
+                 <TouchableOpacity onPress={(!this.state.isJobReview) ? this.tapJobApplyTap : this.tapReview} disabled={this.state.isJobApply && !this.state.isJobReview}>
+                    <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:(this.state.isJobApply) ? 'rgb(7,225,43)': 'rgb(0,121,189)'}]}>
+                      <Text style={[styles.titleText,{color:'#fff'}]}>{(!this.state.isJobReview) ? (this.state.isJobApply)? "Postulado" :"Aplicar" : "Calificar"}</Text>
+                    </View>
+                 </TouchableOpacity>
                 : null}
                 
             </SafeAreaView>

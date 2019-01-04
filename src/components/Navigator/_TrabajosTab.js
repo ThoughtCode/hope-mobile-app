@@ -7,13 +7,13 @@ import AgentJobCommentScreen from "../Agent/AgentJobCommentScreen/AgentJobCommen
 import AgentReviewScreen from "../Agent/AgentReviewScreen/AgentReviewScreen";
   
 export default TrabajosTab = TabNavigator({
-    AgentActules: {
-      screen:  props => <AgentActules {...props} type={"accepted"} />,
-      navigationOptions: {
-          borderBottomWidth: 0,
-          tabBarLabel: 'Actuales',
-          tabBarLabel: ({ tintColor }) => (
-              <View style={[styles.tabViewBox]}>
+  AgentActules: {
+    screen: props => <AgentActules {...props} type={"accepted"} />,
+    navigationOptions: {
+      borderBottomWidth: 0,
+      tabBarLabel: 'Actuales',
+      tabBarLabel: ({ tintColor }) => (
+        <View style={[styles.tabViewBox]}>
                   <Text style={[styles.tabText, { color: tintColor,fontSize :14 }]}>{"Actuales"}</Text>
               </View>
           )

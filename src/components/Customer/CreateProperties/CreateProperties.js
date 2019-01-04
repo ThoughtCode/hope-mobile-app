@@ -66,7 +66,7 @@ export default class CreateProperties extends Component {
                 
             } catch (error) {
                 console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("Noc Noc",error.message)
+                Alert.alert("NOC NOC",error.message)
             }
         },
         error: (err) => {
@@ -102,13 +102,13 @@ export default class CreateProperties extends Component {
                 
                 console.log("create properties data-->"+JSON.stringify(response))
                 this.props.navigation.state.params.refresProperties()
-                Alert.alert("Noc Noc",response.message,[{text: 'OK', onPress: () => {
+                Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {
                         this.props.navigation.goBack()    
                 }}])
                 
             } catch (error) {
                 console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("Noc Noc",error.message)
+                Alert.alert("NOC NOC",error.message)
             }
         },
         error: (err) => {
@@ -141,7 +141,7 @@ export default class CreateProperties extends Component {
                 
             } catch (error) {
                 console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("Noc Noc",error.message)
+                Alert.alert("NOC NOC",error.message)
             }
         },
         error: (err) => {
@@ -306,8 +306,8 @@ export default class CreateProperties extends Component {
                 </KeyboardAvoidingView>            
                 <ActionSheet
                     ref={o => this.ActionSheet = o}
-                    title={'Select avatar'}
-                    options={['Take Photo', 'Choose from Library', 'Cancel']}
+                    title={'Seleccionar imagen'}
+                    options={['Tomar foto', 'Elige de la galeria', 'Cancelar']}
                     cancelButtonIndex={2}
                     onPress={(index) => { this.selectedPhoto(index) }}
                     />

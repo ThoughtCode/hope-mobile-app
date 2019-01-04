@@ -21,9 +21,10 @@ module.exports = StyleSheet.create({
     justifyContent: 'center'
   },
   logo_image: {
-    width: 90,
-    height: 84,
-    marginBottom: 20
+    width: 95,
+    height: 85,
+    top: 60,
+    right: 140
   },
   customer_indicator: {
     backgroundColor: '#fff',
@@ -37,6 +38,7 @@ module.exports = StyleSheet.create({
   },
   customer_indicator_text: {
     color: '#0069A7',
+    fontSize: 20
   },
   agent_login_action: {
     borderTopLeftRadius: 10,
@@ -50,7 +52,7 @@ module.exports = StyleSheet.create({
   },
   agent_login_action_text: {
     color: '#fff',
-    fontSize: 10
+    fontSize: 18
   },
   input_container: {
     backgroundColor: 'rgba(0,0,0,0.5)',

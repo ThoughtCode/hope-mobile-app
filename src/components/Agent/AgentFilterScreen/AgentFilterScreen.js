@@ -14,7 +14,7 @@ const styles = require('./AgentFilterScreenStyles');
 
 const IMAGES = {
     TOP_BACKGROUND : require("../../../../assets/img/topbg.png"),
-    LOGO : require("../../../../assets/img/logo_blanco.png")
+    LOGO : require("../../../../assets/img/logo_blanco.gif")
 }
 var _this = null;
 
@@ -28,7 +28,7 @@ export default class AgentFilterScreen extends Component {
         super(props)
         _this = this
         this.state = {
-            sliderValue: [0, 300],
+            sliderValue: [0, 150],
             startData : null,
             endDate : null,
             frequency : null,
@@ -93,17 +93,20 @@ export default class AgentFilterScreen extends Component {
                 </View>
                 <View style={{flex:1}}>
                     <View style={{flex:1,marginHorizontal:20}}>
-                        <Text style={styles.mainTitleText}>{"Monte del trabajo"}</Text>
+                        <Text style={styles.mainTitleText}>{"Monto del trabajo"}</Text>
                         <View style={{flexDirection:'row',justifyContent:'space-around'}}>
-                            <View>
-                                <Text style={styles.textStyle}>{"$0"}</Text>
-                            </View>
-                            <View style={{flex:1,alignItems:'center'}}>
-                                <Text style={styles.textStyle}>{"$150"}</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.textStyle}>{"$300"}</Text>
-                            </View>
+                          <View>
+                            <Text style={styles.textStyle}>{"$0"}</Text>
+                          </View>
+                          <View style={{flex:1,alignItems:'space-between'}}>
+                            <Text style={styles.textStyle}>{"$50"}</Text>
+                          </View>
+                          <View style={{flex:1,alignItems:'space-between'}}>
+                            <Text style={styles.textStyle}>{"$100"}</Text>
+                          </View>
+                          <View style={{flex:1,alignItems:'space-between'}}>
+                            <Text style={styles.textStyle}>{"$150"}</Text>
+                          </View>
                         </View>
                         
                         <MultiSlider
@@ -111,7 +114,7 @@ export default class AgentFilterScreen extends Component {
                             sliderLength={width - 40}
                             onValuesChange={this.onValueChange}
                             min={0}
-                            max={300}
+                            max={150}
                             step={1}
                             allowOverlap
                             snapped
@@ -123,7 +126,7 @@ export default class AgentFilterScreen extends Component {
                             
                             <DatePicker
                                 style={{flex:1,marginLeft:10}}
-                                date={this.state.startData || new Date()}
+                                date={this.state.startData}
                                 mode="date"
                                 placeholder=""
                                 format="YYYY-MM-DD"
@@ -141,7 +144,7 @@ export default class AgentFilterScreen extends Component {
                             
                             <DatePicker
                                 style={{flex:1,marginLeft : 10}}
-                                date={this.state.endDate || new Date()}
+                                date={this.state.endDate}
                                 mode="date"
                                 placeholder=""
                                 format="YYYY-MM-DD"
@@ -169,7 +172,7 @@ export default class AgentFilterScreen extends Component {
                         <View style={{flexDirection:'row',marginTop:10}}>
                             <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
                                 <FontAwesome name={(this.state.frequency == 2) ? "check-square" : "square-o"} size={30} onPress={() => this.setState({frequency : 2})} style={{color : 'gray'}}/>
-                                <Text style={[styles.textStyle,{marginLeft:5}]}>{"Quinenal"}</Text>
+                                <Text style={[styles.textStyle,{marginLeft:5}]}>{"Quincenal"}</Text>
                             </View>
                             <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
                                 <FontAwesome name={(this.state.frequency) == 3 ? "check-square" : "square-o"} size={30} onPress={() => this.setState({frequency : 3})} style={{color : 'gray'}}/>

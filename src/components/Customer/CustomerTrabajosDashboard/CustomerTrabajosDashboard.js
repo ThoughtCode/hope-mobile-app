@@ -11,7 +11,7 @@ const styles = require('./CustomerTrabajosDashboardStyles');
 
 const IMAGES = {
     TOP_BACKGROUND : require("../../../../assets/img/topbg.png"),
-    LOGO : require("../../../../assets/img/logo_blanco.png")
+    LOGO : require("../../../../assets/img/logo_blanco.gif")
 }
 var _this = null;
 

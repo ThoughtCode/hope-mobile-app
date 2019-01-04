@@ -55,6 +55,10 @@ export default class AgentProfile extends Component {
         this.props.navigation.navigate("AgentUpdatePassword",{})
       } else if (item.key == "comment") {
         this.props.navigation.navigate("AgentComment",{})
+      } else if (item.key == "calendar") {
+        this.props.navigation.navigate("AgentCalendar",{})
+      } else if (item.key == "report") {
+        this.props.navigation.navigate("AgentReport", {})
       }
     }
 
@@ -178,7 +182,7 @@ export default class AgentProfile extends Component {
 
                 <View style={{flex:1}}>
                     <FlatList
-                        data = {[{title : "Mi cuenta",key : 'update_profile'},{title : "Contrasena",key : 'update_password'},{title : "Comentarios",key : 'comment'}]}
+                        data = {[{title : "Mi cuenta",key : 'update_profile'},{title : "Contraseña",key : 'update_password'},{title : "Comentarios",key : 'comment'},{title : "Calendario",key : 'calendar'},{title : "Reportes",key : 'report'}]}
                         renderItem = {this.renderItem}
                         ItemSeparatorComponent={this.ItemSeparatorComponent}
                         keyExtractor={(item)=>item.key.toString()}

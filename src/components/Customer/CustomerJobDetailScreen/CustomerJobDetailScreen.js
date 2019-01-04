@@ -73,7 +73,7 @@ export default class CustomerJobDetailScreen extends Component {
         },
         error: (err) => {
             console.log('jobApplyResponse error ' + JSON.stringify(err));
-            Alert.alert("Noc Noc",err.message)
+            Alert.alert("NOC NOC",err.message)
         },
         complete: () => {
         }

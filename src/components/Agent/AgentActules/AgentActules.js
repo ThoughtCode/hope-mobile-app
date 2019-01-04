@@ -50,7 +50,7 @@ export default class AgentActules extends Component {
     }
 
     //======================================================================
-    // onRefresh
+    // onRefreshAgentTrabajosDashboard
     //======================================================================
 
     onRefresh = () =>{

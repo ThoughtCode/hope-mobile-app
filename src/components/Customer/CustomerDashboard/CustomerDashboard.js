@@ -322,7 +322,7 @@ export default class CustomerDashboard extends Component {
     return (
         <View style={styles.container}>
           <Image source={require('../../../../assets/img/dashboard-home.png')} style={styles.banner_image}/>
-          <Image source={require('../../../../assets/img/logo_blanco.png')} style={styles.logo_image}/>
+          <Image source={require('../../../../assets/img/logo_blanco.gif')} style={styles.logo_image}/>
           <ScrollView>
             <Text style={styles.section_title}>Servicios</Text>
             <View style={styles.section_servicios_container}>

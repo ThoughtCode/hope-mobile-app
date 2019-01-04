@@ -161,7 +161,7 @@ export default class CustomerProfile extends Component {
 
               <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdatePassword")}>
                 <View style={styles.accordion_header}>
-                  <Text style={styles.accordion_header_title}>{"Contrasena"}</Text>
+                  <Text style={styles.accordion_header_title}>{"Contraseña"}</Text>
                   <FontAwesome
                     name="chevron-right"
                     size={24}

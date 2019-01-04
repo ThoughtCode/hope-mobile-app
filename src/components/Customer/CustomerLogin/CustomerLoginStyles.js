@@ -25,7 +25,7 @@ module.exports = StyleSheet.create({
   },
   customer_indicator_text: {
     color: '#0069A7',
-    fontSize: 18
+    fontSize: 20
   },
   agent_login_action: {
     borderTopLeftRadius: 10,
@@ -38,11 +38,12 @@ module.exports = StyleSheet.create({
     zIndex: 1
   },
   agent_login_action_text: {
-    color: '#fff'
+    color: '#fff',
+    fontSize: 18
   },
   login_form_container: {
     flex: 1,
-    top: 250,
+    top: 120,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -133,9 +134,10 @@ module.exports = StyleSheet.create({
     textAlignVertical: 'center'
   },
   logo_image: {
-    width: 120,
-    height: 110,
-    top: 150
+    width: 95,
+    height: 85,
+    top: 60,
+    right: 140
   },
   text_error: {
     color: 'white'

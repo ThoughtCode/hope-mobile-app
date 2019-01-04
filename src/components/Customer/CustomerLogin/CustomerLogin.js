@@ -123,7 +123,7 @@ export default class CustomerLogin extends React.Component {
           </View>
           <Image
             style={styles.logo_image}
-            source={require('../../../../assets/img/logo_blanco.png')}
+            source={require('../../../../assets/img/logo_blanco.gif')}
           />
           <View style={styles.login_form_container}>
             <View style={styles.input_container}>
@@ -160,7 +160,7 @@ export default class CustomerLogin extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.facebookLogin} style={styles.fb_login_button}>
-              <Text style={styles.fb_login_button_text}>Login with facebook</Text>
+              <Text style={styles.fb_login_button_text}>Iniciar sesión con facebook</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Home')}

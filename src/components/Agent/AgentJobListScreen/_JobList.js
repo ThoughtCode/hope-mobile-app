@@ -136,10 +136,6 @@ export default class _JobList extends Component {
     // ListEmptyComponent
     //======================================================================
 
-    onRefresh = () =>{
-
-    }
-
     render(){
         return(
             <View style={{flex:1}}>

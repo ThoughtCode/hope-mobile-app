@@ -34,7 +34,8 @@ export default class App extends React.Component {
     this.state = {
       fontLoaded: false,
       isLoading : true,
-      isAgentLogin : false
+      isAgentLogin : false,
+      notification : {}
     };
   }
 
@@ -50,7 +51,8 @@ export default class App extends React.Component {
   }
 
   _handleNotification = (notification) => {
-    console.log(JSON.stringify(notification.data))
+    console.log(JSON.stringify(notification))
+    this.setState({notification: notification});
   };
 
   async componentWillMount() {
@@ -70,7 +72,7 @@ export default class App extends React.Component {
         }
         // this.setState({isLoading : true,fontLoaded: true,isAgentLogin : data != null})
       })
-      AsyncStorage.multiGet(['password', 'access_token', 'first_name', 'last_name', 'email', 'cell_phone', 'avatar', 'status'],(error,value) =>{
+      AsyncStorage.multiGet(['password', 'access_token', 'first_name', 'last_name', 'email', 'cell_phone', 'avatar', 'status', 'birthday'],(error,value) =>{
     
         if(value[4][1] != null && value[4][1] != undefined){
           globals.password = value[0][1] || ""
@@ -81,6 +83,7 @@ export default class App extends React.Component {
           globals.cell_phone = value[5][1] || ""
           globals.avatar = value[6][1] || ""
           globals.status = value[7][1] || ""
+          globals.birthday = value[8][1] || ""
         }
         
         this.setState({isLoading : true,fontLoaded: true,isAgentLogin : value[4][1] != null})
