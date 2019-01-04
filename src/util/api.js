@@ -41,7 +41,6 @@ export const API = {
     },
 
     getAgentReportProfile: (onResponse, data, isHeaderRequired) => {
-        console.log(data)
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.AGENT_REPORT_PROFILE + data, buildHeader());
     },
     

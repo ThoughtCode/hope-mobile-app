@@ -37,7 +37,7 @@ export const MainNavigator = SwitchNavigator({
     // AgentDashboard: {screen: AgentDashboard},
     AgentTabar : { screen :AgentTabar},
     CustomerTabbar : {screen : CustomerTabbar},
-    // CustomerResetPassword: {screen: CustomerResetPassword},
+    CustomerResetPassword: {screen: CustomerResetPassword},
     AgentResetPassword: {screen: AgentResetPassword},
     // CustomerProfile: {screen: CustomerProfile},
     // CustomerJobs: {screen: CustomerJobs},
