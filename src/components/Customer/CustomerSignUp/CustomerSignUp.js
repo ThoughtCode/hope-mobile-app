@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as urls from '../../../constants/api';
+import * as globals from '../../../util/globals';
 
 const styles = require('./CustomerSignUpStyles');
 
@@ -100,7 +101,19 @@ export default class CustomerSignUp extends Component {
               await this._postMobilePushNotificationToken(
                 data.customer.data.attributes.access_token
               );
-              this.props.navigation.navigate('CustomerDashboard', { data });
+              // this.props.navigation.navigate('CustomerDashboard', { data });
+              AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
+                globals.access_token = data.customer.data.attributes.access_token ||""
+
+                globals.first_name = data.customer.data.attributes.first_name || ""
+                globals.last_name = data.customer.data.attributes.last_name || ""
+                globals.email = data.customer.data.attributes.email || ""
+                globals.password = this.state.password || ""
+                globals.cell_phone = data.customer.data.attributes.cell_phone || ""
+                globals.status = data.customer.data.attributes.status || ""
+                globals.avatar = data.customer.data.attributes.avatar.url || ""
+                this.props.navigation.navigate('CustomerTabbar');
+              })
             });
           } else if (response.status === 422) {
             Alert.alert(
