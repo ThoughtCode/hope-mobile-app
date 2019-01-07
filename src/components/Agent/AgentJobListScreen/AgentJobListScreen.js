@@ -44,6 +44,7 @@ export default class AgentJobListScreen extends Component {
     //======================================================================
 
     static getJobsAPICall(){
+        _this.setState({jobList : []})
         var data =  ""
         if(_this.state.filterdata != null && _this.state.filterdata != ""){
             data = _this.state.filterdata,

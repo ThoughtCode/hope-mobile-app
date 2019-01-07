@@ -84,7 +84,11 @@ export default AgentTabar = TabNavigator({
                   <Entypo name="home" style={[styles.tabIcon]} size={iconHeight} color={tintColor} />
                   <Text style={[styles.tabText, { color: tintColor }]}>{"Inicio"}</Text>
               </View>
-          )
+          ),
+          tabBarOnPress: ev => {
+            AgentJobListScreen.getJobsAPICall()
+            ev.jumpToIndex(ev.scene.index); // This actually allow you to jump to your screen 
+        }
       }
   },
   Trabajos: {
