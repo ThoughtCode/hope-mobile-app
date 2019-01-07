@@ -16,7 +16,11 @@ export default TrabajosTab = TabNavigator({
               <View style={[styles.tabViewBox]}>
                   <Text style={[styles.tabText, { color: tintColor,fontSize :14 }]}>{"Actuales"}</Text>
               </View>
-          )
+          ),
+          tabBarOnPress: ev => {
+            AgentActules.jobsApiCall()
+            ev.jumpToIndex(ev.scene.index); // This actually allow you to jump to your screen 
+        }
       }
     },
     CompletadosList: {
@@ -28,7 +32,11 @@ export default TrabajosTab = TabNavigator({
                 <View style={[styles.tabViewBox]}>
                   <Text style={[styles.tabText, { color: tintColor,fontSize :14 }]}>{"Completados"}</Text>
               </View>
-            )
+          ),
+          tabBarOnPress: ev => {
+            AgentActules.jobsApiCall()
+            ev.jumpToIndex(ev.scene.index); // This actually allow you to jump to your screen 
+          }
       }
     },
     PostuladosList: {
@@ -40,7 +48,11 @@ export default TrabajosTab = TabNavigator({
               <View style={[styles.tabViewBox]}>
                 <Text style={[styles.tabText, { color: tintColor ,fontSize :14 }]}>{"Postulados"}</Text>
             </View>
-          )
+          ),
+          tabBarOnPress: ev => {
+            AgentActules.jobsApiCall()
+            ev.jumpToIndex(ev.scene.index); // This actually allow you to jump to your screen 
+          }
       }
     },
   },{

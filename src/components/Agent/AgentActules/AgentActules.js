@@ -5,6 +5,7 @@ const {height , width} = Dimensions.get('window')
 import { API } from '../../../util/api';
 import Moment from 'moment';
 import JobList from "../AgentJobListScreen/_JobList";
+import { NavigationEvents } from "react-navigation";
 
 const styles = require('./AgentActulesStyles');
 
@@ -13,6 +14,9 @@ const IMAGES = {
 }
 var _this = null;
 export default class AgentActules extends Component {
+
+    // static navigationOptions = () => ({
+    // });
 
     //======================================================================
     // constructor
@@ -43,6 +47,11 @@ export default class AgentActules extends Component {
     //======================================================================
     // getJobsAPICall
     //======================================================================
+
+    static jobsApiCall(){
+        _this.setState({isAPICall:true,page : 1,jobList:[]})
+        API.getJobs(_this.getJobResponseData,"/"+_this.state.type+"?current_page=1",true);
+    }
 
     getJobsAPICall(){
         this.setState({isAPICall:true})
