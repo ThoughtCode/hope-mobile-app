@@ -159,12 +159,14 @@ export default class AgentJobListScreen extends Component {
         error: (err) => {
             console.log('getJobResponseData error ' + JSON.stringify(err));
             this.setState({
-                isAPICall : false
+                isAPICall : false,
+                isOnRefresh : false
             })
         },
         complete: () => {
             this.setState({
-                isAPICall : false
+                isAPICall : false,
+                isOnRefresh : false
             })
         }
     }
