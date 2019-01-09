@@ -105,8 +105,19 @@ export const API = {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.ADD_CARD  , buildHeader());
     },   
 
+    setAddInvoiceDetail: (onResponse, data, isHeaderRequired) => {
+        console.log("----------> onResponse",onResponse)
+        console.log("----------> DATA",data)
+        console.log("----------> isHeaderRequired",isHeaderRequired)
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.ADD_INVOICE_DETAIL  , buildHeader());
+    },   
+
     getCardLists: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_CARD_LIST , buildHeader());
+    },
+
+    getDetailsListsCreateJob: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_DETAILS_LIST_CREATED_JOB , buildHeader());
     },
 
     getCustomerCommentsProfile: (onResponse, data, isHeaderRequired) => {

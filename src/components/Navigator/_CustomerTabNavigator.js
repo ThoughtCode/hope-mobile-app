@@ -31,7 +31,9 @@ import DirectionScreen from "../../components/Customer/DirectionScreen/Direction
 import AddressForm from "../../components/Customer/AddressForm/AddressForm";
 import AdditionalDetail from "../../components/Customer/AdditionalDetail/AdditionalDetail";
 import CardListScreen from "../../components/Customer/CardListScreen/CardListScreen";
+import DetailsListScreen from "../../components/Customer/DetailsListScreen/DetailsListScreen";
 import AddCardScreen from "../../components/Customer/AddCardScreen/AddCardScreen";
+import AddDetailsScreen from "../../components/Customer/AddDetailsScreen/AddDetailsScreen";
 import CommentListScreen from "../../components/Customer/CommentListScreen/CommentListScreen";
 import CustomerProfileCardList from "../../components/Customer/CustomerProfileCardList/CustomerProfileCardList";
 import CustomerProfileAddCard from "../../components/Customer/CustomerProfileAddCard/CustomerProfileAddCard";
@@ -72,7 +74,9 @@ const HomeDashboard = StackNavigator({
     AddressForm : { screen : AddressForm },
     AdditionalDetail : { screen : AdditionalDetail },
     CardListScreen : { screen : CardListScreen },
+    DetailsListScreen : { screen : DetailsListScreen },
     AddCardScreen : { screen : AddCardScreen },
+    AddDetailsScreen : { screen : AddDetailsScreen },
     CommentListScreen : { screen : CommentListScreen },
     CustomerProfileCardList : { screen : CustomerProfileCardList },
     CustomerProfileAddCard : { screen : CustomerProfileAddCard },
