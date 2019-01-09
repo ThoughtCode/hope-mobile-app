@@ -30,7 +30,6 @@ export default class CardListScreen extends Component {
 
   detailsListsResponseData = {
     success: (response) => {
-      console.log(response)
       try {
           console.log("Response data-->" + JSON.stringify(response.invoice_detail.data))
 
@@ -126,7 +125,7 @@ export default class CardListScreen extends Component {
         </View>
 
         <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('AddCardScreen')}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('AddDetailsScreen')}>
             <Text style={{ color: '#1F68A9', fontFamily: 'helvetica', fontSize: 20, fontWeight: 'bold' }}>{"Agregar nueva facturación"}</Text>
           </TouchableOpacity>
         </View>

@@ -93,7 +93,7 @@ export default class CustomerAddBillingScreen extends Component {
                         <Text style={{fontSize:20,fontWeight:'600'}}>{"Jose Castellanows"}</Text>
                     </View>
                     <View style={styles.topTitleView}>
-                        <Text style={styles.mainTitleText}>{"Detalles de facturacion"}</Text>
+                        <Text style={styles.mainTitleText}>{"Detalles de facturación"}</Text>
                     </View>
                 </View> 
                 <View style={{flex:1}}>
