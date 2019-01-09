@@ -31,6 +31,7 @@ import DirectionScreen from "../../components/Customer/DirectionScreen/Direction
 import AddressForm from "../../components/Customer/AddressForm/AddressForm";
 import AdditionalDetail from "../../components/Customer/AdditionalDetail/AdditionalDetail";
 import CardListScreen from "../../components/Customer/CardListScreen/CardListScreen";
+import DetailsListScreen from "../../components/Customer/DetailsListScreen/DetailsListScreen";
 import AddCardScreen from "../../components/Customer/AddCardScreen/AddCardScreen";
 import CommentListScreen from "../../components/Customer/CommentListScreen/CommentListScreen";
 import CustomerProfileCardList from "../../components/Customer/CustomerProfileCardList/CustomerProfileCardList";
@@ -72,6 +73,7 @@ const HomeDashboard = StackNavigator({
     AddressForm : { screen : AddressForm },
     AdditionalDetail : { screen : AdditionalDetail },
     CardListScreen : { screen : CardListScreen },
+    DetailsListScreen : { screen : DetailsListScreen },
     AddCardScreen : { screen : AddCardScreen },
     CommentListScreen : { screen : CommentListScreen },
     CustomerProfileCardList : { screen : CustomerProfileCardList },

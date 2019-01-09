@@ -28,6 +28,7 @@ export default class CustomerCleaning extends Component {
             frequencyData: [],
             selectedDate: Moment.utc(new Date()).format("DD [de] MMM [de] YYYY") + " - 12:00H",
             cardData : null,
+            detailsData : null,
             directionData : null,
             additionalData : null
 
@@ -58,6 +59,12 @@ export default class CustomerCleaning extends Component {
     setCard = (cardData) => {
         this.setState({
             cardData: cardData
+        })
+    }
+
+    setDetails = (detailsData) => {
+        this.setState({
+            detailsData: detailsData
         })
     }
 
@@ -250,29 +257,31 @@ export default class CustomerCleaning extends Component {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{setCard : this.setCard})}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("DetailsListScreen",{setDetails : this.setDetails})}>
                           <View style={styles.rowStyle}>
                             <View style={styles.rowText}>
                               <Text style={styles.titleText}>{"Detalles de facturación"}</Text>
                                 
-                              {/* {this.state.cardData && <View style={styles.childContainer}>
+                              {this.state.detailsData && <View style={styles.childContainer}>
                                 <View style={styles.itemView}>
                                   <View style={{ flexDirection: 'row' }}>
-                                    <FontAwesome name={"cc-visa"} size={20} color={"rgb(0,121,189)"}  />
+                                    {/* <FontAwesome name={"cc-visa"} size={20} color={"rgb(0,121,189)"}  /> */}
                                     <Text style={{ flex: 0.6 }}>
-                                      {this.state.cardData.attributes.number}
+                                      {this.state.detailsData.attributes.social_reason}
                                     </Text>
                                     <Text style={{ flex: 0.4 }}>
-                                      {"Exp." + this.state.cardData.attributes.expiry_month + "/" + this.state.cardData.attributes.expiry_year}
+                                      {this.state.detailsData.attributes.address}
+                                      {/* {"Exp." + this.state.detailsData.attributes.expiry_month + "/" + this.state.detailsData.attributes.expiry_year} */}
                                     </Text>
                                   </View>
                                   <View style={{ flexDirection: 'row' }}>
                                     <Text>
-                                      {"Nombre : " + this.state.cardData.attributes.holder_name}
+																			{this.state.detailsData.attributes.telephone}
+                                      {/* {"Nombre : " + this.state.detailsData.attributes.holder_name} */}
                                     </Text>
                                   </View>
                                 </View>
-                              </View>} */}
+                              </View>}
                             </View>
                             <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                           </View>

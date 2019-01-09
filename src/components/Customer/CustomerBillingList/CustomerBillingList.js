@@ -144,7 +144,7 @@ export default class CustomerBillingList extends Component {
                 </View>
                 <View style={{alignItems:'center',justifyContent:'center',marginVertical:10}}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('CustomerAddBillingScreen')}>
-                        <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Agregar nueva facturacion"}</Text>
+                        <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Agregar nueva facturación"}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ marginVertical:10 }}>

@@ -36,6 +36,7 @@ export const SET_CUSTERMER_REVIEW = "/api/v1/customers/jobs/";
 export const GET_CUSTERMER_SERVICETYPE = "/api/v1/customers/service_types/";
 export const ADD_CARD = "/api/v1/customers/add_card";
 export const GET_CARD_LIST="/api/v1/customers/credit_cards";
+export const GET_DETAILS_LIST_CREATED_JOB="/api/v1/customers/invoice_details";
 export const CUSTOMER_COMMENTS_PROFILE = "/api/v1/customers";
 
 
