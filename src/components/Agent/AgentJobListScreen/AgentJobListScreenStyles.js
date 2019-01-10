@@ -53,7 +53,6 @@ module.exports = StyleSheet.create({
     top: 10,
   },
   logo_image: {
-    height: 140,
-    width: 150,
+    marginHorizontal:20,paddingVertical:20,height:140,width:150,
   }
 });

@@ -5,8 +5,7 @@ module.exports = StyleSheet.create({
   fullSize: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingHorizontal: 10,
     backgroundColor: 'rgba(0,0,0,0.5)'
   },
   sign_up_container: {
@@ -23,7 +22,7 @@ module.exports = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     position: 'absolute',
-    top: 70,
+    top: 30,
     right: 0,
     paddingHorizontal: 25,
     paddingVertical: 5
@@ -36,7 +35,7 @@ module.exports = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     position: 'absolute',
-    top: 100,
+    top: 60,
     right: 0,
     paddingHorizontal: 5,
     paddingVertical: 15,
@@ -49,16 +48,28 @@ module.exports = StyleSheet.create({
   signup_form_container: {
     flex: 1,
     backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    top: 10
   },
   signup_input_container_border: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#fff',
     borderBottomWidth: 1,
-    paddingLeft: 20
+    // paddingLeft: 20
+    paddingHorizontal: 10,
+    width: Dimensions.get('window').width/2,
+  },
+  signup_input_container_border_email: {
+    flexDirection: 'row',
+    // justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#fff',
+    borderBottomWidth: 1,
+    // paddingLeft: 20
+    paddingHorizontal: 10,
+    width: Dimensions.get('window').width,
   },
   signup_input_container: {
     flexDirection: 'row',
@@ -67,7 +78,7 @@ module.exports = StyleSheet.create({
     paddingLeft: 20
   },
   signup_input: {
-    width: 200,
+    width: 150,
     height: 40,
     marginTop: 5,
     textAlign: 'left',
@@ -75,17 +86,10 @@ module.exports = StyleSheet.create({
     color: '#fff',
     paddingLeft: 10
   },
-  signup_input_container_cell: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 20,
-    marginBottom: 30
-  },
   signup_actions: {
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)'
+    // justifyContent: 'flex-end',
+    // backgroundColor: 'rgba(0,0,0,0.5)'
   },
   signup_button: {
     backgroundColor: '#fff',
@@ -124,5 +128,12 @@ module.exports = StyleSheet.create({
   },
   text_error: {
     color: 'white'
-  }
+  },
+  actions_container: {
+    // position: 'absolute',
+    // bottom: 20,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    backgroundColor: 'transparent',
+  },
 });
