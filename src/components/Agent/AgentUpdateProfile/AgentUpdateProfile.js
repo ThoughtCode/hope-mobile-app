@@ -9,6 +9,8 @@ import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
 import { ImagePicker, Camera, Permissions  } from 'expo';
 import ImageUpload from '../../../util/ImageUpload';
 import ActionSheet from 'react-native-actionsheet'
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import moment from 'moment';
 const styles = require('./AgentUpdateProfileStyles');
 
 const IMAGES = {
@@ -30,9 +32,11 @@ export default class AgentProfile extends Component {
             avatar : globals.avatar,
             email : globals.email,
             phone : globals.cell_phone,
-            birthday : globals.birthday,
+            birthday : globals.birthday || "AAAA-MM-DD",
             hasCameraPermission: null,
-            isCameraOpen : false
+            isCameraOpen : false,
+            date: new Date(),
+            isDateTimePickerVisible: false,
         }
     }
 
@@ -185,7 +189,18 @@ export default class AgentProfile extends Component {
 
     _onOpenActionSheet = () => {
         this.ActionSheet.show();
-      }
+    }
+
+    showDatePicker = () => this.setState({isDateTimePickerVisible: true});
+
+    hideDateTimePicker = () => this.setState({isDateTimePickerVisible: false});
+
+    handleDatePicked = (date) => {
+        let datePicked = moment(new Date(date)).format("YYYY-MM-DD");
+        // moment(new Date(date)).format("YYYY-MM-DD");
+        this.setState({birthday: datePicked,date : new Date(date)});
+        this.hideDateTimePicker();
+    }
 
     //======================================================================
     // render
@@ -289,7 +304,11 @@ export default class AgentProfile extends Component {
                                     </View>
                                     <View style={styles.textInputVieW}>
                                         <Text style={styles.textInputTitleText}>{"Cumpleaños"}</Text>
-                                        <TextInput  ref={ref => (this.birthday = ref)}
+                                        <View style={[styles.textInputStyle,{justifyContent:'center'}]}>
+                                            <Text onPress={this.showDatePicker} >{this.state.birthday}</Text>
+                                        </View>
+                                        
+                                        {/* <TextInput  ref={ref => (this.birthday = ref)}
                                                     underlineColorAndroid={"transparent"}
                                                     style={styles.textInputStyle}
                                                     placeholder={"AAAA-MM-DD"}
@@ -297,8 +316,16 @@ export default class AgentProfile extends Component {
                                                     value={this.state.birthday}
                                                     onChangeText={(birthday) => this.setState({birthday : birthday})}
                                                     returnKeyType={"done"}
-                                                    onSubmitEditing={() => Keyboard.dismiss()} />
+                                                    onSubmitEditing={() => Keyboard.dismiss()} /> */}
                                     </View>
+
+                                    <DateTimePicker
+                                        date = {this.state.date }
+                                        isVisible={this.state.isDateTimePickerVisible}
+                                        onConfirm={this.handleDatePicked}
+                                        onCancel={this.hideDateTimePicker}
+                                        mode='date'
+                                    />
 
                                 </View>
                         </View>
