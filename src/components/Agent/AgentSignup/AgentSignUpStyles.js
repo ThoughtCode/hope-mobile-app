@@ -49,7 +49,7 @@ module.exports = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    top: 10
+    top: 30
   },
   signup_input_container_border: {
     flexDirection: 'row',
@@ -88,6 +88,7 @@ module.exports = StyleSheet.create({
   },
   signup_actions: {
     alignItems: 'center',
+    top: 20
     // justifyContent: 'flex-end',
     // backgroundColor: 'rgba(0,0,0,0.5)'
   },
@@ -121,10 +122,9 @@ module.exports = StyleSheet.create({
     letterSpacing: 10
   },
   logo_image: {
-    width: 95,
-    height: 85,
-    top: 60,
-    right: 140
+    width: 90,
+    height: 80,
+    top: 23,
   },
   text_error: {
     color: 'white'
