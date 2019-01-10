@@ -85,20 +85,41 @@ export default class AgentComment extends Component {
       }
     })
     return(
-      <View style={{marginVertical:5,marginTop:20}}>
+      <View style={{marginVertical:5,marginTop:20,alignItems:'center'}}>
         <View style={styles.textInputVieW}>
-          <Text>{nameService}</Text>
-          <Text>Total Trab.</Text>
-          <Text>I.V.A</Text>
-          <Text>Noc Noc</Text>
-          <Text>TOTAL</Text>
+          <View style={{flex:2}}>
+            <Text>{nameService}</Text>
+          </View>
+          <View style={{flex:1.3}}>
+            <Text>Total Trab.</Text>
+          </View>
+          <View style={{flex:0.8}}>
+            <Text>I.V.A</Text>
+          </View>
+          <View style={{flex:1.2}}>
+            <Text>Noc Noc</Text>
+          </View>
+          <View style={{flex:0.9}}>
+            <Text>TOTAL</Text>
+          </View>
         </View>
         <View style={styles.textInputVieW}>
-          <Text style={styles.textInputCommentText}>{firstName} {lastName}</Text>
-          <Text>${subTotal.toFixed(2)}</Text>
-          <Text>${vat.toFixed(2)}</Text>
-          <Text>${fee.toFixed(2)}</Text>
-          <Text>${total.toFixed(2)}</Text>
+          <View style={{flex:2}}>
+            <Text style={styles.textInputCommentText}>{firstName} {lastName}</Text>
+          </View>
+          <View style={{flex:1.3}}>
+            <Text>${subTotal.toFixed(2)}</Text>
+          </View>
+          <View style={{flex:0.8}}>
+            <Text>${vat.toFixed(2)}</Text>
+          </View>
+          <View style={{flex:1.2}}>
+            <Text>${fee.toFixed(2)}</Text>
+          </View>
+          <View style={{flex:0.9}}>
+            <Text>${total.toFixed(2)}</Text>
+          </View>
+          
         </View>
       </View>
     )
