@@ -30,7 +30,8 @@ module.exports = StyleSheet.create({
     fontWeight: '900',
     color: '#fff',
     position: 'absolute',
-    top: BannerHeight/1.8
+    top: BannerHeight/1.8,
+    paddingVertical:40,
   },
   actions_container: {
     position: 'absolute',

@@ -31,7 +31,7 @@ export default class Home extends Component {
     return (
         <View key={index}>
             <Image style={{ width: BannerWidth, height: BannerHeight }} source={ image.src } />
-            <Text style={styles.carousel_description}> {image.description} </Text>
+            <Text style={styles.carousel_description}> {image.description} {'\n'}</Text>
             <Text style={styles.carousel_subtitle}> {image.subtitle} </Text>
         </View>
     );
