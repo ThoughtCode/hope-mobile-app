@@ -106,9 +106,6 @@ export const API = {
     },   
 
     setAddInvoiceDetail: (onResponse, data, isHeaderRequired) => {
-        console.log("----------> onResponse",onResponse)
-        console.log("----------> DATA",data)
-        console.log("----------> isHeaderRequired",isHeaderRequired)
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.ADD_INVOICE_DETAIL  , buildHeader());
     },   
 

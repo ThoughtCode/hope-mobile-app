@@ -199,7 +199,7 @@ export default class AgentJobDetailScreen extends Component {
         if(this.state.jobData.finished_recurrency_at == !null){
             var finisRecurrency = Moment(new Date(this.state.jobData.finished_recurrency_at)).utcOffset(-5).format('hh:mm a')
         }
-        var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
+        var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('l - hh:mm a')
         var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
         var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
         console.log("imprimiendo data -------------->",this.state.jobData.frequency)
