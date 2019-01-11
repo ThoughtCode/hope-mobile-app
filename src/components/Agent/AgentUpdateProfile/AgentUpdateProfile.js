@@ -339,7 +339,7 @@ export default class AgentProfile extends Component {
                 <ActionSheet
                     ref={o => this.ActionSheet = o}
                     title={'Seleccionar imagen'}
-                    options={['Tomar foto', 'Elige de la galeria', 'Cancelar']}
+                    options={['Tomar foto', 'Elige de la galería', 'Cancelar']}
                     cancelButtonIndex={2}
                     onPress={(index) => { this.selectedPhoto(index) }}
                     />
