@@ -39,6 +39,7 @@ export const ADD_INVOICE_DETAIL = "/api/v1/customers/invoice_details";
 export const GET_CARD_LIST="/api/v1/customers/credit_cards";
 export const GET_DETAILS_LIST_CREATED_JOB="/api/v1/customers/invoice_details";
 export const CUSTOMER_COMMENTS_PROFILE = "/api/v1/customers";
+export const GET_HOLIDAY = "/api/v1/customers/holidays";
 
 
 
