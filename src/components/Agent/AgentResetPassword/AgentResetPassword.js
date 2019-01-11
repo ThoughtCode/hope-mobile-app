@@ -7,7 +7,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  Alert
 } from 'react-native';
 
 import * as urls from '../../../constants/api';
@@ -56,7 +57,15 @@ export default class AgentResetPassword extends Component {
             return response;
           } else {
             response.json().then(() => {
-              this.props.navigation.navigate('AgentLogin', {recover_password_text: "Contraseña recuperada. \n Utilice nuevas credenciales \n para ingresar"});
+              Alert.alert(
+                'Contraseña recuperada',
+                'Utilice nuevas credenciales para ingresar',
+                [
+                  { text: 'OK', onPress: () => this.props.navigation.navigate('AgentLogin') }
+                ],
+                { cancelable: false }
+              );
+              // this.props.navigation.navigate('AgentLogin', {recover_password_text: "Contraseña recuperada. \n Utilice nuevas credenciales \n para ingresar"});
             });
           }
         }).catch((error) => this.setState({ errorMessage: error.message }));
@@ -78,7 +87,7 @@ export default class AgentResetPassword extends Component {
             return response;
           } else {
             response.json().then(() => {
-              this.setState({ resetPassword: true })
+              this.setState({ resetPassword: true, errorMessage: "" })
             });
           }
         }).catch((error) => this.setState({ errorMessage: error.message }));
