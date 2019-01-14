@@ -199,21 +199,10 @@ export default class AgentJobDetailScreen extends Component {
         if(this.state.jobData.finished_recurrency_at == !null){
             var finisRecurrency = Moment(new Date(this.state.jobData.finished_recurrency_at)).utcOffset(-5).format('hh:mm a')
         }
-        var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('l - hh:mm a')
+        var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
         var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
         var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
-        console.log("imprimiendo data -------------->",this.state.jobData.frequency)
-        var frequency = ""
-        if(this.state.jobData.frequency == "one_time"){
-            frequency = "Una vez"
-        } else if(this.state.jobData.frequency == "weekly"){
-            frequency = "Semanal"
-        } else if(this.state.jobData.frequency == "fortnightly"){
-            frequency = "Quincenal"
-        } else if(this.state.jobData.frequency == "monthly"){
-            frequency = "Mensual"
-        }
-        return(
+				return(
             <SafeAreaView style={styles.container}>
                 <View>
                     <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
@@ -280,10 +269,6 @@ export default class AgentJobDetailScreen extends Component {
                         <View style={styles.renderRowView}>
                             <Text style={styles.titleText}>{"Fecha"}</Text>
                             <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{initialDate + " - "+ ((this.state.jobData.finished_recurrency_at == !null) ? (finisRecurrency):(finishDate))}</Text>
-                        </View>
-                        <View style={styles.renderRowView}>
-                            <Text style={styles.titleText}>{"Frecuencia"}</Text>
-                            <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{frequency}</Text>
                         </View>
                         <View style={styles.renderRowView}>
                             <Text style={styles.titleText}>{"Servicios Adicionales"}</Text>

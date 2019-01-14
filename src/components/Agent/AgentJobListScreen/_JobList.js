@@ -71,7 +71,7 @@ export default class _JobList extends Component {
                 subDescription += (data.job_details.length - 1 == index) ? "" : ", " 
             }
         })
-        var date = Moment(data.started_at).format('l - hh:mm a')
+        var date = Moment(data.started_at).format('MMM DD - hh:mm a')
         var location = data.property.data.attributes.p_street + ", " + data.property.data.attributes.s_street +", "+data.property.data.attributes.city
         return(
               <TouchableOpacity onPress={() => this.onPressEvent(item)}>
@@ -129,7 +129,7 @@ export default class _JobList extends Component {
     //======================================================================
 
     ListFooterComponent = () =>{
-        return this.state.isLoading ? <ActivityIndicator size="large" color="transparent" alignItems="center" justifyContent="center" animating={this.state.isLoading} /> : null
+        return this.state.isLoading ? <ActivityIndicator size="large" color="#0000ff" alignItems="center" justifyContent="center" animating={this.state.isLoading} /> : null
     }
 
     //======================================================================

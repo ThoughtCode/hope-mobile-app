@@ -21,8 +21,7 @@ export default class AgentLogin extends React.Component {
     super(props);
     this.state = {
       email: '',
-      password: '',
-      errorMessage: ''
+      password: ''
     };
     this.signInAgent = this.signInAgent.bind(this);
   }
@@ -37,6 +36,7 @@ export default class AgentLogin extends React.Component {
   }
 
   signInAgent = () => {
+    // alert("Agent-->",this.state.email +" === "+this.state.password)
     this.setState({ errorMessage: '' });
     if (this.state.email === '') {
       Alert.alert(
@@ -71,21 +71,13 @@ export default class AgentLogin extends React.Component {
           }
         })
       })
-      .then(response => {
+        .then(response => {
           if (response.status === 401) {
             this.setState({
               errorMessage: (
                 <Text style={styles.text_error}>Verifique su usuario y su contraseña</Text>
               )
             });
-            Alert.alert(
-              'Error de validación',
-              'Verifique su usuario y su contraseña',
-              [
-                { text: 'OK', onPress: () => console.log('Verifique su usuario y su contraseña') }
-              ],
-              { cancelable: false }
-            );
             return response;
           } else {
             response.json().then(async data => {
@@ -116,7 +108,7 @@ export default class AgentLogin extends React.Component {
               );
             });
           }
-      })
+        })
         .catch(error => this.setState({ errorMessage: error.message }));
     }
   };

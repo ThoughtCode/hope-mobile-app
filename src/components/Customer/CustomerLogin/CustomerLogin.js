@@ -23,8 +23,7 @@ export default class CustomerLogin extends React.Component {
     this.state = {
       email: '',
       password: '',
-      spinner: false,
-      errorMessage: ''
+      spinner: false
     };
     this.signInUser = this.signInCustomer.bind(this);
   }
@@ -39,6 +38,7 @@ export default class CustomerLogin extends React.Component {
   }
 
   signInCustomer = () => {
+    // alert("customer-->",this.state.email +" === "+this.state.password)
     this.setState({ errorMessage: '' });
     if (this.state.email === '') {
       Alert.alert(
@@ -75,14 +75,6 @@ export default class CustomerLogin extends React.Component {
       }).then((response) => {
         if (response.status === 401) {
           this.setState({ errorMessage: <Text style={styles.text_error}>Verifique su usuario y su contraseña</Text> });
-          Alert.alert(
-            'Error de validación',
-            'Verifique su usuario y su contraseña',
-            [
-              { text: 'OK', onPress: () => console.log('Verifique su usuario y su contraseña') }
-            ],
-            { cancelable: false }
-          );
           return response;
         } else {
           response.json().then((data) => {

@@ -6,7 +6,7 @@
     "facebookScheme": "fb2057031764572769",
     "facebookDisplayName": "Noc Noc",
     "slug": "noc-noc",
-    "sdkVersion": "26.0.0",
+    "sdkVersion": "29.0.0",
     "ios": {
       "bundleIdentifier": "com.nocnoc.app"
     },
