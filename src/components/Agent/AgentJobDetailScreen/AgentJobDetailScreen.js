@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions,SafeAreaView,Alert} from 'react-native';
+import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions,SafeAreaView,Alert,Button} from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 const {height , width} = Dimensions.get('window')
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -8,6 +8,7 @@ import StarRating from '../../../lib/react-native-star-rating';
 import { API } from '../../../util/api';
 import Moment from 'moment';
 import * as globals from '../../../util/globals';
+import openMap from 'react-native-open-maps';
 
 const styles = require('./AgentJobDetailScreenStyles');
 const IMAGES = {TOP_BACKGROUND : require("../../../../assets/img/topbg.png")}
@@ -221,6 +222,15 @@ export default class AgentJobDetailScreen extends Component {
   }
 
   //======================================================================
+  // Google Map
+  //======================================================================
+  
+  openGoogleMap(p_street, s_street, city) {
+    var address = p_street + " & " + s_street + " , " + city
+    openMap({ query: address });
+  }
+
+  //======================================================================
   // render
   //======================================================================
     
@@ -338,6 +348,11 @@ export default class AgentJobDetailScreen extends Component {
                 <EvilIcons name={"location"} size={20} />
                 <Text style={styles.subText}>{location}</Text>
               </View>
+              <TouchableOpacity
+                style={[styles.subText,{paddingHorizontal:5,paddingVertical:10}]}
+                onPress={() => this.openGoogleMap(this.state.jobData.property.data.attributes.p_street , this.state.jobData.property.data.attributes.s_street, this.state.jobData.property.data.attributes.real_city)}>
+                <View><Text>{"Abrir en Google Map"}</Text></View>
+              </TouchableOpacity>
             </View>
             <View style={styles.renderRowView}>
               <Text style={styles.titleText}>{"Precio"}</Text>
