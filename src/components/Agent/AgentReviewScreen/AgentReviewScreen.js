@@ -67,7 +67,7 @@ export default class AgentReviewScreen extends Component {
                 console.log("reviewJobResponse data-->"+JSON.stringify(response))
                 
                 // this.setState({isJobReview : response.can_review,isLoading:false})
-                Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
+                Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => this.props.navigation.navigate("AgentTrabajosDashboard")}])
                 
             } catch (error) {
                 console.log('reviewJobResponse catch error ' + JSON.stringify(error));

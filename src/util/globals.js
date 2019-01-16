@@ -8,3 +8,4 @@ export var cell_phone = null
 export var status = null
 export var avatar = null
 export var birthday = null
+export var id = null

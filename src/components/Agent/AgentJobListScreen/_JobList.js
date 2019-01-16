@@ -137,6 +137,7 @@ export default class _JobList extends Component {
     //======================================================================
 
     render(){
+        console.log("Aqui --------------------------------------------------------------------------")
         return(
             <View style={{flex:1}}>
                 <FlatList
