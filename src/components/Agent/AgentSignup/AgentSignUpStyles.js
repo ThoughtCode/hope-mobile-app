@@ -15,7 +15,8 @@ module.exports = StyleSheet.create({
   },
   input_container: {
     backgroundColor: 'rgba(0,0,0,0.5)',
-    borderRadius: 5
+    borderRadius: 5,
+    width: Dimensions.get('window').width,
   },
   agent_indicator: {
     backgroundColor: '#0069A7',
@@ -78,7 +79,7 @@ module.exports = StyleSheet.create({
     paddingLeft: 20
   },
   signup_input: {
-    width: 150,
+    width: 110,
     height: 40,
     marginTop: 5,
     textAlign: 'left',

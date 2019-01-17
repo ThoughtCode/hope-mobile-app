@@ -48,11 +48,9 @@ module.exports = StyleSheet.create({
     fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'
   },
   logo_container: {
-    textAlignVertical: 'center',
-    textAlign: 'center',
     bottom: 10,
     top: 10,
-    marginHorizontal:20,paddingVertical:20,
+    marginHorizontal:135,paddingVertical:20,
   },
   logo_image: {
     height:90,width:100,
