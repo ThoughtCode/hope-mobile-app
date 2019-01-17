@@ -50,8 +50,8 @@ module.exports = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     justifyContent: 'center',
+    alignItems: 'center',
     top: 30,
-    right: 5
   },
   signup_input_container_border: {
     flexDirection: 'row',
@@ -62,6 +62,7 @@ module.exports = StyleSheet.create({
     // paddingLeft: 20
     paddingHorizontal: 10,
     width: Dimensions.get('window').width/2,
+    left: 10
   },
   signup_input_container_border_email: {
     flexDirection: 'row',
@@ -72,6 +73,7 @@ module.exports = StyleSheet.create({
     // paddingLeft: 20
     paddingHorizontal: 10,
     width: Dimensions.get('window').width,
+    left: 10
   },
   signup_input_container: {
     flexDirection: 'row',
