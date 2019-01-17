@@ -50,7 +50,8 @@ module.exports = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    top: 30
+    top: 30,
+    right: 5
   },
   signup_input_container_border: {
     flexDirection: 'row',

@@ -50,7 +50,7 @@ module.exports = StyleSheet.create({
   logo_container: {
     bottom: 10,
     top: 10,
-    marginHorizontal:135,paddingVertical:20,
+    justifyContent:'space-between',alignItems:'center'
   },
   logo_image: {
     height:90,width:100,
