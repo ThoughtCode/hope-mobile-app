@@ -306,10 +306,10 @@ export default class AgentJobDetailScreen extends Component {
               {(this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone != null) ?
                 <View style={{flexDirection:'row'}}>
                   <Text>
-                    {(!this.state.canReviewJob) ? (this.state.isJobApply)? <MaterialCommunityIcons name={"phone"} size={18} /> || "" : "" : <MaterialCommunityIcons name={"phone"} size={18} /> || "" }
+                    {(!this.state.canReviewJob) ? (this.state.isJobApply)? (this.state.isAccepted == true)? <MaterialCommunityIcons name={"phone"} size={18} /> || "" : "" : <MaterialCommunityIcons name={"phone"} size={18} /> || "" : <MaterialCommunityIcons name={"phone"} size={18} /> || "" }
                   </Text>
                   <Text style={[styles.subText,{marginHorizontal:5}]}>
-                    {(!this.state.canReviewJob) ? (this.state.isJobApply)? this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || this.state.jobData.property.data.attributes.phone : "" : this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || this.state.jobData.property.data.attributes.phone }
+                    {(!this.state.canReviewJob) ? (this.state.isJobApply)? (this.state.isAccepted == true)? this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || this.state.jobData.property.data.attributes.phone : "" : this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || this.state.jobData.property.data.attributes.phone : this.state.jobData.property.data.attributes.customer.data.attributes.cell_phone || this.state.jobData.property.data.attributes.phone }
                   </Text>
                 </View>: null}
             </View>
