@@ -115,7 +115,7 @@ export default class CardListScreen extends Component {
                 <View>
                     <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
                     <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 50, width: width }}>
-                        <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>{"Direcciones"}</Text>
+                        <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>{"Tarjetas"}</Text>
                     </View>
                 </View>
                 <View style={{ flex: 1 }}>
