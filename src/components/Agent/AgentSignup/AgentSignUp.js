@@ -259,16 +259,18 @@ export default class AgentSignUp extends Component {
                   />
                 </View>
               </View>
-              <View style={styles.signup_input_container_border_email}>
-                <FontAwesome name="envelope" size={20} color="#fff" />
-                <TextInput
-                  style={styles.signup_input}
-                  onChangeText={email => this.setState({ email })}
-                  placeholder="CORREO ELECTRÓNICO"
-                  placeholderTextColor="#fff"
-                  autoCapitalize="none"
-                  underlineColorAndroid="transparent"
-                />
+              <View style={styles.actions_container}>
+                <View style={styles.signup_input_container_border_email}>
+                  <FontAwesome name="envelope" size={20} color="#fff" />
+                  <TextInput
+                    style={styles.signup_input}
+                    onChangeText={email => this.setState({ email })}
+                    placeholder="CORREO ELECTRÓNICO"
+                    placeholderTextColor="#fff"
+                    autoCapitalize="none"
+                    underlineColorAndroid="transparent"
+                  />
+                </View>
               </View>
               <View style={styles.actions_container}>
                 <View style={styles.signup_input_container_border}>

@@ -52,13 +52,14 @@ module.exports = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     top: 30,
+    paddingHorizontal: 10
   },
   signup_input_container_border: {
     flexDirection: 'row',
     // justifyContent: 'center',
     alignItems: 'center',
-    borderColor: '#fff',
-    borderBottomWidth: 1,
+    // borderColor: '#fff',
+    // borderBottomWidth: 1,
     // paddingLeft: 20
     paddingHorizontal: 10,
     width: Dimensions.get('window').width/2,
@@ -68,12 +69,12 @@ module.exports = StyleSheet.create({
     flexDirection: 'row',
     // justifyContent: 'center',
     alignItems: 'center',
-    borderColor: '#fff',
-    borderBottomWidth: 1,
+    // borderColor: '#fff',
+    // borderBottomWidth: 1,
     // paddingLeft: 20
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     width: Dimensions.get('window').width,
-    left: 10
+    left: 20
   },
   signup_input_container: {
     flexDirection: 'row',
@@ -139,5 +140,8 @@ module.exports = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
     backgroundColor: 'transparent',
+    borderColor: '#fff',
+    borderBottomWidth: 1,
+    paddingHorizontal: 10,
   },
 });
