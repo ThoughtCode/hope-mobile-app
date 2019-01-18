@@ -30,7 +30,9 @@ export default class CustomerCleaning extends Component {
             cardData : null,
             detailsData : null,
             directionData : null,
-            additionalData : null
+            additionalData : null,
+            servicios : null,
+            total : 0
 
         }
     }
@@ -43,6 +45,12 @@ export default class CustomerCleaning extends Component {
         // AgentJobListScreen.getJobsAPICall()
     }
 
+    setServicios = (servicios,total) =>{
+        this.setState({
+            servicios : servicios,
+            total : total
+        })
+    }
 
     setFrequency = (frequencyData) => {
         this.setState({
@@ -171,11 +179,11 @@ export default class CustomerCleaning extends Component {
                     </View>
 
                     <View style={{flex:1}}>
-                      <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", { serviceTypeID: this.state.serviceType.id })}>
+                      <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", { serviceTypeID: this.state.serviceType.id,setServicios : this.setServicios })}>
                         <View style={styles.rowStyle}>
                           <View style={styles.rowText}>
                             <Text style={styles.titleText}>{"Detalles del Servicio"}</Text>
-                            <Text style={styles.subTitleText}>{"Seleccione servicios"}</Text>
+                            {(this.state.servicios) ? <Text style={styles.subTitleText}>{this.state.servicios}</Text> : <Text style={styles.subTitleText}>{"Seleccione servicios"}</Text>}
                           </View>
                           <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                         </View>
@@ -289,7 +297,7 @@ export default class CustomerCleaning extends Component {
                     </View>
                     <View>
                       <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
-                        <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: 2.5$"}</Text>
+                        <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: "+this.state.total+"$"}</Text>
                       </View>
 
                       <TouchableOpacity onPress={() => this.props.navigation.navigate("PaymentScreen")} style={{ backgroundColor: 'rgb(0,121,189)', paddingVertical: 15, alignItems: 'center', justifyContent: 'center' }}>
