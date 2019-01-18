@@ -84,7 +84,7 @@ export default class DirectionScreen extends Component {
                             {data.attributes.number +" "+data.attributes.s_street + " "+data.attributes.p_street+" "+data.attributes.city}
                         </Text>
                     </View>
-                    <Entypo name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => this.props.navigation.navigate("AddressForm",{propertyData:data,isUpdate : true,refresProperties : this.refresProperties})} />
+                    {/* <Entypo name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => this.props.navigation.navigate("AddressForm",{propertyData:data,isUpdate : true,refresProperties : this.refresProperties})} /> */}
                 </View>
             </TouchableOpacity>
         )
@@ -126,13 +126,6 @@ export default class DirectionScreen extends Component {
                         <Text style={{color:'#1F68A9',fontFamily:'helvetica',fontSize:20,fontWeight:'bold'}}>{"Nueva Direccion"}</Text>
                     </TouchableOpacity>
                 </View>
-                {(this.state.data.length > 0) ? <View style={{ marginVertical:10 }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('thirdScreen')}>
-                        <View style={styles.buttonViewStyle}>
-                            <Text style={styles.buttonTextStyle}>Escoger</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View> : null}
             </View>
         );
     }
