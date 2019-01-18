@@ -22,44 +22,14 @@ export default class ServiceDetail extends Component {
             serviceTypeData : null,
             servicePerameter : [],
             servicesAddons : [],
-            extaraCost : 0,
-            isHoliday: (new Date().getDay() == 6 || new Date().getDay() == 7) ? true : false
+            extaraCost : 0
         }
     }
 
     componentDidMount(){
-        this.state.serviceTypeID && API.getServiceType(this.getServiceTypeResponse,this.state.serviceTypeID,true)
-        !this.state.isHoliday && API.getHoliday(this.getHolidayResponse,this.state.serviceTypeID,true)
-        
+        this.state.serviceTypeID && API.getServiceType(this.getServiceTypeResponse,true)
     }
 
-    getHolidayResponse = {
-        success: (response) => {
-            let date = moment(new Date()).format('yyyy-mm-dd')
-            let isHoliday = false
-            response.holiday.data.map(item =>{
-                if(item.attributes.holiday_date== date){
-                    isHoliday = true
-                }
-            })
-
-            this.setState({
-                isHoliday
-            })
-            // if(date == )
-        },
-        error: (err) => {
-            console.log('getJobResponseData error ' + JSON.stringify(err));
-            this.setState({
-                isAPICall : false
-            })
-        },
-        complete: () => {
-            this.setState({
-                isAPICall : false   
-            })
-        }
-    }
 
     //======================================================================
     // getServiceTypeResponse
@@ -178,36 +148,41 @@ export default class ServiceDetail extends Component {
     }
 
     onPressExcoger = () =>{
-        let data = '',
+        let services_choosen = []
+        let data = '', 
         total = 0
-        this.state.servicePerameter.map((item,index)=>{
-            data += item.name+" X "+item.count
-            // if(index < filterData.length - 1)
-            data += ","
-            total += item.price * item.time * item.count
-            console.log("Totoal-->",total)
-        })
 
+        // Escoger el monto del tipo de servicio
+        let service_base = this.state.serviceTypeData.service_base[0]
+        total = total + (service_base.time * service_base.price)
+
+        // Escoger servicios parametros
+        this.state.servicePerameter.map((item)=>{
+            if (item.count != 0){
+                services_choosen.push(item)
+            } 
+            data += item.name+" X "+ item.count
+            data += " , "
+            total += item.price * item.time * item.count
+            console.log("Total-->",total)
+        })
 
         let filterData = this.state.servicesAddons.filter(x => x.isSelect == true)
         filterData.map((item,index)=> {
             if(item.isSelect){
+                services_choosen.push(item)
                 data += item.name
                 total += item.price * item.time
-                console.log("Totoal-->",total)
+                console.log("Total de cada add on " +item.name + "  -->",total)
                 if(index < filterData.length - 1)
                     data += ","
             }
         })
-        console.log("before Totol-->",total)
-        total = (total + (total * (Number(this.state.extaraCost) / 100))) * 1.12
-        console.log("after total-->",total)
-        
         if(this.state.isHoliday){
-            total = total + Number(this.state.extaraCost);
+          total = total + (total * Number(this.state.extaraCost)/100);
         }
-
-        this.props.navigation.state.params.setServicios(data,total.toFixed(2))
+        total = total * 1.12
+        this.props.navigation.state.params.setServicios(data,total.toFixed(2), services_choosen)
         this.props.navigation.goBack();
     }
 

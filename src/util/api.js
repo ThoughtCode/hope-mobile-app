@@ -102,8 +102,8 @@ export const API = {
     },
 
     
-    getHoliday: (onResponse, data, isHeaderRequired) => {
-        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_HOLIDAY + data, buildHeader());
+    getHoliday: (onResponse, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_HOLIDAY, buildHeader());
     },
     
     setAddCard: (onResponse, data, isHeaderRequired) => {

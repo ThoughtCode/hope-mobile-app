@@ -18,20 +18,25 @@ export default class CalenderPick extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedStartDate: null,
-            time : new Date().getHours() + " : "+ new Date().getMinutes()
+            selectedStartDate: this.props.navigation.state.params.start_date,
+            time : this.props.navigation.state.params.start_date.hours() + " : "+ this.props.navigation.state.params.start_date.minutes(),
+            is_start : this.props.navigation.state.params.is_start
         }
         this.onDateChange = this.onDateChange.bind(this);
     }
 
     onDateChange(date) {
-        var initialDate = Moment.utc(new Date(date)).format("DD [de] MMM [de] YYYY")
+        var initialDate = Moment.utc(new Date(date)).set(
+            {h: this.props.navigation.state.params.start_date.hours(), m: this.props.navigation.state.params.start_date.minutes()}
+            )
         this.setState({
           selectedStartDate: initialDate
         });
     }
 
     async onTimechage(){
+        console.log("mostrar hora cambiando")
+        console.log(this.props.navigation.state.params.start_date)
         try {
             const { action, hour, minute } = await TimePickerAndroid.open({
                 hour: 14,
@@ -40,23 +45,27 @@ export default class CalenderPick extends Component {
             });
             if (action !== TimePickerAndroid.dismissedAction) {
                 // Selected hour (0-23), minute (0-59)
-                this.setState({time : hour + " : "+minute})
+                date_with_hours = this.state.selectedStartDate.set({h: hour, m: minute});
+                this.setState({
+                    time : hour + " : " + minute,
+                    selectedStartDate: date_with_hours
+                })
             }
         } catch ({ code, message }) {
-
             console.warn('Cannot open time picker', message);
         }
     }
 
     onPress = () =>{
         const { setDate } = this.props.navigation.state.params;
-        let selectedDate = this.state.selectedStartDate;
-        selectedDate += " - "+this.state.time+"H",
-        setDate(selectedDate)
+        let selectedDate = this.state.selectedStartDate; 
+        setDate(selectedDate, this.state.is_start)
         this.props.navigation.goBack();
     }
     
     render() {
+
+        console.log('MOSTRANDO ESTADO --->', this.state)
         let { data, checked } = this.state;
         return (
             <View style={styles.container}>
@@ -67,10 +76,13 @@ export default class CalenderPick extends Component {
                 <View style={{flex:1,justifyContent:'space-around'}}>
                     <CalendarPicker
                         onDateChange={this.onDateChange}
+                        selectedStartDate={this.state.selectedStartDate}
                     />
+                    {this.state.is_start != false ? 
                     <View style={{flex:0.3,alignItems:'center',justifyContent:'center'}}>
-                        <Text style={{fontSize:28,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}} onPress={() => this.onTimechage()}>{this.state.time+" hrs"}</Text>
-                    </View>
+                        <Text style={{fontSize:28,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}} onPress={() => this.onTimechage()}>{this.state.time}</Text>
+                    </View>: null}
+                    
                 </View>
                 
                 <View style={{ marginVertical:10 }}>
