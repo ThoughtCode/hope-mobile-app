@@ -89,7 +89,7 @@ export default class CustomerLogin extends React.Component {
             globals.password = this.state.password
             AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
               globals.access_token = data.customer.data.attributes.access_token ||""
-
+              globals.id = data.customer.data.id ||""
               globals.first_name = data.customer.data.attributes.first_name || ""
               globals.last_name = data.customer.data.attributes.last_name || ""
               globals.email = data.customer.data.attributes.email || ""
