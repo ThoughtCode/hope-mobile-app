@@ -27,7 +27,7 @@ export default class ServiceDetail extends Component {
     }
 
     componentDidMount(){
-        this.state.serviceTypeID && API.getServiceType(this.getServiceTypeResponse,true)
+        this.state.serviceTypeID && API.getServiceType(this.getServiceTypeResponse, this.state.serviceTypeID, true)
     }
 
 
@@ -178,11 +178,12 @@ export default class ServiceDetail extends Component {
                     data += ","
             }
         })
+
         if(this.state.isHoliday){
           total = total + (total * Number(this.state.extaraCost)/100);
         }
         total = total * 1.12
-        this.props.navigation.state.params.setServicios(data,total.toFixed(2), services_choosen)
+        this.props.navigation.state.params.setServicios(data, services_choosen)
         this.props.navigation.goBack();
     }
 
