@@ -109,6 +109,41 @@ export default class CustomerLogin extends React.Component {
   };
 }
 
+  facebookLogin = async() =>{
+
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('149249929049705', {
+      permissions: ['public_profile', 'email', 'user_friends'],
+    });
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+
+
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`);
+
+        this.setState({ spinner: true });
+      let fbSigninURL = urls.STAGING_URL + urls.CUSTOMER_FACEBOOK_LOGIN;
+      fetch(fbSigninURL, {
+        method: 'POST',
+      }).then((response) => {
+        this._handleLoginResponse(response);
+      }).catch((error) => this.setState({ errorMessage: error.message, spinner: false }));
+    }
+  }
+
+  _handleLoginResponse = (response) => {
+    if (response.status === 401) {
+      this.setState({ errorMessage: <Text style={styles.text_error}>Verifique su usuario y su contraseña</Text> });
+      this.setState({ spinner: false });
+      return response;
+    } else {
+      response.json().then((data) => {
+          // this.props.navigation.navigate('CustomerTabbar', { data: data });
+          this.props.navigation.navigate('CustomerTabbar');
+        })
+    }
+  }
+
   render(){
     return (
       <ImageBackground
