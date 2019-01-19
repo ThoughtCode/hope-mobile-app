@@ -45,14 +45,34 @@ export default class CustomerCleaning extends Component {
     //======================================================================
 
     componentDidMount() {
-        if (this.state.isHoliday == false){
-            API.getHoliday(this.getHolidayResponse, this.state.serviceType.id, true)
-        }
+      console.log('CARGANDO COMPONENTE')
+      // Si es sabado o domingo, no hace llamado al api
+      if (this.state.isHoliday == false){
+        API.getHoliday(this.getHolidayResponse, this.state.serviceType.id, true)
+      } else {
+        let initial_price = this.state.serviceType.attributes.service_base[0].price
+        let initial_time = this.state.serviceType.attributes.service_base[0].time
+        let initial_total = initial_price * initial_time;
+        let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
+        initial_total = (initial_total + (initial_total * additional_fee)) * 1.12
+        this.setState({
+          total: initial_total
+        })
+      }
     }
 
+    //======================================================================
+    // componentDidUpdate
+    //======================================================================
+
+    componentDidUpdate() {
+      console.log('ACTUALIZE EL COMPONENTE')
+    }
     
     getHolidayResponse = {
         success: (response) => {
+          console.log("TOTAL INICIAL ---->", response)
+
             let date = this.state.selectedDate
             let isHoliday = false
             let initial_price = this.state.serviceType.attributes.service_base[0].price
@@ -60,7 +80,8 @@ export default class CustomerCleaning extends Component {
             let initial_total = initial_price * initial_time;
             let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
             
-            console.log('fecha de hoy', date.format("YYYY-MM-DD"))
+            console.log("TOTAL INICIAL ---->", initial_total)
+
             response.holiday.data.map(item =>{
                 if(item.attributes.holiday_date == date.format("YYYY-MM-DD")){
                     isHoliday = true
@@ -78,16 +99,12 @@ export default class CustomerCleaning extends Component {
             })
         },
         error: (err) => {
-            console.log('getHolidayData error ' + JSON.stringify(err));
+          console.log('getHolidayData error ' + JSON.stringify(err));
         }
     }
 
-    setServicios = (servicios, total, services_choosen) =>{
-        this.setState({
-            servicios : servicios,
-            total : total,
-            services_choosen: services_choosen
-        })
+    setServicios = (servicios, services_choosen) =>{
+        this.calculate_total_job(servicios, services_choosen, this.state.isHoliday)
     }
 
     setFrequency = (frequencyData) => {
@@ -106,10 +123,14 @@ export default class CustomerCleaning extends Component {
 
     }
 
-    setDate = (date, is_start) => {
+    setDate = (date, is_start, is_holiday) => {
+      
+        total = this.calculate_total_job_after_date(is_holiday)
+      
         if (is_start == true){
             this.setState({
-                selectedDate: date
+                selectedDate: date,
+                total: total
             })
         } else {
             this.setState({
@@ -117,6 +138,75 @@ export default class CustomerCleaning extends Component {
             })
         }
     }
+
+    // Funcion que me calcule el total
+
+    calculate_total_job = (servicios, services_choosen, is_holiday) => {
+
+        //   calculado del tipo de servicio
+      let initial_price = this.state.serviceType.attributes.service_base[0].price
+      let initial_time = this.state.serviceType.attributes.service_base[0].time
+      let total = initial_price * initial_time;
+    
+        //   calcular los servicios escogido 
+
+      
+       services_choosen.map((item)=>{
+            if (item.count != null){
+                total += item.price * item.time * item.count
+            } else {
+                total += item.price * item.time
+            }
+        })
+      
+      let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
+      
+      
+      if (is_holiday == true){  
+        total = (total + (total * additional_fee)) * 1.12
+      } else {
+        total = total * 1.12;
+      }
+
+        this.setState({
+            servicios : servicios,
+            total : total,
+            services_choosen: services_choosen
+        })
+    }
+
+    calculate_total_job_after_date = (is_holiday) => {
+
+        console.log('CALCULANDO TOTAL')
+
+        //   calculado del tipo de servicio
+      let initial_price = this.state.serviceType.attributes.service_base[0].price
+      let initial_time = this.state.serviceType.attributes.service_base[0].time
+      let total = initial_price * initial_time;
+    
+        //   calcular los servicios escogido 
+
+      
+       this.state.services_choosen.map((item)=>{
+            if (item.count != null){
+                total += item.price * item.time * item.count
+            } else {
+                total += item.price * item.time
+            }
+        })
+      
+      let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
+      
+      
+      if (is_holiday == true){  
+        total = (total + (total * additional_fee)) * 1.12
+      } else {
+        total = total * 1.12;
+      }
+
+        return total
+    }
+
 
     setCard = (cardData) => {
         this.setState({
@@ -216,7 +306,7 @@ export default class CustomerCleaning extends Component {
     //======================================================================
 
     render() {
-        console.log("------------------------------> THIS STATE", this.state)
+        console.log("ESTADO ACTUAL", this.state)
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>
@@ -256,7 +346,8 @@ export default class CustomerCleaning extends Component {
                         </View>
                       </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { setDate: this.setDate, is_start: true, start_date: this.state.selectedDate })}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { 
+                          setDate: this.setDate, is_start: true, start_date: this.state.selectedDate, service_id: this.state.serviceType.id })}>
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
                                     <Text style={styles.titleText}>{"Fecha y Hora"}</Text>
@@ -268,7 +359,8 @@ export default class CustomerCleaning extends Component {
                         
                         {
                             ( this.state.is_frequent_job == true) ? 
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { setDate: this.setDate, is_start: false, start_date: this.state.end_date })}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { 
+                                setDate: this.setDate, is_start: false, start_date: this.state.end_date, service_id: this.state.serviceType.id })}>
                                 <View style={styles.rowStyle}>
                                     <View style={styles.rowText}>
                                         <Text style={styles.titleText}>{"Fecha final"}</Text>

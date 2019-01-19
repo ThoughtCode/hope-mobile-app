@@ -13,6 +13,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import styles from './CalenderPickStyles';
 import Moment from 'moment';
 // import { TimePickerAndroid  } from 'expo';
+import { API } from '../../../util/api';
 
 export default class CalenderPick extends Component {
     constructor(props) {
@@ -20,7 +21,8 @@ export default class CalenderPick extends Component {
         this.state = {
             selectedStartDate: this.props.navigation.state.params.start_date,
             time : this.props.navigation.state.params.start_date.hours() + " : "+ this.props.navigation.state.params.start_date.minutes(),
-            is_start : this.props.navigation.state.params.is_start
+            is_start : this.props.navigation.state.params.is_start,
+            isHoliday: null
         }
         this.onDateChange = this.onDateChange.bind(this);
     }
@@ -35,8 +37,6 @@ export default class CalenderPick extends Component {
     }
 
     async onTimechage(){
-        console.log("mostrar hora cambiando")
-        console.log(this.props.navigation.state.params.start_date)
         try {
             const { action, hour, minute } = await TimePickerAndroid.open({
                 hour: 14,
@@ -57,14 +57,40 @@ export default class CalenderPick extends Component {
     }
 
     onPress = () =>{
-        const { setDate } = this.props.navigation.state.params;
-        let selectedDate = this.state.selectedStartDate; 
-        setDate(selectedDate, this.state.is_start)
-        this.props.navigation.goBack();
+        API.getHoliday(this.getHolidayResponse, this.props.navigation.state.params.service_id, true)
+    }
+
+    getHolidayResponse = {
+        success: (response) => {
+            const { setDate } = this.props.navigation.state.params;
+            let selectedDate = this.state.selectedStartDate;
+            let date = this.state.selectedStartDate
+            let isHoliday = false
+            // Primero ver si es sabado o domingo
+
+            if(date.day() == 6 || date.day() == 7) {
+                isHoliday = true
+                setDate(selectedDate, this.state.is_start, isHoliday)
+                this.props.navigation.goBack();
+            }
+            // Ver si es holiday
+            response.holiday.data.map(item =>{
+                if(item.attributes.holiday_date == date.format('YYYY-MM-DD')){
+                    isHoliday = true
+                    setDate(selectedDate, this.state.is_start, isHoliday)
+                    this.props.navigation.goBack();
+                }
+            })
+            // Si no es holiday re
+            setDate(selectedDate, this.state.is_start, isHoliday)
+            this.props.navigation.goBack();
+        },
+        error: (err) => {
+          console.log('getHolidayData error ' + JSON.stringify(err));
+        }
     }
     
     render() {
-
         console.log('MOSTRANDO ESTADO --->', this.state)
         let { data, checked } = this.state;
         return (
