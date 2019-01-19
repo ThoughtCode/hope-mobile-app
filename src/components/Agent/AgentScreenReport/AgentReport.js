@@ -39,9 +39,36 @@ export default class AgentComment extends Component {
   //======================================================================
 
   componentDidMount(){
-    var url = "?"+"date_from="+this.state.startDate+"&date_to="+this.state.endDate
+    console.log('FECHAS INICIALES --->', this.state.startDate, this.state.endDate)
+    var url = "?"+"date_from="+this.state.startDate+"&date_to="+this.state.endDate+"&current_page=1"
     API.getAgentReportProfile(this.getAgentReportProfileResponse,url,true);
-    console.log("--------------->Report",this.state.reportList)
+  }
+
+   //======================================================================
+  // btnFilterJobs
+  //======================================================================
+
+  btnFilterJobs = () =>{
+
+    // tomer los nuevos inputs
+
+    // guardar en unas variables los inputs
+
+    // setear correctamente abajo (NO TOMAR DEL ESTADO)
+
+    console.log("Estoy aca filtro --------------------------------------------------->", this.state.startDate, this.state.endDate)
+    var url = "?"
+    
+    if(this.state.startDate != null){
+      url += "date_from=" + this.state.startDate
+    }
+
+    if(this.state.endDate != null){
+      url += "&date_to=" + this.state.endDate
+    }
+    url = url + '&current_page=1'
+
+    API.getAgentReportProfile(this.getAgentReportProfileResponse, url ,true);
   }
 
   //======================================================================
@@ -51,18 +78,22 @@ export default class AgentComment extends Component {
   getAgentReportProfileResponse = {
     success: (response) => {
       try {
-        console.log("getAgentReportProfileResponse data-->"+JSON.stringify(response.job.data))
-        this.setState({
-          reportList : response.job.data
-        })
+        if (response.job != undefined) {
+          console.log("getAgentReportProfileResponse data------------------------------>"+JSON.stringify(response.job))
+          this.setState({
+            reportList : response.job.data
+          })
+        } else {
+          this.setState({
+            reportList : []
+          })
+        }
       } catch (error) {
         console.log('getAgentReportProfileResponse catch error ' + JSON.stringify(error));
       }
     },
     error: (err) => {
       console.log('getAgentReportProfileResponse error ' + JSON.stringify(err));
-    },
-    complete: () => {
     }
   }
 
@@ -146,15 +177,8 @@ export default class AgentComment extends Component {
       </View>
     )
   }
-  
-  //======================================================================
-  // Btn Fiter
-  //======================================================================
+ 
 
-  btnFilterTap = () =>{
-    var url = "?"+"date_from="+this.state.startDate+"&date_to="+this.state.endDate
-    API.getAgentReportProfile(this.getAgentReportProfileResponse,url,true);
-  }
 
   //======================================================================
   // render
@@ -193,7 +217,7 @@ export default class AgentComment extends Component {
               <View style={styles.topTitleView}>
                 <Text style={styles.mainTitleText}>{"Reportes"}</Text>
               </View>
-              <TouchableOpacity onPress={this.btnFilterTap}>
+              <TouchableOpacity onPress={this.btnFilterJobs}>
                 <View style={[styles.bottomButton,{alignItems:'center',backgroundColor:'rgb(0,121,189)'}]}>
                   <Text style={[styles.titleText,{color:'#fff'}]}>{"Filtrar"}</Text>
                 </View>
