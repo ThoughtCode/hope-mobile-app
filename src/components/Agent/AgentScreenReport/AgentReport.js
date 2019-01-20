@@ -110,6 +110,7 @@ export default class AgentComment extends Component {
     var vat = data.attributes.vat
     var fee = data.attributes.service_fee
     var total = subTotal - fee - vat
+    var startedAt = Moment.utc(new Date(data.attributes.started_at)).utcOffset(-5).format('l - hh:mm a')
     data.attributes.job_details.map((data) => {
       if(data.service.type_service == "base"){
         nameService = data.service.name
@@ -151,6 +152,11 @@ export default class AgentComment extends Component {
             <Text>${total.toFixed(2)}</Text>
           </View>
           
+        </View>
+        <View style={styles.textInputVieW}>
+          <View style={{flex:2}}>
+            <Text style={styles.textInputCommentText}>{startedAt}</Text>
+          </View>
         </View>
       </View>
     )
