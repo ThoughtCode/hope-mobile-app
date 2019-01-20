@@ -169,8 +169,19 @@ export default class AgentComment extends Component {
                                 <View style={{alignItems:'center',justifyContent:'center'}}>
                                     <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.firstName + " "+ this.state.lastName}</Text>
                                 </View>
-
-
+                                <View style={styles.opinionsView}>
+                                    <StarRating
+                                        disabled={true}
+                                        emptyStar={'ios-star-outline'}
+                                        fullStar={'ios-star'}
+                                        halfStar={'ios-star-half'}
+                                        iconSet={"Ionicons"}
+                                        maxStars={5}
+                                        rating={2}
+                                        starSize={20}
+                                        fullStarColor={'#ffd700'}
+                                    />
+                                </View>
                             <View style={styles.topTitleView}>
                                 <Text style={styles.mainTitleText}>{"Comentarios"}</Text>
                             </View>

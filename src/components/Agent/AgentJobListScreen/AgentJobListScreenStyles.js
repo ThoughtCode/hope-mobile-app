@@ -38,6 +38,9 @@ module.exports = StyleSheet.create({
   titleText:{
     fontSize:18,fontWeight:'600',fontFamily:'helvetica',textAlign:'center',color:'#0069a7'
   },
+  titleTextCard:{
+    fontSize:18,fontWeight:'600',fontFamily:'helvetica',textAlign:'center',color:'#0069a7',top:15
+  },
   textFont:{
     fontFamily:"helvetica"
   },
