@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, ScrollView, Image, Dimensions,SafeAreaView, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
-import { Agenda } from 'react-native-calendars';
+import { Agenda, LocaleConfig } from 'react-native-calendars';
 const {height , width} = Dimensions.get('window')
 import Ionicons from '@expo/vector-icons/Ionicons'
 import * as globals from '../../../util/globals';
@@ -12,6 +12,15 @@ const styles = require('./AgentCalendarStyles');
 const IMAGES = {
   TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
 }
+
+LocaleConfig.locales['es'] = {
+  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+  monthNamesShort: ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'],
+  dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+  dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sab']
+};
+
+LocaleConfig.defaultLocale = 'es';
 
 export default class AgentComment extends Component {
 
