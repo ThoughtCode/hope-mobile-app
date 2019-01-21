@@ -111,7 +111,7 @@ export default class CustomerLogin extends React.Component {
 
   facebookLogin = async() =>{
 
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('149249929049705', {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('2057031764572769', {
       permissions: ['public_profile', 'email', 'user_friends'],
     });
     if (type === 'success') {
