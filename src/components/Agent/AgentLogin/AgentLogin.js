@@ -100,6 +100,7 @@ export default class AgentLogin extends React.Component {
                   ['cell_phone', data.agent.data.attributes.cell_phone || ''],
                   ['status', data.agent.data.attributes.status || ''],
                   ['avatar', data.agent.data.attributes.avatar.url || '']
+                  ['reviews_average', data.agent.data.attributes.rewiews_average || '']
                 ],
                 () => {
                   globals.access_token = data.agent.data.attributes.access_token || '';
@@ -110,6 +111,8 @@ export default class AgentLogin extends React.Component {
                   globals.cell_phone = data.agent.data.attributes.cell_phone || '';
                   globals.status = data.agent.data.attributes.status || '';
                   globals.avatar = data.agent.data.attributes.avatar.url || '';
+                  globals.rewiews_average = data.agent.data.attributes.rewiews_average || '';
+                  globals.rewiews_count = data.agent.data.attributes.rewiews_count || '';
 
                   this.props.navigation.navigate('AgentDashboard', { data });
                 }

@@ -13,19 +13,24 @@ import CalendarPicker from 'react-native-calendar-picker';
 import styles from './CalenderPickStyles';
 import Moment from 'moment';
 // import { TimePickerAndroid  } from 'expo';
+import { API } from '../../../util/api';
 
 export default class CalenderPick extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedStartDate: null,
-            time : new Date().getHours() + " : "+ new Date().getMinutes()
+            selectedStartDate: this.props.navigation.state.params.start_date,
+            time : this.props.navigation.state.params.start_date.hours() + " : "+ this.props.navigation.state.params.start_date.minutes(),
+            is_start : this.props.navigation.state.params.is_start,
+            isHoliday: null
         }
         this.onDateChange = this.onDateChange.bind(this);
     }
 
     onDateChange(date) {
-        var initialDate = Moment.utc(new Date(date)).format("DD [de] MMM [de] YYYY")
+        var initialDate = Moment.utc(new Date(date)).set(
+            {h: this.props.navigation.state.params.start_date.hours(), m: this.props.navigation.state.params.start_date.minutes()}
+            )
         this.setState({
           selectedStartDate: initialDate
         });
@@ -40,23 +45,53 @@ export default class CalenderPick extends Component {
             });
             if (action !== TimePickerAndroid.dismissedAction) {
                 // Selected hour (0-23), minute (0-59)
-                this.setState({time : hour + " : "+minute})
+                date_with_hours = this.state.selectedStartDate.set({h: hour, m: minute});
+                this.setState({
+                    time : hour + " : " + minute,
+                    selectedStartDate: date_with_hours
+                })
             }
         } catch ({ code, message }) {
-
             console.warn('Cannot open time picker', message);
         }
     }
 
     onPress = () =>{
-        const { setDate } = this.props.navigation.state.params;
-        let selectedDate = this.state.selectedStartDate;
-        selectedDate += " - "+this.state.time+"H",
-        setDate(selectedDate)
-        this.props.navigation.goBack();
+        API.getHoliday(this.getHolidayResponse, this.props.navigation.state.params.service_id, true)
+    }
+
+    getHolidayResponse = {
+        success: (response) => {
+            const { setDate } = this.props.navigation.state.params;
+            let selectedDate = this.state.selectedStartDate;
+            let date = this.state.selectedStartDate
+            let isHoliday = false
+            // Primero ver si es sabado o domingo
+
+            if(date.day() == 6 || date.day() == 7) {
+                isHoliday = true
+                setDate(selectedDate, this.state.is_start, isHoliday)
+                this.props.navigation.goBack();
+            }
+            // Ver si es holiday
+            response.holiday.data.map(item =>{
+                if(item.attributes.holiday_date == date.format('YYYY-MM-DD')){
+                    isHoliday = true
+                    setDate(selectedDate, this.state.is_start, isHoliday)
+                    this.props.navigation.goBack();
+                }
+            })
+            // Si no es holiday re
+            setDate(selectedDate, this.state.is_start, isHoliday)
+            this.props.navigation.goBack();
+        },
+        error: (err) => {
+          console.log('getHolidayData error ' + JSON.stringify(err));
+        }
     }
     
     render() {
+        console.log('MOSTRANDO ESTADO --->', this.state)
         let { data, checked } = this.state;
         return (
             <View style={styles.container}>
@@ -67,10 +102,13 @@ export default class CalenderPick extends Component {
                 <View style={{flex:1,justifyContent:'space-around'}}>
                     <CalendarPicker
                         onDateChange={this.onDateChange}
+                        selectedStartDate={this.state.selectedStartDate}
                     />
+                    {this.state.is_start != false ? 
                     <View style={{flex:0.3,alignItems:'center',justifyContent:'center'}}>
-                        <Text style={{fontSize:28,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}} onPress={() => this.onTimechage()}>{this.state.time+" hrs"}</Text>
-                    </View>
+                        <Text style={{fontSize:28,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}} onPress={() => this.onTimechage()}>{this.state.time}</Text>
+                    </View>: null}
+                    
                 </View>
                 
                 <View style={{ marginVertical:10 }}>
