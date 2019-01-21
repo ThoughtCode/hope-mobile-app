@@ -125,8 +125,14 @@ export default class CustomerLogin extends React.Component {
       let fbSigninURL = urls.STAGING_URL + urls.CUSTOMER_FACEBOOK_LOGIN;
       fetch(fbSigninURL, {
         method: 'POST',
+        body : {
+          "customer": {
+            "facebook_access_token": token
+          }
+      }
       }).then((response) => {
         response.json().then((data) => {
+          console.log("Fb Login Response-->",JSON.stringify(data))
           globals.password = this.state.password
             AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
               globals.access_token = data.customer.data.attributes.access_token ||""
@@ -142,8 +148,9 @@ export default class CustomerLogin extends React.Component {
         })
         
       }).catch((error) => this.setState({ errorMessage: error.message, spinner: false }));
-    }
+    })
   }
+}
 
   _handleLoginResponse = (response) => {
     if (response.status === 401) {
