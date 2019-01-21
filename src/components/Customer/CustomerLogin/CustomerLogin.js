@@ -111,7 +111,7 @@ export default class CustomerLogin extends React.Component {
 
   facebookLogin = async() =>{
 
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('149249929049705', {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('2057031764572769', {
       permissions: ['public_profile', 'email', 'user_friends'],
     });
     if (type === 'success') {
@@ -126,7 +126,21 @@ export default class CustomerLogin extends React.Component {
       fetch(fbSigninURL, {
         method: 'POST',
       }).then((response) => {
-        this._handleLoginResponse(response);
+        response.json().then((data) => {
+          globals.password = this.state.password
+            AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
+              globals.access_token = data.customer.data.attributes.access_token ||""
+
+              globals.first_name = data.customer.data.attributes.first_name || ""
+              globals.last_name = data.customer.data.attributes.last_name || ""
+              globals.email = data.customer.data.attributes.email || ""
+              globals.password = this.state.password || ""
+              globals.cell_phone = data.customer.data.attributes.cell_phone || ""
+              globals.status = data.customer.data.attributes.status || ""
+              globals.avatar = data.customer.data.attributes.avatar.url || ""
+          this._handleLoginResponse(response);
+        })
+        
       }).catch((error) => this.setState({ errorMessage: error.message, spinner: false }));
     }
   }
