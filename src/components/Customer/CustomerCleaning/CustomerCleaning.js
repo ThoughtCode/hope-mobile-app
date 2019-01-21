@@ -26,12 +26,17 @@ export default class CustomerCleaning extends Component {
         this.state = {
             serviceType: props.navigation.state.params.serviceType,
             frequencyData: [],
-            selectedDate: Moment.utc(new Date()).format("DD [de] MMM [de] YYYY") + " - 12:00H",
+            selectedDate: Moment.utc(new Date(Date.UTC(new Date().getUTCFullYear(), (new Date().getMonth()), +new Date().getUTCDate(), new Date().getHours(), new Date().getMinutes()))),
+            end_date : Moment.utc(new Date()),
             cardData : null,
-            detailsData : null,
+            invoicesData : null,
             directionData : null,
-            additionalData : null
-
+            additionalData : null,
+            servicios : null,
+            total : 0,
+            services_choosen : [],
+            is_frequent_job: false,
+            isHoliday: (new Date().getDay() == 6 || new Date().getDay() == 7) ? true : false
         }
     }
 
@@ -40,21 +45,168 @@ export default class CustomerCleaning extends Component {
     //======================================================================
 
     componentDidMount() {
-        // AgentJobListScreen.getJobsAPICall()
+      console.log('CARGANDO COMPONENTE')
+      // Si es sabado o domingo, no hace llamado al api
+      if (this.state.isHoliday == false){
+        API.getHoliday(this.getHolidayResponse, this.state.serviceType.id, true)
+      } else {
+        let initial_price = this.state.serviceType.attributes.service_base[0].price
+        let initial_time = this.state.serviceType.attributes.service_base[0].time
+        let initial_total = initial_price * initial_time;
+        let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
+        initial_total = (initial_total + (initial_total * additional_fee)) * 1.12
+        this.setState({
+          total: initial_total
+        })
+      }
     }
 
+    //======================================================================
+    // componentDidUpdate
+    //======================================================================
+
+    componentDidUpdate() {
+      console.log('ACTUALIZE EL COMPONENTE')
+    }
+    
+    getHolidayResponse = {
+        success: (response) => {
+          console.log("TOTAL INICIAL ---->", response)
+
+            let date = this.state.selectedDate
+            let isHoliday = false
+            let initial_price = this.state.serviceType.attributes.service_base[0].price
+            let initial_time = this.state.serviceType.attributes.service_base[0].time
+            let initial_total = initial_price * initial_time;
+            let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
+            
+            console.log("TOTAL INICIAL ---->", initial_total)
+
+            response.holiday.data.map(item =>{
+                if(item.attributes.holiday_date == date.format("YYYY-MM-DD")){
+                    isHoliday = true
+                    initial_total = (initial_total + (initial_total * additional_fee)) * 1.12
+                    this.setState({
+                        isHoliday: isHoliday,
+                        total: initial_total
+                    })
+                    return true
+                }
+            })
+            this.setState({
+                isHoliday: isHoliday,
+                total: initial_total
+            })
+        },
+        error: (err) => {
+          console.log('getHolidayData error ' + JSON.stringify(err));
+        }
+    }
+
+    setServicios = (servicios, services_choosen) =>{
+        this.calculate_total_job(servicios, services_choosen, this.state.isHoliday)
+    }
 
     setFrequency = (frequencyData) => {
+        
+        if (frequencyData[0].name == "Una vez"){
+            this.setState({
+                frequencyData: frequencyData,
+                is_frequent_job: false
+            })
+        } else {
+            this.setState({
+                frequencyData: frequencyData,
+                is_frequent_job: true
+            })
+        }
+
+    }
+
+    setDate = (date, is_start, is_holiday) => {
+      
+        total = this.calculate_total_job_after_date(is_holiday)
+      
+        if (is_start == true){
+            this.setState({
+                selectedDate: date,
+                total: total
+            })
+        } else {
+            this.setState({
+                end_date: date
+            })
+        }
+    }
+
+    // Funcion que me calcule el total
+
+    calculate_total_job = (servicios, services_choosen, is_holiday) => {
+
+        //   calculado del tipo de servicio
+      let initial_price = this.state.serviceType.attributes.service_base[0].price
+      let initial_time = this.state.serviceType.attributes.service_base[0].time
+      let total = initial_price * initial_time;
+    
+        //   calcular los servicios escogido 
+
+      
+       services_choosen.map((item)=>{
+            if (item.count != null){
+                total += item.price * item.time * item.count
+            } else {
+                total += item.price * item.time
+            }
+        })
+      
+      let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
+      
+      
+      if (is_holiday == true){  
+        total = (total + (total * additional_fee)) * 1.12
+      } else {
+        total = total * 1.12;
+      }
+
         this.setState({
-            frequencyData: frequencyData
+            servicios : servicios,
+            total : total,
+            services_choosen: services_choosen
         })
     }
 
-    setDate = (date) => {
-        this.setState({
-            selectedDate: date
+    calculate_total_job_after_date = (is_holiday) => {
+
+        console.log('CALCULANDO TOTAL')
+
+        //   calculado del tipo de servicio
+      let initial_price = this.state.serviceType.attributes.service_base[0].price
+      let initial_time = this.state.serviceType.attributes.service_base[0].time
+      let total = initial_price * initial_time;
+    
+        //   calcular los servicios escogido 
+
+      
+       this.state.services_choosen.map((item)=>{
+            if (item.count != null){
+                total += item.price * item.time * item.count
+            } else {
+                total += item.price * item.time
+            }
         })
+      
+      let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
+      
+      
+      if (is_holiday == true){  
+        total = (total + (total * additional_fee)) * 1.12
+      } else {
+        total = total * 1.12;
+      }
+
+        return total
     }
+
 
     setCard = (cardData) => {
         this.setState({
@@ -62,9 +214,9 @@ export default class CustomerCleaning extends Component {
         })
     }
 
-    setDetails = (detailsData) => {
+    setDetails = (invoicesData) => {
         this.setState({
-            detailsData: detailsData
+            invoicesData: invoicesData
         })
     }
 
@@ -146,11 +298,6 @@ export default class CustomerCleaning extends Component {
             this.setState({
                 isAPICall: false
             })
-        },
-        complete: () => {
-            this.setState({
-                isAPICall: false
-            })
         }
     }
 
@@ -159,6 +306,7 @@ export default class CustomerCleaning extends Component {
     //======================================================================
 
     render() {
+        console.log("ESTADO ACTUAL", this.state)
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>
@@ -171,11 +319,11 @@ export default class CustomerCleaning extends Component {
                     </View>
 
                     <View style={{flex:1}}>
-                      <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", { serviceTypeID: this.state.serviceType.id })}>
+                      <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", { serviceTypeID: this.state.serviceType.id,setServicios : this.setServicios })}>
                         <View style={styles.rowStyle}>
                           <View style={styles.rowText}>
                             <Text style={styles.titleText}>{"Detalles del Servicio"}</Text>
-                            <Text style={styles.subTitleText}>{"Seleccione servicios"}</Text>
+                            {(this.state.servicios) ? <Text style={styles.subTitleText}>{this.state.servicios}</Text> : <Text style={styles.subTitleText}>{"Seleccione servicios"}</Text>}
                           </View>
                           <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                         </View>
@@ -185,7 +333,6 @@ export default class CustomerCleaning extends Component {
                         <View style={styles.rowStyle}>
                           <View style={styles.rowText}>
                             <Text style={styles.titleText}>{"Frecuencia"}</Text>
-                            {console.log('------->', this.state)}
                             {(this.state.frequencyData == "") ? (<Text style={styles.subTitleText}>{"Seleccione Frecuencia"}</Text>) : (
                               <View style={{ flexDirection: 'row' }}>
                                 {this.state.frequencyData && this.state.frequencyData.map((item, index) => {
@@ -195,19 +342,34 @@ export default class CustomerCleaning extends Component {
                               </View>
                             )}
                           </View>
-                          <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
+                          <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,12class1,189)"} style={styles.iconStyle} />
                         </View>
                       </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { setDate: this.setDate })}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { 
+                          setDate: this.setDate, is_start: true, start_date: this.state.selectedDate, service_id: this.state.serviceType.id })}>
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
                                     <Text style={styles.titleText}>{"Fecha y Hora"}</Text>
-                                    {this.state.selectedDate && <Text style={styles.subTitleText}>{this.state.selectedDate.toString()}</Text>}
+                                    {this.state.selectedDate && <Text style={styles.subTitleText}>{  (this.state.selectedDate).format("DD/MM/YYYY, h:mm")}</Text>}
                                 </View>
                                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                             </View>
                         </TouchableOpacity>
+                        
+                        {
+                            ( this.state.is_frequent_job == true) ? 
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { 
+                                setDate: this.setDate, is_start: false, start_date: this.state.end_date, service_id: this.state.serviceType.id })}>
+                                <View style={styles.rowStyle}>
+                                    <View style={styles.rowText}>
+                                        <Text style={styles.titleText}>{"Fecha final"}</Text>
+                                        {this.state.end_date && <Text style={styles.subTitleText}>{(this.state.end_date).format("DD/MM/YYYY")}</Text>}
+                                    </View>
+                                    <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
+                                </View>
+                            </TouchableOpacity> : null
+                        }
 
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("DirectionScreen",{setDirection : this.setDirection})}>
                             <View style={styles.rowStyle}>
@@ -262,22 +424,22 @@ export default class CustomerCleaning extends Component {
                             <View style={styles.rowText}>
                               <Text style={styles.titleText}>{"Detalles de facturación"}</Text>
                                 
-                              {this.state.detailsData && <View style={styles.childContainer}>
+                              {this.state.invoicesData && <View style={styles.childContainer}>
                                 <View style={styles.itemView}>
                                   <View style={{ flexDirection: 'row' }}>
                                     {/* <FontAwesome name={"cc-visa"} size={20} color={"rgb(0,121,189)"}  /> */}
                                     <Text style={{ flex: 0.6 }}>
-                                      {this.state.detailsData.attributes.social_reason}
+                                      {this.state.invoicesData.attributes.social_reason}
                                     </Text>
                                     <Text style={{ flex: 0.4 }}>
-                                      {this.state.detailsData.attributes.address}
-                                      {/* {"Exp." + this.state.detailsData.attributes.expiry_month + "/" + this.state.detailsData.attributes.expiry_year} */}
+                                      {this.state.invoicesData.attributes.address}
+                                      {/* {"Exp." + this.state.invoicesData.attributes.expiry_month + "/" + this.state.invoicesData.attributes.expiry_year} */}
                                     </Text>
                                   </View>
                                   <View style={{ flexDirection: 'row' }}>
                                     <Text>
-																			{this.state.detailsData.attributes.telephone}
-                                      {/* {"Nombre : " + this.state.detailsData.attributes.holder_name} */}
+																			{this.state.invoicesData.attributes.telephone}
+                                      {/* {"Nombre : " + this.state.invoicesData.attributes.holder_name} */}
                                     </Text>
                                   </View>
                                 </View>
@@ -289,7 +451,7 @@ export default class CustomerCleaning extends Component {
                     </View>
                     <View>
                       <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
-                        <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: 2.5$"}</Text>
+                        <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: $" + this.state.total}</Text>
                       </View>
 
                       <TouchableOpacity onPress={() => this.props.navigation.navigate("PaymentScreen")} style={{ backgroundColor: 'rgb(0,121,189)', paddingVertical: 15, alignItems: 'center', justifyContent: 'center' }}>

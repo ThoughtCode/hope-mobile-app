@@ -13,8 +13,8 @@ import {
     Picker
 } from 'react-native';
 import styles from './AddressFormStyle';
-import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
+import * as globals from '../../../util/globals';
 import Ionicons from '@expo/vector-icons/Ionicons'
 const {height , width} = Dimensions.get('window')
 
@@ -42,7 +42,9 @@ export default class AddressForm extends React.Component {
             neightborhood : [],
             isUpdate : props.navigation.state.params.isUpdate || false,
             propertyData : props.navigation.state.params.propertyData || null,
-            cityID : null
+            cityID : null,
+            firstName : globals.first_name,
+            lastName : globals.last_name
         }
     }
 
@@ -185,6 +187,8 @@ export default class AddressForm extends React.Component {
 
     render() {
         if(this.state.data != null){
+            var initials = this.state.firstName + " "
+                initials += this.state.lastName
             return (
                 <SafeAreaView style={styles.container}>
                     <KeyboardAvoidingView

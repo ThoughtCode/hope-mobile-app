@@ -8,6 +8,7 @@ import {
 import styles from './ServiceDetailStyle';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { API } from '../../../util/api';
+import moment from 'moment';
 
 export default class ServiceDetail extends Component {
     
@@ -20,13 +21,15 @@ export default class ServiceDetail extends Component {
             serviceTypeID : props.navigation.state.params.serviceTypeID,
             serviceTypeData : null,
             servicePerameter : [],
-            servicesAddons : []
+            servicesAddons : [],
+            extaraCost : 0
         }
     }
 
     componentDidMount(){
-        this.state.serviceTypeID && API.getServiceType(this.getServiceTypeResponse,this.state.serviceTypeID,true)
+        this.state.serviceTypeID && API.getServiceType(this.getServiceTypeResponse, this.state.serviceTypeID, true)
     }
+
 
     //======================================================================
     // getServiceTypeResponse
@@ -34,6 +37,7 @@ export default class ServiceDetail extends Component {
 
     getServiceTypeResponse = {
         success: (response) => {
+            console.log("Response data--==->",JSON.stringify(response))
             try {
                 
                 let servicePerameter = response.service_type.data && response.service_type.data.attributes && response.service_type.data.attributes.services_parameters 
@@ -44,7 +48,7 @@ export default class ServiceDetail extends Component {
 
                 let servicesAddons = response.service_type.data && response.service_type.data.attributes && response.service_type.data.attributes.services_addons 
                 let updatedServicesAddons = servicesAddons.map((item) =>{
-                    item.isSelect = 0
+                    item.isSelect = false
                     return item
                 })
                 
@@ -52,6 +56,7 @@ export default class ServiceDetail extends Component {
                     serviceTypeData : response.service_type.data.attributes,
                     servicePerameter : updatedServicePerameter || [],
                     servicesAddons : updatedServicesAddons || [],
+                    extaraCost : response.service_type.data.attributes.extra_service_fee_holiday.value
                 })  
 
                 
@@ -73,9 +78,16 @@ export default class ServiceDetail extends Component {
         }
     }
 
-    toggleSwitch = (value) => {
-        this.setState({ switchValue: value })
-        console.log('Switch is: ' + value)
+    toggleSwitch = (value,index) => {
+
+        let servicesAddons = this.state.servicesAddons
+        let selectedObject = servicesAddons[index]
+        selectedObject.isSelect = !selectedObject.isSelect
+        servicesAddons.slice(index,selectedObject);
+
+
+        this.setState({ servicesAddons: servicesAddons })
+        // console.log('Switch is: ' + JSON.stringify(servicesAddons))
     }
 
     updateServicePerameterCounter(data,index,number){
@@ -86,6 +98,7 @@ export default class ServiceDetail extends Component {
         }
         mydata.slice(selectedObject,index);
         this.setState({servicePerameter : mydata})
+        console.log("servicePerameter",JSON.stringify(mydata))
     }
 
     servicePerameter(data,index){
@@ -127,11 +140,51 @@ export default class ServiceDetail extends Component {
                 <Text style={styles.itemTextStyle}>{data.name}</Text>
                 <Switch
                     style={styles.swithStyle}
-                    onValueChange={this.toggleSwitch}
-                    value={this.state.switchValue}
+                    onValueChange={(val)=>this.toggleSwitch(val,index)}
+                    value={data.isSelect}
                 />
             </View>
         )
+    }
+
+    onPressExcoger = () =>{
+        let services_choosen = []
+        let data = '', 
+        total = 0
+
+        // Escoger el monto del tipo de servicio
+        let service_base = this.state.serviceTypeData.service_base[0]
+        total = total + (service_base.time * service_base.price)
+
+        // Escoger servicios parametros
+        this.state.servicePerameter.map((item)=>{
+            if (item.count != 0){
+                services_choosen.push(item)
+            } 
+            data += item.name+" X "+ item.count
+            data += " , "
+            total += item.price * item.time * item.count
+            console.log("Total-->",total)
+        })
+
+        let filterData = this.state.servicesAddons.filter(x => x.isSelect == true)
+        filterData.map((item,index)=> {
+            if(item.isSelect){
+                services_choosen.push(item)
+                data += item.name
+                total += item.price * item.time
+                console.log("Total de cada add on " +item.name + "  -->",total)
+                if(index < filterData.length - 1)
+                    data += ","
+            }
+        })
+
+        if(this.state.isHoliday){
+          total = total + (total * Number(this.state.extaraCost)/100);
+        }
+        total = total * 1.12
+        this.props.navigation.state.params.setServicios(data, services_choosen)
+        this.props.navigation.goBack();
     }
 
     render() {
@@ -166,7 +219,7 @@ export default class ServiceDetail extends Component {
                     </View>
                         
                     
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={this.onPressExcoger}>
                         <View style={styles.buttonViewStyle}>
                             <Text style={styles.buttonTextStyle}>Escoger</Text>
                         </View>

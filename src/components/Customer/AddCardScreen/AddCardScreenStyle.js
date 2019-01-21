@@ -41,7 +41,10 @@ const AddCardScreenStyle = StyleSheet.create({
         alignItems: 'center',
         height: 45,
     },
-    textStyle :{fontSize:18,fontFamily:'helvetica',marginHorizontal:20,marginVertical: 10,}
+    textStyle :{fontSize:18,fontFamily:'helvetica',marginHorizontal:20,marginVertical: 10,},
+    backButtonImage: {
+        color: "#000", position: 'absolute', top: 20, left: 20, zIndex: 1, color: '#fff'
+      },
 });
 
 export default AddCardScreenStyle;

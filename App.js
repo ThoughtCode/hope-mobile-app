@@ -67,6 +67,7 @@ export default class App extends React.Component {
         if(item != null){
           const data = JSON.parse(item)
           const authToken = data.customer.data.attributes.access_token;
+          globals.id = data.customer.id
           globals.access_token = authToken;
           globals.avatar = data.customer.data.attributes.avatar.url;
         }

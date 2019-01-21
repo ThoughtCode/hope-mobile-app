@@ -102,13 +102,12 @@ export default class AgentComment extends Component {
           var phone = data.attributes.property.data.attributes.phone
           var firstName = data.attributes.property.data.attributes.customer.data.attributes.first_name
           var lastName = data.attributes.property.data.attributes.customer.data.attributes.last_name
-          console.log(data.attributes.property.data.attributes.customer.data.attributes)
           items[strTime] = [];
           items[strTime].push({
             idJob: idJob,
             name: serviceBase,
-            startedAt: Moment.utc(new Date(startedAt)).utcOffset(-5).format('MMMM, DD - hh:mm a'),
-            finishedAt: Moment.utc(new Date(finishedAt)).utcOffset(-5).format('MMMM, DD - hh:mm a'),
+            startedAt: Moment.utc(new Date(startedAt)).utcOffset(-5).format('l - hh:mm a'),
+            finishedAt: Moment.utc(new Date(finishedAt)).utcOffset(-5).format('l - hh:mm a'),
             city: city,
             number: number,
             pStreet: pStreet,
