@@ -177,10 +177,11 @@ export default class AgentComment extends Component {
                                         halfStar={'ios-star-half'}
                                         iconSet={"Ionicons"}
                                         maxStars={5}
-                                        rating={2}
+                                        rating={globals.rewiews_average}
                                         starSize={20}
                                         fullStarColor={'#ffd700'}
                                     />
+                                    <Text style={styles.opinionsText}>{globals.rewiews_count+" opiniones"}</Text>
                                 </View>
                             <View style={styles.topTitleView}>
                                 <Text style={styles.mainTitleText}>{"Comentarios"}</Text>

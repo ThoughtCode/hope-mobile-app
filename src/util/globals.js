@@ -9,3 +9,5 @@ export var status = null
 export var avatar = null
 export var birthday = null
 export var id = null
+export var rewiews_average = 0
+export var rewiews_count = 0
