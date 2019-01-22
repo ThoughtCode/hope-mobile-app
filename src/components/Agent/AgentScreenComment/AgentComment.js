@@ -29,7 +29,9 @@ export default class AgentComment extends Component {
             firstName : globals.first_name,
             lastName : globals.last_name,
             avatar : globals.avatar,
-            reviewsCommentList : []
+            reviewsCommentList : [],
+            comments_number: 0,
+            review_avg: 0
         }
     }
 
@@ -47,11 +49,19 @@ export default class AgentComment extends Component {
 
     getAgentCommentsProfileResponse = {
         success: (response) => {
-            console.log("-------------------------------> RESPONSE",response)
             try {
                 console.log("getAgentCommentsProfileResponse data-->"+JSON.stringify(response.review.data))
+                let review_avg = 0
+                response.review.data.map((val)=>{
+                   console.log("ITEM ---------------->", parseInt(val.attributes.qualification, 10))
+                   review_avg += parseInt(val.attributes.qualification, 10)
+                })
+                review_avg = review_avg / response.review.data.length
+
                 this.setState({
-                    reviewsCommentList : response.review.data
+                    reviewsCommentList : response.review.data,
+                    comments_number: response.review.data.length,
+                    review_avg: review_avg
                 })
             } catch (error) {
                 console.log('getAgentCommentsProfileResponse catch error ' + JSON.stringify(error));
@@ -71,30 +81,6 @@ export default class AgentComment extends Component {
     renderItem = (item) =>{
         var data = item.item
         return(
-            // <View style={styles.renderRowView}>
-            //     <View style={{flexDirection:'row',alignItems:'center'}}>
-            //         <View style={styles.userImageView} >
-            //             {(data.attributes.my_reviews.data.attributes.reviewee_avatar.url != null)?
-            //                 <Image source={{uri : data.attributes.my_reviews.data.attributes.reviewee_avatar.url || ""}} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> 
-            //             :
-            //             <Image source={require("../../../../assets/img/profile_placehoder.png")} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>}
-            //         </View>
-            //         <View style={{flex:1}}>
-            //             <Text style={styles.titleText}>{data.attributes.my_reviews.data.attributes.reviewee_first_name + " "+ data.attributes.my_reviews.data.attributes.reviewee_last_name}</Text>
-            //         </View>
-            //         <StarRating
-            //             disabled={true}
-            //             emptyStar={'ios-star-outline'}
-            //             fullStar={'ios-star'}
-            //             halfStar={'ios-star-half'}
-            //             iconSet={'Ionicons'}
-            //             maxStars={5}
-            //             rating={data.attributes.qualification}
-            //             starSize={18}
-            //             fullStarColor={'#ffd700'}/>
-            //     </View>
-            //     <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text> 
-            // </View>
             <View style={{flex:1,marginHorizontal:20}}>
                 <View style={styles.textInputVieW}>
                     <Text style={styles.textInputTitleText}>{data.attributes.my_reviews.data.attributes.owner_first_name + " "+ data.attributes.my_reviews.data.attributes.owner_last_name}</Text>
@@ -146,6 +132,7 @@ export default class AgentComment extends Component {
     render(){
         var initials = globals.first_name.charAt(0) || ""
         initials += globals.last_name.charAt(0) || ""
+        console.log("COMENTARIOS ------------------>",this.state)
         return(
             <SafeAreaView style={styles.container}>
                  <KeyboardAvoidingView
@@ -177,11 +164,11 @@ export default class AgentComment extends Component {
                                         halfStar={'ios-star-half'}
                                         iconSet={"Ionicons"}
                                         maxStars={5}
-                                        rating={globals.rewiews_average}
+                                        rating={this.state.review_avg}
                                         starSize={20}
                                         fullStarColor={'#ffd700'}
                                     />
-                                    <Text style={styles.opinionsText}>{globals.rewiews_count+" opiniones"}</Text>
+                                    <Text style={styles.opinionsText}>{this.state.comments_number +" opiniones"}</Text>
                                 </View>
                             <View style={styles.topTitleView}>
                                 <Text style={styles.mainTitleText}>{"Comentarios"}</Text>
