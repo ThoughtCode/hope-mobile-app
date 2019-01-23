@@ -69,6 +69,10 @@ export const API = {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROPERTIES, buildHeader());
     },
 
+    createJob: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_CREATEDJOB, buildHeader());
+    },
+
     updateProperties: (onResponse, data, isHeaderRequired,id) => {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROPERTIES + "/"+ id, buildHeader());
     },

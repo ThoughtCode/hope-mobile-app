@@ -177,16 +177,12 @@ export default class CustomerCleaning extends Component {
 
     calculate_total_job_after_date = (is_holiday) => {
 
-        console.log('CALCULANDO TOTAL')
-
         //   calculado del tipo de servicio
       let initial_price = this.state.serviceType.attributes.service_base[0].price
       let initial_time = this.state.serviceType.attributes.service_base[0].time
       let total = initial_price * initial_time;
     
         //   calcular los servicios escogido 
-
-      
        this.state.services_choosen.map((item)=>{
             if (item.count != null){
                 total += item.price * item.time * item.count
@@ -196,7 +192,6 @@ export default class CustomerCleaning extends Component {
         })
       
       let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
-      
       
       if (is_holiday == true){  
         total = (total + (total * additional_fee)) * 1.12
@@ -451,10 +446,10 @@ export default class CustomerCleaning extends Component {
                     </View>
                     <View>
                       <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
-                        <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: $" + this.state.total}</Text>
+                        <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: $" + this.state.total.toFixed(2)}</Text>
                       </View>
 
-                      <TouchableOpacity onPress={() => this.props.navigation.navigate("PaymentScreen")} style={{ backgroundColor: 'rgb(0,121,189)', paddingVertical: 15, alignItems: 'center', justifyContent: 'center' }}>
+                      <TouchableOpacity onPress={() => this.props.navigation.navigate("PaymentScreen",{data:this.state})} style={{ backgroundColor: 'rgb(0,121,189)', paddingVertical: 15, alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', color: '#fff' }}>{"Solicitar servicio"}</Text>
                       </TouchableOpacity>
                     </View>
