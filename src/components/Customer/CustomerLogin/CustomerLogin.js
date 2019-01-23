@@ -14,7 +14,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as urls from '../../../constants/api';
 import * as globals from '../../../util/globals';
-
+import { API } from '../../../util/api';
 const styles = require('./CustomerLoginStyles');
 
 export default class CustomerLogin extends React.Component {
@@ -109,6 +109,37 @@ export default class CustomerLogin extends React.Component {
   };
 }
 
+loginWithFacebookResponse = {
+  success: (response) => {
+    try {
+      console.log("Fb Login Response-->",JSON.stringify(response))
+            AsyncStorage.multiSet([["access_token",response.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(response)]],()=>{
+              globals.access_token = response.customer.data.attributes.access_token ||""
+
+              globals.first_name = response.customer.data.attributes.first_name || ""
+              globals.last_name = response.customer.data.attributes.last_name || ""
+              globals.email = response.customer.data.attributes.email || ""
+              // globals.password = this.state.password || ""
+              globals.cell_phone = response.customer.data.attributes.cell_phone || ""
+              globals.status = response.customer.data.attributes.status && response.customer.data.attributes.status || ""
+              globals.avatar = response.customer.data.attributes.avatar.url || ""
+              // this._handleLoginResponse(response);
+              this.props.navigation.navigate('CustomerTabbar');
+        })
+    } catch (error) {
+      this.setState({ errorMessage: error.message, spinner: false })
+      console.log('Loginwith facebook catch error ' + JSON.stringify(error));
+    }
+  },
+  error: (err) => {
+    console.log('Loginwith facebook error ' + JSON.stringify(err));
+    this.setState({ errorMessage: error.message, spinner: false })
+  },
+  complete: () => {
+    this.setState({ errorMessage: error.message, spinner: false })
+  }
+}
+
   facebookLogin = async() =>{
 
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('2057031764572769', {
@@ -122,33 +153,40 @@ export default class CustomerLogin extends React.Component {
         `https://graph.facebook.com/me?access_token=${token}`);
 
         this.setState({ spinner: true });
-      let fbSigninURL = urls.STAGING_URL + urls.CUSTOMER_FACEBOOK_LOGIN;
-      fetch(fbSigninURL, {
-        method: 'POST',
-        body : {
+        let data = {
           "customer": {
             "facebook_access_token": token
           }
-      }
-      }).then((response) => {
-        response.json().then((data) => {
-          console.log("Fb Login Response-->",JSON.stringify(data))
-          globals.password = this.state.password
-            AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
-              globals.access_token = data.customer.data.attributes.access_token ||""
+        }
+        API.loginWithFacebook(this.loginWithFacebookResponse,data,true);
+      
+    //     let fbSigninURL = urls.STAGING_URL + urls.CUSTOMER_FACEBOOK_LOGIN;
+      
+    //   console.log("Login URL-->",fbSigninURL)
+    //   console.log("data-->",data)
+    //   fetch(fbSigninURL, {
+    //     method: 'POST',
+    //     body : data
+    //   }).then((response) => {
+    //     response.json().then((data) => {
+    //       console.log("Fb Login Response-->",JSON.stringify(data))
+    //       // this._handleLoginResponse(data);
+    //       // globals.password = this.state.password
+    //       //   AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
+    //       //     globals.access_token = data.customer.data.attributes.access_token ||""
 
-              globals.first_name = data.customer.data.attributes.first_name || ""
-              globals.last_name = data.customer.data.attributes.last_name || ""
-              globals.email = data.customer.data.attributes.email || ""
-              globals.password = this.state.password || ""
-              globals.cell_phone = data.customer.data.attributes.cell_phone || ""
-              globals.status = data.customer.data.attributes.status || ""
-              globals.avatar = data.customer.data.attributes.avatar.url || ""
-          this._handleLoginResponse(response);
-        })
+    //       //     globals.first_name = data.customer.data.attributes.first_name || ""
+    //       //     globals.last_name = data.customer.data.attributes.last_name || ""
+    //       //     globals.email = data.customer.data.attributes.email || ""
+    //       //     globals.password = this.state.password || ""
+    //       //     globals.cell_phone = data.customer.data.attributes.cell_phone || ""
+    //       //     globals.status = data.customer.data.attributes.status || ""
+    //       //     globals.avatar = data.customer.data.attributes.avatar.url || ""
+    //       // this._handleLoginResponse(response);
+    //     // })
         
-      }).catch((error) => this.setState({ errorMessage: error.message, spinner: false }));
-    })
+    //   }).catch((error) => this.setState({ errorMessage: error.message, spinner: false }));
+    // })
   }
 }
 
