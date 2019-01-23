@@ -265,7 +265,7 @@ export default class AgentSignUp extends Component {
                   <TextInput
                     style={styles.signup_input}
                     onChangeText={email => this.setState({ email })}
-                    placeholder="CORREO ELECTRÓNICO"
+                    placeholder="CORREO"
                     placeholderTextColor="#fff"
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
@@ -293,7 +293,7 @@ export default class AgentSignUp extends Component {
                   <TextInput
                     style={styles.signup_input}
                     onChangeText={password_confirmation => this.setState({ password_confirmation })}
-                    placeholder="CONFIRMACIÓN DE CONTRASEÑA"
+                    placeholder="CONFIRMACIÓN"
                     placeholderTextColor="#fff"
                     autoCapitalize="none"
                     underlineColorAndroid="transparent"
