@@ -85,7 +85,8 @@ export default class CustomerLogin extends React.Component {
           );
           return response;
         } else {
-          response.json().then((data) => {
+          response.json().then(async data => {
+            await this._postMobilePushNotificationToken(data.customer.data.attributes.access_token);
             globals.password = this.state.password
             AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
               globals.access_token = data.customer.data.attributes.access_token ||""
@@ -143,6 +144,37 @@ export default class CustomerLogin extends React.Component {
         })
     }
   }
+
+  _getStorageValue = async key => {
+    var value = await AsyncStorage.getItem(key);
+    return value;
+  };
+
+  _postMobilePushNotificationToken = async authToken => {
+    setMobileTokenUrl = urls.STAGING_URL + urls.SET_CUSTOMER_MOBILE_TOKEN;
+    let push_notification = await this._getStorageValue('PushNotificationToken');
+    fetch(setMobileTokenUrl, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Token ${authToken}`
+      },
+      body: JSON.stringify({
+        customer: {
+          mobile_push_token: push_notification
+        }
+      })
+    })
+      .then(response => {
+        if (response.status === 200) {
+          response.json().then(async data => {
+            console.log(data);
+          });
+        }
+      })
+      .catch(error => console.log('token not saved'));
+  };
 
   render(){
     return (
