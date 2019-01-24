@@ -41,6 +41,6 @@ export const GET_CARD_LIST="/api/v1/customers/credit_cards";
 export const GET_DETAILS_LIST_CREATED_JOB="/api/v1/customers/invoice_details";
 export const CUSTOMER_COMMENTS_PROFILE = "/api/v1/customers";
 export const GET_HOLIDAY = "/api/v1/customers/holidays";
-
-
+export const SET_AGENT_MOBILE_TOKEN = "/api/v1/agents/add_mobile_token";
+export const SET_CUSTOMER_MOBILE_TOKEN = "/api/v1/customers/add_mobile_token";
 

@@ -24,6 +24,13 @@ export default registerForNotifications = async () => {
   }
 
   // Get the token that uniquely identifies this device
-  let token = await Notifications.getExpoPushTokenAsync();
-  await AsyncStorage.setItem('PushNotificationToken', token);
+  try {
+    let token = await Notifications.getExpoPushTokenAsync();
+    console.log("token = ", token);
+    await AsyncStorage.setItem('PushNotificationToken', token);
+  } catch (err) {
+    console.log(err);
+  }
+  
+  
 }
