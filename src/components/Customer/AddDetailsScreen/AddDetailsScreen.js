@@ -8,7 +8,8 @@ import {
   Dimensions,
   Picker,
   ScrollView,
-  Alert
+  Alert,
+  KeyboardAvoidingView
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './AddDetailsScreenStyle';
@@ -166,113 +167,118 @@ export default class AddCardScreen extends Component {
             <Text>{"Agregar detalles de facturación"}</Text>
           </View>
         </View>
-        <ScrollView>
-          <View style={{flex:1}}>
-            <View style={{flexDirection:'row',marginVertical:5}}>
-              <View style={styles.textStyle}>
-                <Text>{"Razon Social:"}</Text>
-              </View>
-              <View style={styles.textInputStyleContainer}>
-                <TextInput
-                  ref={input => {
-                    this.textInput = input
-                  }}
-                  underlineColorAndroid='transparent'
-                  placeholder='Razon Social'
-                  value={initials}
-                  style={styles.textInputStyle}
-                  onChangeText={(text) => this.setState({socialReason : text})} />
-              </View>
-            </View>
-            <View style={{flexDirection:'row',marginVertical:5}}>
-              <View style={styles.textStyle}>
-                <Text>{"Identificación:"}</Text>
-              </View>
-              <View style={styles.textInputStyleContainer}>
-                {(this.state.identificationType && this.state.identificationType.length > 0) ?
-                  <Picker
-                    selectedValue={this.state.identificationType}
-                    style={{ height: 50, width: width - 20 }}
-                    onValueChange={this.updateSelect}
-                  >
-                    <Picker.Item label={this.state.identificationTypeSelecct || "Seleccione opción"} value={this.state.identificationTypeSelecct} key={-1} />
-                    { this.state.identificationType.map((item, key)=>{
-                      return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
-                    })}
-                  </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{console.log(this.state.identificationTypeSelecct)}</Text>
-                }
-              </View>
-            </View>
-            <View style={{flexDirection:'row',marginVertical:5}}>
-              <View style={styles.textStyle}>
-                <Text>{"N° de identificación:"}</Text>
-              </View>
-              <View style={styles.textInputStyleContainer}>
-                <TextInput
-                  ref={input => {
-                    this.textInput = input
-                  }}
-                  underlineColorAndroid='transparent'
-                  placeholder='N° de identificación'
-                  style={styles.textInputStyle}
-                  onChangeText={(text) => this.setState({identification : text})} />
-              </View>
-            </View>
-            <View style={{flexDirection:'row',marginVertical:5}}>
-              <View style={styles.textStyle}>
-                <Text>{"Correo electrónico:"}</Text>
-              </View>
-              <View style={styles.textInputStyleContainer}>
-                <TextInput
-                  ref={input => {
-                    this.textInput = input
-                  }}
-                  underlineColorAndroid='transparent'
-                  placeholder='Correo electrónico'
-                  value={this.state.email}
-                  style={styles.textInputStyle}
-                  onChangeText={(text) => this.setState({email : text})} />
-              </View>
-            </View>
-            <View style={{flexDirection:'row',marginVertical:5}}>
-              <View style={styles.textStyle}>
-                <Text>{"Dircción:"}</Text>
-              </View>
-              <View style={styles.textInputStyleContainer}>
-                <TextInput
-                  ref={input => {
-                    this.textInput = input
-                  }}
-                  underlineColorAndroid='transparent'
-                  placeholder='Dircción'
-                  style={styles.textInputStyle}
-                  onChangeText={(text) => this.setState({address : text})} />
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+          <ScrollView>
+            <View style={{flex:1}}>
+              <View style={{flexDirection:'row',marginVertical:5}}>
+                <View style={styles.textStyle}>
+                  <Text>{"Razon Social:"}</Text>
                 </View>
-            </View>
-            <View style={{flexDirection:'row',marginVertical:5}}>
-              <View style={styles.textStyle}>
-                <Text>{"Teléfono:"}</Text>
+                <View style={styles.textInputStyleContainer}>
+                  <TextInput
+                    ref={input => {
+                      this.textInput = input
+                    }}
+                    underlineColorAndroid='transparent'
+                    placeholder='Razon Social'
+                    value={initials}
+                    style={styles.textInputStyle}
+                    onChangeText={(text) => this.setState({socialReason : text})} />
+                </View>
               </View>
-              <View style={styles.textInputStyleContainer}>
-                <TextInput
-                  ref={input => {
-                    this.textInput = input
-                  }}
-                  underlineColorAndroid='transparent'
-                  placeholder='Teléfono'
-                  style={styles.textInputStyle}
-                  onChangeText={(text) => this.setState({telephone : text})} />
+              <View style={{flexDirection:'row',marginVertical:5}}>
+                <View style={styles.textStyle}>
+                  <Text>{"Identificación:"}</Text>
+                </View>
+                <View style={styles.textInputStyleContainer}>
+                  {(this.state.identificationType && this.state.identificationType.length > 0) ?
+                    <Picker
+                      selectedValue={this.state.identificationType}
+                      style={{ height: 50, width: width - 20 }}
+                      onValueChange={this.updateSelect}
+                    >
+                      <Picker.Item label={this.state.identificationTypeSelecct || "Seleccione opción"} value={this.state.identificationTypeSelecct} key={-1} />
+                      { this.state.identificationType.map((item, key)=>{
+                        return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
+                      })}
+                    </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{console.log(this.state.identificationTypeSelecct)}</Text>
+                  }
+                </View>
               </View>
-            </View>
+              <View style={{flexDirection:'row',marginVertical:5}}>
+                <View style={styles.textStyle}>
+                  <Text>{"N° de identificación:"}</Text>
+                </View>
+                <View style={styles.textInputStyleContainer}>
+                  <TextInput
+                    ref={input => {
+                      this.textInput = input
+                    }}
+                    underlineColorAndroid='transparent'
+                    placeholder='N° de identificación'
+                    style={styles.textInputStyle}
+                    onChangeText={(text) => this.setState({identification : text})} />
+                </View>
+              </View>
+              <View style={{flexDirection:'row',marginVertical:5}}>
+                <View style={styles.textStyle}>
+                  <Text>{"Correo electrónico:"}</Text>
+                </View>
+                <View style={styles.textInputStyleContainer}>
+                  <TextInput
+                    ref={input => {
+                      this.textInput = input
+                    }}
+                    underlineColorAndroid='transparent'
+                    placeholder='Correo electrónico'
+                    value={this.state.email}
+                    style={styles.textInputStyle}
+                    onChangeText={(text) => this.setState({email : text})} />
+                </View>
+              </View>
+              <View style={{flexDirection:'row',marginVertical:5}}>
+                <View style={styles.textStyle}>
+                  <Text>{"Dircción:"}</Text>
+                </View>
+                <View style={styles.textInputStyleContainer}>
+                  <TextInput
+                    ref={input => {
+                      this.textInput = input
+                    }}
+                    underlineColorAndroid='transparent'
+                    placeholder='Dircción'
+                    style={styles.textInputStyle}
+                    onChangeText={(text) => this.setState({address : text})} />
+                  </View>
+              </View>
+              <View style={{flexDirection:'row',marginVertical:5}}>
+                <View style={styles.textStyle}>
+                  <Text>{"Teléfono:"}</Text>
+                </View>
+                <View style={styles.textInputStyleContainer}>
+                  <TextInput
+                    ref={input => {
+                      this.textInput = input
+                    }}
+                    underlineColorAndroid='transparent'
+                    placeholder='Teléfono'
+                    style={styles.textInputStyle}
+                    onChangeText={(text) => this.setState({telephone : text})} />
+                </View>
+              </View>
 
-          </View>
-        </ScrollView>
-        <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
+            </View>
+          </ScrollView>
           <TouchableOpacity onPress={() => this.validation()}>
-            <Text style={{ color: '#1F68A9', fontFamily: 'helvetica', fontSize: 20, fontWeight: 'bold' }}>{"Agregar detalle de facturación"}</Text>
+            <View style={styles.buttonViewStyle}>
+              <Text style={styles.buttonTextStyle}>{"Guardar"}</Text>
+            </View>
           </TouchableOpacity>
+        </KeyboardAvoidingView>
+        {/* <TouchableOpacity onPress={() => this.validation()}>
+          <Text style={{ color: '#1F68A9', fontFamily: 'helvetica', fontSize: 20, fontWeight: 'bold' }}>{"Agregar detalle de facturación"}</Text>
+        </TouchableOpacity> */}
         </View>
-      </View>
     );
   }
 }

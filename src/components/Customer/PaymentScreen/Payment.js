@@ -29,6 +29,8 @@ export default class Payment extends React.Component {
       startedAt: this.props.navigation.state.params.data.selectedDate,
       additionalServiceData: this.props.navigation.state.params.data.services_choosen,
       total: this.props.navigation.state.params.data.total,
+      invoicesData: this.props.navigation.state.params.data.invoicesData,
+      cardData: this.props.navigation.state.params.data.cardData,
       checked: [],
       isHoliday: this.props.navigation.state.params.data.isHoliday,
       extraFee : this.props.navigation.state.params.data.serviceType.attributes.extra_service_fee_holiday.value,
@@ -62,29 +64,45 @@ export default class Payment extends React.Component {
   }
 
   onPressHandle = () =>{
+    let frequencyDataCall = ""
+    let optionSelecctInstallments = 0
+    let additionalServiceData = []
+    if(this.state.frequencyData[0].name == "Una vez"){
+      frequencyDataCall = 0
+    }else if(this.state.frequencyData[0].name == "Semanal"){
+      frequencyDataCall = 1
+    }else if(this.state.frequencyData[0].name == "Quincenal"){
+      frequencyDataCall = 2
+    }else if(this.state.frequencyData[0].name == "Mensual"){
+      frequencyDataCall = 3
+    }
+    if(this.state.optionSelecct == "No deseo diferir mi pago"){
+      optionSelecctInstallments = 1
+    }
+    if(this.state.optionSelecct == "Diferir mi pago en 3 meses. Sin intereses"){
+      optionSelecctInstallments = 3
+    }
+
+    let service_base = this.state.serviceType.attributes.service_base[0]
+
+    additionalServiceData.push({"service_id": service_base.id, "value": 1})
+
+    this.state.additionalServiceData.map((aS)=>{
+      if (aS.id){
+        additionalServiceData.push({"service_id": aS.id, "value": (aS.count != null ? aS.count : 1)})
+      }
+    })
+    console.log("optionSelecctInstallments ---------------------->", additionalServiceData)
     let data = {
       "job": {
-        "property_id": 41,
-        "started_at": "2019-01-22", 
-        "details": "Test",
-        "frequency": 0,
-        "job_details_attributes": [
-          {
-            "service_id": 2,
-            "value": 1
-          },
-          {
-            "service_id": 1,
-            "value": 1
-          },
-          {
-            "service_id": 3,
-            "value": 1
-          }
-        ],
-        "invoice_detail_id": 6,
-        "credit_card_id": 68,
-        "installments": 3
+        "property_id": this.props.navigation.state.params.data.directionData.attributes.id,
+        "started_at": this.state.startedAt, 
+        "details": this.props.navigation.state.params.data.additionalData,
+        "invoice_detail_id": this.state.invoicesData.id,
+        "frequency": frequencyDataCall,
+        "job_details_attributes": additionalServiceData,
+        "credit_card_id": this.state.cardData.id,
+        "installments": optionSelecctInstallments
       }
     }
     API.createJob(this.createJobResponse,data,true);
@@ -92,7 +110,7 @@ export default class Payment extends React.Component {
       'Trabajo creado',
       'Se creo tu trabajo con exito',
       [
-        { text: 'OK', onPress: () => console.log('Se creo tu trabajo con exito') }
+        { text: 'OK', onPress: () => this.props.navigation.navigate("CustomerTrabajosDashboard")}
       ],
       { cancelable: false }
     );
@@ -125,7 +143,7 @@ export default class Payment extends React.Component {
       vat = total * 0.12
 
       
-      console.log(this.props.navigation.state.params.data)
+      console.log("IMPRIMIENDO DATA AQUI ------------------------------------------->",this.props.navigation.state.params.data,this.state.frequencyData[0].name)
         return (
             <View style={styles.container}>
                 <View>

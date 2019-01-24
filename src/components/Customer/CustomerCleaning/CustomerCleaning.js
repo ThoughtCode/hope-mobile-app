@@ -380,7 +380,7 @@ export default class CustomerCleaning extends Component {
                             <View style={styles.rowStyle}>
                                 <View style={styles.rowText}>
                                     <Text style={styles.titleText}>{"Detalles adicionales del trabajo"}</Text>
-                                    {this.state.additionalData && <Text style={styles.subTitleText}>{this.state.additionalData}</Text>}
+                                    <Text style={styles.subTitleText}>{this.state.additionalData}</Text>
                                 </View>
                                 <MaterialIcons name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                             </View>

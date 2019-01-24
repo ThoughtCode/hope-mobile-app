@@ -8,6 +8,9 @@ const CardListScreenStyle = StyleSheet.create({
         marginTop: 20,
         backgroundColor: '#ffffff',
     },
+    backButtonImage:{
+        color:"#000",position:'absolute',top:20,left:20,zIndex:1,color : '#fff'
+    },
     childContainer: {
         margin: 10, flexDirection: 'row', alignItems: 'center',borderBottomWidth:1,borderBottomColor:'lightgray'
     },
