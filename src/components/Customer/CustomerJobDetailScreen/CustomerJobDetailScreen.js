@@ -223,30 +223,31 @@ export default class CustomerJobDetailScreen extends Component {
     //======================================================================
     
     render(){
-        
-        var name = this.state.jobData.customer && this.state.jobData.customer.first_name  || "" + " "+ this.state.jobData.customer && this.state.jobData.customer.last_name || ""
-        var initials = this.state.jobData.customer && this.state.jobData.customer.first_name.charAt(0)
-        initials +=  this.state.jobData.customer && this.state.jobData.customer.last_name.charAt(0)
-        
-        var description = ""
-        var subDescription = ""
-        this.state.jobData.job_details.map((val,index)=>{
-            if(val.service.type_service == "base"){
-                // description += val.service.name
-            }else{
-                subDescription += val.service.name + " x " + val.value
-                // subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
-            }
-        
-        })
-        // alert(Moment("2013-11-18").tz("America/Guayaquil").format('Z'))
-        // Momenr.setTimezone('+0500')
-        // var initialDate = Moment(new Date(this.state.jobData.started_at)).utc().format('MMMM, DD - hh:mm a')
-        // America/Guayaquil
-        // var finishDate = Moment(this.state.jobData.finished_at).zone(+5).format('hh:mm a')
-        var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
-        var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
-        var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
+      var name = this.state.jobData.customer && this.state.jobData.customer.first_name  || "" + " "+ this.state.jobData.customer && this.state.jobData.customer.last_name || ""
+      var initials = this.state.jobData.customer && this.state.jobData.customer.first_name.charAt(0)
+      initials +=  this.state.jobData.customer && this.state.jobData.customer.last_name.charAt(0)
+      var description = ""
+      var subDescription = ""
+      this.state.jobData.job_details.map((val,index)=>{
+        if(val.service.type_service == "base"){
+        }else{
+          subDescription += val.service.name + " x " + val.value
+        }
+      })
+      var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
+      var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
+      var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
+      var frequency = ""
+      if(this.state.jobData.frequency == "one_time"){
+        frequency = "Una vez"
+      } else if(this.state.jobData.frequency == "weekly"){
+        frequency = "Semanal"
+      } else if(this.state.jobData.frequency == "fortnightly"){
+        frequency = "Quincenal"
+      } else if(this.state.jobData.frequency == "monthly"){
+        frequency = "Mensual"
+      }
+      console.log("--------------------------->>>>>>>>>>>>>>>>>>>>>>>>STATUS STATUS STATUS",this.state.jobData.job_details[0].service.name)
         return(
             <SafeAreaView style={styles.container}>
                 <View>
@@ -289,52 +290,51 @@ export default class CustomerJobDetailScreen extends Component {
 
                 <View style={{flex:1}}>
                     <ScrollView>
-
                         <TouchableOpacity activeOpacity = { 0.7 } onPress = {() => this.setState({isCallapseOpen : !this.state.isCallapseOpen})}>
-                            <View style={{padding:10,backgroundColor:'rgb(240,240,240)',flexDirection:'row',justifyContent:'space-between'}}>
-                                <Text style={styles.mainTitleText}>{"Detalles del trabajo"}</Text>
-                                <Entypo name={(this.state.isCallapseOpen) ? "chevron-up" : "chevron-down"} color={"gray"} size={25} />
-                            </View>
+                          <View style={{padding:10,backgroundColor:'rgb(240,240,240)',flexDirection:'row',justifyContent:'space-between'}}>
+                            <Text style={styles.mainTitleText}>{"Detalles del trabajo"}</Text>
+                            <Entypo name={(this.state.isCallapseOpen) ? "chevron-up" : "chevron-down"} color={"gray"} size={25} />
+                          </View>
                         </TouchableOpacity>
-
                         <Collapsible collapsed={!this.state.isCallapseOpen} duration={200}>
-                            <View >
-                                {/* <View style={styles.renderRowView}>
-                                    <Text style={styles.titleText}>{"Tipo de trabajo"}</Text>
-                                    <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{description}</Text>
-                                </View> */}
-                                <View style={styles.renderRowView}>
-                                    <Text style={styles.titleText}>{"Fecha"}</Text>
-                                    <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{initialDate + " - "+ finishDate}</Text>
-                                </View>
-                                <View style={styles.renderRowView}>
-                                    <Text style={styles.titleText}>{"Servicios Adicionales"}</Text>
-                                    <Text style={[styles.subText]}>{subDescription}</Text>
-                                </View>
-                                <View style={styles.renderRowView}>
-                                    <Text style={styles.titleText}>{"Detalles a Considerar"}</Text>
-                                    <Text style={styles.subText}>{this.state.jobData.details}</Text>
-                                </View>
-
-                                <View style={[styles.renderRowView]}>
-                                    <Text style={styles.titleText}>{"Ubicación"}</Text>
-                                    <View style={{flexDirection:'row',alignItems:'center'}}> 
-                                        <EvilIcons name={"location"} size={20} />
-                                        <Text style={styles.subText}>{location}</Text>
-                                    </View>
-                                </View>
-                                <View style={styles.renderRowView}>
-                                    <Text style={styles.titleText}>{"Precio"}</Text>
-                                    <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{"$ "+ this.state.jobData.total.toFixed(2)}</Text>
-                                </View>
+                          <View >
+                            <View style={styles.renderRowView}>
+                              <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{this.state.jobData.job_details[0].service.name}</Text>
                             </View>
+                            <View style={styles.renderRowView}>
+                              <Text style={styles.titleText}>{"Fecha"}</Text>
+                              <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{initialDate + " - "+ finishDate}</Text>
+                            </View>
+                            <View style={styles.renderRowView}>
+                              <Text style={styles.titleText}>{"Servicios Adicionales"}</Text>
+                              <Text style={[styles.subText]}>{subDescription}</Text>
+                            </View>
+                            <View style={styles.renderRowView}>
+                              <Text style={styles.titleText}>{"Frecuencia"}</Text>
+                              <Text style={styles.subText}>{frequency}</Text>
+                            </View>
+                            <View style={styles.renderRowView}>
+                              <Text style={styles.titleText}>{"Detalles a Considerar"}</Text>
+                              <Text style={styles.subText}>{this.state.jobData.details}</Text>
+                            </View>
+                            <View style={[styles.renderRowView]}>
+                              <Text style={styles.titleText}>{"Ubicación"}</Text>
+                              <View style={{flexDirection:'row',alignItems:'center'}}> 
+                                <EvilIcons name={"location"} size={20} />
+                                <Text style={styles.subText}>{location}</Text>
+                              </View>
+                            </View>
+                            <View style={styles.renderRowView}>
+                              <Text style={styles.titleText}>{"Precio"}</Text>
+                              <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{"$ "+ this.state.jobData.total.toFixed(2)}</Text>
+                            </View>
+                          </View>
                         </Collapsible>
-                        
                         <TouchableOpacity activeOpacity = { 0.7 } onPress = {() => this.setState({isCallapseOpen1 : !this.state.isCallapseOpen1})}>
-                            <View style={{padding:10,backgroundColor:'gray',flexDirection:'row',justifyContent:'space-between'}}>
-                                <Text>{"Agentes postulados"}</Text>
-                                <Entypo name={(this.state.isCallapseOpen1) ? "chevron-down" : "chevron-up"} color={"#fff"} size={25} />
-                            </View>
+                          <View style={{padding:10,backgroundColor:'gray',flexDirection:'row',justifyContent:'space-between'}}>
+                            <Text>{"Agentes postulados"}</Text>
+                            <Entypo name={(this.state.isCallapseOpen1) ? "chevron-down" : "chevron-up"} color={"#fff"} size={25} />
+                          </View>
                         </TouchableOpacity>
 
                         <Collapsible collapsed={this.state.isCallapseOpen1}>
