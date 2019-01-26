@@ -34,7 +34,7 @@ export default class _JobList extends Component {
   //======================================================================
 
 
-  renderItem(item) {
+  renderItem = (item) => {
     data = item.item.attributes
     var description = ""
     var subDescription = ""
@@ -48,8 +48,9 @@ export default class _JobList extends Component {
     })
     var date = Moment(data.started_at).format('l - hh:mm a')
     var location = data.property.data.attributes.p_street + ", " + data.property.data.attributes.s_street +", "+data.property.data.attributes.city
+    
     return(
-      <TouchableOpacity style={{flex:1,marginHorizontal:20,paddingVertical:20}} onPress={() => this.props.navigateToDetail(item )   }>
+      <TouchableOpacity style={{flex:1,marginHorizontal:20,paddingVertical:20}} onPress={() => this.props.navigateToDetail(item.item )   }>
         <View style={styles.listTitleView}>
           <Text style={styles.titleText}>
             {(data.customer && data.customer.first_name) + " "+ (data.customer && data.customer.last_name)}
