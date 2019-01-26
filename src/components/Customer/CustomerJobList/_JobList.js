@@ -63,10 +63,7 @@ export default class _JobList extends Component {
       var date = Moment(data.started_at).format('l - hh:mm a')
       var location = data.property.data.attributes.p_street + ", " + data.property.data.attributes.s_street +", "+data.property.data.attributes.city
       return(
-
-
-
-        <TouchableOpacity style={{flex:1,marginHorizontal:20,paddingVertical:20}} onPress={() => this.props.navigation.navigateToDetail("CustomerJobDetailScreen",{jobData:data}) }>
+        <TouchableOpacity key={item.id} style={{flex:1,marginHorizontal:20,paddingVertical:20}} onPress={() => this.props.navigateToDetail(item ) }>
           <View>
             <View style={styles.listTitleView}>
               <Text style={styles.titleText}>Trabajos
