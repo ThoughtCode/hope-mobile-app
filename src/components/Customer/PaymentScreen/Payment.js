@@ -9,7 +9,8 @@ import {
     CheckBox,
     Dimensions,
     Picker,
-    Alert
+    Alert,
+    Linking
 } from 'react-native';
 const { height, width } = Dimensions.get('window');
 import FontAwesome from '@expo/vector-icons/FontAwesome'
@@ -27,6 +28,7 @@ export default class Payment extends React.Component {
       serviceType: this.props.navigation.state.params.data.serviceType,
       frequencyData: this.props.navigation.state.params.data.frequencyData,
       startedAt: this.props.navigation.state.params.data.selectedDate,
+      endDate: this.props.navigation.state.params.data.end_date,
       additionalServiceData: this.props.navigation.state.params.data.services_choosen,
       total: this.props.navigation.state.params.data.total,
       invoicesData: this.props.navigation.state.params.data.invoicesData,
@@ -64,61 +66,82 @@ export default class Payment extends React.Component {
   }
 
   onPressHandle = () =>{
-    let frequencyDataCall = ""
-    let optionSelecctInstallments = 0
-    let additionalServiceData = []
-    if(this.state.frequencyData[0].name == "Una vez"){
-      frequencyDataCall = 0
-    }else if(this.state.frequencyData[0].name == "Semanal"){
-      frequencyDataCall = 1
-    }else if(this.state.frequencyData[0].name == "Quincenal"){
-      frequencyDataCall = 2
-    }else if(this.state.frequencyData[0].name == "Mensual"){
-      frequencyDataCall = 3
-    }
-    if(this.state.optionSelecct == "No deseo diferir mi pago"){
-      optionSelecctInstallments = 1
-    }
-    if(this.state.optionSelecct == "Diferir mi pago en 3 meses. Sin intereses"){
-      optionSelecctInstallments = 3
-    }
-
-    let service_base = this.state.serviceType.attributes.service_base[0]
-
-    additionalServiceData.push({"service_id": service_base.id, "value": 1})
-
-    this.state.additionalServiceData.map((aS)=>{
-      if (aS.id){
-        additionalServiceData.push({"service_id": aS.id, "value": (aS.count != null ? aS.count : 1)})
+    if(this.state.optionSelecct == ""){
+      Alert.alert(
+        'Alerta',
+        'Seleccione opción, diferir tú pago',
+        [
+          { text: 'OK', onPress: () => console.log('Seleccione opción, diferir tú pago')}
+        ],
+        { cancelable: false }
+      );
+    } else if (this.state.selectTerms == false){
+      Alert.alert(
+        'Alerta',
+        'Debe aceptar los terminos y condiciones',
+        [
+          { text: 'OK', onPress: () => console.log('Debe aceptar los terminos y condiciones')}
+        ],
+        { cancelable: false }
+      );
+    } else {
+      let frequencyDataCall = ""
+      let optionSelecctInstallments = 0
+      let additionalServiceData = []
+      if(this.state.frequencyData[0].name == "Una vez"){
+        frequencyDataCall = 0
+      }else if(this.state.frequencyData[0].name == "Semanal"){
+        frequencyDataCall = 1
+      }else if(this.state.frequencyData[0].name == "Quincenal"){
+        frequencyDataCall = 2
+      }else if(this.state.frequencyData[0].name == "Mensual"){
+        frequencyDataCall = 3
       }
-    })
-    console.log("optionSelecctInstallments ---------------------->", additionalServiceData)
-    let data = {
-      "job": {
-        "property_id": this.props.navigation.state.params.data.directionData.attributes.id,
-        "started_at": this.state.startedAt, 
-        "details": this.props.navigation.state.params.data.additionalData,
-        "invoice_detail_id": this.state.invoicesData.id,
-        "frequency": frequencyDataCall,
-        "job_details_attributes": additionalServiceData,
-        "credit_card_id": this.state.cardData.id,
-        "installments": optionSelecctInstallments
+      if(this.state.optionSelecct == "No deseo diferir mi pago"){
+        optionSelecctInstallments = 1
       }
-    }
-    API.createJob(this.createJobResponse,data,true);
-    Alert.alert(
-      'Trabajo creado',
-      'Se creo tu trabajo con exito',
-      [
-        { text: 'OK', onPress: () => this.props.navigation.navigate("CustomerTrabajosDashboard")}
-      ],
-      { cancelable: false }
-    );
-    // if(!this.state.isUpdate){
-    //   API.createJob(this.createJobResponse,data,true);
-    // }else{
-    //   this.state.propertyData && this.state.propertyData.id && API.updateProperties(this.createPropertiesResponse,data,true,this.state.propertyData.id);
-    // }  
+      if(this.state.optionSelecct == "Diferir mi pago en 3 meses. Sin intereses"){
+        optionSelecctInstallments = 3
+      }
+
+      let service_base = this.state.serviceType.attributes.service_base[0]
+
+      additionalServiceData.push({"service_id": service_base.id, "value": 1})
+
+      this.state.additionalServiceData.map((aS)=>{
+        if (aS.id){
+          additionalServiceData.push({"service_id": aS.id, "value": (aS.count != null ? aS.count : 1)})
+        }
+      })
+      console.log("optionSelecctInstallments ---------------------->", additionalServiceData)
+      let data = {
+        "job": {
+          "property_id": this.props.navigation.state.params.data.directionData.attributes.id,
+          "started_at": this.state.startedAt, 
+          "finished_recurrency_at": this.state.endDate,
+          "details": this.props.navigation.state.params.data.additionalData,
+          "invoice_detail_id": this.state.invoicesData.id,
+          "frequency": frequencyDataCall,
+          "job_details_attributes": additionalServiceData,
+          "credit_card_id": this.state.cardData.id,
+          "installments": optionSelecctInstallments
+        }
+      }
+      API.createJob(this.createJobResponse,data,true);
+      Alert.alert(
+        'Trabajo creado',
+        'Se creo tu trabajo con exito',
+        [
+          { text: 'OK', onPress: () => this.props.navigation.navigate("CustomerTrabajosDashboard")}
+        ],
+        { cancelable: false }
+      );
+      // if(!this.state.isUpdate){
+      //   API.createJob(this.createJobResponse,data,true);
+      // }else{
+      //   this.state.propertyData && this.state.propertyData.id && API.updateProperties(this.createPropertiesResponse,data,true,this.state.propertyData.id);
+      // }
+    }  
   }
 
     render() {
@@ -148,7 +171,7 @@ export default class Payment extends React.Component {
             <View style={styles.container}>
                 <View>
                   <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
-                  <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 50, width: width }}>
+                  <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 15, width: width }}>
                     <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>
                       {this.state.serviceType.attributes.name}
                     </Text>
@@ -157,8 +180,8 @@ export default class Payment extends React.Component {
                     </Text>
                   </View>
                 </View>
-                <Text style={{ margin: 10, fontSize: 18, fontFamily: "helvetica" }}>
-                  {Moment(this.state.startedAt).format('MMMM Do YYYY, h:mm:ss a')}
+                <Text style={{ margin: 5, fontSize: 18, fontFamily: "helvetica" }}>
+                  {Moment(this.state.startedAt).format('L, h:mm:ss a')}
                 </Text>
                 <View style={styles.deviderStyle} />
                 <View style={{ flex: 0.9 }}>
@@ -171,7 +194,7 @@ export default class Payment extends React.Component {
                             {item.name}
                           </Text>
                           <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                            ${item.price * item.time}
+                            ${(item.price * item.time).toFixed(2)}
                           </Text>
                         </View>
                       </View>
@@ -187,14 +210,13 @@ export default class Payment extends React.Component {
                             {item.name}
                           </Text>
                           <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                            ${item.price * item.time * ((item.count != null) ? (item.count) : (1))}
+                            ${(item.price * item.time).toFixed(2) * ((item.count != null) ? (item.count) : (1))}
                           </Text>
                         </View>
                       </View>
                     }
                     keyExtractor={(item, index) => index.toString()}
                   />
-                  {/* If is holiday mostrar 'Recargo por fin de semana' y usamos el total_with_aditional_fee*/}
                   {(this.state.isHoliday == true) ? (
                     <View style={styles.childContainer}>
                       <View style={styles.itemView}>
@@ -202,25 +224,23 @@ export default class Payment extends React.Component {
                           Recargo fin de semana o feriados
                         </Text>
                         <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                          ${total_with_additional_fee}
+                          ${total_with_additional_fee.toFixed(2)}
                         </Text>
                       </View>
                     </View>
                   ):null}
-                  {/* Iva vamos a usar el VAT */}
                   <View style={styles.childContainer}>
                     <View style={styles.itemView}>
                       <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
                         I.V.A
                       </Text>
                       <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                        ${vat}
+                        ${vat.toFixed(2)}
                       </Text>
                     </View>
                   </View>
-
                 </View>
-                <View style={{ flexDirection: 'row', margin: 10 }}>
+                <View style={{ flexDirection: 'row', margin: 5 }}>
                   <Text style={{ flex: 0.4,fontSize: 16, fontFamily: "helvetica" }}>
                     Horas de limpieza
                   </Text>
@@ -229,16 +249,16 @@ export default class Payment extends React.Component {
                   </Text>
                 </View>
                 <View style={styles.deviderStyle} />
-                <View style={{ margin: 10, flexDirection: 'row' }}>
-                  <Text style={{ flex: 0.7, color: '#288fe2', fontSize: 24, fontFamily: "helvetica" }}>
-                    Total
-                  </Text>
-                  <Text style={{ flex: 0.3, color: '#288fe2', fontSize: 24, fontFamily: "helvetica" }}>
-                    ${this.state.total.toFixed(2)}
-                  </Text>
-                </View>
+                  <View style={{ flexDirection: 'row', margin: 5 }}>
+                    <Text style={{ flex: 0.7, color: '#288fe2', fontSize: 24, fontFamily: "helvetica" }}>
+                      Total
+                    </Text>
+                    <Text style={{ flex: 0.3, color: '#288fe2', fontSize: 24, fontFamily: "helvetica" }}>
+                      ${this.state.total.toFixed(2)}
+                    </Text>
+                  </View>
                 <View style={styles.deviderStyle} />
-                <Text style={{ margin: 10 }}>
+                <Text style={{ margin: 5 }}>
                   ¿Quieres diferir tú pago?
                 </Text>
                 <View style={styles.textInputStyleContainer}>
@@ -254,35 +274,20 @@ export default class Payment extends React.Component {
                       })}
                     </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{console.log(this.state.optionSelecct)}</Text>
                   }
-                  {/* <TextInput
-                    ref={input => {
-                      this.textInput = input
-                    }}
-                    underlineColorAndroid='transparent'
-                    placeholder='Diferir en:'
-                    // value={initials}
-                    style={styles.textInputStyle}
-                    onChangeText={(text) => this.enterText(text)} /> */}
-                  {/* <TextInput
-                    ref={input => {
-                      this.textInput = input
-                    }}
-                    placeholder='No defer your payment'
-                    underlineColorAndroid='transparent'
-                    style={styles.textInputStyle}
-                    onChangeText={(text) => this.enterText(text)}
-                  /> */}
                 </View>
-                <View style={{ flexDirection: 'row', margin: 10 }}>
+                <View style={{ flexDirection: 'row', margin: 5 }}>
                   {(this.state.selectTerms == false) ? (
-                    <Ionicons name={"ios-checkmark-circle-outline"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(true)} />
+                    <Ionicons name={"ios-square-outline"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(true)} />
                   ) : (
-                    <Ionicons name={"ios-checkmark-circle"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(false)} />
+                    <Ionicons name={"ios-square"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(false)} />
                   )}
-                  {/* <FontAwesome name={"fa-check-square"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} onPress={() => alert("onClick")} /> */}
-                  <Text style={{ textAlign: 'center', margin: 5 }}>
-                    Acepto términos y condiciones
-                  </Text>
+                  <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://www.nocnoc.com.ec/politicas#policies')}}>
+                    <View>
+                      <Text style={{ textAlign: 'center', margin: 5 }}>
+                        Acepto términos y condiciones
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
                 <TouchableOpacity onPress={() => this.onPressHandle()}>
                   <View style={styles.buttonViewStyle}>
