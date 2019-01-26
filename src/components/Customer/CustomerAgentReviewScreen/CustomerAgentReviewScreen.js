@@ -159,16 +159,16 @@ export default class CustomerAgentReviewScreen extends Component {
                             <Text style={styles.opinionsText}>{(this.state.isHired) ? this.state.jobCommentList.length+" opiniones" : this.state.jobData.rewiews_count+" opiniones"}</Text>
                         </View>
                         <View style={{flexDirection:'row'}}>
-                            {(this.state.jobData.email != null) ?
-                            <View style={{flexDirection:'row'}}>
-                                <View><MaterialCommunityIcons name={"email"} size={18} /></View>
-                                <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.email || ""}</Text>
-                            </View> : null}
-                            {(this.state.jobData.cell_phone != null) ?
-                            <View style={{flexDirection:'row'}}>
-                                <View><MaterialCommunityIcons name={"phone"} size={18} /></View>
-                                <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.cell_phone || ""}</Text> 
-                            </View> : null}
+                          {(this.state.jobData.email != null) ?
+                          <View style={{flexDirection:'row'}}>
+                            <View><MaterialCommunityIcons name={"email"} size={18} /></View>
+                            <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.email || ""}</Text>
+                          </View> : null}
+                          {(this.state.jobData.cell_phone != null) ?
+                          <View style={{flexDirection:'row'}}>
+                            <View><MaterialCommunityIcons name={"phone"} size={18} /></View>
+                            <Text style={[styles.subText,{marginHorizontal:5}]}>{this.state.jobData.cell_phone || ""}</Text> 
+                          </View> : null}
                         </View>
                         
                     </View>
