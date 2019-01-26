@@ -27,6 +27,7 @@ export const UPDATE_PROFILE_PIC = "/api/v1/agents/update";
 export const SET_REVIEW = "/api/v1/agents/jobs/";
 
 export const CUSTOMERS_JOBS = "/api/v1/customers/jobs";
+export const AGENT_REVIEWS = "/api/v1/customers/jobs/";
 export const CUSTOMERS_PROPERTIES = "/api/v1/customers/properties";
 export const CUSTOMERS_CREATEDJOB = "/api/v1/customers/jobs";
 export const CUSTOMERS_PROFILE = "/api/v1/customers/update";

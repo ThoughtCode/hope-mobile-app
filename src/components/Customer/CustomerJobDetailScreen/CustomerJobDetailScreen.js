@@ -34,7 +34,8 @@ export default class CustomerJobDetailScreen extends Component {
             isLoading : true,
             isCallapseOpen : true,
             isCallapseOpen1 : true,
-            type : props.navigation.state.params.type || null
+            type : props.navigation.state.params.type || null,
+            canReview : false,
         }
     }
 
@@ -43,11 +44,26 @@ export default class CustomerJobDetailScreen extends Component {
     //======================================================================
 
     componentDidMount(){
-        var hiredAgent = this.state.jobData.agent || []
-        this.setState({isCallapseOpen : true,agentList: [...this.state.jobData.proposals.data,...hiredAgent] || [] },()=>{
-            this.forceUpdate()
-        })
+      API.agentReviews(this.agentReviewsResponse,this.state.jobId,true)
+      var hiredAgent = this.state.jobData.agent || []
+      this.setState({isCallapseOpen : true,agentList: [...this.state.jobData.proposals.data,...hiredAgent] || [] },()=>{
+        this.forceUpdate()
+      })
+    }
 
+    agentReviewsResponse = {
+      success: (response) => {
+        try {
+          console.log("agentReviewsResponse data-->"+JSON.stringify(response))
+          this.setState({canReview: response.can_review})
+        } catch (error) {
+          console.log('agentReviewsResponse catch error ' + JSON.stringify(error));
+        }
+      },
+      error: (err) => {
+        console.log('agentReviewsResponse error ' + JSON.stringify(err));
+        Alert.alert("NOC NOC",err.message)
+      }
     }
 
     //======================================================================
@@ -361,14 +377,22 @@ export default class CustomerJobDetailScreen extends Component {
                                         <Text style={{color:'gray'}}>{this.state.jobData.agent_rewiews_count+" Trabajos Completados"}</Text>
                                         <Text style={{color:'gray'}}>{this.state.jobData.agent_rewiews_count+" Opiniones"}</Text>
                                     </View>
-                    
-                                    {/* <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text>  */}
-                                    {/* <Text style={styles.subText} numberOfLines={0}>{"This is Duumey conetecr of Agent Adta skkcv  nfxl"}</Text>  */}
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerReviewScreen",{jobData : this.props.navigation.state.params.jobData})} >
+                                    {(this.state.canReview == true) ? (
+                                      <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerReviewScreen",{jobData : this.props.navigation.state.params.jobData})} >
+                                        <View style={{backgroundColor:'rgb(7,225,43)',marginHorizontal:10,alignItems:'center',justifyContent:'center',paddingVertical:7,marginTop:10}}>
+                                          <Text style={[styles.titleText,{color:'#fff'}]}>{"Calificar"}</Text>
+                                        </View>
+                                      </TouchableOpacity>
+                                    ):((this.state.jobData.status == "accepted" && this.state.canReview == false)?(
+                                      <TouchableOpacity>
                                         <View style={{backgroundColor:'rgb(7,225,43)',marginHorizontal:10,alignItems:'center',justifyContent:'center',paddingVertical:7,marginTop:10}}>
                                           <Text style={[styles.titleText,{color:'#fff'}]}>{"Contratado"}</Text>
                                         </View>
-                                    </TouchableOpacity>
+                                      </TouchableOpacity>
+                                    ):(
+                                      <View><Text>{""}</Text></View>
+                                    )
+                                    )}
                                 </View>
 
                             :

@@ -61,6 +61,10 @@ export const API = {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_JOBS + data, buildHeader());
     },
 
+    agentReviews: (onResponse, job_id, isHeaderRequired) => {
+        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.AGENT_REVIEWS + job_id + "/can_review", buildHeader());
+    },
+
     customerProperties: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMERS_PROPERTIES, buildHeader());
     },
