@@ -63,8 +63,8 @@ export default class CustomerTrabajosDashboard extends Component {
     // navigateToDetail
     //======================================================================
 
-    static navigateToDetail = (item,setRow,type) =>{
-        _this.props.navigation.navigate("CustomerJobDetailScreen",{jobData: item.item,setRow:setRow,index: item.index,type : type})
+    navigateToDetail = (item,type) =>{
+        this.props.navigation.navigate("CustomerJobDetailScreen",{jobData: item,type : type})
     }
 
     //======================================================================
@@ -124,7 +124,7 @@ export default class CustomerTrabajosDashboard extends Component {
                     <Text style={styles.titleStyle} >{"Mis Trabajos"}</Text>
                     <Text style={styles.subTitleStyle} onPress={() => this.setState({modalVisible : true})} >{"Nuevo trabajo"}</Text>
                 </View>
-                <TrabajosTab navigateToDetail={this.navigateToDetail} />
+                <TrabajosTab screenProps={{navigateToDetail: this.navigateToDetail}} />
             </SafeAreaView>
         )
     }

@@ -135,9 +135,9 @@ export default class CustomerJobList extends Component {
         this.onEndReachedCalledDuringMomentum = false;
     }
 
-    navigateToDetail = (item,setRow) =>{
+    navigateToDetail = (item) =>{
       // this.props.navigation.navigate("CustomerJobDetailScreen",{jobData:job})
-      this.props.navigation.navigate("CustomerJobDetailScreen",{jobData: item.item,setRow: setRow,index: item.index})
+      this.props.screenProps.navigateToDetail(item,this.props.type)
     }
     
     //======================================================================
