@@ -50,7 +50,6 @@ export default class Payment extends React.Component {
   }
 
   _calculateHours = () => {
-    console.log("---------------------> _calculateHours DATA DATA DATA",this.state.serviceType.attributes)
     let total_work_hours = 0
     this.state.additionalServiceData.map((p)=>{
       total_work_hours += parseInt(p.time, 10);
@@ -60,12 +59,11 @@ export default class Payment extends React.Component {
   }
 
   _selectTerms = (e) => {
-    console.log("-----------------------------------> EVENTO",e)
     this.setState({selectTerms: e})
-
   }
 
   onPressHandle = () =>{
+    console.log(this.state.startedAt, Moment.utc(new Date()).subtract(5, 'h'), (this.state.startedAt > Moment.utc(new Date()).subtract(5, 'h')));
     if(this.state.optionSelecct == ""){
       Alert.alert(
         'Alerta',
@@ -84,8 +82,16 @@ export default class Payment extends React.Component {
         ],
         { cancelable: false }
       );
-    } else {
-      let frequencyDataCall = ""
+    } else if (this.state.startedAt < Moment.utc(new Date()).subtract(5, 'h')){
+      Alert.alert(
+        'Alerta',
+        'La fecha de inicio debe ser mayor a la fecha del trabajo',
+        [
+          { text: 'OK', onPress: () => this.props.navigation.goBack()}
+        ],
+        { cancelable: false }
+    )} else {
+      let frequencyDataCall = 0
       let optionSelecctInstallments = 0
       let additionalServiceData = []
       if(this.state.frequencyData[0].name == "Una vez"){
@@ -101,11 +107,10 @@ export default class Payment extends React.Component {
         optionSelecctInstallments = 1
       }
       if(this.state.optionSelecct == "Diferir mi pago en 3 meses. Sin intereses"){
-        optionSelecctInstallments = 3
+        optionSelecctInstallments = "3"
       }
 
       let service_base = this.state.serviceType.attributes.service_base[0]
-
       additionalServiceData.push({"service_id": service_base.id, "value": 1})
 
       this.state.additionalServiceData.map((aS)=>{
@@ -113,18 +118,18 @@ export default class Payment extends React.Component {
           additionalServiceData.push({"service_id": aS.id, "value": (aS.count != null ? aS.count : 1)})
         }
       })
-      console.log("optionSelecctInstallments ---------------------->", additionalServiceData)
+      let finished_recurrency_at = (this.state.endDate == null) ? '' : this.state.endDate
       let data = {
         "job": {
           "property_id": this.props.navigation.state.params.data.directionData.attributes.id,
           "started_at": this.state.startedAt, 
-          "finished_recurrency_at": this.state.endDate,
-          "details": this.props.navigation.state.params.data.additionalData,
+          "details": this.props.navigation.state.params.data.additionalData || "",
           "invoice_detail_id": this.state.invoicesData.id,
           "frequency": frequencyDataCall,
           "job_details_attributes": additionalServiceData,
           "credit_card_id": this.state.cardData.id,
-          "installments": optionSelecctInstallments
+          "installments": optionSelecctInstallments,
+          "finished_recurrency_at": finished_recurrency_at
         }
       }
       API.createJob(this.createJobResponse,data,true);
@@ -136,11 +141,6 @@ export default class Payment extends React.Component {
         ],
         { cancelable: false }
       );
-      // if(!this.state.isUpdate){
-      //   API.createJob(this.createJobResponse,data,true);
-      // }else{
-      //   this.state.propertyData && this.state.propertyData.id && API.updateProperties(this.createPropertiesResponse,data,true,this.state.propertyData.id);
-      // }
     }  
   }
 
@@ -164,9 +164,6 @@ export default class Payment extends React.Component {
         total = total;
       }
       vat = total * 0.12
-
-      
-      console.log("IMPRIMIENDO DATA AQUI ------------------------------------------->",this.props.navigation.state.params.data,this.state.frequencyData[0].name)
         return (
             <View style={styles.container}>
                 <View>

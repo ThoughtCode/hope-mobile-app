@@ -57,14 +57,6 @@ export default class CustomerCleaning extends Component {
       })
     }
   }
-
-  //======================================================================
-  // componentDidUpdate
-  //======================================================================
-
-  componentDidUpdate() {
-    console.log('ACTUALIZE EL COMPONENTE')
-  }
     
   getHolidayResponse = {
     success: (response) => {
