@@ -133,7 +133,10 @@ export const API = {
     getCustomerCommentsProfile: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMER_COMMENTS_PROFILE +'/reviews', buildHeader());
     },
-    
+
+    loginWithFacebook: (onResponse, data, isHeaderRequired) => {
+        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMER_FACEBOOK_LOGIN  , buildHeader());
+    },   
 }
 
 export const buildHeader = (headerParams = {}) => {
