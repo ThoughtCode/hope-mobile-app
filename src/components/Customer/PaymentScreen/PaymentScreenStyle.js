@@ -14,18 +14,18 @@ const thirdScreenStyle = StyleSheet.create({
     },
     ChildView: { flex: 0.9, margin: 10, flexDirection: 'column' },
     itemView: {
-        marginLeft:10,
+        marginLeft:5,
         marginTop: 5,
         flexDirection: 'row'
     },
     buttonViewStyle:
     {
-        width: 300, flex: 1, margin: 10, height: 50, backgroundColor: '#1F68A9', justifyContent: 'center'
+      width: 100, flex: 1, height: 40, backgroundColor: '#1F68A9', justifyContent: 'center'
     },
     textInputStyleContainer: {
         borderColor: "#000000",
         borderWidth: 1,
-        margin: 10,
+        margin: 5,
         height: 40
     },
     textInputStyle: {
@@ -43,16 +43,16 @@ const thirdScreenStyle = StyleSheet.create({
     },
     buttonViewStyle:
     {
-        margin: 10, height: 50, backgroundColor: '#1F68A9', justifyContent: 'center'
+        margin: 5, height: 40, backgroundColor: '#1F68A9', justifyContent: 'center'
     },
     buttonTextStyle:
     {
-        fontFamily:"helvetica", fontSize: 16, color: '#ffffff', textAlign: 'center'
+      fontFamily:"helvetica", fontSize: 16, color: '#ffffff', textAlign: 'center'
     },
     topImage:{
-        height: width * 0.3,
-        width : width
-      },
+      height: width * 0.2,
+      width : width
+    },
 });
 
 export default thirdScreenStyle;

@@ -20,7 +20,6 @@ export default class AddCardScreen extends React.Component {
   render() {
     let yourAlert = `document.getElementById("email").value += '${this.state.email}';
       document.getElementById("user_id").value += '` + this.state.id +`';`
-      console.log("-----------------> ID ID ID ID ID",this.state.id)
     return (
       <View style={{flex: 1}}>
         <View>
@@ -225,12 +224,11 @@ export default class AddCardScreen extends React.Component {
         </html> ` 
           }}
         />
-        <TouchableOpacity
-          onPress={() => this.props.navigation.goBack()}
-          style={styles.back_button}
-        >
-          <Text style={styles.back_button_text}>REGRESAR</Text>
-        </TouchableOpacity>
+        <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen")} style={styles.back_button}>
+            <Text style={{ color: '#1F68A9', fontFamily: 'helvetica', fontSize: 20, fontWeight: 'bold' }}>{"REGRESAR"}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

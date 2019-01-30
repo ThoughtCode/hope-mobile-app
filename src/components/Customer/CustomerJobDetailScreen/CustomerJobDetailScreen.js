@@ -34,7 +34,8 @@ export default class CustomerJobDetailScreen extends Component {
             isLoading : true,
             isCallapseOpen : true,
             isCallapseOpen1 : true,
-            type : props.navigation.state.params.type || null
+            type : props.navigation.state.params.type || null,
+            canReview : false,
         }
     }
 
@@ -43,11 +44,26 @@ export default class CustomerJobDetailScreen extends Component {
     //======================================================================
 
     componentDidMount(){
-        var hiredAgent = this.state.jobData.agent || []
-        this.setState({isCallapseOpen : true,agentList: [...this.state.jobData.proposals.data,...hiredAgent] || [] },()=>{
-            this.forceUpdate()
-        })
+      API.agentReviews(this.agentReviewsResponse,this.state.jobId,true)
+      var hiredAgent = this.state.jobData.agent || []
+      this.setState({isCallapseOpen : true,agentList: [...this.state.jobData.proposals.data,...hiredAgent] || [] },()=>{
+        this.forceUpdate()
+      })
+    }
 
+    agentReviewsResponse = {
+      success: (response) => {
+        try {
+          console.log("agentReviewsResponse data-->"+JSON.stringify(response))
+          this.setState({canReview: response.can_review})
+        } catch (error) {
+          console.log('agentReviewsResponse catch error ' + JSON.stringify(error));
+        }
+      },
+      error: (err) => {
+        console.log('agentReviewsResponse error ' + JSON.stringify(err));
+        Alert.alert("NOC NOC",err.message)
+      }
     }
 
     //======================================================================
@@ -166,49 +182,43 @@ export default class CustomerJobDetailScreen extends Component {
         }
     }
 
-    renderItem = (item) =>{
-        var data = item.item
-        return(
-            <View style={styles.renderRowView1}>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <View style={styles.userImageView} >
-                        {/* <Image source={require("../../../../assets/img/profile_placehoder.png")} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> */}
-                        {(data.attributes.agent.data.attributes.avatar.url != null)?
-                            <Image source={{uri : data.attributes.agent.data.attributes.avatar.url || ""}} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> 
-                        :
-                        <Image source={require("../../../../assets/img/profile_placehoder.png")} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>}
-                    </View>
-                    <View style={{flex:1}}>
-                        <Text onPress={() => this.props.navigation.navigate("CustomerAgentReviewScreen",{isHired : false,jobData : data, review : data.attributes.agent.data.attributes.rewiews_average })} style={styles.titleText}>{data.attributes.agent.data.attributes.first_name + " "+ data.attributes.agent.data.attributes.last_name}</Text>
-                        {/* <Text style={styles.titleText}>{"Ravi Joshi"}</Text> */}
-                    </View>
-                    <StarRating
-                        disabled={true}
-                        emptyStar={'ios-star-outline'}
-                        fullStar={'ios-star'}
-                        halfStar={'ios-star-half'}
-                        iconSet={'Ionicons'}
-                        maxStars={5}
-                        rating={data.attributes.agent.data.attributes.rewiews_average}
-                        // rating={3}
-                        starSize={18}
-                        fullStarColor={'#ffd700'}/>
-                </View>
-                <View style={{flexDirection:'row',justifyContent:'space-between',marginLeft:40}}>
-                    <Text style={{color:'gray'}}>{data.attributes.agent.data.attributes.rewiews_count+" Trabajos Completados"}</Text>
-                    <Text style={{color:'gray'}}>{data.attributes.agent.data.attributes.rewiews_count+" Opiniones"}</Text>
-                </View>
-
-                {/* <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text>  */}
-                {/* <Text style={styles.subText} numberOfLines={0}>{"This is Duumey conetecr of Agent Adta skkcv  nfxl"}</Text>  */}
-                <TouchableOpacity onPress={() => this.agentContract(data.id)} >
-                    <View style={{backgroundColor:'#1e67a9',marginHorizontal:10,alignItems:'center',justifyContent:'center',paddingVertical:7,marginTop:10}}>
-                        <Text style={[styles.titleText,{color:'#fff'}]}>{"Contratar Agente"}</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-        )
-    }
+  renderItem = (item) =>{
+    var data = item.item
+    return(
+      <View style={styles.renderRowView1}>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
+          <View style={styles.userImageView} >
+            {(data.attributes.agent.data.attributes.avatar.url != null)?
+              <Image source={{uri : data.attributes.agent.data.attributes.avatar.url || ""}} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> 
+            :
+            <Image source={require("../../../../assets/img/profile_placehoder.png")} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>}
+          </View>
+          <View style={{flex:1}}>
+            <Text onPress={() => this.props.navigation.navigate("CustomerAgentReviewScreen",{isHired : false,jobData : data, review : data.attributes.agent.data.attributes.rewiews_average })} style={styles.titleText}>{data.attributes.agent.data.attributes.first_name + " "+ data.attributes.agent.data.attributes.last_name}</Text>
+          </View>
+          <StarRating
+            disabled={true}
+            emptyStar={'ios-star-outline'}
+            fullStar={'ios-star'}
+            halfStar={'ios-star-half'}
+            iconSet={'Ionicons'}
+            maxStars={5}
+            rating={data.attributes.agent.data.attributes.rewiews_average}
+            starSize={18}
+            fullStarColor={'#ffd700'}/>
+        </View>
+        <View style={{flexDirection:'row',justifyContent:'space-between',marginLeft:40}}>
+          <Text style={{color:'gray'}}>{data.attributes.agent.data.attributes.rewiews_count+" Trabajos Completados"}</Text>
+          <Text style={{color:'gray'}}>{data.attributes.agent.data.attributes.rewiews_count+" Opiniones"}</Text>
+        </View>
+        <TouchableOpacity onPress={() => this.agentContract(data.id)} >
+          <View style={{backgroundColor:'#1e67a9',marginHorizontal:10,alignItems:'center',justifyContent:'center',paddingVertical:7,marginTop:10}}>
+            <Text style={[styles.titleText,{color:'#fff'}]}>{"Contratar Agente"}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  }
 
     ListEmptyComponent =() =>{
         return(
@@ -223,30 +233,30 @@ export default class CustomerJobDetailScreen extends Component {
     //======================================================================
     
     render(){
-        
-        var name = this.state.jobData.customer && this.state.jobData.customer.first_name  || "" + " "+ this.state.jobData.customer && this.state.jobData.customer.last_name || ""
-        var initials = this.state.jobData.customer && this.state.jobData.customer.first_name.charAt(0)
-        initials +=  this.state.jobData.customer && this.state.jobData.customer.last_name.charAt(0)
-        
-        var description = ""
-        var subDescription = ""
-        this.state.jobData.job_details.map((val,index)=>{
-            if(val.service.type_service == "base"){
-                // description += val.service.name
-            }else{
-                subDescription += val.service.name + " x " + val.value
-                // subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
-            }
-        
-        })
-        // alert(Moment("2013-11-18").tz("America/Guayaquil").format('Z'))
-        // Momenr.setTimezone('+0500')
-        // var initialDate = Moment(new Date(this.state.jobData.started_at)).utc().format('MMMM, DD - hh:mm a')
-        // America/Guayaquil
-        // var finishDate = Moment(this.state.jobData.finished_at).zone(+5).format('hh:mm a')
-        var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
-        var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
-        var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
+      var name = this.state.jobData.customer && this.state.jobData.customer.first_name  || "" + " "+ this.state.jobData.customer && this.state.jobData.customer.last_name || ""
+      var initials = this.state.jobData.customer && this.state.jobData.customer.first_name.charAt(0)
+      initials +=  this.state.jobData.customer && this.state.jobData.customer.last_name.charAt(0)
+      var description = ""
+      var subDescription = ""
+      this.state.jobData.job_details.map((val,index)=>{
+        if(val.service.type_service == "base"){
+        }else{
+          subDescription += val.service.name + " x " + val.value
+        }
+      })
+      var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
+      var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
+      var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
+      var frequency = ""
+      if(this.state.jobData.frequency == "one_time"){
+        frequency = "Una vez"
+      } else if(this.state.jobData.frequency == "weekly"){
+        frequency = "Semanal"
+      } else if(this.state.jobData.frequency == "fortnightly"){
+        frequency = "Quincenal"
+      } else if(this.state.jobData.frequency == "monthly"){
+        frequency = "Mensual"
+      }
         return(
             <SafeAreaView style={styles.container}>
                 <View>
@@ -289,52 +299,51 @@ export default class CustomerJobDetailScreen extends Component {
 
                 <View style={{flex:1}}>
                     <ScrollView>
-
                         <TouchableOpacity activeOpacity = { 0.7 } onPress = {() => this.setState({isCallapseOpen : !this.state.isCallapseOpen})}>
-                            <View style={{padding:10,backgroundColor:'rgb(240,240,240)',flexDirection:'row',justifyContent:'space-between'}}>
-                                <Text style={styles.mainTitleText}>{"Detalles del trabajo"}</Text>
-                                <Entypo name={(this.state.isCallapseOpen) ? "chevron-up" : "chevron-down"} color={"gray"} size={25} />
-                            </View>
+                          <View style={{padding:10,backgroundColor:'rgb(240,240,240)',flexDirection:'row',justifyContent:'space-between'}}>
+                            <Text style={styles.mainTitleText}>{"Detalles del trabajo"}</Text>
+                            <Entypo name={(this.state.isCallapseOpen) ? "chevron-up" : "chevron-down"} color={"gray"} size={25} />
+                          </View>
                         </TouchableOpacity>
-
                         <Collapsible collapsed={!this.state.isCallapseOpen} duration={200}>
-                            <View >
-                                {/* <View style={styles.renderRowView}>
-                                    <Text style={styles.titleText}>{"Tipo de trabajo"}</Text>
-                                    <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{description}</Text>
-                                </View> */}
-                                <View style={styles.renderRowView}>
-                                    <Text style={styles.titleText}>{"Fecha"}</Text>
-                                    <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{initialDate + " - "+ finishDate}</Text>
-                                </View>
-                                <View style={styles.renderRowView}>
-                                    <Text style={styles.titleText}>{"Servicios Adicionales"}</Text>
-                                    <Text style={[styles.subText]}>{subDescription}</Text>
-                                </View>
-                                <View style={styles.renderRowView}>
-                                    <Text style={styles.titleText}>{"Detalles a Considerar"}</Text>
-                                    <Text style={styles.subText}>{this.state.jobData.details}</Text>
-                                </View>
-
-                                <View style={[styles.renderRowView]}>
-                                    <Text style={styles.titleText}>{"Ubicación"}</Text>
-                                    <View style={{flexDirection:'row',alignItems:'center'}}> 
-                                        <EvilIcons name={"location"} size={20} />
-                                        <Text style={styles.subText}>{location}</Text>
-                                    </View>
-                                </View>
-                                <View style={styles.renderRowView}>
-                                    <Text style={styles.titleText}>{"Precio"}</Text>
-                                    <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{"$ "+ this.state.jobData.total.toFixed(2)}</Text>
-                                </View>
+                          <View >
+                            <View style={styles.renderRowView}>
+                              <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{this.state.jobData.job_details[0].service.name}</Text>
                             </View>
+                            <View style={styles.renderRowView}>
+                              <Text style={styles.titleText}>{"Fecha"}</Text>
+                              <Text style={[styles.subText,{color:'rgb(0,121,189)'}]}>{initialDate + " - "+ finishDate}</Text>
+                            </View>
+                            <View style={styles.renderRowView}>
+                              <Text style={styles.titleText}>{"Servicios Adicionales"}</Text>
+                              <Text style={[styles.subText]}>{subDescription}</Text>
+                            </View>
+                            <View style={styles.renderRowView}>
+                              <Text style={styles.titleText}>{"Frecuencia"}</Text>
+                              <Text style={styles.subText}>{frequency}</Text>
+                            </View>
+                            <View style={styles.renderRowView}>
+                              <Text style={styles.titleText}>{"Detalles a Considerar"}</Text>
+                              <Text style={styles.subText}>{this.state.jobData.details}</Text>
+                            </View>
+                            <View style={[styles.renderRowView]}>
+                              <Text style={styles.titleText}>{"Ubicación"}</Text>
+                              <View style={{flexDirection:'row',alignItems:'center'}}> 
+                                <EvilIcons name={"location"} size={20} />
+                                <Text style={styles.subText}>{location}</Text>
+                              </View>
+                            </View>
+                            <View style={styles.renderRowView}>
+                              <Text style={styles.titleText}>{"Precio"}</Text>
+                              <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{"$ "+ this.state.jobData.total.toFixed(2)}</Text>
+                            </View>
+                          </View>
                         </Collapsible>
-                        
                         <TouchableOpacity activeOpacity = { 0.7 } onPress = {() => this.setState({isCallapseOpen1 : !this.state.isCallapseOpen1})}>
-                            <View style={{padding:10,backgroundColor:'gray',flexDirection:'row',justifyContent:'space-between'}}>
-                                <Text>{"Agentes postulados"}</Text>
-                                <Entypo name={(this.state.isCallapseOpen1) ? "chevron-down" : "chevron-up"} color={"#fff"} size={25} />
-                            </View>
+                          <View style={{padding:10,backgroundColor:'gray',flexDirection:'row',justifyContent:'space-between'}}>
+                            <Text>{"Agentes postulados"}</Text>
+                            <Entypo name={(this.state.isCallapseOpen1) ? "chevron-down" : "chevron-up"} color={"#fff"} size={25} />
+                          </View>
                         </TouchableOpacity>
 
                         <Collapsible collapsed={this.state.isCallapseOpen1}>
@@ -368,14 +377,22 @@ export default class CustomerJobDetailScreen extends Component {
                                         <Text style={{color:'gray'}}>{this.state.jobData.agent_rewiews_count+" Trabajos Completados"}</Text>
                                         <Text style={{color:'gray'}}>{this.state.jobData.agent_rewiews_count+" Opiniones"}</Text>
                                     </View>
-                    
-                                    {/* <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text>  */}
-                                    {/* <Text style={styles.subText} numberOfLines={0}>{"This is Duumey conetecr of Agent Adta skkcv  nfxl"}</Text>  */}
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerReviewScreen",{jobData : this.props.navigation.state.params.jobData})} >
+                                    {(this.state.canReview == true) ? (
+                                      <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerReviewScreen",{jobData : this.props.navigation.state.params.jobData})} >
                                         <View style={{backgroundColor:'rgb(7,225,43)',marginHorizontal:10,alignItems:'center',justifyContent:'center',paddingVertical:7,marginTop:10}}>
-                                            <Text style={[styles.titleText,{color:'#fff'}]}>{"Contratado"}</Text>
+                                          <Text style={[styles.titleText,{color:'#fff'}]}>{"Calificar"}</Text>
                                         </View>
-                                    </TouchableOpacity>
+                                      </TouchableOpacity>
+                                    ):((this.state.jobData.status == "accepted" && this.state.canReview == false)?(
+                                      <TouchableOpacity>
+                                        <View style={{backgroundColor:'rgb(7,225,43)',marginHorizontal:10,alignItems:'center',justifyContent:'center',paddingVertical:7,marginTop:10}}>
+                                          <Text style={[styles.titleText,{color:'#fff'}]}>{"Contratado"}</Text>
+                                        </View>
+                                      </TouchableOpacity>
+                                    ):(
+                                      <View><Text>{""}</Text></View>
+                                    )
+                                    )}
                                 </View>
 
                             :

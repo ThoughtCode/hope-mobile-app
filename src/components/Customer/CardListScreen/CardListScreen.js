@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './CardListScreenStyle';
 const { height, width } = Dimensions.get('window')
 import { API } from '../../../util/api';
@@ -26,14 +27,13 @@ export default class CardListScreen extends Component {
     }
 
     componentDidMount() {
+        console.log("LLAMANDO A ESTE COMPONENTE DE CARDLIST")
         API.getCardLists(this.cardListsResponseData, {}, true);
     }
 
     cardListsResponseData = {
         success: (response) => {
             try {
-                console.log("Response data-->" + JSON.stringify(response.payment.data))
-
                 let temCardList = response.payment.data.map((item) => {
                     item.isChecked = false;
                     return item
@@ -97,7 +97,7 @@ export default class CardListScreen extends Component {
     ListEmptyComponent = () => {
         return (
             <View style={{ flex: 1, width: width, alignItems: 'center', justifyContent: 'center', paddingVertical: 20 }} >
-                <Text style={{ fontSize: 18, fontFamily: 'helvetica' }}>{"No tiene propiedades, por favor\ningrese una Nueva Direccion"}</Text>
+                <Text style={{ fontSize: 18, fontFamily: 'helvetica' }}>{"No tienes tarjetas, por favor ingresa una."}</Text>
             </View>
         )
     }
@@ -113,6 +113,7 @@ export default class CardListScreen extends Component {
         return (
             <View style={styles.container}>
                 <View>
+                    <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
                     <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
                     <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 50, width: width }}>
                         <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>{"Tarjetas"}</Text>

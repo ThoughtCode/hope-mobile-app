@@ -37,8 +37,8 @@ export default class CustomerTrabajosDashboard extends Component {
 
     componentDidMount(){
         AsyncStorage.getItem("customerData").then((item) =>{
-            // const data = this.props.navigation.getParam('data');
-            const data = JSON.parse(item)
+            const data = this.props.navigation.getParam('data');
+            // const data = JSON.parse(item)
             const authToken = data.customer.data.attributes.access_token;
             this.getServicesTypes(authToken);
         })
@@ -63,8 +63,8 @@ export default class CustomerTrabajosDashboard extends Component {
     // navigateToDetail
     //======================================================================
 
-    static navigateToDetail = (item,setRow,type) =>{
-        _this.props.navigation.navigate("CustomerJobDetailScreen",{jobData: item.item,setRow:setRow,index: item.index,type : type})
+    navigateToDetail = (item,type) =>{
+        this.props.navigation.navigate("CustomerJobDetailScreen",{jobData: item,type : type})
     }
 
     //======================================================================
@@ -89,18 +89,17 @@ export default class CustomerTrabajosDashboard extends Component {
                             >
                             {
                                 this.state.servicesTypes.map((serviceType) => {
-                                    return (
-                                        <View key={serviceType.id} style={styles.servicios_item}>
-                                            <TouchableOpacity onPress={() => this.setState({modalVisible : false},()=> {this.props.navigation.navigate("CustomerCleaning", { serviceType: serviceType })})}>
-                                                <Image source={{ uri: serviceType.attributes.image.url }}
-                                                    style={styles.servicios_item_image}
-                                                    resizeMode={"cover"}
-                                                />
-                                                <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
-                                            </TouchableOpacity>
-                                        </View>
-
-                                    );
+                                  return (
+                                    <View key={serviceType.id} style={styles.servicios_item}>
+                                      <TouchableOpacity onPress={() => this.setState({modalVisible : false},()=> {this.props.navigation.navigate("CustomerCleaning", { serviceType: serviceType })})}>
+                                        <Image source={{ uri: serviceType.attributes.image.url }}
+                                          style={styles.servicios_item_image}
+                                          resizeMode={"cover"}
+                                        />
+                                        <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
+                                      </TouchableOpacity>
+                                    </View>
+                                  );
                                 })
                             }
                             </ScrollView>
@@ -125,7 +124,7 @@ export default class CustomerTrabajosDashboard extends Component {
                     <Text style={styles.titleStyle} >{"Mis Trabajos"}</Text>
                     <Text style={styles.subTitleStyle} onPress={() => this.setState({modalVisible : true})} >{"Nuevo trabajo"}</Text>
                 </View>
-                <TrabajosTab navigateToDetail={this.navigateToDetail} />
+                <TrabajosTab screenProps={{navigateToDetail: this.navigateToDetail}} />
             </SafeAreaView>
         )
     }

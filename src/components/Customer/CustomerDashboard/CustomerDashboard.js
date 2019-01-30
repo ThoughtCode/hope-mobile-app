@@ -47,6 +47,13 @@ export default class CustomerDashboard extends Component {
   //     }).catch((error) => this.setState({errorMessage: error.message}));
   // };
 
+
+  static navigateToDetail = (item) =>{
+    console.log("Navegar a detallers")
+    // this.props.navigation.navigate("CustomerJobDetailScreen",{jobData: item.item})
+    _this.props.navigation.navigate("CustomerJobDetailScreen",{jobData: item.item})
+  }
+
   getServicesTypes = (authToken) => {
     servicesTypesURL = urls.BASE_URL + urls.SERVICE_TYPES;
     fetch(servicesTypesURL, {
@@ -104,6 +111,8 @@ export default class CustomerDashboard extends Component {
         this.getPastJobs(authToken);
       })
   }
+
+
 
   renderPastJobs(){
     return(
@@ -166,30 +175,7 @@ export default class CustomerDashboard extends Component {
                               )
                             })}
                             </View>
-                            
-                            {/* <Text style={[styles.textFont]}>{description}</Text>
-                            <Text style={[styles.textFont]}>{description}</Text> */}
-                            {/* <View style={styles.subtextViewStyle}>
-                              <View style={{ flex: 1 }}>
-                                <Text style={[styles.textFont, { fontSize: 12 }]}>{subDescription}</Text>
-                              </View> */}
-                              {/* <View style={{ flex: 0.2 }}>
-                                <Text style={[styles.textFont, { color: 'rgb(0,121,189)', fontSize: 20 }]}>{"$" + job.attributes.total.toFixed(2)}</Text>
-                              </View> */}
-                            {/* </View> */}
-                            
                           </View>
-                          {/* <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
-                          <Text style={styles.trabajos_item_date}>
-                            {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
-                          </Text>
-                          <View style={styles.trabajos_avatars_container}>
-                            <Image source={require('../../../../assets/img/profile_avatar1.png')}
-                                   style={styles.trabajos_avatar_image}/>
-                            <Image source={require('../../../../assets/img/profile_avatar2.png')}
-                                   style={styles.trabajos_avatar_image}/>
-                          </View>
-                          <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text> */}
                           <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerJobDetailScreen",{jobData:job})} >
                             <View style={{borderWidth:1,borderColor:'lightgray',borderRadius:5,paddingVertical:10,alignItems:'center',justifyContent:'center'}}>
                               <Text>{"Ver Detalles"}</Text>
@@ -267,17 +253,6 @@ export default class CustomerDashboard extends Component {
                             })}
                             </View>
                           </View>
-                          {/* <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
-                          <Text style={styles.trabajos_item_date}>
-                            {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
-                          </Text>
-                          <View style={styles.trabajos_avatars_container}>
-                            <Image source={require('../../../../assets/img/profile_avatar1.png')}
-                                  style={styles.trabajos_avatar_image}/>
-                            <Image source={require('../../../../assets/img/profile_avatar2.png')}
-                                  style={styles.trabajos_avatar_image}/>
-                          </View>
-                          <Text style={styles.trabajos_item_footer}>Mas agentes están en camino</Text> */}
                           <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerJobDetailScreen",{jobData:job})} >
                             <View style={{borderWidth:1,borderColor:'lightgray',borderRadius:5,paddingVertical:10,alignItems:'center',justifyContent:'center'}}>
                               <Text>{"Ver Detalles"}</Text>
@@ -286,22 +261,6 @@ export default class CustomerDashboard extends Component {
                       </View>
                   );
                 })
-                  //   const date = new Date(job.attributes.started_at), locale = "es-ES",
-                  //       month = date.toLocaleString(locale, {month: "long"});
-                  //   return (
-                  //       <View key={job.id} style={styles.trabajos_item}>
-                  //         <Text style={styles.trabajos_item_title}>{job.attributes.job_details[0].service.name}</Text>
-                  //         <Text style={styles.trabajos_item_date}>
-                  //           {month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"}
-                  //         </Text>
-                  //         <View style={styles.trabajos_avatars_container}>
-                  //           <Image source={require('../../../../assets/img/profile_avatar3.png')}
-                  //                  style={styles.trabajos_avatar_image}/>
-                  //         </View>
-                  //         <Text style={styles.trabajos_item_footer}>Realizado exitosamente</Text>
-                  //       </View>
-                  //   );
-                  // })
                 }
               </ScrollView>
             </View>
@@ -354,40 +313,7 @@ export default class CustomerDashboard extends Component {
             {(this.state.pastJobs.length > 0) ? this.renderPreviousJobs() : this.noJobview("past")}
             
           </ScrollView>
-          {/* <View style={styles.footer}>
-            <View style={styles.footer_item}>
-              <FontAwesome
-                  name="home"
-                  size={24}
-                  color='gray'
-              />
-              <Text style={styles.footer_item_text}>Home</Text>
-            </View>
-            <View style={styles.footer_item}>
-              <TouchableOpacity
-                  style={styles.footer_item}
-                  onPress={() => this.props.navigation.navigate('CustomerTrabajosDashboard', {data: this.props.navigation.getParam('data')})}
-              >
-                <FontAwesome
-                    name="briefcase"
-                    size={24}
-                    color='gray'
-                />
-                <Text style={styles.footer_item_text}>Trabajos</Text>
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity
-                style={styles.footer_item}
-                onPress={() => this.props.navigation.navigate('CustomerProfile', {data: this.props.navigation.getParam('data')})}
-            >
-              <FontAwesome
-                  name="user"
-                  size={24}
-                  color='gray'
-              />
-              <Text style={styles.footer_item_text}>Profile</Text>
-            </TouchableOpacity>
-          </View> */}
+          
         </View>
     );
   }
