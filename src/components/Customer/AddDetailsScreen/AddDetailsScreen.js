@@ -44,6 +44,7 @@ export default class AddCardScreen extends Component {
       email : globals.email,
       phone : globals.cell_phone,
       detailsData : null,
+      jobCurrentState: this.props.navigation.state.params.jobActualState,
     }
   }
 
@@ -129,7 +130,8 @@ export default class AddCardScreen extends Component {
     }
     if(!this.state.isUpdate && is_form_validated){
       API.setAddInvoiceDetail(this.addInvoiceDetailDataResponseData, data, true);
-      this.props.navigation.navigate("DetailsListScreen",{setDetails : this.setDetails})
+      let jobCurrentStateSend = this.props.navigation.state.params.jobActualState
+      this.props.navigation.navigate("DetailsListScreen",{setDetails : this.setDetails, jobActualState : jobCurrentStateSend})
     }else{
       console.log("Estoy aca ------------>")
     }
@@ -275,9 +277,6 @@ export default class AddCardScreen extends Component {
             </View>
           </TouchableOpacity>
         </KeyboardAvoidingView>
-        {/* <TouchableOpacity onPress={() => this.validation()}>
-          <Text style={{ color: '#1F68A9', fontFamily: 'helvetica', fontSize: 20, fontWeight: 'bold' }}>{"Agregar detalle de facturación"}</Text>
-        </TouchableOpacity> */}
         </View>
     );
   }

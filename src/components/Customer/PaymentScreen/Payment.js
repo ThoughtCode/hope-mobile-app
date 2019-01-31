@@ -1,26 +1,14 @@
 import React from 'react';
-import {
-    Text,
-    View,
-    TextInput,
-    Image,
-    TouchableOpacity,
-    FlatList,
-    CheckBox,
-    Dimensions,
-    Picker,
-    Alert,
-    Linking
-} from 'react-native';
-const { height, width } = Dimensions.get('window');
-import FontAwesome from '@expo/vector-icons/FontAwesome'
+import {Text,View,Image,TouchableOpacity,FlatList,Dimensions,Picker,Alert,Linking,ScrollView} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './PaymentScreenStyle';
 import { API } from '../../../util/api';
 import Moment from 'moment';
+const { width } = Dimensions.get('window');
 const IMAGES = {
-    TOP_BACKGROUND: require("../../../../assets/img/topbg.png")
+  TOP_BACKGROUND: require("../../../../assets/img/topbg.png")
 }
+
 export default class Payment extends React.Component {
   constructor(props) {
     super(props);
@@ -146,7 +134,9 @@ export default class Payment extends React.Component {
 
     render() {
       let { data, checked } = this.state;
-      let total = 0
+      let initial_price = this.state.serviceType.attributes.service_base[0].price
+      let initial_time = this.state.serviceType.attributes.service_base[0].time
+      let total = initial_price * initial_time;
       let vat = 0
       let total_with_additional_fee = 0
       this.state.additionalServiceData.map((item)=>{
@@ -164,6 +154,8 @@ export default class Payment extends React.Component {
         total = total;
       }
       vat = total * 0.12
+      console.log("VAT",vat)
+      console.log("TOTAL",total)
         return (
             <View style={styles.container}>
                 <View>
@@ -181,62 +173,64 @@ export default class Payment extends React.Component {
                   {Moment(this.state.startedAt).format('L, h:mm:ss a')}
                 </Text>
                 <View style={styles.deviderStyle} />
-                <View style={{ flex: 0.9 }}>
-                  <FlatList data={this.state.serviceType.attributes.service_base}
-                    extraData={this.state}
-                    renderItem={({ item, index }) =>
+                <ScrollView>
+                  <View style={{ flex: 0.9 }}>
+                    <FlatList data={this.state.serviceType.attributes.service_base}
+                      extraData={this.state}
+                      renderItem={({ item, index }) =>
+                        <View style={styles.childContainer}>
+                          <View style={styles.itemView}>
+                            <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
+                              {item.name}
+                            </Text>
+                            <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
+                              ${(item.price * item.time).toFixed(2)}
+                            </Text>
+                          </View>
+                        </View>
+                      }
+                      keyExtractor={(item, index) => index.toString()}
+                    />
+                    <FlatList data={this.state.additionalServiceData}
+                      extraData={this.state}
+                      renderItem={({ item, index }) =>
+                        <View style={styles.childContainer}>
+                          <View style={styles.itemView}>
+                            <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
+                              {item.name}
+                            </Text>
+                            <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
+                              ${(item.price * item.time).toFixed(2) * ((item.count != null) ? (item.count) : (1))}
+                            </Text>
+                          </View>
+                        </View>
+                      }
+                      keyExtractor={(item, index) => index.toString()}
+                    />
+                    {(this.state.isHoliday == true) ? (
                       <View style={styles.childContainer}>
                         <View style={styles.itemView}>
                           <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
-                            {item.name}
+                            Recargo fin de semana o feriados
                           </Text>
                           <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                            ${(item.price * item.time).toFixed(2)}
+                            ${total_with_additional_fee.toFixed(2)}
                           </Text>
                         </View>
                       </View>
-                    }
-                    keyExtractor={(item, index) => index.toString()}
-                  />
-                  <FlatList data={this.state.additionalServiceData}
-                    extraData={this.state}
-                    renderItem={({ item, index }) =>
-                      <View style={styles.childContainer}>
-                        <View style={styles.itemView}>
-                          <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
-                            {item.name}
-                          </Text>
-                          <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                            ${(item.price * item.time).toFixed(2) * ((item.count != null) ? (item.count) : (1))}
-                          </Text>
-                        </View>
-                      </View>
-                    }
-                    keyExtractor={(item, index) => index.toString()}
-                  />
-                  {(this.state.isHoliday == true) ? (
+                    ):null}
                     <View style={styles.childContainer}>
                       <View style={styles.itemView}>
                         <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
-                          Recargo fin de semana o feriados
+                          I.V.A
                         </Text>
                         <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                          ${total_with_additional_fee.toFixed(2)}
+                          ${vat.toFixed(2)}
                         </Text>
                       </View>
                     </View>
-                  ):null}
-                  <View style={styles.childContainer}>
-                    <View style={styles.itemView}>
-                      <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
-                        I.V.A
-                      </Text>
-                      <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                        ${vat.toFixed(2)}
-                      </Text>
-                    </View>
                   </View>
-                </View>
+                </ScrollView>
                 <View style={{ flexDirection: 'row', margin: 5 }}>
                   <Text style={{ flex: 0.4,fontSize: 16, fontFamily: "helvetica" }}>
                     Horas de limpieza

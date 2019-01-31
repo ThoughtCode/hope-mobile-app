@@ -27,6 +27,9 @@ const DirectionScreenStyles = StyleSheet.create({
         height: width * 0.35,
         width : width
     },
+    backButtonImage:{
+        color:"#000",position:'absolute',top:20,left:20,zIndex:1,color : '#fff'
+    },
 });
 
 export default DirectionScreenStyles;
