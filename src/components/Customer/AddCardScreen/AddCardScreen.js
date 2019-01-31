@@ -225,7 +225,7 @@ export default class AddCardScreen extends React.Component {
           }}
         />
         <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen")} style={styles.back_button}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{jobActualState:this.props.navigation.state.params.jobActualState})} style={styles.back_button}>
             <Text style={{ color: '#1F68A9', fontFamily: 'helvetica', fontSize: 20, fontWeight: 'bold' }}>{"REGRESAR"}</Text>
           </TouchableOpacity>
         </View>
