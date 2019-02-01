@@ -22,19 +22,19 @@ export default class AddCardScreen extends React.Component {
       document.getElementById("user_id").value += '` + this.state.id +`';`
     return (
       <View style={{flex: 1}}>
-        <View>
+        {/* <View>
           <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
           <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 50, width: width }}>
             <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>{"Agregar Tarjeta"}</Text>
           </View>
-        </View>
+        </View> */}
         <WebView
-          style={{flex: 1}}
-          originWhitelist={['*']}
-          nativeConfig={{props: {webContentsDebuggingEnabled: true}}} 
-          javaScriptEnabled={true}
-          domStorageEnabled={true}
-          injectedJavaScript={yourAlert}
+          // style={{flex: 1}}
+          // originWhitelist={['*']}
+          // nativeConfig={{props: {webContentsDebuggingEnabled: true}}} 
+          // javaScriptEnabled={true}
+          // domStorageEnabled={true}
+          // injectedJavaScript={yourAlert}
           source={{ html: `
           <!DOCTYPE html>
             <html>
