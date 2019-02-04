@@ -18,8 +18,6 @@ export default class AddCardScreen extends React.Component {
     }
   }
   render() {
-    let yourAlert = `document.getElementById("email").value += '${this.state.email}';
-      document.getElementById("user_id").value += '` + this.state.id +`';`
     return (
       <View style={{flex: 1}}>
         <View>
@@ -29,30 +27,9 @@ export default class AddCardScreen extends React.Component {
           </View>
         </View>
         <WebView
-          style={{flex: 1}}
-          originWhitelist={['*']}
-          nativeConfig={{props: {webContentsDebuggingEnabled: true}}} 
           javaScriptEnabled={true}
           domStorageEnabled={true}
-          injectedJavaScript={yourAlert}
-          source={{ html: `
-            <!DOCTYPE html>
-            <html>
-              <head>  
-                <title>Example Paymentez Add Card | PaymentezJs</title>
-                <meta charset="UTF-8">  
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              </head>
-              <body>
-                <div>
-                  <h1>
-                    <button class="btn payment">Agregar Tarjeta Save</button>
-                  </h1>
-                </div>
-              </body>
-            </html>
-          ` 
-          }}
+          source={{ uri: `https://hopeec-staging.herokuapp.com/add_credit_card?email=${this.state.email}&id=${this.state.id}`}}
         />
         <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{jobActualState:this.props.navigation.state.params.jobActualState})} style={styles.back_button}>
