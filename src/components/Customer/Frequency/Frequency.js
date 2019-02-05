@@ -4,7 +4,6 @@ import {
     View,
     TouchableOpacity,
     FlatList,
-    CheckBox
 } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -22,17 +21,17 @@ export default class Frequency extends Component {
                 },
                 {
                     name: 'Semanal',
-                    description: 'Te visitaremos semanaimente el dia que tu elijas',
+                    description: 'Te visitaremos semanaimente el día que tú elijas',
                     isSelected : false
                 },
                 {
                     name: 'Quincenal',
-                    description: 'Te visitaremos cada 15 dias el dia que tu elijas',
+                    description: 'Te visitaremos cada 15 dias el día que tú elijas',
                     isSelected : false
                 },
                 {
                     name: 'Mensual',
-                    description: 'Te Visitaremos mensualmente el dia que tu elijas',
+                    description: 'Te Visitaremos mensualmente el día que tú elijas',
                     isSelected : false
                 }
             ]

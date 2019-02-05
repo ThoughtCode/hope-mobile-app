@@ -14,7 +14,7 @@ export default class AddressForm extends React.Component {
     this.state = {
       avatar : globals.avatar,
       data : null,
-      nobre : '',
+      nombre : '',
       neighborhoodID : 0,
       selectNeighborhood : '',
       street1 : '',
@@ -45,7 +45,7 @@ export default class AddressForm extends React.Component {
 
     if(this.state.isUpdate){
       this.setState({
-        nobre : this.state.propertyData.attributes.name,
+        nombre : this.state.propertyData.attributes.name,
         neighborhoodID : this.state.propertyData.attributes.neightborhood_id, 
         street1 : this.state.propertyData.attributes.s_street,
         street2 : this.state.propertyData.attributes.p_street,
@@ -116,7 +116,7 @@ export default class AddressForm extends React.Component {
   onPressHandle = () =>{
     let data = {
       "property": {
-        "name": this.state.nobre,
+        "name": this.state.nombre,
         "neightborhood_id": this.state.neighborhoodID, 
         "p_street": this.state.street1,
         "s_street": this.state.street2,
@@ -208,10 +208,10 @@ export default class AddressForm extends React.Component {
                     <TextInput ref={ref => (this.firtNameInput = ref)}
                       underlineColorAndroid={"transparent"}
                       style={styles.textInputStyle}
-                      placeholder={"Nobre"}
+                      placeholder={"Nombre"}
                       placeholderTextColor={"gray"}
-                      value={this.state.nobre}
-                      onChangeText={(nobre) => this.setState({ nobre: nobre })}
+                      value={this.state.nombre}
+                      onChangeText={(nombre) => this.setState({ nombre: nombre })}
                     />
                   </View>
 
@@ -274,7 +274,7 @@ export default class AddressForm extends React.Component {
                     <TextInput ref={ref => (this.numeracionInput = ref)}
                       underlineColorAndroid={"transparent"}
                       style={styles.textInputStyle}
-                      placeholder={"Numeracion"}
+                      placeholder={"Numeración"}
                       placeholderTextColor={"gray"}
                       value={this.state.numeracion}
                       onChangeText={(numeracion) => this.setState({ numeracion: numeracion })}

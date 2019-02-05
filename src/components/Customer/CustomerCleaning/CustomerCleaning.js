@@ -62,21 +62,41 @@ export default class CustomerCleaning extends Component {
       let newDetailsData = null
       let newJobData = null
       let newCardData = null
-      if (this.props.navigation.state.params.newDetailsData != null ){
-        newDetailsData = this.props.navigation.state.params.newDetailsData
-        newJobData = this.props.navigation.state.params.jobCurrentState.directionData
-        newCardData = this.props.navigation.state.params.jobCurrentState.cardData
-      }
-      if (this.props.navigation.state.params.newJobData != null ){
+      
+      console.log("STATE PRINCIPAL CMPONENT ------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>",this.props.navigation.state.params)
+      
+      has_card_data = this.props.navigation.state.params.newCardData
+      has_address_data = this.props.navigation.state.params.jobCurrentState.directionData
+      has_direction_data = this.props.navigation.state.params.jobCurrentState.directionData
+
+      if (this.props.navigation.state.params.newJobData != null){
+        console.log("ESTOY EN NEW DIRECTION DATA ------------------->>>>>>>>>>>>>>>> DIRECTION",this.props.navigation.state.params)
         newJobData = this.props.navigation.state.params.newJobData
         newDetailsData = this.props.navigation.state.params.jobCurrentState.invoicesData
         newCardData = this.props.navigation.state.params.jobCurrentState.cardData
       }
-      if (this.props.navigation.state.params.newCardData != null ){
+      if (this.props.navigation.state.params.newDetailsData != null){
+        console.log("ESTOY EN NEW DATEILS DATA ------------------->>>>>>>>>>>>>>>> DETAILS")
+        newDetailsData = this.props.navigation.state.params.newDetailsData
+        newJobData = this.props.navigation.state.params.jobCurrentState.directionData
+        newCardData = this.props.navigation.state.params.jobCurrentState.cardData
+      }
+      // console.log("ESTA LLEGANDO O NO ---------------->>>>>>>>>>>>>",this.props.navigation.state.params.newCardData)
+      if (this.props.navigation.state.params.newCardData != null && has_card_data != undefined) {
+        console.log("ESTOY EN NEW CARD DATA ------------------->>>>>>>>>>>>>>>> CARD")
+        newCardData = this.props.navigation.state.params.newCardData
         newJobData = this.props.navigation.state.params.jobCurrentState.directionData
         newDetailsData = this.props.navigation.state.params.jobCurrentState.invoicesData
-        newCardData = this.props.navigation.state.params.newCardData
       }
+
+      if (has_card_data == undefined && has_address_data != null && has_direction_data != null && this.props.navigation.state.params.newDetailsData == null && this.props.navigation.state.params.newJobData == null){
+        console.log("NO CARD CHOOSEN ------------------->>>>>>>>>>>>>>>>")
+        newCardData = this.props.navigation.state.params.jobCurrentState.cardData
+        newJobData = this.props.navigation.state.params.jobCurrentState.directionData
+        newDetailsData = this.props.navigation.state.params.jobCurrentState.invoicesData
+      }
+
+      console.log('THIS IS THE FINAL DATA ------->', newCardData, newJobData, newDetailsData)
 
       this.setState({
         serviceType: this.props.navigation.state.params.jobCurrentState.serviceType,
@@ -301,9 +321,9 @@ export default class CustomerCleaning extends Component {
     }else if(this.state.cardData == null || ""){
       Alert.alert(
         'Error de validación',
-        'Seleccione una metodo de pago',
+        'Seleccione un metodo de pago',
         [
-          { text: 'OK', onPress: () => console.log('Seleccione una metodo de pago') }
+          { text: 'OK', onPress: () => console.log('Seleccione un metodo de pago') }
         ],
         { cancelable: false }
       );
@@ -411,33 +431,6 @@ export default class CustomerCleaning extends Component {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{jobActualState: this.state})}>
-              <View style={styles.rowStyle}>
-                <View style={styles.rowText}>
-                  <Text style={styles.titleText}>{"Ingresa tú forma de Pago"}</Text>
-                  {this.state.cardData && <View style={styles.childContainer}>
-                    <View style={styles.itemView}>
-                      <View style={{ flexDirection: 'row' }}>
-                        <FontAwesome name={"cc-visa"} size={20} color={"rgb(0,121,189)"}  />
-                        <Text style={{ flex: 0.6 }}>
-                          {this.state.cardData.attributes.number}
-                        </Text>
-                        <Text style={{ flex: 0.4 }}>
-                          {"Exp." + this.state.cardData.attributes.expiry_month + "/" + this.state.cardData.attributes.expiry_year}
-                        </Text>
-                      </View>
-                      <View style={{ flexDirection: 'row' }}>
-                        <Text>
-                          {"Nombre : " + this.state.cardData.attributes.holder_name}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>}
-                </View>
-                <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
-              </View>
-            </TouchableOpacity>
-
             <TouchableOpacity onPress={() => this.props.navigation.navigate("DetailsListScreen",{jobActualState: this.state})}>
               <View style={styles.rowStyle}>
                 <View style={styles.rowText}>
@@ -456,6 +449,33 @@ export default class CustomerCleaning extends Component {
                       <View style={{ flexDirection: 'row' }}>
                         <Text>
                           {this.state.invoicesData.attributes.telephone}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>}
+                </View>
+                <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{jobActualState: this.state})}>
+              <View style={styles.rowStyle}>
+                <View style={styles.rowText}>
+                  <Text style={styles.titleText}>{"Ingresa tú forma de Pago"}</Text>
+                  {this.state.cardData && <View style={styles.childContainer}>
+                    <View style={styles.itemView}>
+                      <View style={{ flexDirection: 'row' }}>
+                        <FontAwesome name={"cc-visa"} size={20} color={"rgb(0,121,189)"}  />
+                        <Text style={{ flex: 0.6 }}>
+                          {this.state.cardData.attributes.number}
+                        </Text>
+                        <Text style={{ flex: 0.4 }}>
+                          {"Exp." + this.state.cardData.attributes.expiry_month + "/" + this.state.cardData.attributes.expiry_year}
+                        </Text>
+                      </View>
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text>
+                          {"Nombre : " + this.state.cardData.attributes.holder_name}
                         </Text>
                       </View>
                     </View>

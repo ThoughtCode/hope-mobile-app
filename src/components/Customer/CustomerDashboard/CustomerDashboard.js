@@ -223,7 +223,7 @@ export default class CustomerDashboard extends Component {
   noJobview(data = "") {
     return(
       <View style={{alignItems:'center',justifyContent:'center',padding:20}}>
-        <Text>{"No "+ data +" Job Available"}</Text>
+        <Text>{"No tienes trabajos "+ data}</Text>
       </View>
     )
   }
@@ -256,8 +256,8 @@ export default class CustomerDashboard extends Component {
               }
             </ScrollView>
           </View>
-          {(this.state.nextJobs.length > 0) ?  this.renderPastJobs() : this.noJobview()}
-          {(this.state.pastJobs.length > 0) ? this.renderPreviousJobs() : this.noJobview("past")}
+          {(this.state.nextJobs.length > 0) ? this.renderPastJobs() : this.noJobview("actuales")}
+          {(this.state.pastJobs.length > 0) ? this.renderPreviousJobs() : this.noJobview("pasados")}
         </ScrollView>
       </View>
     );

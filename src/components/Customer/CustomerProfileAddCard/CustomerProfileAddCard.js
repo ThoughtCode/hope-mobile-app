@@ -126,7 +126,7 @@ export default class CustomerProfileAddCard extends Component {
                 </View> 
                 
                 <View style={{flex:1,marginTop:20}}>
-                    <Text style={styles.textStyle}>{"Numero de tarjeta"}</Text>
+                    <Text style={styles.textStyle}>{"Número de tarjeta"}</Text>
                         <View style={styles.textInputStyleContainer}>
                         <TextInput
                             ref={input => {
@@ -137,7 +137,7 @@ export default class CustomerProfileAddCard extends Component {
                             style={styles.textInputStyle}
                             onChangeText={(text) => this.setState({name : text})} />
                         </View>
-                    <Text style={styles.textStyle}>{"Numero de Completo"}</Text>
+                    <Text style={styles.textStyle}>{"Número de Completo"}</Text>
                     <View style={styles.textInputStyleContainer}>
                         <TextInput
                             ref={input => {

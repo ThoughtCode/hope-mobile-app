@@ -65,7 +65,7 @@ export default class CardListScreen extends Component {
     }
   }
 
-  selectCatdTap(index){
+  selectCardTap(index){
     let cardData = this.state.cardListData;
     let newCardList = cardData.map((x) => {x.isChecked = false; return x})
     let selectedObject = newCardList[index];
@@ -78,9 +78,9 @@ export default class CardListScreen extends Component {
     var data = item.item
     console.log('Item -->', data)
     return (
-      <TouchableOpacity onPress={() => this.selectCatdTap(item.index)}>
+      <TouchableOpacity onPress={() => this.selectCardTap(item.index)}>
         <View style={styles.childContainer}>
-          <FontAwesome name={(data.isChecked) ? "check-square" : "square-o"} size={30} onPress={() => this.selectCatdTap(item.index)} style={{ color: '#1F68A9' }}  />
+          <FontAwesome name={(data.isChecked) ? "check-square" : "square-o"} size={30} onPress={() => this.selectCardTap(item.index)} style={{ color: '#1F68A9' }}  />
           <View style={styles.itemView}>
             <View style={{ flexDirection: 'row' }}>
               <FontAwesome name={"cc-visa"} size={20} color={"rgb(0,121,189)"} style={styles.iconStyle} />
@@ -123,10 +123,11 @@ export default class CardListScreen extends Component {
   }
 
   render() {
+    console.log("STATE SECUNDARIO COMPONENT ------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>")
     return (
       <View style={styles.container}>
         <View>
-          <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
+          <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={this.onPress} />
           <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
           <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 50, width: width }}>
             <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>{"Tarjetas"}</Text>

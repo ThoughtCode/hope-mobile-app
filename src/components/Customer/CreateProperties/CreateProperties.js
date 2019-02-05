@@ -25,7 +25,7 @@ export default class CreateProperties extends Component {
         this.state = {
             isLoading : true,
             avatar : globals.avatar,
-            nobre : '',
+            nombres : '',
             neighborhoodID : '',
             street1 : '',
             street2 : '',
@@ -80,7 +80,7 @@ export default class CreateProperties extends Component {
         
         data = {
             "property": {
-                "name": this.state.nobre,
+                "name": this.state.nombres,
                 "neightborhood_id": this.state.neighborhoodID, 
                 "p_street": this.state.street1,
                 "s_street": this.state.street2,
@@ -194,10 +194,10 @@ export default class CreateProperties extends Component {
                                         <TextInput  ref={ref => (this.firtNameInput = ref)}
                                                     underlineColorAndroid={"transparent"}
                                                     style={styles.textInputStyle}
-                                                    placeholder={"Nobre"}
+                                                    placeholder={"nombres"}
                                                     placeholderTextColor={"gray"}
-                                                    value={this.state.nobre}
-                                                    onChangeText={(nobre) => this.setState({nobre : nobre})}
+                                                    value={this.state.nombres}
+                                                    onChangeText={(nombres) => this.setState({nombres : nombres})}
                                                     returnKeyType={"next"}
                                                     onSubmitEditing={() => this.setFocus("cityInput")} />
                                     </View>
@@ -275,7 +275,7 @@ export default class CreateProperties extends Component {
                                         <TextInput  ref={ref => (this.numeracionInput = ref)}
                                                     underlineColorAndroid={"transparent"}
                                                     style={styles.textInputStyle}
-                                                    placeholder={"Numeracion"}
+                                                    placeholder={"Numeración"}
                                                     placeholderTextColor={"gray"}
                                                     value={this.state.numeracion}
                                                     onChangeText={(numeracion) => this.setState({numeracion : numeracion})}

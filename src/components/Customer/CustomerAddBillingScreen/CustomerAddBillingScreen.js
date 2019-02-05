@@ -99,7 +99,7 @@ export default class CustomerAddBillingScreen extends Component {
                 <View style={{flex:1}}>
                     <View style={{flexDirection:'row',marginVertical:5}}>
                         <View style={styles.textStyle}>
-                            <Text>{"Razon Social:"}</Text>
+                            <Text>{"Razón Social:"}</Text>
                         </View>
                         <View style={styles.textInputStyleContainer}>
                             <TextInput

@@ -105,7 +105,7 @@ export default class ServiceDetail extends Component {
         return(
             <View>
                 <View style={styles.titleViewContainer}>
-                    <Text style={styles.titleTextStyle}>Numero de habitaciones</Text>
+                    <Text style={styles.titleTextStyle}>Número de habitaciones</Text>
                 </View>
                 <View style={styles.childContainer}>
                     <View style={styles.subChildContainer}>

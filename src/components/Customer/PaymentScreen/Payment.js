@@ -154,8 +154,6 @@ export default class Payment extends React.Component {
         total = total;
       }
       vat = total * 0.12
-      console.log("VAT",vat)
-      console.log("TOTAL",total)
         return (
             <View style={styles.container}>
                 <View>
