@@ -75,10 +75,10 @@ export default class AddCardScreen extends Component {
     }
     else if (this.state.identification === "") {
       Alert.alert(
-        'Error, numero de deidentificación',
-        'Debe colocar su numero de identificación',
+        'Error, número de deidentificación',
+        'Debe colocar su número de identificación',
         [
-          { text: 'OK', onPress: () => console.log('Debe colocar su numero de identificación') }
+          { text: 'OK', onPress: () => console.log('Debe colocar su número de identificación') }
         ]
       );
       is_form_validated = false;
@@ -98,7 +98,7 @@ export default class AddCardScreen extends Component {
         'Error, de Teléfono',
         'Debe colocar número de teléfono',
         [
-          { text: 'OK', onPress: () => console.log('Debe colocar numero de telefono') }
+          { text: 'OK', onPress: () => console.log('Debe colocar número de telefono') }
         ]
       );
       is_form_validated = false;
@@ -174,7 +174,7 @@ export default class AddCardScreen extends Component {
             <View style={{flex:1}}>
               <View style={{flexDirection:'row',marginVertical:5}}>
                 <View style={styles.textStyle}>
-                  <Text>{"Razon Social:"}</Text>
+                  <Text>{"Razón Social:"}</Text>
                 </View>
                 <View style={styles.textInputStyleContainer}>
                   <TextInput
@@ -182,7 +182,7 @@ export default class AddCardScreen extends Component {
                       this.textInput = input
                     }}
                     underlineColorAndroid='transparent'
-                    placeholder='Razon Social'
+                    placeholder='Razón Social'
                     value={initials}
                     style={styles.textInputStyle}
                     onChangeText={(text) => this.setState({socialReason : text})} />
