@@ -44,4 +44,4 @@ export const CUSTOMER_COMMENTS_PROFILE = "/api/v1/customers";
 export const GET_HOLIDAY = "/api/v1/customers/holidays";
 export const SET_AGENT_MOBILE_TOKEN = "/api/v1/agents/add_mobile_token";
 export const SET_CUSTOMER_MOBILE_TOKEN = "/api/v1/customers/add_mobile_token";
-
+export const DELETE_CARD = "/api/v1/customers/delete_card/";

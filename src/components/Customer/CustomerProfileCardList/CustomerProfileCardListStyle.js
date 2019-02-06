@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native'
-const {height , width} = Dimensions.get('window')
+const {width} = Dimensions.get('window')
 
 module.exports = StyleSheet.create({
   container: {
@@ -58,23 +58,19 @@ module.exports = StyleSheet.create({
     fontSize:16,marginLeft:10,color:'gray',fontFamily : 'helvetica'
   },
   emptyText:{
-    fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'
+    fontSize:16,color:'#1e67a9',fontFamily : 'helvetica',paddingHorizontal:20
   },
   childContainer: {
     margin: 10, flexDirection: 'row', alignItems: 'center'
   },
   itemView:{
-      margin:10,
-      flexDirection:'column',
-      flex:1
+    margin:10,
+    flexDirection:'column',
+    flex:1
   },
   profile_picture_name_container: {
     width: Dimensions.get('window').width,
-    // height: 160,
-    // backgroundColor: '#FAFAFA',
     borderColor: '#DDDCDC',
-    // borderTopWidth: 2,
-    // borderBottomWidth: 2,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-evenly',

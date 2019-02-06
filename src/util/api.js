@@ -137,6 +137,10 @@ export const API = {
     loginWithFacebook: (onResponse, data, isHeaderRequired) => {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.CUSTOMER_FACEBOOK_LOGIN  , buildHeader());
     },   
+
+    destroyCard: (onResponse, id, isHeaderRequired) => {
+        request(onResponse, {}, 'DELETE', 'JSON', isHeaderRequired, APILIST.BASE_URL + APILIST.DELETE_CARD + id, buildHeader());
+    }
 }
 
 export const buildHeader = (headerParams = {}) => {
@@ -207,6 +211,7 @@ async function request(onResponse, data, type, returnType, isHeaderRequired, fea
         // }
     } catch (error) {
         console.log("onResponse catch error " + error);
+        onResponse.error(responseJSON);
         // if (onResponse.complete) {
         //     console.log("onResponse catch complete");
         //     onResponse.complete();
