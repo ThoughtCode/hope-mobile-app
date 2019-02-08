@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity,WebView,Image,SafeAreaView} from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons'
 import * as globals from '../../../util/globals';
 import { View } from 'react-native-animatable';
 

@@ -140,6 +140,10 @@ export const API = {
 
     destroyCard: (onResponse, id, isHeaderRequired) => {
         request(onResponse, {}, 'DELETE', 'JSON', isHeaderRequired, APILIST.BASE_URL + APILIST.DELETE_CARD + id, buildHeader());
+    },
+
+    destroyInvoice: (onResponse, id, isHeaderRequired) => {
+        request(onResponse, {}, 'DELETE', 'JSON', isHeaderRequired, APILIST.BASE_URL + APILIST.DELETE_INVOICE + id, buildHeader());
     }
 }
 
