@@ -139,17 +139,6 @@ export default class CreateProperties extends Component {
     }
   }
 
-  checkIfIOS(){
-    if(Platform.OS === 'ios'){ // check if ios
-      console.log("IOS!!!");
-      //this button will (onpress) set our picker visible
-      return (<Button buttonStyle={{backgroundColor:'#D1D1D1', opacity: this.state.opacityOfOtherItems}} onPress={this.toggle()} color="#101010" title={this.state.label} onPress={this.changeOpacity}/>); 
-    }else if(Platform.OS === 'android'){ //check if android
-      
-      console.log("ANDROID!!!");
-    }
-  }
-
   toggle(){
     if(Platform.OS === 'ios'){
       if(this.state.pickerOpacity == 0){
@@ -216,51 +205,54 @@ export default class CreateProperties extends Component {
                                                     returnKeyType={"next"}
                                                     onSubmitEditing={() => this.setFocus("cityInput")} />
                                     </View>
-                                    {this.checkIfIOS()}
-                                    <View style={[styles.textInputVieW,{borderWidth:1,borderRadius:5,borderColor:"lightgray",height:40,justifyContent:'center'}]}>
-                                        {(this.state.city && this.state.city.length > 0) ?
-                                        <Picker
-                                            selectedValue={this.state.language}
-                                            style={{ height: 50, width: width - 20 }}
-                                            onValueChange={(itemValue, itemIndex) => this.selectCity(itemIndex)}>
-                                            <Picker.Item label={"Cuidad"} value={"Cuidad"} key={-1} />
-                                            { this.state.city.map((item, key)=>{
-                                                return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
-                                            })}
-                                        </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{"Cuidad"}</Text>}
+                                    {(Platform.OS === 'ios') ? ("Entro iOS"):(
+                                      <View>
+                                        <View style={[styles.textInputVieW,{borderWidth:1,borderRadius:5,borderColor:"lightgray",height:40,justifyContent:'center'}]}>
+                                            {(this.state.city && this.state.city.length > 0) ?
+                                            <Picker
+                                                selectedValue={this.state.language}
+                                                style={{ height: 50, width: width - 20 }}
+                                                onValueChange={(itemValue, itemIndex) => this.selectCity(itemIndex)}>
+                                                <Picker.Item label={"Cuidad"} value={"Cuidad"} key={-1} />
+                                                { this.state.city.map((item, key)=>{
+                                                    return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
+                                                })}
+                                            </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{"Cuidad"}</Text>}
 
-                                        {/* <TextInput  ref={ref => (this.cityInput = ref)}
-                                                    underlineColorAndroid={"transparent"}
-                                                    style={styles.textInputStyle}
-                                                    placeholder={"Cuidad"}
-                                                    placeholderTextColor={"gray"}
-                                                    value={this.state.city}
-                                                    onChangeText={(city) => this.setState({city :city})}
-                                                    returnKeyType={"next"}
-                                                    onSubmitEditing={() => this.setFocus("neighborhoodInput")} /> */}
-                                    </View>
+                                            {/* <TextInput  ref={ref => (this.cityInput = ref)}
+                                                        underlineColorAndroid={"transparent"}
+                                                        style={styles.textInputStyle}
+                                                        placeholder={"Cuidad"}
+                                                        placeholderTextColor={"gray"}
+                                                        value={this.state.city}
+                                                        onChangeText={(city) => this.setState({city :city})}
+                                                        returnKeyType={"next"}
+                                                        onSubmitEditing={() => this.setFocus("neighborhoodInput")} /> */}
+                                        </View>
 
-                                    <View style={[styles.textInputVieW,{borderWidth:1,borderRadius:5,borderColor:"lightgray",height:40,justifyContent:'center'}]}>
-                                    { (this.state.neightborhood && this.state.neightborhood.length > 0)? 
-                                        <Picker
-                                            selectedValue={this.state.language}
-                                            style={{ height: 50, width: width - 20 }}
-                                            onValueChange={(itemValue, itemIndex) => this.setState({neighborhoodID: this.state.neightborhood[itemIndex - 1].id})}>
-                                            <Picker.Item label={"Barrio"} value={"Barrio"} key={-1} />
-                                            {this.state.neightborhood.map((item, key)=>{
-                                                return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
-                                            })}
-                                        </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{"Barrio"}</Text>}
-                                        {/* <TextInput  ref={ref => (this.neighborhoodInput = ref)}
-                                                    underlineColorAndroid={"transparent"}
-                                                    style={styles.textInputStyle}
-                                                    placeholder={"Barrio "}
-                                                    placeholderTextColor={"gray"}
-                                                    value={this.state.neighborhood}
-                                                    onChangeText={(neighborhood) => this.setState({neighborhood : neighborhood})}
-                                                    returnKeyType={"next"}
-                                                    onSubmitEditing={() => this.setFocus("streetInput")} /> */}
-                                    </View>
+                                        <View style={[styles.textInputVieW,{borderWidth:1,borderRadius:5,borderColor:"lightgray",height:40,justifyContent:'center'}]}>
+                                        { (this.state.neightborhood && this.state.neightborhood.length > 0)? 
+                                            <Picker
+                                                selectedValue={this.state.language}
+                                                style={{ height: 50, width: width - 20 }}
+                                                onValueChange={(itemValue, itemIndex) => this.setState({neighborhoodID: this.state.neightborhood[itemIndex - 1].id})}>
+                                                <Picker.Item label={"Barrio"} value={"Barrio"} key={-1} />
+                                                {this.state.neightborhood.map((item, key)=>{
+                                                    return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
+                                                })}
+                                            </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{"Barrio"}</Text>}
+                                            {/* <TextInput  ref={ref => (this.neighborhoodInput = ref)}
+                                                        underlineColorAndroid={"transparent"}
+                                                        style={styles.textInputStyle}
+                                                        placeholder={"Barrio "}
+                                                        placeholderTextColor={"gray"}
+                                                        value={this.state.neighborhood}
+                                                        onChangeText={(neighborhood) => this.setState({neighborhood : neighborhood})}
+                                                        returnKeyType={"next"}
+                                                        onSubmitEditing={() => this.setFocus("streetInput")} /> */}
+                                        </View>
+                                      </View>
+                                    )}
 
                                     <View style={styles.textInputVieW}>
                                         <TextInput  ref={ref => (this.streetInput = ref)}
