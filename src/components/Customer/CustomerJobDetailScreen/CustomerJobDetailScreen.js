@@ -241,10 +241,10 @@ export default class CustomerJobDetailScreen extends Component {
       this.state.jobData.job_details.map((val,index)=>{
         if(val.service.type_service == "base"){
         }else{
-          subDescription += val.service.name + " x " + val.value
+          subDescription += val.service.name + " x" + val.value + ", "
         }
       })
-      var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('MMMM, DD - hh:mm a')
+      var initialDate = Moment.utc(new Date(this.state.jobData.started_at)).utcOffset(-5).format('l - hh:mm a')
       var finishDate = Moment(new Date(this.state.jobData.finished_at)).utcOffset(-5).format('hh:mm a')
       var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
       var frequency = ""
@@ -302,10 +302,10 @@ export default class CustomerJobDetailScreen extends Component {
                         <TouchableOpacity activeOpacity = { 0.7 } onPress = {() => this.setState({isCallapseOpen : !this.state.isCallapseOpen})}>
                           <View style={{padding:10,backgroundColor:'rgb(240,240,240)',flexDirection:'row',justifyContent:'space-between'}}>
                             <Text style={styles.mainTitleText}>{"Detalles del trabajo"}</Text>
-                            <Entypo name={(this.state.isCallapseOpen) ? "chevron-up" : "chevron-down"} color={"gray"} size={25} />
+                            <Entypo name={(this.state.isCallapseOpen) ? "chevron-down" : "chevron-up"} color={"gray"} size={25} />
                           </View>
                         </TouchableOpacity>
-                        <Collapsible collapsed={!this.state.isCallapseOpen} duration={200}>
+                        <Collapsible collapsed={this.state.isCallapseOpen} duration={200}>
                           <View >
                             <View style={styles.renderRowView}>
                               <Text style={[styles.titleText,{color:'rgb(0,121,189)'}]}>{this.state.jobData.job_details[0].service.name}</Text>

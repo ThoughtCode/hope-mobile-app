@@ -122,7 +122,7 @@ export default class DirectionScreen extends Component {
           <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
           <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
           <View style={{position:'absolute',zIndex:1,alignItems:'center',justifyContent:'center',marginTop:50,width : width}}>
-            <Text style={{color:'#fff',fontSize:22,fontFamily:'helvetica'}}>{"Direcciones"}</Text>
+            <Text style={{color:'#fff',fontSize:22,fontFamily:'helvetica'}}>{"Dirección"}</Text>
           </View>
         </View>
         <View style={{flex:1}}>

@@ -116,15 +116,12 @@ loginWithFacebookResponse = {
       console.log("Fb Login Response-->",JSON.stringify(response))
             AsyncStorage.multiSet([["access_token",response.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(response)]],()=>{
               globals.access_token = response.customer.data.attributes.access_token ||""
-
               globals.first_name = response.customer.data.attributes.first_name || ""
               globals.last_name = response.customer.data.attributes.last_name || ""
               globals.email = response.customer.data.attributes.email || ""
-              // globals.password = this.state.password || ""
               globals.cell_phone = response.customer.data.attributes.cell_phone || ""
               globals.status = response.customer.data.attributes.status && response.customer.data.attributes.status || ""
               globals.avatar = response.customer.data.attributes.avatar.url || ""
-              // this._handleLoginResponse(response);
               this.props.navigation.navigate('CustomerTabbar');
         })
     } catch (error) {

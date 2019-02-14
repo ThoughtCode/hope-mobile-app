@@ -1,31 +1,26 @@
 import React, {Component} from 'react';
-import {
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  AsyncStorage
-} from 'react-native';
-
+import {Image,ScrollView,Text,TouchableOpacity,View,AsyncStorage} from 'react-native';
+import Moment from 'moment';
 import * as urls from '../../../constants/api';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
-const styles = require('./CustomerDashboardStyles');
 import * as globals from '../../../util/globals';
+
+const styles = require('./CustomerDashboardStyles');
+var _this = null;
 
 export default class CustomerDashboard extends Component {
   constructor(props) {
     super(props);
+    _this = this
     this.state = {
       servicesTypes: [],
       nextJobs: [],
-      pastJobs: []
+      pastJobs: [],
     };
     this.getServicesTypes = this.getServicesTypes.bind(this);
     this.getNextJobs = this.getNextJobs.bind(this);
     this.getPastJobs = this.getPastJobs.bind(this);
-    
   }
 
   static navigateToDetail = (item) =>{
@@ -48,6 +43,7 @@ export default class CustomerDashboard extends Component {
   };
 
   getNextJobs = (authToken) => {
+    this.setState({nextJobs:[]})
     nextJobsURL = urls.BASE_URL + urls.NEXT_JOBS;
     fetch(nextJobsURL, {
       method: 'GET',
@@ -59,11 +55,11 @@ export default class CustomerDashboard extends Component {
     }).then((response) => response.json()).then((data) => {
       let nextJobs = data.job.data;
       this.setState({nextJobs});
-      console.log("NextJob-->",JSON.stringify(nextJobs))
     }).catch((error) => this.setState({errorMessage: error.message}));
   };
 
   getPastJobs = (authToken) => {
+    this.setState({pastJobs:[]})
     pastJobsURL = urls.BASE_URL + urls.PAST_JOBS;
     fetch(pastJobsURL, {
       method: 'GET',
@@ -89,6 +85,11 @@ export default class CustomerDashboard extends Component {
     })
   }
 
+  static getJobsAPICall(){
+    _this.getNextJobs(globals.access_token);
+    _this.getPastJobs(globals.access_token);
+  }
+
   renderPastJobs(){
     return(
       <View>
@@ -103,7 +104,8 @@ export default class CustomerDashboard extends Component {
                 this.state.nextJobs.map((job) => {
                   const date = new Date(job.attributes.started_at), locale = "es-ES",
                   month = date.toLocaleString(locale, {month: "long"});
-                  var end_date = month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"
+                  var end_date = Moment(month).format('l - hh:mm a')
+                  // var end_date = month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"
                   var description = ""
                   var subDescription = ""
                   job.attributes.job_details.map((val,index)=>{
@@ -127,8 +129,8 @@ export default class CustomerDashboard extends Component {
                           <Text style={[styles.textFont, { marginLeft: 5, fontSize: 12, fontWeight:'bold' }]}>{location}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          <Ionicons name={"md-time"} size={16} />
-                          <Text style={{fontSize:14}} numberOfLines={1}>{end_date}</Text>
+                          <Ionicons name={"md-time"} size={16} style={{marginLeft: 2}} />
+                          <Text style={[styles.textFont, { marginLeft: 6, fontSize: 12 }]} numberOfLines={1}>{end_date}</Text>
                         </View>
                         <View style={styles.subtextViewStyle}>
                         {job.attributes.job_details.map((val,index)=>{
@@ -168,7 +170,8 @@ export default class CustomerDashboard extends Component {
             {this.state.pastJobs.map((job) => {
               const date = new Date(job.attributes.started_at), locale = "es-ES",
               month = date.toLocaleString(locale, {month: "long"});
-              var end_date = month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"
+              var end_date = Moment(month).format('l - hh:mm a')
+              // var end_date = month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"
               var description = ""
               var subDescription = ""
               job.attributes.job_details.map((val,index)=>{
@@ -243,7 +246,6 @@ export default class CustomerDashboard extends Component {
             >
               {
                 this.state.servicesTypes.map((serviceType) => {
-                  console.log("ServiceJob-->",JSON.stringify(serviceType))
                   return (
                     <View key={serviceType.id} style={styles.servicios_item}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerCleaning",{serviceType : serviceType})}>

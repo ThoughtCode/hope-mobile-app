@@ -123,7 +123,6 @@ export default class CardListScreen extends Component {
   }
 
   render() {
-    console.log("STATE SECUNDARIO COMPONENT ------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>")
     return (
       <View style={styles.container}>
         <View>

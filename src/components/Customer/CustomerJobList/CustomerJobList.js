@@ -1,18 +1,11 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, FlatList, Image, Dimensions,SafeAreaView} from 'react-native';
-import EvilIcons from '@expo/vector-icons/EvilIcons'
-const {height , width} = Dimensions.get('window')
-import { API } from '../../../util/api';
-import Moment from 'moment';
-
+import {SafeAreaView} from 'react-native';
+import {API} from '../../../util/api';
 import JobList from "./_JobList";
 
 const styles = require('./CustomerJobListStyles');
-
-const IMAGES = {
-    TOP_BACKGROUND : require("../../../../assets/img/topbg.png"),
-}
 var _this = null;
+
 export default class CustomerJobList extends Component {
 
   //======================================================================
@@ -45,6 +38,11 @@ export default class CustomerJobList extends Component {
   // getJobsAPICall
   //======================================================================
 
+  static jobsApiCall(){
+    _this.setState({isAPICall:true,page : 1,jobList:[]})
+    API.getCustomerJobs(_this.getJobResponseData,"/"+_this.state.type+"?current_page=1",true);
+  }
+
   getJobsAPICall(){
     this.setState({isAPICall:true})
     API.getCustomerJobs(this.getJobResponseData,"/"+this.state.type+"?current_page=1",true);
@@ -55,6 +53,7 @@ export default class CustomerJobList extends Component {
   //======================================================================
 
   onRefresh = () =>{
+    console.log("this.getJobResponseData",this.getJobResponseData)
     this.setState({isOnRefresh : true,isAPICall:true,page : 1})
     API.getCustomerJobs(this.getJobResponseData,"/"+this.state.type+"?current_page=1",true);
   }

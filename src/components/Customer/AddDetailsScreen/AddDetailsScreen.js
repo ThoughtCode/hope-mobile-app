@@ -240,7 +240,7 @@ export default class AddCardScreen extends Component {
               </View>
               <View style={{flexDirection:'row',marginVertical:5}}>
                 <View style={styles.textStyle}>
-                  <Text>{"Dircción:"}</Text>
+                  <Text>{"Dirección:"}</Text>
                 </View>
                 <View style={styles.textInputStyleContainer}>
                   <TextInput
@@ -248,7 +248,7 @@ export default class AddCardScreen extends Component {
                       this.textInput = input
                     }}
                     underlineColorAndroid='transparent'
-                    placeholder='Dircción'
+                    placeholder='Dirección'
                     style={styles.textInputStyle}
                     onChangeText={(text) => this.setState({address : text})} />
                   </View>
