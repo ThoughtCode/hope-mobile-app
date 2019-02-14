@@ -51,7 +51,7 @@ export default class Payment extends React.Component {
   }
 
   onPressHandle = () =>{
-    console.log(this.state.startedAt, Moment.utc(new Date()).subtract(5, 'h'), (this.state.startedAt > Moment.utc(new Date()).subtract(5, 'h')));
+    // console.log(this.state.startedAt, Moment.utc(new Date()).subtract(5, 'h'), (this.state.startedAt > Moment.utc(new Date()).subtract(5, 'h')));
     if(this.state.optionSelecct == ""){
       Alert.alert(
         'Alerta',
@@ -125,7 +125,7 @@ export default class Payment extends React.Component {
         'Trabajo creado',
         'Se creo tu trabajo con exito',
         [
-          { text: 'OK', onPress: () => this.props.navigation.navigate("CustomerTrabajosDashboard")}
+          { text: 'OK', onPress: () => this.props.navigation.navigate("CustomerDashboard")}
         ],
         { cancelable: false }
       );

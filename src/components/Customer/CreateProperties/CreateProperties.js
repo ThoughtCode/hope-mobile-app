@@ -1,155 +1,170 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions,SafeAreaView,Alert,TextInput,Keyboard, KeyboardAvoidingView, AsyncStorage, Picker} from 'react-native';
-import EvilIcons from '@expo/vector-icons/EvilIcons'
-const {height , width} = Dimensions.get('window')
+import {Text,TouchableOpacity,View,ScrollView,Image,Dimensions,SafeAreaView,Alert,TextInput,Keyboard,KeyboardAvoidingView,AsyncStorage,Picker,Platform} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons'
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
-import { ImagePicker, Camera, Permissions  } from 'expo';
-import ImageUpload from '../../../util/ImageUpload';
 import ActionSheet from 'react-native-actionsheet'
-const styles = require('./CreatePropertiesStyles');
 
-const IMAGES = {
-    TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
-}
+const {width} = Dimensions.get('window')
+const styles = require('./CreatePropertiesStyles');
+const IMAGES = {TOP_BACKGROUND : require("../../../../assets/img/topbg.png")}
 
 export default class CreateProperties extends Component {
 
-    //======================================================================
-    // constructor
-    //======================================================================
+  //======================================================================
+  // constructor
+  //======================================================================
 
-    constructor(props){
-        super(props)
-        this.state = {
-            isLoading : true,
-            avatar : globals.avatar,
-            nombres : '',
-            neighborhoodID : '',
-            street1 : '',
-            street2 : '',
-            numeracion : '',
-            reference : '',
-            userData : null,
-            city : [],
-            neightborhood : []
-        }
+  constructor(props){
+    super(props)
+    this.state = {
+      isLoading : true,
+      avatar : globals.avatar,
+      nombres : '',
+      neighborhoodID : '',
+      street1 : '',
+      street2 : '',
+      numeracion : '',
+      reference : '',
+      userData : null,
+      city : [],
+      neightborhood : [],
+      pickerOpacity: 0,
+      opacityOfOtherItems: 1, //THIS IS THE OPACITY OF ALL OTHER ITEMS, WHICH COLLIDES WITH YOUR PICKER.
+      label: 'Firstvalue'
     }
+  }
 
-    //======================================================================
-    // componentDidMount
-    //======================================================================
+  //======================================================================
+  // componentDidMount
+  //======================================================================
 
-    componentDidMount(){
-        AsyncStorage.getItem("customerData").then((item) =>{
-            // const data = this.state.data;
-            const data = JSON.parse(item)
-            this.setState({userData : data})
+  componentDidMount(){
+    AsyncStorage.getItem("customerData").then((item) =>{
+      const data = JSON.parse(item)
+      this.setState({userData : data})
+    })
+    API.getCity(this.getCityResponse,{},true);  
+  }
+
+  //======================================================================
+  // jobApplyResponse
+  //======================================================================
+
+  getCityResponse = {
+      success: (response) => {
+          try {
+              
+              console.log("City data-->"+JSON.stringify(response))
+              this.setState({
+                  city : response.city && response.city.data || []
+              })
+              
+          } catch (error) {
+              console.log('create propertiescatch error ' + JSON.stringify(error));
+              Alert.alert("NOC NOC",error.message)
+          }
+      },
+      error: (err) => {
+          console.log('create properties error ' + JSON.stringify(err));
+      },
+      complete: () => {
+      }
+  }
+
+  btnUpdateTap = () =>{
+      
+      data = {
+          "property": {
+              "name": this.state.nombres,
+              "neightborhood_id": this.state.neighborhoodID, 
+              "p_street": this.state.street1,
+              "s_street": this.state.street2,
+              "number": this.state.numeracion,
+              "phone": this.state.numeracion,
+              "aditional_references0": this.state.reference
+          }
+      }
+      API.createProperties(this.createResponse,data,true);
+  }
+
+  //======================================================================
+  // jobApplyResponse
+  //======================================================================
+
+  createResponse = {
+    success: (response) => {
+      try {
+        console.log("create properties data-->"+JSON.stringify(response))
+        this.props.navigation.state.params.refresProperties()
+        Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {
+          this.props.navigation.goBack()    
+        }}])
+      } catch (error) {
+        console.log('create propertiescatch error ' + JSON.stringify(error));
+        Alert.alert("NOC NOC",error.message)
+      }
+    },
+    error: (err) => {
+      console.log('create properties error ' + JSON.stringify(err));
+    }
+  }
+
+  //======================================================================
+  // setFocus
+  //======================================================================
+
+  setFocus = (textField) =>{
+    this[textField].focus()
+  }
+
+  selectCity(cityId){
+    API.getNeightborhoods(this.getneightborhoodResponse,this.state.city[cityId - 1].id,true);
+  }
+
+  getneightborhoodResponse = {
+    success: (response) => {
+      try {
+        console.log("neightborhood data-->"+JSON.stringify(response))
+        this.setState({
+          neightborhood : response.neightborhood && response.neightborhood.data || []
         })
-        API.getCity(this.getCityResponse,{},true);
-        
+      } catch (error) {
+        console.log('create propertiescatch error ' + JSON.stringify(error));
+        Alert.alert("NOC NOC",error.message)
+      }
+    },
+    error: (err) => {
+      console.log('create properties error ' + JSON.stringify(err));
     }
+  }
 
-     //======================================================================
-    // jobApplyResponse
-    //======================================================================
-
-    getCityResponse = {
-        success: (response) => {
-            try {
-                
-                console.log("City data-->"+JSON.stringify(response))
-                this.setState({
-                    city : response.city && response.city.data || []
-                })
-                
-            } catch (error) {
-                console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("NOC NOC",error.message)
-            }
-        },
-        error: (err) => {
-            console.log('create properties error ' + JSON.stringify(err));
-        },
-        complete: () => {
-        }
+  checkIfIOS(){
+    if(Platform.OS === 'ios'){ // check if ios
+      console.log("IOS!!!");
+      //this button will (onpress) set our picker visible
+      return (<Button buttonStyle={{backgroundColor:'#D1D1D1', opacity: this.state.opacityOfOtherItems}} onPress={this.toggle()} color="#101010" title={this.state.label} onPress={this.changeOpacity}/>); 
+    }else if(Platform.OS === 'android'){ //check if android
+      
+      console.log("ANDROID!!!");
     }
+  }
 
-    btnUpdateTap = () =>{
-        
-        data = {
-            "property": {
-                "name": this.state.nombres,
-                "neightborhood_id": this.state.neighborhoodID, 
-                "p_street": this.state.street1,
-                "s_street": this.state.street2,
-                "number": this.state.numeracion,
-                "phone": this.state.numeracion,
-                "aditional_references0": this.state.reference
-            }
-        }
-        API.createProperties(this.createResponse,data,true);
+  toggle(){
+    if(Platform.OS === 'ios'){
+      if(this.state.pickerOpacity == 0){
+        this.setState({
+          pickerOpacity: 1,
+          opacityOfOtherItems: 0 // THIS WILL HIDE YOUR BUTTON!
+        });
+        }else{
+          this.setState({
+            pickerOpacity: 0,
+            opacityOfOtherItems: 1
+        });
+      }
     }
-
-    //======================================================================
-    // jobApplyResponse
-    //======================================================================
-
-    createResponse = {
-        success: (response) => {
-            try {
-                
-                console.log("create properties data-->"+JSON.stringify(response))
-                this.props.navigation.state.params.refresProperties()
-                Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {
-                        this.props.navigation.goBack()    
-                }}])
-                
-            } catch (error) {
-                console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("NOC NOC",error.message)
-            }
-        },
-        error: (err) => {
-            console.log('create properties error ' + JSON.stringify(err));
-        },
-        complete: () => {
-        }
-    }
-
-    //======================================================================
-    // setFocus
-    //======================================================================
-
-    setFocus = (textField) =>{
-        this[textField].focus()
-    }
-
-    selectCity(cityId){
-        API.getNeightborhoods(this.getneightborhoodResponse,this.state.city[cityId - 1].id,true);
-    }
-
-    getneightborhoodResponse = {
-        success: (response) => {
-            try {
-                
-                console.log("neightborhood data-->"+JSON.stringify(response))
-                this.setState({
-                  neightborhood : response.neightborhood && response.neightborhood.data || []
-                })
-                
-            } catch (error) {
-                console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("NOC NOC",error.message)
-            }
-        },
-        error: (err) => {
-            console.log('create properties error ' + JSON.stringify(err));
-        },
-        complete: () => {
-        }
-    }
+  }
 
     //======================================================================
     // render
@@ -201,7 +216,7 @@ export default class CreateProperties extends Component {
                                                     returnKeyType={"next"}
                                                     onSubmitEditing={() => this.setFocus("cityInput")} />
                                     </View>
-
+                                    {this.checkIfIOS()}
                                     <View style={[styles.textInputVieW,{borderWidth:1,borderRadius:5,borderColor:"lightgray",height:40,justifyContent:'center'}]}>
                                         {(this.state.city && this.state.city.length > 0) ?
                                         <Picker
