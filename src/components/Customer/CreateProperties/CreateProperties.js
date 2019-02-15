@@ -280,7 +280,7 @@ export default class CreateProperties extends Component {
                                         onValueChange={(itemValue, itemIndex) => this.selectCity(itemIndex, itemValue)}>
                                         <Picker.Item label={this.state.cityName || "Ciudad"} value={this.state.cityName} key={-1} />
                                           {this.state.city.map((item, key) => {
-                                            return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
+                                            return (<Text label={item.attributes.name} value={item.attributes.name} key={key} />)
                                           })}
                                       </Picker> : <Text style={{ color: 'lightgray', paddingLeft: 10 }}>{"Ciudad"}</Text>
                                     }
@@ -295,7 +295,7 @@ export default class CreateProperties extends Component {
                                         >
                                         <Picker.Item label={ this.state.selectNeighborhood || "Barrio"} value={this.state.selectNeighborhood} key={-1} />
                                           {this.state.neightborhood.map((item, key) => {
-                                            return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
+                                            return (<Text label={item.attributes.name} value={item.attributes.name} key={key} />)
                                           })}
                                       </Picker> : <Text style={{ color: 'lightgray', paddingLeft: 10 }}>{"Barrio"}</Text>
                                     }
