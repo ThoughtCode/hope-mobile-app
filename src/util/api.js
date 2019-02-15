@@ -110,7 +110,6 @@ export const API = {
     },
 
     getNextJobsApiCall: (onResponse, isHeaderRequired) => {
-        console.log("onResponse ------------------>>>>",onResponse)
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.NEXT_JOBS, buildHeader());
     },
 

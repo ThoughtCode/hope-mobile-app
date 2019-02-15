@@ -1,95 +1,151 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions,SafeAreaView,Alert,TextInput,Keyboard, KeyboardAvoidingView, AsyncStorage, Picker} from 'react-native';
-import EvilIcons from '@expo/vector-icons/EvilIcons'
-const {height , width} = Dimensions.get('window')
-import Ionicons from '@expo/vector-icons/Ionicons'
+import {Text,TouchableOpacity,View,ScrollView,Image,Dimensions,SafeAreaView,Alert,TextInput,Keyboard,KeyboardAvoidingView,AsyncStorage,Picker} from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
-import { ImagePicker, Camera, Permissions  } from 'expo';
-import ImageUpload from '../../../util/ImageUpload';
 import ActionSheet from 'react-native-actionsheet'
+const {width} = Dimensions.get('window')
 const styles = require('./CreatePropertiesStyles');
 
-const IMAGES = {
-    TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
-}
+const IMAGES = {TOP_BACKGROUND : require("../../../../assets/img/topbg.png")}
 
 export default class CreateProperties extends Component {
 
-    //======================================================================
-    // constructor
-    //======================================================================
+  //======================================================================
+  // constructor
+  //======================================================================
 
-    constructor(props){
-        super(props)
-        this.state = {
-            isLoading : true,
-            avatar : globals.avatar,
-            nombres : '',
-            neighborhoodID : '',
-            street1 : '',
-            street2 : '',
-            numeracion : '',
-            reference : '',
-            userData : null,
-            city : [],
-            neightborhood : []
-        }
+  constructor(props){
+    super(props)
+    this.state = {
+      selectedValue: null,
+      isLoading : true,
+      avatar : globals.avatar,
+      name : '',
+      city : [],
+      street1 : '',
+      street2 : '',
+      numeracion : '',
+      reference : '',
+      userData : null,
+      neightborhood : [],  
+      data : null,
+      neighborhoodID : 0,
+      selectNeighborhood : '',
+      cityID : null,
+      cityName: '',
+      directionData: null,
+      data: [
+        "Javascript",
+        "Go",
+        "Java",
+        "Kotlin",
+        "C++",
+        "C#",
+        "PHP"
+      ]
     }
+  }
 
-    //======================================================================
-    // componentDidMount
-    //======================================================================
+  //======================================================================
+  // componentDidMount
+  //======================================================================
 
-    componentDidMount(){
-        AsyncStorage.getItem("customerData").then((item) =>{
-            // const data = this.state.data;
-            const data = JSON.parse(item)
-            this.setState({userData : data})
+  componentDidMount(){
+    AsyncStorage.getItem("customerData").then((item) =>{
+      const data = JSON.parse(item)
+      this.setState({userData : data})
+    })
+    API.getCity(this.getCityResponse,{},true);
+  }
+
+  //======================================================================
+  // jobApplyResponse
+  //======================================================================
+
+  getCityResponse = {
+    success: (response) => {
+      try {
+        this.setState({
+          city : response.city && response.city.data || []
+        },() =>{
+          if(this.state.isUpdate){
+            this.state.cityId && this.selectCity(this.state.cityId)
+          }
         })
-        API.getCity(this.getCityResponse,{},true);
-        
+      } catch (error) {
+        Alert.alert("NOC NOC",error.message)
+      }
+    },
+    error: (err) => {
+      console.log('create properties error ' + JSON.stringify(err));
     }
-
-     //======================================================================
-    // jobApplyResponse
-    //======================================================================
-
-    getCityResponse = {
-        success: (response) => {
-            try {
-                
-                console.log("City data-->"+JSON.stringify(response))
-                this.setState({
-                    city : response.city && response.city.data || []
-                })
-                
-            } catch (error) {
-                console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("NOC NOC",error.message)
-            }
-        },
-        error: (err) => {
-            console.log('create properties error ' + JSON.stringify(err));
-        },
-        complete: () => {
-        }
-    }
+  }
 
     btnUpdateTap = () =>{
+      let valid = true;
+      if(this.state.name == ""){
+        valid = false;
+        Alert.alert('Error de validación', 'El nombre no puede estar vacío', [{ text: 'OK' }], {
+          cancelable: false
+        });
+        return valid;
+      }
+      if(this.state.city === "Ciudad" || 0 || []){
+        valid = false;
+        Alert.alert('Error de validación', 'Seleccione una ciudad', [{ text: 'OK' }], {
+          cancelable: false
+        });
+        return valid;
+      }
+      if(this.state.neighborhoodID == 0){
+        valid = false;
+        Alert.alert('Error de validación', 'Seleccione un barrio', [{ text: 'OK' }], {
+          cancelable: false
+        });
+        return valid;
+      }
+      if(this.state.street1 == ""){
+        valid = false;
+        Alert.alert('Error de validación', 'Seleccione un barrio', [{ text: 'OK' }], {
+          cancelable: false
+        });
+        return valid;
+      }
+      if(this.state.street2 == ""){
+        valid = false;
+        Alert.alert('Error de validación', 'Seleccione un barrio', [{ text: 'OK' }], {
+          cancelable: false
+        });
+        return valid;
+      }
+      if(this.state.numeracion == ""){
+        valid = false;
+        Alert.alert('Error de validación', 'Seleccione un barrio', [{ text: 'OK' }], {
+          cancelable: false
+        });
+        return valid;
+      }
+      if(this.state.reference == ""){
+        valid = false;
+        Alert.alert('Error de validación', 'Seleccione un barrio', [{ text: 'OK' }], {
+          cancelable: false
+        });
+        return valid;
+      }
         
         data = {
             "property": {
-                "name": this.state.nombres,
+                "name": this.state.name,
+                "city": this.state.city,
                 "neightborhood_id": this.state.neighborhoodID, 
                 "p_street": this.state.street1,
                 "s_street": this.state.street2,
                 "number": this.state.numeracion,
-                "phone": this.state.numeracion,
                 "aditional_references0": this.state.reference
             }
         }
-        API.createProperties(this.createResponse,data,true);
+        // API.createProperties(this.createResponse,data,true);
     }
 
     //======================================================================
@@ -126,30 +182,43 @@ export default class CreateProperties extends Component {
         this[textField].focus()
     }
 
-    selectCity(cityId){
-        API.getNeightborhoods(this.getneightborhoodResponse,this.state.city[cityId - 1].id,true);
+    selectCity(itemIndex){
+      API.getNeightborhoods(this.getneightborhoodResponse,itemIndex,true);
+      this.state.city.map(r=>{
+        this.setState({cityName: r.attributes.name})
+      })
+      return
     }
 
-    getneightborhoodResponse = {
-        success: (response) => {
-            try {
-                
-                console.log("neightborhood data-->"+JSON.stringify(response))
-                this.setState({
-                  neightborhood : response.neightborhood && response.neightborhood.data || []
-                })
-                
-            } catch (error) {
-                console.log('create propertiescatch error ' + JSON.stringify(error));
-                Alert.alert("NOC NOC",error.message)
-            }
-        },
-        error: (err) => {
-            console.log('create properties error ' + JSON.stringify(err));
-        },
-        complete: () => {
-        }
+  //======================================================================
+  // getneightborhoodResponse
+  //======================================================================
+
+  getneightborhoodResponse = {
+    success: (response) => {
+      try {
+        this.setState({
+          neightborhood : response.neightborhood.data || [],
+          neighborhoodID : response.neightborhood.data.id,
+        })
+          
+      } catch (error) {
+        Alert.alert("NOC NOC",error.message)
+      }
+    },
+    error: (err) => {
+      console.log('create properties error ' + JSON.stringify(err));
     }
+  }
+
+  updateNeighborhood = (name, id) => {
+    if(id != 0){
+      this.setState({ 
+        selectNeighborhood: name, 
+        neighborhoodID: id 
+      })
+    }
+  }
 
     //======================================================================
     // render
@@ -190,62 +259,48 @@ export default class CreateProperties extends Component {
                             
                             <View>
                                 <View style={{flex:1,marginHorizontal:20,marginBottom:20}}>
-                                    <View style={styles.textInputVieW}>
-                                        <TextInput  ref={ref => (this.firtNameInput = ref)}
-                                                    underlineColorAndroid={"transparent"}
-                                                    style={styles.textInputStyle}
-                                                    placeholder={"nombres"}
-                                                    placeholderTextColor={"gray"}
-                                                    value={this.state.nombres}
-                                                    onChangeText={(nombres) => this.setState({nombres : nombres})}
-                                                    returnKeyType={"next"}
-                                                    onSubmitEditing={() => this.setFocus("cityInput")} />
-                                    </View>
+                                  <View style={styles.textInputVieW}>
+                                    <TextInput  ref={ref => (this.firtNameInput = ref)}
+                                                underlineColorAndroid={"transparent"}
+                                                style={styles.textInputStyle}
+                                                placeholder={"Nombre"}
+                                                placeholderTextColor={"gray"}
+                                                value={this.state.name}
+                                                onChangeText={(name) => this.setState({name : name})}
+                                                // returnKeyType={"next"}
+                                                // onSubmitEditing={() => this.setFocus("cityInput")}
+                                    />
+                                  </View>
 
-                                    <View style={[styles.textInputVieW,{borderWidth:1,borderRadius:5,borderColor:"lightgray",height:40,justifyContent:'center'}]}>
-                                        {(this.state.city && this.state.city.length > 0) ?
-                                        <Picker
-                                            selectedValue={this.state.language}
-                                            style={{ height: 50, width: width - 20 }}
-                                            onValueChange={(itemValue, itemIndex) => this.selectCity(itemIndex)}>
-                                            <Picker.Item label={"Cuidad"} value={"Cuidad"} key={-1} />
-                                            { this.state.city.map((item, key)=>{
-                                                return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
-                                            })}
-                                        </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{"Cuidad"}</Text>}
+                                  <View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
+                                    {(this.state.city && this.state.city.length > 0) ?
+                                      <Picker
+                                        selectedValue={this.state.cityID}
+                                        // style={{ height: 50, width: width - 20 }}
+                                        onValueChange={(itemValue, itemIndex) => this.selectCity(itemIndex, itemValue)}>
+                                        <Picker.Item label={this.state.cityName || "Ciudad"} value={this.state.cityName} key={-1} />
+                                          {this.state.city.map((item, key) => {
+                                            return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
+                                          })}
+                                      </Picker> : <Text style={{ color: 'lightgray', paddingLeft: 10 }}>{"Ciudad"}</Text>
+                                    }
+                                  </View>
 
-                                        {/* <TextInput  ref={ref => (this.cityInput = ref)}
-                                                    underlineColorAndroid={"transparent"}
-                                                    style={styles.textInputStyle}
-                                                    placeholder={"Cuidad"}
-                                                    placeholderTextColor={"gray"}
-                                                    value={this.state.city}
-                                                    onChangeText={(city) => this.setState({city :city})}
-                                                    returnKeyType={"next"}
-                                                    onSubmitEditing={() => this.setFocus("neighborhoodInput")} /> */}
-                                    </View>
+                                  <View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
+                                    {(this.state.neightborhood && this.state.neightborhood.length > 0) ?
+                                      <Picker
+                                        selectedValue={this.state.neighborhoodID}
+                                        // style={{ height: 50, width: width - 20 }}
+                                        onValueChange={(itemValue, itemIndex) => this.updateNeighborhood(itemValue, itemIndex)}
+                                        >
+                                        <Picker.Item label={ this.state.selectNeighborhood || "Barrio"} value={this.state.selectNeighborhood} key={-1} />
+                                          {this.state.neightborhood.map((item, key) => {
+                                            return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
+                                          })}
+                                      </Picker> : <Text style={{ color: 'lightgray', paddingLeft: 10 }}>{"Barrio"}</Text>
+                                    }
+                                  </View>
 
-                                    <View style={[styles.textInputVieW,{borderWidth:1,borderRadius:5,borderColor:"lightgray",height:40,justifyContent:'center'}]}>
-                                    { (this.state.neightborhood && this.state.neightborhood.length > 0)? 
-                                        <Picker
-                                            selectedValue={this.state.language}
-                                            style={{ height: 50, width: width - 20 }}
-                                            onValueChange={(itemValue, itemIndex) => this.setState({neighborhoodID: this.state.neightborhood[itemIndex - 1].id})}>
-                                            <Picker.Item label={"Barrio"} value={"Barrio"} key={-1} />
-                                            {this.state.neightborhood.map((item, key)=>{
-                                                return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
-                                            })}
-                                        </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{"Barrio"}</Text>}
-                                        {/* <TextInput  ref={ref => (this.neighborhoodInput = ref)}
-                                                    underlineColorAndroid={"transparent"}
-                                                    style={styles.textInputStyle}
-                                                    placeholder={"Barrio "}
-                                                    placeholderTextColor={"gray"}
-                                                    value={this.state.neighborhood}
-                                                    onChangeText={(neighborhood) => this.setState({neighborhood : neighborhood})}
-                                                    returnKeyType={"next"}
-                                                    onSubmitEditing={() => this.setFocus("streetInput")} /> */}
-                                    </View>
 
                                     <View style={styles.textInputVieW}>
                                         <TextInput  ref={ref => (this.streetInput = ref)}
