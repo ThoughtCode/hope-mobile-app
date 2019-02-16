@@ -4,15 +4,16 @@ import EvilIcons from '@expo/vector-icons/EvilIcons'
 import Entypo from '@expo/vector-icons/Entypo'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-const { width } = Dimensions.get('window')
 import { API } from '../../../util/api';
 import Moment from 'moment';
 import Ionicons from '@expo/vector-icons/Ionicons'
+
+const { width } = Dimensions.get('window')
 const styles = require('./CustomerCleaningStyles');
-const IMAGES = {
-  TOP_BACKGROUND: require("../../../../assets/img/topbg.png")
-}
+const IMAGES = {TOP_BACKGROUND: require("../../../../assets/img/topbg.png")}
+
 var _this = null;
+
 export default class CustomerCleaning extends Component {
 
   //======================================================================
@@ -62,42 +63,30 @@ export default class CustomerCleaning extends Component {
       let newDetailsData = null
       let newJobData = null
       let newCardData = null
-      
-      console.log("STATE PRINCIPAL CMPONENT ------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>",this.props.navigation.state.params)
-      
       has_card_data = this.props.navigation.state.params.newCardData
       has_address_data = this.props.navigation.state.params.jobCurrentState.directionData
       has_direction_data = this.props.navigation.state.params.jobCurrentState.directionData
-
       if (this.props.navigation.state.params.newJobData != null){
-        console.log("ESTOY EN NEW DIRECTION DATA ------------------->>>>>>>>>>>>>>>> DIRECTION",this.props.navigation.state.params)
         newJobData = this.props.navigation.state.params.newJobData
         newDetailsData = this.props.navigation.state.params.jobCurrentState.invoicesData
         newCardData = this.props.navigation.state.params.jobCurrentState.cardData
       }
       if (this.props.navigation.state.params.newDetailsData != null){
-        console.log("ESTOY EN NEW DATEILS DATA ------------------->>>>>>>>>>>>>>>> DETAILS")
         newDetailsData = this.props.navigation.state.params.newDetailsData
         newJobData = this.props.navigation.state.params.jobCurrentState.directionData
         newCardData = this.props.navigation.state.params.jobCurrentState.cardData
       }
-      // console.log("ESTA LLEGANDO O NO ---------------->>>>>>>>>>>>>",this.props.navigation.state.params.newCardData)
       if (this.props.navigation.state.params.newCardData != null && has_card_data != undefined) {
-        console.log("ESTOY EN NEW CARD DATA ------------------->>>>>>>>>>>>>>>> CARD")
         newCardData = this.props.navigation.state.params.newCardData
         newJobData = this.props.navigation.state.params.jobCurrentState.directionData
         newDetailsData = this.props.navigation.state.params.jobCurrentState.invoicesData
       }
 
       if (has_card_data == undefined && has_address_data != null && has_direction_data != null && this.props.navigation.state.params.newDetailsData == null && this.props.navigation.state.params.newJobData == null){
-        console.log("NO CARD CHOOSEN ------------------->>>>>>>>>>>>>>>>")
         newCardData = this.props.navigation.state.params.jobCurrentState.cardData
         newJobData = this.props.navigation.state.params.jobCurrentState.directionData
         newDetailsData = this.props.navigation.state.params.jobCurrentState.invoicesData
       }
-
-      console.log('THIS IS THE FINAL DATA ------->', newCardData, newJobData, newDetailsData)
-
       this.setState({
         serviceType: this.props.navigation.state.params.jobCurrentState.serviceType,
         frequencyData: this.props.navigation.state.params.jobCurrentState.frequencyData,
@@ -357,7 +346,6 @@ export default class CustomerCleaning extends Component {
               <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica', marginLeft:20 }}>{this.state.serviceType.attributes.name}</Text>
             </View>
           </View>
-
           <View style={{flex:1}}>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", { serviceTypeID: this.state.serviceType.id,setServicios : this.setServicios })}>
               <View style={styles.rowStyle}>
@@ -368,7 +356,6 @@ export default class CustomerCleaning extends Component {
                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => this.props.navigation.navigate("Frequency", { setFrequency: this.setFrequency })}>
               <View style={styles.rowStyle}>
                 <View style={styles.rowText}>
@@ -385,7 +372,6 @@ export default class CustomerCleaning extends Component {
                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,12class1,189)"} style={styles.iconStyle} />
               </View>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { 
               setDate: this.setDate, is_start: true, start_date: this.state.selectedDate, service_id: this.state.serviceType.id })}>
               <View style={styles.rowStyle}>
@@ -396,7 +382,6 @@ export default class CustomerCleaning extends Component {
                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
             </TouchableOpacity>
-
             {
               ( this.state.is_frequent_job == true) ? 
               <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { 
@@ -410,7 +395,6 @@ export default class CustomerCleaning extends Component {
                 </View>
               </TouchableOpacity> : null
             }
-
             <TouchableOpacity onPress={() => this.props.navigation.navigate("DirectionScreen",{jobActualState: this.state})}>
               <View style={styles.rowStyle}>
                 <View style={styles.rowText}>
@@ -420,7 +404,6 @@ export default class CustomerCleaning extends Component {
                 <Entypo name={"location-pin"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => this.props.navigation.navigate("AdditionalDetail",{setAdditionalInfo : this.setAdditionalInfo})}>
               <View style={styles.rowStyle}>
                 <View style={styles.rowText}>
@@ -430,12 +413,10 @@ export default class CustomerCleaning extends Component {
                 <MaterialIcons name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => this.props.navigation.navigate("DetailsListScreen",{jobActualState: this.state})}>
               <View style={styles.rowStyle}>
                 <View style={styles.rowText}>
                   <Text style={styles.titleText}>{"Detalles de facturación"}</Text>
-                    
                   {this.state.invoicesData && <View style={styles.childContainer}>
                     <View style={styles.itemView}>
                       <View style={{ flexDirection: 'row' }}>
@@ -457,7 +438,6 @@ export default class CustomerCleaning extends Component {
                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{jobActualState: this.state})}>
               <View style={styles.rowStyle}>
                 <View style={styles.rowText}>

@@ -49,6 +49,9 @@ module.exports = StyleSheet.create({
   textInputStyle:{
     borderWidth:1,borderColor:'lightgray',borderRadius:5,height:40,paddingLeft:10
   },
+  textStyle:{
+    borderWidth:1,borderColor:'lightgray',borderRadius:5,height:40,paddingVertical:10,paddingHorizontal:10
+  },
   titleText:{
     fontSize:20,fontWeight:'900',fontFamily:"helvetica"
   },
