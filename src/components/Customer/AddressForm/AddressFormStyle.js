@@ -39,6 +39,9 @@ const AddressFormStyle = StyleSheet.create({
         alignItems: 'center',
         height: 45,
     },
+    textStyle:{
+        borderWidth:1,borderColor:'lightgray',borderRadius:5,height:40,paddingVertical:10,paddingHorizontal:10
+    },
     profile_picture_name_container: {
         width: Dimensions.get('window').width,
         // height: 160,

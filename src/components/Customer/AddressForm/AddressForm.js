@@ -1,12 +1,13 @@
 import React from 'react';
-import {Text,View,TextInput,TouchableOpacity,Dimensions,AsyncStorage,ScrollView,SafeAreaView,KeyboardAvoidingView,Image,Picker,Alert} from 'react-native';
+import {Text,View,TextInput,TouchableOpacity,AsyncStorage,ScrollView,SafeAreaView,KeyboardAvoidingView,Image,Picker,Alert} from 'react-native';
 import styles from './AddressFormStyle';
 import { API } from '../../../util/api';
 import * as globals from '../../../util/globals';
-import Ionicons from '@expo/vector-icons/Ionicons'
+import Ionicons from '@expo/vector-icons/Ionicons';
+import ActionSheet from 'react-native-actionsheet'
 
-const {width} = Dimensions.get('window')
 const IMAGES = {TOP_BACKGROUND : require("../../../../assets/img/topbg.png")}
+var is_form_validated = false;
 
 export default class AddressForm extends React.Component {
   constructor(props){
@@ -14,7 +15,7 @@ export default class AddressForm extends React.Component {
     this.state = {
       avatar : globals.avatar,
       data : null,
-      nombre : '',
+      name : '',
       neighborhoodID : 0,
       selectNeighborhood : '',
       street1 : '',
@@ -45,7 +46,7 @@ export default class AddressForm extends React.Component {
 
     if(this.state.isUpdate){
       this.setState({
-        nombre : this.state.propertyData.attributes.name,
+        name : this.state.propertyData.attributes.name,
         neighborhoodID : this.state.propertyData.attributes.neightborhood_id, 
         street1 : this.state.propertyData.attributes.s_street,
         street2 : this.state.propertyData.attributes.p_street,
@@ -113,10 +114,73 @@ export default class AddressForm extends React.Component {
     }
   }
 
+  btnUpdateTap = () =>{
+    let valid = true;
+    if(this.state.name == ""){
+      valid = false;
+      Alert.alert('Error de validación', 'El nombre no puede estar vacío', [{ text: 'OK' }], {
+        cancelable: false
+      });
+      is_form_validated = false;
+      return valid;
+    } else
+    if(this.state.cityName == ""){
+      valid = false;
+      Alert.alert('Error de validación', 'Seleccione una ciudad', [{ text: 'OK' }], {
+        cancelable: false
+      });
+      is_form_validated = false;
+      return valid;
+    } else
+    if(this.state.selectNeighborhood == ""){
+      valid = false;
+      Alert.alert('Error de validación', 'Seleccione un barrio', [{ text: 'OK' }], {
+        cancelable: false
+      });
+      is_form_validated = false;
+      return valid;
+    } else
+    if(this.state.street1 == ""){
+      valid = false;
+      Alert.alert('Error de validación', 'Agrege primera calle', [{ text: 'OK' }], {
+        cancelable: false
+      });
+      is_form_validated = false;
+      return valid;
+    } else
+    if(this.state.street2 == ""){
+      valid = false;
+      Alert.alert('Error de validación', 'Agrege segunda calle', [{ text: 'OK' }], {
+        cancelable: false
+      });
+      is_form_validated = false;
+      return valid;
+    } else
+    if(this.state.numeracion == ""){
+      valid = false;
+      Alert.alert('Error de validación', 'Debe colocar una numeración', [{ text: 'OK' }], {
+        cancelable: false
+      });
+      is_form_validated = false;
+      return valid;
+    } else
+    if(this.state.reference == ""){
+      valid = false;
+      Alert.alert('Error de validación', 'Debe colocar una referencia', [{ text: 'OK' }], {
+        cancelable: false
+      });
+      is_form_validated = false;
+      return valid;
+    } else {
+      is_form_validated = true;
+    }
+    this.onPressHandle()
+  }
+
   onPressHandle = () =>{
     let data = {
       "property": {
-        "name": this.state.nombre,
+        "name": this.state.name,
         "neightborhood_id": this.state.neighborhoodID, 
         "p_street": this.state.street1,
         "s_street": this.state.street2,
@@ -125,7 +189,7 @@ export default class AddressForm extends React.Component {
         "aditional_references0": this.state.reference
       }
     }
-    if(!this.state.isUpdate){
+    if(!this.state.isUpdate || is_form_validated == true){
       API.createProperties(this.createPropertiesResponse,data,true);
     }else{
       this.state.propertyData && this.state.propertyData.id && API.updateProperties(this.createPropertiesResponse,data,true,this.state.propertyData.id);
@@ -174,6 +238,30 @@ export default class AddressForm extends React.Component {
     }
   }
 
+  _onOpenActionSheetCity = () => {
+    this.ActionSheet.show();
+  }
+
+  actionSheetCity(itemIndex){
+    var cityId = this.state.city[itemIndex].id
+    var cityName = this.state.city[itemIndex].attributes.name
+    API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
+    this.setState({cityName: cityName})
+  }
+
+  _onOpenActionSheetNeighborhood = () => {
+    this.ActionSheetNeighborhood.show();
+  }
+
+  actionSheetNeighborhood = (itemIndex) => {
+    var neighborhoodId = this.state.neightborhood[itemIndex].id
+    var neighborhoodName = this.state.neightborhood[itemIndex].attributes.name
+    this.setState({ 
+      selectNeighborhood: neighborhoodName, 
+      neighborhoodID: neighborhoodId 
+    })
+  }
+
   render() {
     if(this.state.data != null){
       var initials = this.state.firstName + " "
@@ -210,40 +298,21 @@ export default class AddressForm extends React.Component {
                       style={styles.textInputStyle}
                       placeholder={"Nombre"}
                       placeholderTextColor={"gray"}
-                      value={this.state.nombre}
-                      onChangeText={(nombre) => this.setState({ nombre: nombre })}
+                      value={this.state.name}
+                      onChangeText={(name) => this.setState({ name: name })}
                     />
                   </View>
 
-                  {this.state.city.map(r=>{
-                  })}
                   <View style={[styles.textInputStyleContainer, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
-                    {(this.state.city && this.state.city.length > 0) ?
-                      <Picker
-                        selectedValue={this.state.cityID}
-                        style={{ height: 50, width: width - 20 }}
-                        onValueChange={(itemValue, itemIndex) => this.selectCity(itemIndex, itemValue)}>
-                        <Picker.Item label={this.state.cityName || "Ciudad"} value={this.state.cityName} key={-1} />
-                          {this.state.city.map((item, key) => {
-                            return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
-                          })}
-                      </Picker> : <Text style={{ color: 'lightgray', paddingLeft: 10 }}>{"Ciudad"}</Text>
-                    }
+                    <TouchableOpacity onPress={this._onOpenActionSheetCity}>
+                      <Text style={styles.textStyle}>{this.state.cityName || "Ciudad"}</Text>
+                    </TouchableOpacity>
                   </View>
 
                   <View style={[styles.textInputStyleContainer, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
-                    {(this.state.neightborhood && this.state.neightborhood.length > 0) ?
-                      <Picker
-                        selectedValue={this.state.neighborhoodID}
-                        style={{ height: 50, width: width - 20 }}
-                        onValueChange={(itemValue, itemIndex) => this.updateNeighborhood(itemValue, itemIndex)}
-                        >
-                        <Picker.Item label={ this.state.selectNeighborhood || "Barrio"} value={this.state.selectNeighborhood} key={-1} />
-                          {this.state.neightborhood.map((item, key) => {
-                            return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
-                          })}
-                      </Picker> : <Text style={{ color: 'lightgray', paddingLeft: 10 }}>{"Barrio"}</Text>
-                    }
+                    <TouchableOpacity onPress={this._onOpenActionSheetNeighborhood}>
+                      <Text style={styles.textStyle}>{this.state.selectNeighborhood || "Barrio"}</Text>
+                    </TouchableOpacity>
                   </View>
 
                   <View style={styles.textInputStyleContainer}>
@@ -296,12 +365,26 @@ export default class AddressForm extends React.Component {
                 </View>
               </View>
             </ScrollView>
-            <TouchableOpacity onPress={this.onPressHandle}>
+            <TouchableOpacity onPress={this.btnUpdateTap}>
               <View style={styles.buttonViewStyle}>
                 <Text style={styles.buttonTextStyle}>{"Guardar"}</Text>
               </View>
             </TouchableOpacity>
           </KeyboardAvoidingView>
+          <ActionSheet
+            ref={o => this.ActionSheet = o}
+            title={'Seleccionar ciudad'}
+            options={this.state.city.map((c)=>[c.attributes.name])}
+            // cancelButtonIndex={1}
+            onPress={(index) => { this.actionSheetCity(index) }}
+          />
+          <ActionSheet
+            ref={o => this.ActionSheetNeighborhood = o}
+            title={'Seleccionar barrio'}
+            options={this.state.neightborhood.map((n)=>[n.attributes.name])}
+            // cancelButtonIndex={1}
+            onPress={(index) => { this.actionSheetNeighborhood(index) }}
+          />
         </SafeAreaView>
       )
     }else{

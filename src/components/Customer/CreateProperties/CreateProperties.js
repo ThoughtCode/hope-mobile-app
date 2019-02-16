@@ -4,7 +4,6 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
 import ActionSheet from 'react-native-actionsheet'
-import { gray } from 'ansi-colors';
 
 const styles = require('./CreatePropertiesStyles');
 const IMAGES = {TOP_BACKGROUND : require("../../../../assets/img/topbg.png")}
@@ -103,7 +102,7 @@ export default class CreateProperties extends Component {
     } else
     if(this.state.street1 == ""){
       valid = false;
-      Alert.alert('Error de validación', 'Seleccione primera calle', [{ text: 'OK' }], {
+      Alert.alert('Error de validación', 'Agrege primera calle', [{ text: 'OK' }], {
         cancelable: false
       });
       is_form_validated = false;
@@ -111,7 +110,7 @@ export default class CreateProperties extends Component {
     } else
     if(this.state.street2 == ""){
       valid = false;
-      Alert.alert('Error de validación', 'Seleccione segunda calle', [{ text: 'OK' }], {
+      Alert.alert('Error de validación', 'Agrege segunda calle', [{ text: 'OK' }], {
         cancelable: false
       });
       is_form_validated = false;
@@ -269,8 +268,6 @@ export default class CreateProperties extends Component {
                               placeholderTextColor={"gray"}
                               value={this.state.name}
                               onChangeText={(name) => this.setState({name : name})}
-                              // returnKeyType={"next"}
-                              // onSubmitEditing={() => this.setFocus("cityInput")}
                   />
                 </View>
                 <View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
