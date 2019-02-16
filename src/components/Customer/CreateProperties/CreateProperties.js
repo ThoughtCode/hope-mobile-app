@@ -212,6 +212,7 @@ export default class CreateProperties extends Component {
   }
 
   updateNeighborhood = (name, id) => {
+    console.log("estoy aqui =================",name,id)
     if(id != 0){
       this.setState({ 
         selectNeighborhood: name, 
@@ -220,14 +221,18 @@ export default class CreateProperties extends Component {
     }
   }
 
+  _onOpenActionSheet = () => {
+    this.ActionSheet.show();
+  }
+
     //======================================================================
     // render
     //======================================================================
     
     render(){
-        if(this.state.userData != null){
-        var initials = this.state.userData.customer.data.attributes.first_name.charAt(0)
-                initials += this.state.userData.customer.data.attributes.last_name.charAt(0) || ""
+      if(this.state.userData != null){
+      var initials = this.state.userData.customer.data.attributes.first_name.charAt(0)
+          initials += this.state.userData.customer.data.attributes.last_name.charAt(0) || ""
         return(
             <SafeAreaView style={styles.container}>
                 <KeyboardAvoidingView
@@ -273,18 +278,23 @@ export default class CreateProperties extends Component {
                                   </View>
 
                                   <View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
-                                    {(this.state.city && this.state.city.length > 0) ?
-                                      <Picker
-                                        selectedValue={this.state.cityID}
-                                        // style={{ height: 50, width: width - 20 }}
-                                        onValueChange={(itemValue, itemIndex) => this.selectCity(itemIndex, itemValue)}>
-                                        <Picker.Item label={this.state.cityName || "Ciudad"} value={this.state.cityName} key={-1} />
-                                          {this.state.city.map((item, key) => {
-                                            return (<Text label={item.attributes.name} value={item.attributes.name} key={key} />)
-                                          })}
-                                      </Picker> : <Text style={{ color: 'lightgray', paddingLeft: 10 }}>{"Ciudad"}</Text>
-                                    }
-                                  </View>
+                                  {(this.state.city && this.state.city.length > 0) ?
+                                    // <TouchableOpacity onPress={this._onOpenActionSheet}>
+                                    //   {this.state.city.map((item, key) => {
+                                    //     return (<Text>{item.attributes.name}</Text>)
+                                    //   })}
+                                    // </TouchableOpacity>
+                                    <Picker
+                                      selectedValue={this.state.cityID}
+                                      // style={{ height: 50, width: width - 20 }}
+                                      onValueChange={(itemValue, itemIndex) => this.selectCity(itemIndex, itemValue)}>
+                                      <Picker.Item label={this.state.cityName || "Ciudad"} value={this.state.cityName} key={-1} />
+                                        {this.state.city.map((item, key) => {
+                                          return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
+                                        })}
+                                    </Picker> : <Text style={{ color: 'lightgray', paddingLeft: 10 }}>{"Ciudad"}</Text>
+                                  }
+                                </View>
 
                                   <View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
                                     {(this.state.neightborhood && this.state.neightborhood.length > 0) ?
@@ -358,14 +368,17 @@ export default class CreateProperties extends Component {
                                     <Text style={[styles.titleText,{color:'#fff'}]}>{"Guardar"}</Text>
                                 </View>
                         </TouchableOpacity>
-                </KeyboardAvoidingView>            
-                <ActionSheet
-                    ref={o => this.ActionSheet = o}
-                    title={'Seleccionar imagen'}
-                    options={['Tomar foto', 'Elige de la galería', 'Cancelar']}
-                    cancelButtonIndex={2}
-                    onPress={(index) => { this.selectedPhoto(index) }}
-                    />
+                </KeyboardAvoidingView>
+                {/* {console.log("AQUI ---------------------==================>>>>>>>>",this.state.city.map((c)=>[c]))}             */}
+                {/* <ActionSheet
+                  ref={o => this.ActionSheet = o}
+                  title={'Seleccionar ciudad'}
+                  options={this.state.city.map((c)=>[c.attributes.name])}
+                  // cancelButtonIndex={1}
+                  // id={this.state.city.map((c)=>[c.id])}
+                  // name={this.state.city.map((c)=>[c.attributes.name])}
+                  onPress={(index) => { this.updateNeighborhood(index) }}
+                /> */}
             </SafeAreaView>
         )
         }else{
