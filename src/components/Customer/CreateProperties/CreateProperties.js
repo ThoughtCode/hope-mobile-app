@@ -62,7 +62,7 @@ export default class CreateProperties extends Component {
           city : response.city && response.city.data || []
         },() =>{
           if(this.state.isUpdate){
-            this.state.cityId && this.actionSheetCity(this.state.cityId)
+            this.state.cityId && this.actionSheetCitySelect(this.state.cityId)
           }
         })
       } catch (error) {
@@ -337,7 +337,7 @@ export default class CreateProperties extends Component {
           ref={o => this.ActionSheetCity = o}
           title={'Seleccionar ciudad'}
           options={this.state.city.map((c)=>[c.attributes.name])}
-          // cancelButtonIndex={1}
+          // cancelButtonIndex={2}
           onPress={(index) => { this.actionSheetCitySelect(index) }}
         />
         <ActionSheet
