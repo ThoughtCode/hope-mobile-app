@@ -35,7 +35,8 @@ export default class CreateProperties extends Component {
       cityID : null,
       cityName: '',
       directionData: null,
-      isUpdate: false
+      isUpdate: false,
+      cityNameOption: []
     }
   }
 
@@ -68,10 +69,16 @@ export default class CreateProperties extends Component {
       } catch (error) {
         Alert.alert("NOC NOC",error.message)
       }
+      this.optionsCitySelection()
     },
     error: (err) => {
       console.log('create properties error ' + JSON.stringify(err));
     }
+  }
+
+  optionsCitySelection(){
+    var nameCityOption = this.state.city.map((c)=>[c.attributes.name])
+    this.setState({cityNameOption:nameCityOption})
   }
 
   btnUpdateTap = () =>{
@@ -333,10 +340,11 @@ export default class CreateProperties extends Component {
             </View>
           </TouchableOpacity>
         </KeyboardAvoidingView>
+        {console.log("cityNameOptioncityNameOptioncityNameOptioncityNameOptioncityNameOption",this.state.cityNameOption)}
         <ActionSheet
           ref={o => this.ActionSheetCity = o}
           title={'Seleccionar ciudad'}
-          options={this.state.city.map((c)=>[c.attributes.name])}
+          options={this.state.cityNameOption}
           // cancelButtonIndex={2}
           onPress={(index) => { this.actionSheetCitySelect(index) }}
         />
