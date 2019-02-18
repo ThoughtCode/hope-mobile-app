@@ -77,7 +77,8 @@ export default class CreateProperties extends Component {
   }
 
   optionsCitySelection(){
-    var nameCityOption = this.state.city.map((c)=>[c.attributes.name])
+    var nameCityOption = this.state.city.map((c)=>c.attributes.name)
+    nameCityOption.push('Cancelar')
     this.setState({cityNameOption:nameCityOption})
   }
 
@@ -345,7 +346,7 @@ export default class CreateProperties extends Component {
           ref={o => this.ActionSheetCity = o}
           title={'Seleccionar ciudad'}
           options={this.state.cityNameOption}
-          // cancelButtonIndex={2}
+          // cancelButtonIndex={this.state.cityNameOption.length -1}
           onPress={(index) => { this.actionSheetCitySelect(index) }}
         />
         <ActionSheet
