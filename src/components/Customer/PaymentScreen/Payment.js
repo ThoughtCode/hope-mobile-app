@@ -117,7 +117,8 @@ export default class Payment extends React.Component {
           "job_details_attributes": additionalServiceData,
           "credit_card_id": this.state.cardData.id,
           "installments": optionSelecctInstallments,
-          "finished_recurrency_at": finished_recurrency_at
+          "finished_recurrency_at": finished_recurrency_at,
+          "source": 1
         }
       }
       API.createJob(this.createJobResponse,data,true);
