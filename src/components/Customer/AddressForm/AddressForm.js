@@ -34,6 +34,8 @@ export default class AddressForm extends React.Component {
       cityName: '',
       directionData: null,
       jobCurrentState: this.props.navigation.state.params.jobActualState,
+      cityNameOption: [],
+      neightborhoodNameOption: []
     }
   }
 
@@ -75,10 +77,17 @@ export default class AddressForm extends React.Component {
       } catch (error) {
         Alert.alert("NOC NOC",error.message)
       }
+      this.optionsCitySelection()
     },
     error: (err) => {
       console.log('create properties error ' + JSON.stringify(err));
     }
+  }
+
+  optionsCitySelection(){
+    var nameCityOption = this.state.city.map((c)=>c.attributes.name)
+    nameCityOption.push('Cancelar')
+    this.setState({cityNameOption:nameCityOption})
   }
 
   //======================================================================
@@ -91,27 +100,6 @@ export default class AddressForm extends React.Component {
       this.setState({cityName: r.attributes.name})
     })
     return
-  }
-
-  //======================================================================
-  // getneightborhoodResponse
-  //======================================================================
-
-  getneightborhoodResponse = {
-    success: (response) => {
-      try {
-        this.setState({
-          neightborhood : response.neightborhood.data || [],
-          neighborhoodID : response.neightborhood.data.id,
-        })
-          
-      } catch (error) {
-        Alert.alert("NOC NOC",error.message)
-      }
-    },
-    error: (err) => {
-      console.log('create properties error ' + JSON.stringify(err));
-    }
   }
 
   btnUpdateTap = () =>{
@@ -229,37 +217,62 @@ export default class AddressForm extends React.Component {
     this[textField].focus()
   }
 
-  updateNeighborhood = (name, id) => {
-    if(id != 0){
-      this.setState({ 
-        selectNeighborhood: name, 
-        neighborhoodID: id 
-      })
+  //======================================================================
+  // getneightborhoodResponse
+  //======================================================================
+
+  getneightborhoodResponse = {
+    success: (response) => {
+      try {
+        this.setState({
+          neightborhood : response.neightborhood.data || [],
+          neighborhoodID : response.neightborhood.data.id,
+        })
+          
+      } catch (error) {
+        Alert.alert("NOC NOC",error.message)
+      }
+      this.neightborhoodNameOptionResponse()
+    },
+    error: (err) => {
+      console.log('create properties error ' + JSON.stringify(err));
     }
   }
 
-  _onOpenActionSheetCity = () => {
-    this.ActionSheet.show();
+  neightborhoodNameOptionResponse(){
+    var nameNeightborhoodOption = this.state.neightborhood.map((n)=>n.attributes.name)
+    nameNeightborhoodOption.push('Cancelar')
+    this.setState({neightborhoodNameOption:nameNeightborhoodOption})
   }
 
-  actionSheetCity(itemIndex){
-    var cityId = this.state.city[itemIndex].id
-    var cityName = this.state.city[itemIndex].attributes.name
-    API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
-    this.setState({cityName: cityName})
+  _onOpenActionSheetCity = () => {
+    this.ActionSheetCity.show();
+  }
+
+  actionSheetCitySelect(itemIndex){
+    if(this.state.cityNameOption.length -1 == itemIndex){
+    }else{
+      var cityId = this.state.city[itemIndex].id
+      var cityName = this.state.city[itemIndex].attributes.name
+      API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
+      this.setState({cityName: cityName})
+    }
   }
 
   _onOpenActionSheetNeighborhood = () => {
     this.ActionSheetNeighborhood.show();
   }
 
-  actionSheetNeighborhood = (itemIndex) => {
-    var neighborhoodId = this.state.neightborhood[itemIndex].id
-    var neighborhoodName = this.state.neightborhood[itemIndex].attributes.name
-    this.setState({ 
-      selectNeighborhood: neighborhoodName, 
-      neighborhoodID: neighborhoodId 
-    })
+  actionSheetNeighborhoodSelect = (itemIndex) => {
+    if(this.state.neightborhoodNameOption.length -1 == itemIndex){
+    }else{
+      var neighborhoodId = this.state.neightborhood[itemIndex].id
+      var neighborhoodName = this.state.neightborhood[itemIndex].attributes.name
+      this.setState({ 
+        selectNeighborhood: neighborhoodName, 
+        neighborhoodID: neighborhoodId 
+      })
+    }
   }
 
   render() {
@@ -371,20 +384,24 @@ export default class AddressForm extends React.Component {
               </View>
             </TouchableOpacity>
           </KeyboardAvoidingView>
-          <ActionSheet
-            ref={o => this.ActionSheet = o}
-            title={'Seleccionar ciudad'}
-            options={this.state.city.map((c)=>[c.attributes.name])}
-            // cancelButtonIndex={1}
-            onPress={(index) => { this.actionSheetCity(index) }}
-          />
-          <ActionSheet
-            ref={o => this.ActionSheetNeighborhood = o}
-            title={'Seleccionar barrio'}
-            options={this.state.neightborhood.map((n)=>[n.attributes.name])}
-            // cancelButtonIndex={1}
-            onPress={(index) => { this.actionSheetNeighborhood(index) }}
-          />
+          {this.state.cityNameOption ? (
+            <ActionSheet
+              ref={o => this.ActionSheetCity = o}
+              title={'Seleccionar ciudad'}
+              options={this.state.cityNameOption}
+              cancelButtonIndex={this.state.cityNameOption.length - 1}
+              onPress={(index) => { this.actionSheetCitySelect(index) }}
+            />
+          ):('')}
+          {this.state.neightborhoodNameOption ? (
+            <ActionSheet
+              ref={o => this.ActionSheetNeighborhood = o}
+              title={'Seleccionar barrio'}
+              options={this.state.neightborhoodNameOption}
+              cancelButtonIndex={this.state.neightborhoodNameOption.length -1}
+              onPress={(index) => { this.actionSheetNeighborhoodSelect(index) }}
+            />
+          ):('')}
         </SafeAreaView>
       )
     }else{

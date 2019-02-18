@@ -231,7 +231,6 @@ export default class CreateProperties extends Component {
       API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
       this.setState({cityName: cityName})
     }
-
   }
 
   _onOpenActionSheetNeighborhood = () => {
