@@ -207,7 +207,7 @@ export default class CreateProperties extends Component {
     this.ActionSheetCity.show();
   }
 
-  actionSheetCity(itemIndex){
+  actionSheetCitySelect(itemIndex){
     var cityId = this.state.city[itemIndex].id
     var cityName = this.state.city[itemIndex].attributes.name
     API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
@@ -218,7 +218,7 @@ export default class CreateProperties extends Component {
     this.ActionSheetNeighborhood.show();
   }
 
-  actionSheetNeighborhood = (itemIndex) => {
+  actionSheetNeighborhoodSelect = (itemIndex) => {
     var neighborhoodId = this.state.neightborhood[itemIndex].id
     var neighborhoodName = this.state.neightborhood[itemIndex].attributes.name
     this.setState({ 
@@ -336,18 +336,16 @@ export default class CreateProperties extends Component {
         <ActionSheet
           ref={o => this.ActionSheetCity = o}
           title={'Seleccionar ciudad'}
-          options={['Option 1','Cancelar']
-            // this.state.city.map((c)=>[c.attributes.name])
-          }
+          options={this.state.city.map((c)=>[c.attributes.name])}
           // cancelButtonIndex={1}
-          onPress={(index) => { this.actionSheetCity(index) }}
+          onPress={(index) => { this.actionSheetCitySelect(index) }}
         />
         <ActionSheet
           ref={o => this.ActionSheetNeighborhood = o}
           title={'Seleccionar barrio'}
           options={this.state.neightborhood.map((n)=>[n.attributes.name])}
           // cancelButtonIndex={1}
-          onPress={(index) => { this.actionSheetNeighborhood(index) }}
+          onPress={(index) => { this.actionSheetNeighborhoodSelect(index) }}
         />
       </SafeAreaView>
     )
