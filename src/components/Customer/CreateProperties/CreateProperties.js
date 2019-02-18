@@ -214,7 +214,7 @@ export default class CreateProperties extends Component {
   }
 
   neightborhoodNameOptionResponse(){
-    var nameNeightborhoodOption = this.state.neightborhood.map((n)=>[n.attributes.name])
+    var nameNeightborhoodOption = this.state.neightborhood.map((n)=>n.attributes.name)
     nameNeightborhoodOption.push('Cancelar')
     this.setState({neightborhoodNameOption:nameNeightborhoodOption})
   }
@@ -365,14 +365,15 @@ export default class CreateProperties extends Component {
             onPress={(index) => { this.actionSheetCitySelect(index) }}
           />
         ):('')}
-        <ActionSheet
-          ref={o => this.ActionSheetNeighborhood = o}
-          title={'Seleccionar barrio'}
-          options={this.state.neightborhoodNameOption}
-          cancelButtonIndex={this.state.neightborhoodNameOption.length -1}
-          onPress={(index) => { this.actionSheetNeighborhoodSelect(index) }}
-        />
-
+        {this.state.neightborhoodNameOption ? (
+          <ActionSheet
+            ref={o => this.ActionSheetNeighborhood = o}
+            title={'Seleccionar barrio'}
+            options={this.state.neightborhoodNameOption}
+            cancelButtonIndex={this.state.neightborhoodNameOption.length -1}
+            onPress={(index) => { this.actionSheetNeighborhoodSelect(index) }}
+          />
+        ):('')}
       </SafeAreaView>
     )
     }else{
