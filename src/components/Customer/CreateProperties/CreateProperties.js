@@ -334,7 +334,7 @@ export default class CreateProperties extends Component {
           </TouchableOpacity>
         </KeyboardAvoidingView>
         <ActionSheet
-          ref={o => this.ActionSheet = o}
+          ref={city => this.ActionSheet = city}
           title={'Seleccionar ciudad'}
           options={this.state.city.map((c)=>[c.attributes.name])}
           // cancelButtonIndex={1}
