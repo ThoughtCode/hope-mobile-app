@@ -4,6 +4,7 @@ import { API } from '../../../util/api';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './CustomerAddBillingScreenStyle';
 import * as globals from '../../../util/globals';
+import ActionSheet from 'react-native-actionsheet'
 
 const { width } = Dimensions.get('window')
 const IMAGES = {
@@ -22,12 +23,8 @@ export default class AddBillingScreen extends Component {
       email: '',
       address: '',
       telephone: '',
-      identificationTypeSelecct: '',
-      identificationType : [
-        {attributes : {name : "Consumidor final"}},
-        {attributes : {name : "Cédula"}},
-        {attributes : {name : "RUC"}},
-      ],
+      identificationTypeSelecct: null,
+      identificationType : '',
       firstName : globals.first_name,
       lastName : globals.last_name,
       avatar : globals.avatar,
@@ -40,7 +37,7 @@ export default class AddBillingScreen extends Component {
   }
 
   validation() {
-    if (this.state.identificationTypeSelecct == ""){
+    if (this.state.identificationTypeSelecct == null){
       Alert.alert(
         'Error, en el tipo identificación ',
         'Debe seleccionar un tipo de identificación',
@@ -103,26 +100,17 @@ export default class AddBillingScreen extends Component {
   }
   
   onPressHandle = () =>{
-    var it = 0
-    if(this.state.identificationTypeSelecct == "Consumidor final"){
-      it = 0
-    }else if(this.state.identificationTypeSelecct == "Cédula"){
-      it = 1
-    }else if(this.state.identificationTypeSelecct == "RUC"){
-      it = 2
-    }
     let data = {
       "invoice_detail": {
         "email": this.state.email,
         "identification": this.state.identification,
-        "identification_type": it,
+        "identification_type": this.state.identificationTypeSelecct,
         "social_reason": this.state.socialReason,
         "address": this.state.address,
         "telephone": this.state.telephone
       }
     }
     if(!this.state.isUpdate && is_form_validated){
-      console.log("Estoy aca if ------------>")      
       API.setAddInvoiceDetail(this.addBillingDataResponseData, data, true);
       // let jobCurrentStateSend = this.props.navigation.state.params.jobActualState
       // this.props.navigation.navigate("DetailsListScreen",{setDetails : this.setDetails, jobActualState : jobCurrentStateSend})
@@ -140,6 +128,24 @@ export default class AddBillingScreen extends Component {
     this.setState({
       detailsData: detailsData
     })
+  }
+
+  _onOpenActionSheetIdentification = () => {
+    this.ActionSheetIdentification.show();
+  }
+
+  actionSheetIdentificationSelect(itemIndex){
+    let select = null
+    if(itemIndex == 0){
+      select = "Consumidor final"
+      this.setState({identificationTypeSelecct:itemIndex,identificationType:select})
+    }else if(itemIndex == 1){
+      select = "Cédula"
+      this.setState({identificationTypeSelecct:itemIndex,identificationType:select})
+    }else if(itemIndex == 2){
+      select = "RUC"
+      this.setState({identificationTypeSelecct:itemIndex,identificationType:select})
+    }else{}
   }
 
   render() {
@@ -187,6 +193,11 @@ export default class AddBillingScreen extends Component {
                   <Text>{"Identificación:"}</Text>
                 </View>
                 <View style={styles.textInputStyleContainer}>
+                  <TouchableOpacity onPress={this._onOpenActionSheetIdentification}>
+                    <Text style={{ height: 50, width: width, paddingLeft:5}}>{this.state.identificationType || "Identificación"}</Text>
+                  </TouchableOpacity>
+                </View>
+                {/* <View style={styles.textInputStyleContainer}>
                   {(this.state.identificationType && this.state.identificationType.length > 0) ?
                     <Picker
                       selectedValue={this.state.identificationType}
@@ -199,7 +210,7 @@ export default class AddBillingScreen extends Component {
                       })}
                     </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{console.log(this.state.identificationTypeSelecct)}</Text>
                   }
-                </View>
+                </View> */}
               </View>
               <View style={{flexDirection:'row',marginVertical:5}}>
                 <View style={styles.textStyle}>
@@ -271,6 +282,13 @@ export default class AddBillingScreen extends Component {
             </View>
           </TouchableOpacity>
         </KeyboardAvoidingView>
+        <ActionSheet
+          ref={o => this.ActionSheetIdentification = o}
+          title={'Seleccionar identificación'}
+          options={['Consumidor final','Cédula','RUC','Cancelar']}
+          cancelButtonIndex={3}
+          onPress={(index) => { this.actionSheetIdentificationSelect(index) }}
+        />
         </View>
     );
   }
