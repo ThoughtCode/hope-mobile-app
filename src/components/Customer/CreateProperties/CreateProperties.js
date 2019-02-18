@@ -36,7 +36,8 @@ export default class CreateProperties extends Component {
       cityName: '',
       directionData: null,
       isUpdate: false,
-      cityNameOption: []
+      cityNameOption: [],
+      neightborhoodNameOption: []
     }
   }
 
@@ -205,10 +206,17 @@ export default class CreateProperties extends Component {
       } catch (error) {
         Alert.alert("NOC NOC",error.message)
       }
+      this.neightborhoodNameOptionResponse()
     },
     error: (err) => {
       console.log('create properties error ' + JSON.stringify(err));
     }
+  }
+
+  neightborhoodNameOptionResponse(){
+    var nameNeightborhoodOption = this.state.neightborhood.map((n)=>[n.attributes.name])
+    nameNeightborhoodOption.push('Cancelar')
+    this.setState({neightborhoodNameOption:nameNeightborhoodOption})
   }
 
   _onOpenActionSheetCity = () => {
@@ -216,10 +224,14 @@ export default class CreateProperties extends Component {
   }
 
   actionSheetCitySelect(itemIndex){
-    var cityId = this.state.city[itemIndex].id
-    var cityName = this.state.city[itemIndex].attributes.name
-    API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
-    this.setState({cityName: cityName})
+    if(this.state.cityNameOption.length -1 == itemIndex){
+    }else{
+      var cityId = this.state.city[itemIndex].id
+      var cityName = this.state.city[itemIndex].attributes.name
+      API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
+      this.setState({cityName: cityName})
+    }
+
   }
 
   _onOpenActionSheetNeighborhood = () => {
@@ -227,12 +239,15 @@ export default class CreateProperties extends Component {
   }
 
   actionSheetNeighborhoodSelect = (itemIndex) => {
-    var neighborhoodId = this.state.neightborhood[itemIndex].id
-    var neighborhoodName = this.state.neightborhood[itemIndex].attributes.name
-    this.setState({ 
-      selectNeighborhood: neighborhoodName, 
-      neighborhoodID: neighborhoodId 
-    })
+    if(this.state.neightborhoodNameOption.length -1 == itemIndex){
+    }else{
+      var neighborhoodId = this.state.neightborhood[itemIndex].id
+      var neighborhoodName = this.state.neightborhood[itemIndex].attributes.name
+      this.setState({ 
+        selectNeighborhood: neighborhoodName, 
+        neighborhoodID: neighborhoodId 
+      })
+    }
   }
 
   //======================================================================
@@ -340,22 +355,26 @@ export default class CreateProperties extends Component {
               <Text style={[styles.titleText,{color:'#fff'}]}>{"Guardar"}</Text>
             </View>
           </TouchableOpacity>
-        </KeyboardAvoidingView>
-        {console.log("cityNameOptioncityNameOptioncityNameOptioncityNameOptioncityNameOption",this.state.cityNameOption)}
-        <ActionSheet
-          ref={o => this.ActionSheetCity = o}
-          title={'Seleccionar ciudad'}
-          options={this.state.cityNameOption}
-          // cancelButtonIndex={this.state.cityNameOption.length -1}
-          onPress={(index) => { this.actionSheetCitySelect(index) }}
-        />
-        <ActionSheet
-          ref={o => this.ActionSheetNeighborhood = o}
-          title={'Seleccionar barrio'}
-          options={this.state.neightborhood.map((n)=>[n.attributes.name])}
-          // cancelButtonIndex={1}
-          onPress={(index) => { this.actionSheetNeighborhoodSelect(index) }}
-        />
+        </KeyboardAvoidingView>        
+        {this.state.cityNameOption ? (
+          <ActionSheet
+            ref={o => this.ActionSheetCity = o}
+            title={'Seleccionar ciudad'}
+            options={this.state.cityNameOption}
+            cancelButtonIndex={this.state.cityNameOption.length - 1}
+            onPress={(index) => { this.actionSheetCitySelect(index) }}
+          />
+        ):('')}
+        {this.state.neightborhoodNameOption ? (
+          <ActionSheet
+            ref={o => this.ActionSheetNeighborhood = o}
+            title={'Seleccionar barrio'}
+            options={this.state.neightborhoodNameOption}
+            cancelButtonIndex={this.state.neightborhoodNameOption.length -1}
+            onPress={(index) => { this.actionSheetNeighborhoodSelect(index) }}
+          />
+        ):('')}
+
       </SafeAreaView>
     )
     }else{
