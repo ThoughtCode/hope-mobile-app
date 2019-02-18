@@ -204,7 +204,7 @@ export default class CreateProperties extends Component {
   }
 
   _onOpenActionSheetCity = () => {
-    this.ActionSheet.show();
+    this.ActionSheetCity.show();
   }
 
   actionSheetCity(itemIndex){
@@ -334,7 +334,7 @@ export default class CreateProperties extends Component {
           </TouchableOpacity>
         </KeyboardAvoidingView>
         <ActionSheet
-          ref={city => this.ActionSheet = city}
+          ref={city => this.ActionSheetCity = city}
           title={'Seleccionar ciudad'}
           options={this.state.city.map((c)=>[c.attributes.name])}
           // cancelButtonIndex={1}
