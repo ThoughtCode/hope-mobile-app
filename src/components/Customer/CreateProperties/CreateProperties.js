@@ -336,7 +336,9 @@ export default class CreateProperties extends Component {
         <ActionSheet
           ref={city => this.ActionSheetCity = city}
           title={'Seleccionar ciudad'}
-          options={this.state.city.map((c)=>[c.attributes.name])}
+          options={['Option 1','Cancelar']
+            // this.state.city.map((c)=>[c.attributes.name])
+          }
           // cancelButtonIndex={1}
           onPress={(index) => { this.actionSheetCity(index) }}
         />
