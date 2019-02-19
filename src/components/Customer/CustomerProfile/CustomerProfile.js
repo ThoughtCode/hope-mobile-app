@@ -172,7 +172,7 @@ export default class CustomerProfile extends Component {
 
               <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdateProperties")}>
                 <View style={styles.accordion_header}>
-                  <Text style={styles.accordion_header_title}>{"Propiedades"}</Text>
+                  <Text style={styles.accordion_header_title}>{"Dirección de Propiedades"}</Text>
                   <FontAwesome
                     name="chevron-right"
                     size={24}
@@ -194,7 +194,7 @@ export default class CustomerProfile extends Component {
 
               <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerProfileCardList")}>
                 <View style={styles.accordion_header}>
-                  <Text style={styles.accordion_header_title}>{"Metodo de pago"}</Text>
+                  <Text style={styles.accordion_header_title}>{"Método de pago"}</Text>
                   <FontAwesome
                     name="chevron-right"
                     size={24}

@@ -105,7 +105,7 @@ export default class CustomerBillingList extends Component {
   ListEmptyComponent = () =>{
     return(
       <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
-        <Text style={styles.emptyText}>{"Sin datos para facturar, por favor agrege una."}</Text>
+        <Text style={styles.emptyText}>{"No has registrado datos para el envío de tu factura electrónica."}</Text>
       </View>
     )
   }

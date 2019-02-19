@@ -30,7 +30,7 @@ export default class CalenderPick extends Component {
   async onTimechage(){
     try {
       const { action, hour, minute } = await TimePickerAndroid.open({
-        hour: 14,
+        hour: 7,
         minute: 0,
         is24Hour: true, // Will display '2 PM'
       });
@@ -57,7 +57,6 @@ export default class CalenderPick extends Component {
       let date = this.state.selectedStartDate
       let isHoliday = false
       // Primero ver si es sabado o domingo
-      console.log("Estoy comprobando esto ----------->>>>>>>>>>>>>", date)
       if(date.day() == 0 || date.day() == 6) {
         isHoliday = true
         setDate(selectedDate, this.state.is_start, isHoliday)

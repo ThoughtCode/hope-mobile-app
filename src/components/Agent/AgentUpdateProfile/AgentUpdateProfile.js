@@ -295,7 +295,7 @@ export default class AgentProfile extends Component {
                                         <TextInput  ref={ref => (this.phoneInput = ref)}
                                                     underlineColorAndroid={"transparent"}
                                                     style={styles.textInputStyle}
-                                                    placeholder={"+593 99999999"}
+                                                    placeholder={"0999999999"}
                                                     placeholderTextColor={"gray"}
                                                     value={this.state.phone}
                                                     onChangeText={(phone) => this.setState({phone : phone})}

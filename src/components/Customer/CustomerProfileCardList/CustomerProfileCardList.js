@@ -129,7 +129,7 @@ export default class CustomerProfileCardList extends Component {
   ListEmptyComponent = () =>{
     return(
       <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
-        <Text style={styles.emptyText}>{"Sin tarjetas, por favor agrege una."}</Text>
+        <Text style={styles.emptyText}>{"No has registrado una tarjeta de crédito o débito, por favor agrega una."}</Text>
       </View>
     )
   }
@@ -160,7 +160,7 @@ export default class CustomerProfileCardList extends Component {
               </Text>}
             </View>
             <View style={styles.topTitleView}>
-              <Text style={styles.mainTitleText}>{"Tarjetas"}</Text>
+              <Text style={styles.mainTitleText}>{"Tarjetas de crédito o débito"}</Text>
             </View>
           </View> 
           <View style={{flex:1}}>

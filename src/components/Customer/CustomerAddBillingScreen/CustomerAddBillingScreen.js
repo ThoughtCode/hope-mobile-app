@@ -4,12 +4,10 @@ import { API } from '../../../util/api';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './CustomerAddBillingScreenStyle';
 import * as globals from '../../../util/globals';
-import ActionSheet from 'react-native-actionsheet'
+import ActionSheet from 'react-native-actionsheet';
 
 const { width } = Dimensions.get('window')
-const IMAGES = {
-  TOP_BACKGROUND: require("../../../../assets/img/topbg.png")
-}
+const IMAGES = {TOP_BACKGROUND: require("../../../../assets/img/topbg.png")}
 
 var is_form_validated = false;
 
@@ -31,8 +29,9 @@ export default class AddBillingScreen extends Component {
       email : globals.email,
       phone : globals.cell_phone,
       detailsData : null,
-      jobCurrentState: ''
-      // this.props.navigation.state.params.jobActualState,
+      jobCurrentState: '',
+      maxLengthInput : 0,
+      maxLengthText : ''
     }
   }
 
@@ -46,8 +45,7 @@ export default class AddBillingScreen extends Component {
         ]
       );
       is_form_validated = false;
-    }
-    else if (this.state.identification === "") {
+    }else if (this.state.identification === "") {
       Alert.alert(
         'Error, número de deidentificación',
         'Debe colocar su número de identificación',
@@ -56,8 +54,7 @@ export default class AddBillingScreen extends Component {
         ]
       );
       is_form_validated = false;
-    }
-    else if (this.state.address === "") {
+    }else if (this.state.address === "") {
       Alert.alert(
         'Error, de dirección',
         'Debe colocar la dirección para su facturación',
@@ -66,8 +63,7 @@ export default class AddBillingScreen extends Component {
         ]
       );
       is_form_validated = false;
-    }
-    else if (this.state.telephone === "") {
+    }else if (this.state.telephone === "") {
       Alert.alert(
         'Error, de Teléfono',
         'Debe colocar número de teléfono',
@@ -76,8 +72,7 @@ export default class AddBillingScreen extends Component {
         ]
       );
       is_form_validated = false;
-    }
-    else {
+    }else {
       is_form_validated = true;
     }
     this.onPressHandle()
@@ -112,10 +107,7 @@ export default class AddBillingScreen extends Component {
     }
     if(!this.state.isUpdate && is_form_validated){
       API.setAddInvoiceDetail(this.addBillingDataResponseData, data, true);
-      // let jobCurrentStateSend = this.props.navigation.state.params.jobActualState
-      // this.props.navigation.navigate("DetailsListScreen",{setDetails : this.setDetails, jobActualState : jobCurrentStateSend})
     }else{
-      console.log("Estoy aca else------------>")
     }
     
   }
@@ -138,12 +130,33 @@ export default class AddBillingScreen extends Component {
     let select = null
     if(itemIndex == 0){
       select = "Consumidor final"
+      Alert.alert(
+        'Mensaje',
+        'N° de identificación, debe contener 10 caracteres',
+        [
+          { text: 'OK', onPress: () => this.setState({maxLengthInput:10})}
+        ]
+      );
       this.setState({identificationTypeSelecct:itemIndex,identificationType:select})
     }else if(itemIndex == 1){
       select = "Cédula"
+      Alert.alert(
+        'Mensaje',
+        'N° de identificación, debe contener 10 caracteres',
+        [
+          { text: 'OK', onPress: () => this.setState({maxLengthInput:10})}
+        ]
+      );
       this.setState({identificationTypeSelecct:itemIndex,identificationType:select})
     }else if(itemIndex == 2){
       select = "RUC"
+      Alert.alert(
+        'Mensaje',
+        'N° de identificación, debe contener 13 caracteres',
+        [
+          { text: 'OK', onPress: () => this.setState({maxLengthInput:13})}
+        ]
+      );
       this.setState({identificationTypeSelecct:itemIndex,identificationType:select})
     }else{}
   }
@@ -194,23 +207,9 @@ export default class AddBillingScreen extends Component {
                 </View>
                 <View style={styles.textInputStyleContainer}>
                   <TouchableOpacity onPress={this._onOpenActionSheetIdentification}>
-                    <Text style={{ height: 50, width: width, paddingLeft:5}}>{this.state.identificationType || "Identificación"}</Text>
+                    <Text style={(this.state.identificationType == '') ? ({alignItems:'center',justifyContent:'center',marginVertical:12,paddingLeft:5,color:'gray'}):({alignItems:'center',justifyContent:'center',marginVertical:12,paddingLeft:5})}>{this.state.identificationType || "Identificación"}</Text>
                   </TouchableOpacity>
                 </View>
-                {/* <View style={styles.textInputStyleContainer}>
-                  {(this.state.identificationType && this.state.identificationType.length > 0) ?
-                    <Picker
-                      selectedValue={this.state.identificationType}
-                      style={{ height: 50, width: width - 20 }}
-                      onValueChange={this.updateSelect}
-                    >
-                      <Picker.Item label={this.state.identificationTypeSelecct || "Seleccione opción"} value={this.state.identificationTypeSelecct} key={-1} />
-                      { this.state.identificationType.map((item, key)=>{
-                        return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
-                      })}
-                    </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{console.log(this.state.identificationTypeSelecct)}</Text>
-                  }
-                </View> */}
               </View>
               <View style={{flexDirection:'row',marginVertical:5}}>
                 <View style={styles.textStyle}>
@@ -224,6 +223,8 @@ export default class AddBillingScreen extends Component {
                     underlineColorAndroid='transparent'
                     placeholder='N° de identificación'
                     style={styles.textInputStyle}
+                    keyboardType = 'numeric'
+                    maxLength = {this.state.maxLengthInput}
                     onChangeText={(text) => this.setState({identification : text})} />
                 </View>
               </View>
@@ -245,7 +246,7 @@ export default class AddBillingScreen extends Component {
               </View>
               <View style={{flexDirection:'row',marginVertical:5}}>
                 <View style={styles.textStyle}>
-                  <Text>{"Dircción:"}</Text>
+                  <Text>{"Dirección:"}</Text>
                 </View>
                 <View style={styles.textInputStyleContainer}>
                   <TextInput
@@ -253,7 +254,7 @@ export default class AddBillingScreen extends Component {
                       this.textInput = input
                     }}
                     underlineColorAndroid='transparent'
-                    placeholder='Dircción'
+                    placeholder='Dirección'
                     style={styles.textInputStyle}
                     onChangeText={(text) => this.setState({address : text})} />
                   </View>

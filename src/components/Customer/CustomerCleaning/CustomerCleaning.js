@@ -310,9 +310,9 @@ export default class CustomerCleaning extends Component {
     }else if(this.state.cardData == null || ""){
       Alert.alert(
         'Error de validación',
-        'Seleccione un metodo de pago',
+        'Seleccione un método de pago',
         [
-          { text: 'OK', onPress: () => console.log('Seleccione un metodo de pago') }
+          { text: 'OK', onPress: () => console.log('Seleccione un método de pago') }
         ],
         { cancelable: false }
       );

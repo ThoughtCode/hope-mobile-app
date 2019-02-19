@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Image,
-  Dimensions,
-  Picker,
-  ScrollView,
-  Alert,
-  KeyboardAvoidingView
-} from 'react-native';
+import {Text,View,TouchableOpacity,TextInput,Image,Dimensions,ScrollView,Alert,KeyboardAvoidingView} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './AddDetailsScreenStyle';
 import { API } from '../../../util/api';
 import * as globals from '../../../util/globals';
+import ActionSheet from 'react-native-actionsheet';
+
 const { width } = Dimensions.get('window')
-const IMAGES = {
-    TOP_BACKGROUND: require("../../../../assets/img/topbg.png")
-}
+const IMAGES = {TOP_BACKGROUND: require("../../../../assets/img/topbg.png")}
 
 var is_form_validated = false;
 
@@ -32,12 +21,8 @@ export default class AddCardScreen extends Component {
       email: '',
       address: '',
       telephone: '',
-      identificationTypeSelecct: '',
-      identificationType : [
-        {attributes : {name : "Consumidor final"}},
-        {attributes : {name : "Cédula"}},
-        {attributes : {name : "RUC"}},
-      ],
+      identificationTypeSelecct: null,
+      identificationType : '',
       firstName : globals.first_name,
       lastName : globals.last_name,
       avatar : globals.avatar,
@@ -45,6 +30,8 @@ export default class AddCardScreen extends Component {
       phone : globals.cell_phone,
       detailsData : null,
       jobCurrentState: this.props.navigation.state.params.jobActualState,
+      maxLengthInput : 0,
+      maxLengthText : ''
     }
   }
 
@@ -63,7 +50,7 @@ export default class AddCardScreen extends Component {
   }
 
   validation() {
-    if (this.state.identificationTypeSelecct == ""){
+    if (this.state.identificationTypeSelecct == null){
       Alert.alert(
         'Error, en el tipo identificación ',
         'Debe seleccionar un tipo de identificación',
@@ -72,8 +59,7 @@ export default class AddCardScreen extends Component {
         ]
       );
       is_form_validated = false;
-    }
-    else if (this.state.identification === "") {
+    }else if (this.state.identification === "") {
       Alert.alert(
         'Error, número de deidentificación',
         'Debe colocar su número de identificación',
@@ -82,8 +68,7 @@ export default class AddCardScreen extends Component {
         ]
       );
       is_form_validated = false;
-    }
-    else if (this.state.address === "") {
+    }else if (this.state.address === "") {
       Alert.alert(
         'Error, de derección',
         'Debe colocar la derección para su facturación',
@@ -92,8 +77,7 @@ export default class AddCardScreen extends Component {
         ]
       );
       is_form_validated = false;
-    }
-    else if (this.state.telephone === "") {
+    }else if (this.state.telephone === "") {
       Alert.alert(
         'Error, de Teléfono',
         'Debe colocar número de teléfono',
@@ -102,27 +86,18 @@ export default class AddCardScreen extends Component {
         ]
       );
       is_form_validated = false;
-    }
-    else {
+    }else {
       is_form_validated = true;
     }
     this.onPressHandle()
   }
 
   onPressHandle = () =>{
-    var it = 0
-    if(this.state.identificationTypeSelecct == "Consumidor final"){
-      it = 0
-    }else if(this.state.identificationTypeSelecct == "Cédula"){
-      it = 1
-    }else if(this.state.identificationTypeSelecct == "RUC"){
-      it = 2
-    }
     let data = {
       "invoice_detail": {
         "email": this.state.email,
         "identification": this.state.identification,
-        "identification_type": it,
+        "identification_type": this.state.identificationTypeSelecct,
         "social_reason": this.state.socialReason,
         "address": this.state.address,
         "telephone": this.state.telephone
@@ -133,9 +108,7 @@ export default class AddCardScreen extends Component {
       let jobCurrentStateSend = this.props.navigation.state.params.jobActualState
       this.props.navigation.navigate("DetailsListScreen",{setDetails : this.setDetails, jobActualState : jobCurrentStateSend})
     }else{
-      console.log("Estoy aca ------------>")
     }
-    
   }
 
   updateSelect = (select) => {
@@ -146,6 +119,45 @@ export default class AddCardScreen extends Component {
     this.setState({
       detailsData: detailsData
     })
+  }
+
+  _onOpenActionSheetIdentification = () => {
+    this.ActionSheetIdentification.show();
+  }
+
+  actionSheetIdentificationSelect(itemIndex){
+    let select = null
+    if(itemIndex == 0){
+      select = "Consumidor final"
+      Alert.alert(
+        'Mensaje',
+        'N° de identificación, debe contener 10 caracteres',
+        [
+          { text: 'OK', onPress: () => this.setState({maxLengthInput:10})}
+        ]
+      );
+      this.setState({identificationTypeSelecct:itemIndex,identificationType:select})
+    }else if(itemIndex == 1){
+      select = "Cédula"
+      Alert.alert(
+        'Mensaje',
+        'N° de identificación, debe contener 10 caracteres',
+        [
+          { text: 'OK', onPress: () => this.setState({maxLengthInput:10})}
+        ]
+      );
+      this.setState({identificationTypeSelecct:itemIndex,identificationType:select})
+    }else if(itemIndex == 2){
+      select = "RUC"
+      Alert.alert(
+        'Mensaje',
+        'N° de identificación, debe contener 13 caracteres',
+        [
+          { text: 'OK', onPress: () => this.setState({maxLengthInput:13})}
+        ]
+      );
+      this.setState({identificationTypeSelecct:itemIndex,identificationType:select})
+    }else{}
   }
 
   render() {
@@ -193,18 +205,9 @@ export default class AddCardScreen extends Component {
                   <Text>{"Identificación:"}</Text>
                 </View>
                 <View style={styles.textInputStyleContainer}>
-                  {(this.state.identificationType && this.state.identificationType.length > 0) ?
-                    <Picker
-                      selectedValue={this.state.identificationType}
-                      style={{ height: 50, width: width - 20 }}
-                      onValueChange={this.updateSelect}
-                    >
-                      <Picker.Item label={this.state.identificationTypeSelecct || "Seleccione opción"} value={this.state.identificationTypeSelecct} key={-1} />
-                      { this.state.identificationType.map((item, key)=>{
-                        return (<Picker.Item label={item.attributes.name} value={item.attributes.name} key={key} />)
-                      })}
-                    </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{console.log(this.state.identificationTypeSelecct)}</Text>
-                  }
+                  <TouchableOpacity onPress={this._onOpenActionSheetIdentification}>
+                    <Text style={(this.state.identificationType == '') ? ({alignItems:'center',justifyContent:'center',marginVertical:12,paddingLeft:5,color:'gray'}):({alignItems:'center',justifyContent:'center',marginVertical:12,paddingLeft:5})}>{this.state.identificationType || "Identificación"}</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
               <View style={{flexDirection:'row',marginVertical:5}}>
@@ -219,6 +222,8 @@ export default class AddCardScreen extends Component {
                     underlineColorAndroid='transparent'
                     placeholder='N° de identificación'
                     style={styles.textInputStyle}
+                    keyboardType = 'numeric'
+                    maxLength = {this.state.maxLengthInput}
                     onChangeText={(text) => this.setState({identification : text})} />
                 </View>
               </View>
@@ -277,7 +282,14 @@ export default class AddCardScreen extends Component {
             </View>
           </TouchableOpacity>
         </KeyboardAvoidingView>
-        </View>
+        <ActionSheet
+          ref={o => this.ActionSheetIdentification = o}
+          title={'Seleccionar identificación'}
+          options={['Consumidor final','Cédula','RUC','Cancelar']}
+          cancelButtonIndex={3}
+          onPress={(index) => { this.actionSheetIdentificationSelect(index) }}
+        />
+      </View>
     );
   }
 }
