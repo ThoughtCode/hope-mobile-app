@@ -309,7 +309,7 @@ export default class AddressForm extends React.Component {
                     <TextInput ref={ref => (this.firtNameInput = ref)}
                       underlineColorAndroid={"transparent"}
                       style={styles.textInputStyle}
-                      placeholder={"Nombre"}
+                      placeholder={"Nombre propiedad"}
                       placeholderTextColor={"gray"}
                       value={this.state.name}
                       onChangeText={(name) => this.setState({ name: name })}

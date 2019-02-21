@@ -93,7 +93,7 @@ export default class CustomerCleaning extends Component {
 
                         <View style={styles.rowStyle}>
                             <View style={styles.rowText}>
-                                <Text style={styles.titleText}>{"Ingresa tu forma de Pago"}</Text>
+                                <Text style={styles.titleText}>{"Seleccione una forma de pago"}</Text>
                                 <Text style={{fontFamily:"helvetica",fontSize:18}}>{"N XXXX-1111 Exp. 9/2020"}</Text>
                                 <Text style={{fontFamily:"helvetica",fontSize:15}}>{"Nombre: Jose Castellanos"}</Text>
                             </View>

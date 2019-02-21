@@ -376,7 +376,7 @@ export default class CustomerCleaning extends Component {
               setDate: this.setDate, is_start: true, start_date: this.state.selectedDate, service_id: this.state.serviceType.id })}>
               <View style={styles.rowStyle}>
                 <View style={styles.rowText}>
-                  <Text style={styles.titleText}>{"Fecha y Hora"}</Text>
+                  <Text style={styles.titleText}>{"Fecha y Hora inicial"}</Text>
                   {this.state.selectedDate && <Text style={styles.subTitleText}>{  (this.state.selectedDate).format("DD/MM/YYYY, h:mm")}</Text>}
                 </View>
                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
@@ -441,7 +441,7 @@ export default class CustomerCleaning extends Component {
             <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{jobActualState: this.state})}>
               <View style={styles.rowStyle}>
                 <View style={styles.rowText}>
-                  <Text style={styles.titleText}>{"Ingresa tú forma de Pago"}</Text>
+                  <Text style={styles.titleText}>{"Seleccione una forma de pago"}</Text>
                   {this.state.cardData && <View style={styles.childContainer}>
                     <View style={styles.itemView}>
                       <View style={{ flexDirection: 'row' }}>

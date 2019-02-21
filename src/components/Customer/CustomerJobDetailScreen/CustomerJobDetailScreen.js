@@ -98,7 +98,7 @@ export default class CustomerJobDetailScreen extends Component {
     tapOnCancle = () =>{
         var penalty_time = this.state.jobData.config[1].value
         var penalty_ammount = this.state.jobData.config[2].value
-        Alert.alert("Aviso de penalización","Recuerda que si cancelas el servicio antes de ‘"+ penalty_time +" horas’ de inicio de trabajo se cobrará un valor de "+ penalty_ammount +" por cargos administrativos.",
+        Alert.alert("Aviso de penalización","Recuerda que si cancelas el servicio antes de ‘"+ penalty_time +" horas’ del inicio de trabajo se cobrará un valor de $"+ penalty_ammount +" por cargos administrativos.",
         [
             {text: 'Cancelar Trabajo', onPress: () => this.canceleAPI(), style: 'destructive'},
             {text: 'Cerrar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},   

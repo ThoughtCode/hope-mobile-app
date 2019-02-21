@@ -22,13 +22,13 @@ module.exports = StyleSheet.create({
   section_servicios_container: {
     height: 270,
     padding: 10,
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
 
   section_trabajos_container: {
     // height: 200,
     padding: 10,
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   trabajos_container: {
     alignItems: 'center',

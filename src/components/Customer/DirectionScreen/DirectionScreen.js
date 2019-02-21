@@ -108,7 +108,7 @@ export default class DirectionScreen extends Component {
     return(
       <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
         <Text style={{fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'}}>
-          {"No tiene propiedades, por favor\ningrese una Nueva Dirección"}
+          {"No tiene propiedades, por favor\ningrese una nueva dirección"}
         </Text>
       </View>
     )

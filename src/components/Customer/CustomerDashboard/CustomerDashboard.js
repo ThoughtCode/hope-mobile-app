@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
-import {Image,ScrollView,Text,TouchableOpacity,View,AsyncStorage} from 'react-native';
+import {Image,ScrollView,Text,TouchableOpacity,View,AsyncStorage,Dimensions,Animated} from 'react-native';
 import Moment from 'moment';
 import * as urls from '../../../constants/api';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as globals from '../../../util/globals';
 
+const { width } = Dimensions.get('window');
 const styles = require('./CustomerDashboardStyles');
 var _this = null;
 
 export default class CustomerDashboard extends Component {
+  scrollX = new Animated.Value(0) // this will be the scroll location of our ScrollView
   constructor(props) {
     super(props);
     _this = this
@@ -17,6 +19,7 @@ export default class CustomerDashboard extends Component {
       servicesTypes: [],
       nextJobs: [],
       pastJobs: [],
+      activeSlide: null
     };
     this.getServicesTypes = this.getServicesTypes.bind(this);
     this.getNextJobs = this.getNextJobs.bind(this);
@@ -91,6 +94,7 @@ export default class CustomerDashboard extends Component {
   }
 
   renderPastJobs(){
+    let position = Animated.divide(this.scrollX, width);
     return(
       <View>
         <Text style={styles.section_title}>Próximos Trabajos</Text>
@@ -99,6 +103,12 @@ export default class CustomerDashboard extends Component {
               contentContainerStyle={styles.trabajos_container}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              pagingEnabled={true}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { x: this.scrollX } } }]
+              )}
+              scrollEventThrottle={16}
             >
               {
                 this.state.nextJobs.map((job) => {
@@ -152,12 +162,25 @@ export default class CustomerDashboard extends Component {
                 })
               }
             </ScrollView>
+            <View style={{ flexDirection: 'row' }}>
+              {this.state.nextJobs.map((_, i) => {
+                let opacity = position.interpolate({
+                  inputRange: [i - 1, i, i + 1],
+                  outputRange: [0.3, 1, 0.3],
+                  extrapolate: 'clamp'
+                });
+                return (
+                  <Animated.View key={i} style={{ opacity, height: 10, width: 10, backgroundColor: '#595959', margin: 8, borderRadius: 5 }}/>
+                );
+              })}
+            </View>
           </View>
       </View>
     )
   }
 
   renderPreviousJobs(){
+    let position = Animated.divide(this.scrollX, width);
     return(
       <View>
         <Text style={styles.section_title}>Historial de Trabajos</Text>
@@ -166,6 +189,12 @@ export default class CustomerDashboard extends Component {
             contentContainerStyle={styles.trabajos_container}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            pagingEnabled={true}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { x: this.scrollX } } }]
+            )}
+            scrollEventThrottle={16}
           >
             {this.state.pastJobs.map((job) => {
               const date = new Date(job.attributes.started_at), locale = "es-ES",
@@ -218,6 +247,18 @@ export default class CustomerDashboard extends Component {
               })
             }
           </ScrollView>
+          <View style={{ flexDirection: 'row' }}>
+            {this.state.pastJobs.map((_, i) => {
+              let opacity = position.interpolate({
+                inputRange: [i - 1, i, i + 1],
+                outputRange: [0.3, 1, 0.3],
+                extrapolate: 'clamp'
+              });
+              return (
+                <Animated.View key={i} style={{ opacity, height: 10, width: 10, backgroundColor: '#595959', margin: 8, borderRadius: 5 }}/>
+              );
+            })}
+          </View>
         </View>
       </View>
     )
@@ -232,6 +273,8 @@ export default class CustomerDashboard extends Component {
   }
 
   render() {
+    // position will be a value between 0 and photos.length - 1 assuming you don't scroll pass the ends of the ScrollView
+    let position = Animated.divide(this.scrollX, width);
     return (
       <View style={styles.container}>
         <Image source={require('../../../../assets/img/dashboard-home.png')} style={styles.banner_image}/>
@@ -243,20 +286,38 @@ export default class CustomerDashboard extends Component {
               contentContainerStyle={styles.servicios_container}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              pagingEnabled={true}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { x: this.scrollX } } }]
+              )}
+              scrollEventThrottle={16}
             >
               {
                 this.state.servicesTypes.map((serviceType) => {
                   return (
                     <View key={serviceType.id} style={styles.servicios_item}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerCleaning",{serviceType : serviceType})}>
-                      <Image source={{uri : serviceType.attributes.image.url}} style={styles.servicios_item_image}/>
-                      <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
+                      <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerCleaning",{serviceType : serviceType})}>
+                        <Image source={{uri : serviceType.attributes.image.url}} style={styles.servicios_item_image}/>
+                        <Text style={styles.servicios_item_description}>{serviceType.attributes.name}</Text>
                       </TouchableOpacity>
                     </View>
                   );
                 })
               }
             </ScrollView>
+            <View style={{ flexDirection: 'row' }}>
+              {this.state.servicesTypes.map((_, i) => {
+                let opacity = position.interpolate({
+                  inputRange: [i - 1, i, i + 1],
+                  outputRange: [0.3, 1, 0.3],
+                  extrapolate: 'clamp'
+                });
+                return (
+                  <Animated.View key={i} style={{ opacity, height: 10, width: 10, backgroundColor: '#595959', margin: 8, borderRadius: 5 }}/>
+                );
+              })}
+            </View>
           </View>
           {(this.state.nextJobs.length > 0) ? this.renderPastJobs() : this.noJobview("actuales")}
           {(this.state.pastJobs.length > 0) ? this.renderPreviousJobs() : this.noJobview("pasados")}

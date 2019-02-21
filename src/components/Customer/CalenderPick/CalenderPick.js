@@ -1,10 +1,11 @@
 import React,{Component} from 'react';
-import {Text,View,TouchableOpacity,TimePickerAndroid} from 'react-native';
+import {Text,View,TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from 'react-native-calendar-picker';
 import styles from './CalenderPickStyles';
 import Moment from 'moment';
 import { API } from '../../../util/api';
+import TimePicker from 'react-native-modal-datetime-picker';
 
 export default class CalenderPick extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ export default class CalenderPick extends Component {
       selectedStartDate: this.props.navigation.state.params.start_date,
       time : this.props.navigation.state.params.start_date.hours() + " : "+ this.props.navigation.state.params.start_date.minutes(),
       is_start : this.props.navigation.state.params.is_start,
-      isHoliday: null
+      isHoliday: null,
+      isDateTimePickerVisible: false,
     }
     this.onDateChange = this.onDateChange.bind(this);
   }
@@ -25,25 +27,6 @@ export default class CalenderPick extends Component {
     this.setState({
       selectedStartDate: initialDate
     });
-  }
-
-  async onTimechage(){
-    try {
-      const { action, hour, minute } = await TimePickerAndroid.open({
-        hour: 7,
-        minute: 0,
-        is24Hour: true, // Will display '2 PM'
-      });
-      if (action !== TimePickerAndroid.dismissedAction) {
-        date_with_hours = this.state.selectedStartDate.set({h: hour, m: minute});
-        this.setState({
-          time : hour + " : " + minute,
-          selectedStartDate: date_with_hours
-        })
-      }
-    } catch ({ code, message }) {
-      console.warn('Cannot open time picker', message);
-    }
   }
 
   onPress = () =>{
@@ -78,6 +61,21 @@ export default class CalenderPick extends Component {
       console.log('getHolidayData error ' + JSON.stringify(err));
     }
   }
+  
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  _handleDatePicked = (date) => {
+    let updateTime = Moment(date).format('LT')
+    date_with_hours = date
+    date_with_hours = this.state.selectedStartDate.set({h: Moment(date).format('hh'), m: Moment(date).format('mm')});
+    this.setState({
+      time : updateTime,
+      selectedStartDate: date_with_hours
+    })
+    this._hideDateTimePicker();
+  };
     
   render() {
     let { data, checked } = this.state;
@@ -98,7 +96,15 @@ export default class CalenderPick extends Component {
           />
           {this.state.is_start != false ? 
           <View style={{flex:0.3,alignItems:'center',justifyContent:'center'}}>
-            <Text style={{fontSize:28,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}} onPress={() => this.onTimechage()}>{this.state.time}</Text>
+            <TouchableOpacity onPress={this._showDateTimePicker}>
+              <Text style={{fontSize:28,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}}>{this.state.time}</Text>
+            </TouchableOpacity>
+            <TimePicker
+              isVisible={this.state.isDateTimePickerVisible}
+              onConfirm={this._handleDatePicked}
+              onCancel={this._hideDateTimePicker}
+              mode='time'
+            />
           </View>: null}
         </View>
         <View style={{ marginVertical:10 }}>

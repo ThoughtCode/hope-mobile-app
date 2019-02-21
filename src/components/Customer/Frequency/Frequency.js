@@ -21,7 +21,7 @@ export default class Frequency extends Component {
                 },
                 {
                     name: 'Semanal',
-                    description: 'Te visitaremos semanaimente el día que tú elijas',
+                    description: 'Te visitaremos semanalmente el día que tú elijas',
                     isSelected : false
                 },
                 {
@@ -31,7 +31,7 @@ export default class Frequency extends Component {
                 },
                 {
                     name: 'Mensual',
-                    description: 'Te Visitaremos mensualmente el día que tú elijas',
+                    description: 'Te visitaremos mensualmente el día que tú elijas',
                     isSelected : false
                 }
             ]

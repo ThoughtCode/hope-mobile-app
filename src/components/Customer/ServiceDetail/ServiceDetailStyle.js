@@ -6,7 +6,7 @@ const ServiceDetailStyle = StyleSheet.create({
         marginTop: 20,
         backgroundColor: '#ffffff',
     },
-    titleViewContainer: { height: 30, backgroundColor: '#58C4C5', justifyContent: 'center' },
+    titleViewContainer: { height: 30, backgroundColor: '#1F68A9', justifyContent: 'center' },
     titleTextStyle: { fontSize: 16, color: '#ffffff', textAlign: 'center' },
     childContainer: {
         backgroundColor: '#f9f9f9',
@@ -18,11 +18,11 @@ const ServiceDetailStyle = StyleSheet.create({
         flex: 0.5,
         justifyContent: 'center', alignItems: 'center',
         flexDirection: 'row',
-        borderColor: '#58C4C5',
+        borderColor: '#1F68A9',
         borderWidth: 1
     },
-    minusView: { backgroundColor: '#58C4C5', height: 50, width: 50, justifyContent: 'center' },
-    plusView: { backgroundColor: '#58C4C5', height: 50, width: 50, justifyContent: 'center' },
+    minusView: { backgroundColor: '#1F68A9', height: 50, width: 50, justifyContent: 'center' },
+    plusView: { backgroundColor: '#1F68A9', height: 50, width: 50, justifyContent: 'center' },
     switchContainer:
     {
         margin: 10, flexDirection: 'row'

@@ -24,7 +24,7 @@ export default class Payment extends React.Component {
       checked: [],
       isHoliday: this.props.navigation.state.params.data.isHoliday,
       extraFee : this.props.navigation.state.params.data.serviceType.attributes.extra_service_fee_holiday.value,
-      optionSelecct : '',
+      optionSelecct : "No deseo diferir mi pago",
       toDiffer : [
         {name : "No deseo diferir mi pago"},
         {name : "Diferir mi pago en 3 meses. Sin intereses"},
@@ -262,18 +262,18 @@ export default class Payment extends React.Component {
                       { this.state.toDiffer.map((item, key)=>{
                         return (<Picker.Item label={item.name} value={item.name} key={key} />)
                       })}
-                    </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{console.log(this.state.optionSelecct)}</Text>
+                    </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{console.log("this.state.select",this.state.optionSelecct)}</Text>
                   }
                 </View>
                 <View style={{ flexDirection: 'row', margin: 5 }}>
                   {(this.state.selectTerms == false) ? (
                     <Ionicons name={"ios-square-outline"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(true)} />
                   ) : (
-                    <Ionicons name={"ios-square"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(false)} />
+                    <Ionicons name={"ios-checkbox"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(false)} />
                   )}
                   <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://www.nocnoc.com.ec/politicas#policies')}}>
                     <View>
-                      <Text style={{ textAlign: 'center', margin: 5 }}>
+                      <Text style={{ textAlign: 'center', margin: 5, color:'blue'}}>
                         Acepto términos y condiciones
                       </Text>
                     </View>
@@ -281,7 +281,7 @@ export default class Payment extends React.Component {
                 </View>
                 <TouchableOpacity onPress={() => this.onPressHandle()}>
                   <View style={styles.buttonViewStyle}>
-                    <Text style={styles.buttonTextStyle}>Pagar</Text>
+                    <Text style={styles.buttonTextStyle}>Solicitar servicio</Text>
                   </View>
                 </TouchableOpacity>
             </View>

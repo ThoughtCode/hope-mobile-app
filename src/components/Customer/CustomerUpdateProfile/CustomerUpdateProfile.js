@@ -7,7 +7,9 @@ import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
 import { ImagePicker, Camera, Permissions  } from 'expo';
 import ImageUpload from '../../../util/ImageUpload';
-import ActionSheet from 'react-native-actionsheet'
+import ActionSheet from 'react-native-actionsheet';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import moment from 'moment';
 const styles = require('./CustomerUpdateProfileStyles');
 
 const IMAGES = {
@@ -16,43 +18,45 @@ const IMAGES = {
 
 export default class CustomerUpdateProfile extends Component {
 
-    //======================================================================
-    // constructor
-    //======================================================================
+  //======================================================================
+  // constructor
+  //======================================================================
 
-    constructor(props){
-        super(props)
-        this.state = {
-            isLoading : true,
-            firstName : globals.first_name,
-            lastName : globals.last_name,
-            avatar : globals.avatar,
-            email : globals.email,
-            phone : globals.cell_phone,
-            hasCameraPermission: null,
-            isCameraOpen : false,
-            userData : null
-        }
+  constructor(props){
+    super(props)
+    this.state = {
+      isLoading : true,
+      firstName : globals.first_name,
+      lastName : globals.last_name,
+      avatar : globals.avatar,
+      email : globals.email,
+      phone : globals.cell_phone,
+      birthday : globals.birthday || "AAAA-MM-DD",
+      hasCameraPermission: null,
+      isCameraOpen : false,
+      userData : null,
+      date: new Date(),
+      isDateTimePickerVisible: false,
     }
+  }
 
-    //======================================================================
-    // componentDidMount
-    //======================================================================
+  //======================================================================
+  // componentDidMount
+  //======================================================================
 
-    componentDidMount(){
-        AsyncStorage.getItem("customerData").then((item) =>{
-            // const data = this.state.data;
-            const data = JSON.parse(item)
-            this.setState({userData : data,
-                firstName : data.customer.data.attributes.first_name,
-                lastName : data.customer.data.attributes.last_name,
-                // avatar : data.customer.data.attributes.avatar.url,
-                email : data.customer.data.attributes.email,
-                phone : data.customer.data.attributes.cell_phone
-            })
-      
-        })
-    }
+  componentDidMount(){
+    AsyncStorage.getItem("customerData").then((item) =>{
+      // const data = this.state.data;
+      const data = JSON.parse(item)
+      this.setState({userData : data,
+          firstName : data.customer.data.attributes.first_name,
+          lastName : data.customer.data.attributes.last_name,
+          // avatar : data.customer.data.attributes.avatar.url,
+          email : data.customer.data.attributes.email,
+          phone : data.customer.data.attributes.cell_phone
+      })
+    })
+  }
 
     btnUpdateTap = () =>{
         
@@ -62,6 +66,7 @@ export default class CustomerUpdateProfile extends Component {
                 "last_name": this.state.lastName,
                 "email": this.state.email,
                 "cell_phone": this.state.phone,
+                "birthday": this.state.birthday
               }
         } 
         if(this.state.profilePhoto != null){
@@ -93,6 +98,7 @@ export default class CustomerUpdateProfile extends Component {
                         globals.last_name = response.customer.data.attributes.last_name || ""
                         globals.email = response.customer.data.attributes.email || ""
                         globals.cell_phone = response.customer.data.attributes.cell_phone || ""
+                        globals.birthday = response.customer.data.attributes.birthday || ""
                         globals.avatar = response.customer.data.attributes.avatar.url || ""
                         // this.props.navigation.state.params.setData()
                         this.props.navigation.goBack()    
@@ -188,8 +194,19 @@ export default class CustomerUpdateProfile extends Component {
     }
 
     _onOpenActionSheet = () => {
-        this.ActionSheet.show();
-      }
+      this.ActionSheet.show();
+    }
+
+    showDatePicker = () => this.setState({isDateTimePickerVisible: true});
+
+    hideDateTimePicker = () => this.setState({isDateTimePickerVisible: false});
+
+    handleDatePicked = (date) => {
+      let datePicked = moment(new Date(date)).format("YYYY-MM-DD");
+      // moment(new Date(date)).format("YYYY-MM-DD");
+      this.setState({birthday: datePicked,date : new Date(date)});
+      this.hideDateTimePicker();
+    }
 
     //======================================================================
     // render
@@ -294,6 +311,21 @@ export default class CustomerUpdateProfile extends Component {
                                                     returnKeyType={"done"}
                                                     onSubmitEditing={() => Keyboard.dismiss()} />
                                     </View>
+
+                                    <View style={styles.textInputVieW}>
+                                      <Text style={styles.textInputTitleText}>{"Cumpleaños"}</Text>
+                                      <View style={[styles.textInputStyle,{justifyContent:'center'}]}>
+                                        <Text onPress={this.showDatePicker} >{this.state.birthday}</Text>
+                                      </View>
+                                    </View>
+
+                                    <DateTimePicker
+                                      date = {this.state.date }
+                                      isVisible={this.state.isDateTimePickerVisible}
+                                      onConfirm={this.handleDatePicked}
+                                      onCancel={this.hideDateTimePicker}
+                                      mode='date'
+                                    />
 
                                 </View>
                         </View>
