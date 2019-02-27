@@ -44,4 +44,7 @@ module.exports = StyleSheet.create({
   backButtonImage:{
     color:"#000",position:'absolute',top:20,left:20,zIndex:1,color : '#fff'
   },
+  checkMarkIcon:{
+    flexDirection:'row',justifyContent:'flex-start',alignItems:'center'
+  }
 });

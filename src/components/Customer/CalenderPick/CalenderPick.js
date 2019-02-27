@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Text,View,TouchableOpacity} from 'react-native';
+import {Text,View,TouchableOpacity,Alert} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from 'react-native-calendar-picker';
 import styles from './CalenderPickStyles';
@@ -16,45 +16,49 @@ export default class CalenderPick extends Component {
       is_start : this.props.navigation.state.params.is_start,
       isHoliday: null,
       isDateTimePickerVisible: false,
+      selectedUpdateDate : false
     }
     this.onDateChange = this.onDateChange.bind(this);
   }
 
   onDateChange(date) {
-    var initialDate = Moment.utc(new Date(date)).set(
-      {h: this.props.navigation.state.params.start_date.hours(), m: this.props.navigation.state.params.start_date.minutes()}
-    )
     this.setState({
-      selectedStartDate: initialDate
+      selectedStartDate: date
     });
   }
 
   onPress = () =>{
-    API.getHoliday(this.getHolidayResponse, this.props.navigation.state.params.service_id, true)
+    console.log("updateTime",this.state.selectedStartDate)
+    console.log("updateTime",this.state.time)
+    if(this.state.time == "12:00 am"){
+      Alert.alert('Hora', 'Debe seleccionar la hora', [{text:'OK'}]);
+    }else{
+      API.getHoliday(this.getHolidayResponse, this.props.navigation.state.params.service_id, true)
+    }
   }
 
   getHolidayResponse = {
     success: (response) => {
       const { setDate } = this.props.navigation.state.params;
-      let selectedDate = this.state.selectedStartDate;
+      let selectedStartDate = this.state.selectedStartDate.utcOffset(-5);
       let date = this.state.selectedStartDate
       let isHoliday = false
       // Primero ver si es sabado o domingo
       if(date.day() == 0 || date.day() == 6) {
         isHoliday = true
-        setDate(selectedDate, this.state.is_start, isHoliday)
+        setDate(selectedStartDate, this.state.is_start, isHoliday, this.state.selectedUpdateDate)
         this.props.navigation.goBack();
       }
       // Ver si es holiday
       response.holiday.data.map(item =>{
         if(item.attributes.holiday_date == date.format('YYYY-MM-DD')){
           isHoliday = true
-          setDate(selectedDate, this.state.is_start, isHoliday)
+          setDate(selectedStartDate, this.state.is_start, isHoliday, this.state.selectedUpdateDate)
           this.props.navigation.goBack();
         }
       })
       // Si no es holiday re
-      setDate(selectedDate, this.state.is_start, isHoliday)
+      setDate(selectedStartDate, this.state.is_start, isHoliday, this.state.selectedUpdateDate)
       this.props.navigation.goBack();
     },
     error: (err) => {
@@ -67,13 +71,17 @@ export default class CalenderPick extends Component {
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
   _handleDatePicked = (date) => {
-    let updateTime = Moment(date).format('LT')
-    date_with_hours = date
-    date_with_hours = this.state.selectedStartDate.set({h: Moment(date).format('hh'), m: Moment(date).format('mm')});
+    console.log("this.state this.state",date)
+    var updateTime = Moment(date).format('hh:mm a')
+    var initialDate = Moment.utc(new Date(date))
+    console.log("data data data data data",updateTime)
+    if(!this.state.selectedStartDate == this.state.selectedStartDate){
+      this.setState({selectedUpdateDate:true})
+    }
     this.setState({
       time : updateTime,
-      selectedStartDate: date_with_hours
-    })
+      selectedStartDate: initialDate
+    });
     this._hideDateTimePicker();
   };
     
@@ -93,6 +101,7 @@ export default class CalenderPick extends Component {
             months={['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']}
             previousTitle="Anterior"
             nextTitle="Próximo"
+            minuteInterval={30}
           />
           {this.state.is_start != false ? 
           <View style={{flex:0.3,alignItems:'center',justifyContent:'center'}}>
@@ -104,6 +113,7 @@ export default class CalenderPick extends Component {
               onConfirm={this._handleDatePicked}
               onCancel={this._hideDateTimePicker}
               mode='time'
+              minuteInterval={30}
             />
           </View>: null}
         </View>

@@ -1,15 +1,6 @@
 import React, {Component} from 'react';
-import {
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  AsyncStorage
-}
-  from 'react-native';
+import {Image,ScrollView,Text,TouchableOpacity,View,AsyncStorage,Linking} from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
-import Accordion from 'react-native-collapsible/Accordion';
 import * as globals from '../../../util/globals';
 import * as urls from '../../../constants/api';
 
@@ -147,73 +138,98 @@ export default class CustomerProfile extends Component {
             <View style={{backgroundColor:'rgb(237,235,237)',paddingHorizontal:20,paddingVertical:10}}>
               <Text>{"Perfil de Cliente"}</Text>
             </View>
-            <View style={{flex:1}}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdateProfile",{updatePhoto : this.updatePhoto,setData : this.setData})}>
-                <View style={styles.accordion_header}>
-                  <Text style={styles.accordion_header_title}>{"Mi cuenta"}</Text>
-                  <FontAwesome
-                    name="chevron-right"
-                    size={24}
-                    color='#2478AE'
-                  />
-                </View>
-              </TouchableOpacity>
+            <ScrollView>
+              <View style={{flex:1}}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdateProfile",{updatePhoto : this.updatePhoto,setData : this.setData})}>
+                  <View style={styles.accordion_header}>
+                    <Text style={styles.accordion_header_title}>{"Mi cuenta"}</Text>
+                    <FontAwesome
+                      name="chevron-right"
+                      size={24}
+                      color='#2478AE'
+                    />
+                  </View>
+                </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdatePassword")}>
-                <View style={styles.accordion_header}>
-                  <Text style={styles.accordion_header_title}>{"Contraseña"}</Text>
-                  <FontAwesome
-                    name="chevron-right"
-                    size={24}
-                    color='#2478AE'
-                  />
-                </View>
-              </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdatePassword")}>
+                  <View style={styles.accordion_header}>
+                    <Text style={styles.accordion_header_title}>{"Contraseña"}</Text>
+                    <FontAwesome
+                      name="chevron-right"
+                      size={24}
+                      color='#2478AE'
+                    />
+                  </View>
+                </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdateProperties")}>
-                <View style={styles.accordion_header}>
-                  <Text style={styles.accordion_header_title}>{"Dirección de Propiedades"}</Text>
-                  <FontAwesome
-                    name="chevron-right"
-                    size={24}
-                    color='#2478AE'
-                  />
-                </View>
-              </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerUpdateProperties")}>
+                  <View style={styles.accordion_header}>
+                    <Text style={styles.accordion_header_title}>{"Dirección de Propiedades"}</Text>
+                    <FontAwesome
+                      name="chevron-right"
+                      size={24}
+                      color='#2478AE'
+                    />
+                  </View>
+                </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => this.props.navigation.navigate("CommentListScreen")}>
-                <View style={styles.accordion_header}>
-                  <Text style={styles.accordion_header_title}>{"Comentarios"}</Text>
-                  <FontAwesome
-                    name="chevron-right"
-                    size={24}
-                    color='#2478AE'
-                  />
-                </View>
-              </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("CommentListScreen")}>
+                  <View style={styles.accordion_header}>
+                    <Text style={styles.accordion_header_title}>{"Comentarios"}</Text>
+                    <FontAwesome
+                      name="chevron-right"
+                      size={24}
+                      color='#2478AE'
+                    />
+                  </View>
+                </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerProfileCardList")}>
-                <View style={styles.accordion_header}>
-                  <Text style={styles.accordion_header_title}>{"Método de pago"}</Text>
-                  <FontAwesome
-                    name="chevron-right"
-                    size={24}
-                    color='#2478AE'
-                  />
-                </View>
-              </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerProfileCardList")}>
+                  <View style={styles.accordion_header}>
+                    <Text style={styles.accordion_header_title}>{"Método de pago"}</Text>
+                    <FontAwesome
+                      name="chevron-right"
+                      size={24}
+                      color='#2478AE'
+                    />
+                  </View>
+                </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerBillingList")}>
-                <View style={styles.accordion_header}>
-                  <Text style={styles.accordion_header_title}>{"Detalles de facturación"}</Text>
-                  <FontAwesome
-                    name="chevron-right"
-                    size={24}
-                    color='#2478AE'
-                  />
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerBillingList")}>
+                  <View style={styles.accordion_header}>
+                    <Text style={styles.accordion_header_title}>{"Detalles de facturación"}</Text>
+                    <FontAwesome
+                      name="chevron-right"
+                      size={24}
+                      color='#2478AE'
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <View style={styles.accordion_header_contact}>
+                  <Text style={styles.accordion_header_title}>{"Contáctanos"}</Text>
                 </View>
-              </TouchableOpacity>
-            </View>
+                <View style={styles.accordion_header_contact}>
+                  <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://www.nocnoc.com.ec/#contact')}}>
+                    <Text style={{ textAlign: 'center', color:'blue'}}>
+                      Contactarnos aqui?
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={()=>{Linking.openURL(`whatsapp://send?phone=+593995388728`)}}>
+                    <FontAwesome
+                      name="whatsapp"
+                      size={24}
+                      color='green'
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={()=>{Linking.openURL(`whatsapp://send?phone=+593995388728`)}}>
+                    <Text style={{ textAlign: 'center'}}>
+                      +593 99 538 8728
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </ScrollView>
             <View style={styles.logout_container}>
               <TouchableOpacity style={styles.logout_button}
                                 onPress={() => this.signOutCustomer(this.state.data.customer.data.attributes.access_token)}>

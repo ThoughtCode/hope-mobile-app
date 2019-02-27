@@ -52,7 +52,7 @@ export default class AgentReviewScreen extends Component {
             console.log("Data-->",data)
             API.setReview(this.reviewJobResponse,data,this.props.navigation.state.params.jobData.id,true);
         }else{
-            Alert.alert("NOC NOC","Please enter comment")
+            Alert.alert("NOC NOC","Por favor ingrese un comentario")
         }
         
     }
@@ -141,7 +141,7 @@ export default class AgentReviewScreen extends Component {
                             maxStars={5}
                             rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                             starSize={20}
-                            fullStarColor={'gray'}
+                            fullStarColor={'#ffd700'}
                         />
                         <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
                     </View>
@@ -176,7 +176,7 @@ export default class AgentReviewScreen extends Component {
                                 rating={this.state.starCount}
                                 starSize={20}
                                 selectedStar={(rating) => this.onStarRatingPress(rating)}
-                                fullStarColor={'gray'}
+                                fullStarColor={'#ffd700'}
                             />
                         </View>
                     </ScrollView>

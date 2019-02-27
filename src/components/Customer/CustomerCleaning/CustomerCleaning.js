@@ -6,11 +6,11 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { API } from '../../../util/api';
 import Moment from 'moment';
-import Ionicons from '@expo/vector-icons/Ionicons'
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-const { width } = Dimensions.get('window')
+const { width } = Dimensions.get('window');
 const styles = require('./CustomerCleaningStyles');
-const IMAGES = {TOP_BACKGROUND: require("../../../../assets/img/topbg.png")}
+const IMAGES = {TOP_BACKGROUND: require("../../../../assets/img/topbg.png")};
 
 var _this = null;
 
@@ -36,7 +36,9 @@ export default class CustomerCleaning extends Component {
       total : 0,
       services_choosen : [],
       is_frequent_job: false,
-      isHoliday: (new Date().getDay() == 6 || new Date().getDay() == 7) ? true : false
+      isHoliday: (new Date().getDay() == 6 || new Date().getDay() == 7) ? true : false,
+      selectedDateCalenderPick: false,
+      selectedStartTime: false
     }
   }
 
@@ -152,12 +154,13 @@ export default class CustomerCleaning extends Component {
     }
   }
 
-  setDate = (date, is_start, is_holiday) => {
+  setDate = (date, is_start, is_holiday, selectedDateCalenderPick) => {
     total = this.calculate_total_job_after_date(is_holiday)
     if (is_start == true){
       this.setState({
         selectedDate: date,
-        total: total
+        total: total,
+        selectedDateCalenderPick: selectedDateCalenderPick
       })
     } else {
       this.setState({
@@ -338,28 +341,49 @@ export default class CustomerCleaning extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView>
-          <View>
-            <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
-            <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
-            <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 50, width: width }}>
-              <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica', marginLeft:20 }}>{this.state.serviceType.attributes.name}</Text>
-            </View>
+        <View>
+          <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
+          <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
+          <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 50, width: width }}>
+            <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica', marginLeft:20 }}>{this.state.serviceType.attributes.name}</Text>
           </View>
+        </View>
+        <ScrollView>
           <View style={{flex:1}}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", { serviceTypeID: this.state.serviceType.id,setServicios : this.setServicios })}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", {
+              serviceTypeID: this.state.serviceType.id,setServicios : this.setServicios, servicesUpdate : this.state.services_choosen })}>
               <View style={styles.rowStyle}>
+                <Image source={require('../../../../assets/img/detallesServicio.png')} style={{width:60,height:60}} />
                 <View style={styles.rowText}>
-                  <Text style={styles.titleText}>{"Detalles del Servicio"}</Text>
+                  {(this.state.servicios == null || "") ? (
+                    <Text style={styles.titleText}>{"Detalles del Servicio"}</Text>
+                    ):(
+                      <View style={styles.checkMarkIcon}>
+                      <Text style={{paddingHorizontal:10}}>
+                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                      </Text>
+                      <Text style={styles.titleText}>{"Detalles del Servicio"}</Text>
+                    </View>
+                  )}
                   {(this.state.servicios) ? <Text style={styles.subTitleText}>{this.state.servicios}</Text> : <Text style={styles.subTitleText}>{"Seleccione servicios"}</Text>}
                 </View>
                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("Frequency", { setFrequency: this.setFrequency })}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("Frequency", { setFrequency: this.setFrequency, data:this.state.frequencyData })}>
               <View style={styles.rowStyle}>
+                <Image source={require('../../../../assets/img/frecuencia.png')} style={{width:60,height:60}} />
                 <View style={styles.rowText}>
-                  <Text style={styles.titleText}>{"Frecuencia"}</Text>
+                  {(this.state.frequencyData < [0]) ? (
+                    <Text style={styles.titleText}>{"Frecuencia"}</Text>
+                  ):(
+                    <View style={styles.checkMarkIcon}>
+                      <Text style={{paddingHorizontal:10}}>
+                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                      </Text>
+                      <Text style={styles.titleText}>{"Frecuencia"}</Text>
+                    </View>
+                  )}
                   {(this.state.frequencyData == "") ? (<Text style={styles.subTitleText}>{"Seleccione Frecuencia"}</Text>) : (
                     <View style={{ flexDirection: 'row' }}>
                       {this.state.frequencyData && this.state.frequencyData.map((item, index) => {
@@ -369,15 +393,25 @@ export default class CustomerCleaning extends Component {
                     </View>
                   )}
                 </View>
-                <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,12class1,189)"} style={styles.iconStyle} />
+                <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { 
               setDate: this.setDate, is_start: true, start_date: this.state.selectedDate, service_id: this.state.serviceType.id })}>
               <View style={styles.rowStyle}>
+                <Image source={require('../../../../assets/img/fechaHora.png')} style={{width:60,height:60}} />
                 <View style={styles.rowText}>
-                  <Text style={styles.titleText}>{"Fecha y Hora inicial"}</Text>
-                  {this.state.selectedDate && <Text style={styles.subTitleText}>{  (this.state.selectedDate).format("DD/MM/YYYY, h:mm")}</Text>}
+                  {(this.state.selectedDateCalenderPick == false) ? (
+                    <Text style={styles.titleText}>{"Fecha y Hora inicial"}</Text>
+                  ):(
+                    <View style={styles.checkMarkIcon}>
+                      <Text style={{paddingHorizontal:10}}>
+                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                      </Text>
+                      <Text style={styles.titleText}>{"Fecha y Hora inicial"}</Text>
+                    </View>
+                  )}
+                  {this.state.selectedDate && <Text style={styles.subTitleText}>{(this.state.selectedDate).format("DD/MM/YYYY, hh:mm a")}</Text>}
                 </View>
                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
@@ -387,8 +421,18 @@ export default class CustomerCleaning extends Component {
               <TouchableOpacity onPress={() => this.props.navigation.navigate("CalenderPick", { 
                 setDate: this.setDate, is_start: false, start_date: this.state.end_date, service_id: this.state.serviceType.id })}>
                 <View style={styles.rowStyle}>
+                  <Image source={require('../../../../assets/img/fechaHora.png')} style={{width:60,height:60}} />                  
                   <View style={styles.rowText}>
-                    <Text style={styles.titleText}>{"Fecha final"}</Text>
+                    {(this.state.selectedDateCalenderPick == false) ? (
+                      <Text style={styles.titleText}>{"Fecha final"}</Text>
+                    ):(
+                      <View style={styles.checkMarkIcon}>
+                        <Text style={{paddingHorizontal:10}}>
+                          <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                        </Text>
+                        <Text style={styles.titleText}>{"Fecha final"}</Text>
+                      </View>
+                    )}
                     {this.state.end_date && <Text style={styles.subTitleText}>{(this.state.end_date).format("DD/MM/YYYY")}</Text>}
                   </View>
                   <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
@@ -397,8 +441,18 @@ export default class CustomerCleaning extends Component {
             }
             <TouchableOpacity onPress={() => this.props.navigation.navigate("DirectionScreen",{jobActualState: this.state})}>
               <View style={styles.rowStyle}>
+                <Image source={require('../../../../assets/img/direccion.png')} style={{width:60,height:60}} />                
                 <View style={styles.rowText}>
-                  <Text style={styles.titleText}>{"Dirección"}</Text>
+                  {(this.state.directionData == null) ? (
+                    <Text style={styles.titleText}>{"Dirección"}</Text>
+                  ):(
+                    <View style={styles.checkMarkIcon}>
+                      <Text style={{paddingHorizontal:10}}>
+                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                      </Text>
+                      <Text style={styles.titleText}>{"Dirección"}</Text>
+                    </View>
+                  )}                  
                   {this.state.directionData && <Text style={styles.subTitleText}>{this.state.directionData.attributes.number +" "+this.state.directionData.attributes.s_street + " "+this.state.directionData.attributes.p_street+" "+this.state.directionData.attributes.city}</Text>}
                 </View>
                 <Entypo name={"location-pin"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
@@ -406,8 +460,18 @@ export default class CustomerCleaning extends Component {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("AdditionalDetail",{setAdditionalInfo : this.setAdditionalInfo})}>
               <View style={styles.rowStyle}>
+                <Image source={require('../../../../assets/img/detAdicionales.png')} style={{width:60,height:60}} />
                 <View style={styles.rowText}>
-                  <Text style={styles.titleText}>{"Detalles adicionales del trabajo"}</Text>
+                  {(this.state.additionalData == null) ? (
+                    <Text style={styles.titleText}>{"Detalles adicionales del trabajo"}</Text>
+                  ):(
+                    <View style={styles.checkMarkIcon}>
+                      <Text style={{paddingHorizontal:10}}>
+                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                      </Text>
+                      <Text style={styles.titleText}>{"Detalles adicionales del trabajo"}</Text>
+                    </View>
+                  )}
                   <Text style={styles.subTitleText}>{this.state.additionalData}</Text>
                 </View>
                 <MaterialIcons name={"edit"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
@@ -415,49 +479,51 @@ export default class CustomerCleaning extends Component {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("DetailsListScreen",{jobActualState: this.state})}>
               <View style={styles.rowStyle}>
+                <Image source={require('../../../../assets/img/detFactura.png')} style={{width:60,height:60}} />
                 <View style={styles.rowText}>
-                  <Text style={styles.titleText}>{"Detalles de facturación"}</Text>
-                  {this.state.invoicesData && <View style={styles.childContainer}>
-                    <View style={styles.itemView}>
-                      <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ flex: 0.6 }}>
-                          {this.state.invoicesData.attributes.social_reason}
-                        </Text>
-                        <Text style={{ flex: 0.4 }}>
-                          {this.state.invoicesData.attributes.address}
-                        </Text>
-                      </View>
-                      <View style={{ flexDirection: 'row' }}>
-                        <Text>
-                          {this.state.invoicesData.attributes.telephone}
-                        </Text>
-                      </View>
+                  {(this.state.invoicesData == null) ? (
+                    <Text style={styles.titleText}>{"Detalles de facturación"}</Text>
+                  ):(
+                    <View style={styles.checkMarkIcon}>
+                      <Text style={{paddingHorizontal:10}}>
+                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                      </Text>
+                      <Text style={styles.titleText}>{"Detalles de facturación"}</Text>
                     </View>
-                  </View>}
+                  )}
+                  {this.state.invoicesData && <Text style={styles.subTitleText}>{this.state.invoicesData.attributes.social_reason +" "+this.state.invoicesData.attributes.address +" "+this.state.invoicesData.attributes.telephone}</Text>}
                 </View>
                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{jobActualState: this.state})}>
               <View style={styles.rowStyle}>
+                <Image source={require('../../../../assets/img/formaPago.png')} style={{width:60,height:60}} />
                 <View style={styles.rowText}>
-                  <Text style={styles.titleText}>{"Seleccione una forma de pago"}</Text>
-                  {this.state.cardData && <View style={styles.childContainer}>
-                    <View style={styles.itemView}>
-                      <View style={{ flexDirection: 'row' }}>
-                        <FontAwesome name={"cc-visa"} size={20} color={"rgb(0,121,189)"}  />
-                        <Text style={{ flex: 0.6 }}>
-                          {this.state.cardData.attributes.number}
-                        </Text>
-                        <Text style={{ flex: 0.4 }}>
-                          {"Exp." + this.state.cardData.attributes.expiry_month + "/" + this.state.cardData.attributes.expiry_year}
-                        </Text>
-                      </View>
-                      <View style={{ flexDirection: 'row' }}>
-                        <Text>
-                          {"Nombre : " + this.state.cardData.attributes.holder_name}
-                        </Text>
-                      </View>
+                  {(this.state.cardData == null) ? (
+                    <Text style={styles.titleText}>{"Seleccione una forma de pago"}</Text>
+                  ):(
+                    <View style={styles.checkMarkIcon}>
+                      <Text style={{paddingHorizontal:10}}>
+                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                      </Text>
+                      <Text style={styles.titleText}>{"Seleccione una forma de pago"}</Text>
+                    </View>
+                  )}
+                  {this.state.cardData && <View>
+                    <View style={{ flexDirection: 'row' }}>
+                      <FontAwesome name={"cc-visa"} size={20} color={"rgb(0,121,189)"}  />
+                      <Text style={{ flex: 0.6 }}>
+                        {this.state.cardData.attributes.number}
+                      </Text>
+                      <Text style={{ flex: 0.4 }}>
+                        {"Exp." + this.state.cardData.attributes.expiry_month + "/" + this.state.cardData.attributes.expiry_year}
+                      </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row' }}>
+                      <Text>
+                        {"Nombre : " + this.state.cardData.attributes.holder_name}
+                      </Text>
                     </View>
                   </View>}
                 </View>
@@ -465,15 +531,15 @@ export default class CustomerCleaning extends Component {
               </View>
             </TouchableOpacity>
           </View>
-          <View>
-              <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
-                <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: $" + this.state.total.toFixed(2)}</Text>
-              </View>
-              <TouchableOpacity onPress={() => this._requestService()} style={{ backgroundColor: 'rgb(0,121,189)', paddingVertical: 15, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', color: '#fff' }}>{"Solicitar servicio"}</Text>
-              </TouchableOpacity>
-            </View>
         </ScrollView>
+        <View>
+          <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
+            <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: $" + this.state.total.toFixed(2)}</Text>
+          </View>
+          <TouchableOpacity onPress={() => this._requestService()} style={{ backgroundColor: 'rgb(0,121,189)', paddingVertical: 15, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', color: '#fff' }}>{"Solicitar servicio"}</Text>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     )
   }

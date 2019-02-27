@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, ScrollView, Image, Dimensions, SafeAreaView, TextInput, Keyboard,Alert} from 'react-native';
-import EvilIcons from '@expo/vector-icons/EvilIcons'
-const {height , width} = Dimensions.get('window')
+import {Text, TouchableOpacity, View, ScrollView, Image, SafeAreaView, TextInput, Keyboard,Alert} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons'
 import StarRating from '../../../lib/react-native-star-rating';
 import { API } from '../../../util/api';
 
 const styles = require('./CustomerReviewScreenStyles');
 
-const IMAGES = {
-    TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
-}
+const IMAGES = {TOP_BACKGROUND : require("../../../../assets/img/topbg.png")}
 
 export default class CustomerReviewScreen extends Component {
 
@@ -29,14 +25,6 @@ export default class CustomerReviewScreen extends Component {
     }
 
     //======================================================================
-    // componentDidMount
-    //======================================================================
-
-    componentDidMount(){
-        console.log("Jobdata")
-    }
-
-    //======================================================================
     // tapJobReviewTap
     //======================================================================
 
@@ -48,11 +36,9 @@ export default class CustomerReviewScreen extends Component {
                     "comment" : this.state.comment
                 }
             }
-            // "job_id" : this.state.jobData.customer.hashed_id
-            console.log("Data-->",data)
             API.setCustomerReview(this.reviewJobResponse,data,this.props.navigation.state.params.jobData.id,true);
         }else{
-            Alert.alert("NOC NOC","Please enter comment")
+            Alert.alert("NOC NOC","Por favor ingrese un comentario")
         }
         
     }
@@ -64,18 +50,14 @@ export default class CustomerReviewScreen extends Component {
     reviewJobResponse = {
         success: (response) => {
             try {
-                console.log("reviewJobResponse data-->"+JSON.stringify(response))
-                
-                // this.setState({isJobReview : response.can_review,isLoading:false})
-                Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])
-                
+                Alert.alert("NOC NOC",response.message,[{text: 'OK',  onPress: ()=> this.props.navigation.navigate("CustomerDashboard")}])
             } catch (error) {
                 console.log('reviewJobResponse catch error ' + JSON.stringify(error));
             }
         },
         error: (err) => {
             console.log('reviewJobResponse error ' + JSON.stringify(err));
-            Alert.alert("NOC NOC",err.message)
+            Alert.alert("NOC NOC",err.message,[{text: 'OK',  onPress: ()=> this.props.navigation.navigate("CustomerDashboard")}])
         },
         complete: () => {
         }
@@ -98,16 +80,6 @@ export default class CustomerReviewScreen extends Component {
     render(){
         var initials = this.state.jobData.customer && this.state.jobData.customer.first_name.charAt(0)
         initials +=  this.state.jobData.customer && this.state.jobData.customer.last_name.charAt(0)
-        // this.state.jobData.job_details.map((val,index)=>{
-        //     if(val.service.type_service == "base"){
-        //         description += val.service.name
-        //     }else{
-        //         subDescription += val.service.name + " X " + val.service.time
-        //         subDescription += (data.job_details && data.job_details.length - 1 == index) ? "" : ", " 
-        //     }
-        
-        // })
-        // var location = this.state.jobData.property.data.attributes.p_street + ", " + this.state.jobData.property.data.attributes.s_street +", "+this.state.jobData.property.data.attributes.city
         return(
             <SafeAreaView style={styles.container}>
                 <View>
@@ -141,7 +113,7 @@ export default class CustomerReviewScreen extends Component {
                             maxStars={5}
                             rating={this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_average}
                             starSize={20}
-                            fullStarColor={'gray'}
+                            fullStarColor={'#ffd700'}
                         />
                         <Text style={styles.opinionsText}>{this.state.jobData.property.data.attributes.customer.data.attributes.rewiews_count+" opiniones"}</Text>
                     </View>
@@ -158,7 +130,7 @@ export default class CustomerReviewScreen extends Component {
                                         underlineColorAndroid={"transparent"}
                                         style={styles.textInputStyle}
                                         placeholder={""}
-                                        placeholderTextColor={"gray"}
+                                        placeholderTextColor={"#ffd700"}
                                         value={this.state.comment}
                                         onChangeText={(comment) => this.setState({comment : comment})}
                                         returnKeyType={"next"}
@@ -176,7 +148,7 @@ export default class CustomerReviewScreen extends Component {
                                 rating={this.state.starCount}
                                 starSize={20}
                                 selectedStar={(rating) => this.onStarRatingPress(rating)}
-                                fullStarColor={'gray'}
+                                fullStarColor={'#ffd700'}
                             />
                         </View>
                     </ScrollView>

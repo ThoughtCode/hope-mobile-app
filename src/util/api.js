@@ -147,6 +147,10 @@ export const API = {
 
     destroyInvoice: (onResponse, id, isHeaderRequired) => {
         request(onResponse, {}, 'DELETE', 'JSON', isHeaderRequired, APILIST.BASE_URL + APILIST.DELETE_INVOICE + id, buildHeader());
+    },
+
+    detroyProperty: (onResponse, id, isHeaderRequired) => {
+        request(onResponse, {}, 'DELETE', 'JSON', isHeaderRequired, APILIST.BASE_URL + APILIST.DELETE_PROPERTY + id, buildHeader());
     }
 }
 

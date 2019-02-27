@@ -53,6 +53,9 @@ const thirdScreenStyle = StyleSheet.create({
       height: width * 0.2,
       width : width
     },
+    backButtonImage:{
+        color:"#000",position:'absolute',top:20,left:20,zIndex:1,color : '#fff',zIndex:2
+    },
 });
 
 export default thirdScreenStyle;

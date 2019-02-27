@@ -46,3 +46,4 @@ export const SET_AGENT_MOBILE_TOKEN = "/api/v1/agents/add_mobile_token";
 export const SET_CUSTOMER_MOBILE_TOKEN = "/api/v1/customers/add_mobile_token";
 export const DELETE_CARD = "/api/v1/customers/delete_card/";
 export const DELETE_INVOICE = "/api/v1/customers/invoice_details/";
+export const DELETE_PROPERTY = "/api/v1/customers/properties/";

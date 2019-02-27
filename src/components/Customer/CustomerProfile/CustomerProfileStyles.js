@@ -53,7 +53,7 @@ module.exports = StyleSheet.create({
   },
   accordion_header: {
     width: Dimensions.get('window').width,
-    height: 50,
+    height: 45,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -64,6 +64,17 @@ module.exports = StyleSheet.create({
   },
   accordion_header_title: {
     fontSize: 16
+  },
+  accordion_header_contact: {
+    width: Dimensions.get('window').width,
+    height: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 50,
+    borderColor: 'transparent',
+    borderBottomWidth: 1,
   },
   accordion_content: {
     display: 'flex',

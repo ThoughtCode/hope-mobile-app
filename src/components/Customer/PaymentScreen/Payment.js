@@ -159,6 +159,7 @@ export default class Payment extends React.Component {
             <View style={styles.container}>
                 <View>
                   <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
+                  <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
                   <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 15, width: width }}>
                     <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>
                       {this.state.serviceType.attributes.name}

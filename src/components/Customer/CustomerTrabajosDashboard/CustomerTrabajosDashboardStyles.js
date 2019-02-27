@@ -74,4 +74,19 @@ module.exports = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  logout_button: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  logout_container: {
+    width: Dimensions.get('window').width,
+    height: 40,
+    backgroundColor: '#2478AE',
+  },
+  logout_button_text: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#fff'
+  },
 });

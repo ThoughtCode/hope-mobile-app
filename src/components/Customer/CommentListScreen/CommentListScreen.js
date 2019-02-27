@@ -75,7 +75,7 @@ export default class CommentListScreen extends Component {
     return (
       <View style={{flex:1,marginHorizontal:20}}>
         <View style={styles.textInputVieW}>
-          <Text style={styles.textInputTitleText}>{data.attributes.my_reviews.data.attributes.reviewee_first_name + " "+ data.attributes.my_reviews.data.attributes.reviewee_last_name}</Text>
+          <Text style={styles.textInputTitleText}>{data.attributes.my_reviews.data.attributes.owner_first_name + " "+ data.attributes.my_reviews.data.attributes.owner_last_name}</Text>
           <StarRating
             disabled={true}
             emptyStar={'ios-star-outline'}
@@ -133,7 +133,7 @@ export default class CommentListScreen extends Component {
   //           maxStars={5}
   //           rating={data.attributes.qualification || 0}
   //           starSize={18}
-  //           fullStarColor={'gray'}/>
+  //           fullStarColor={'#ffd700}/>
   //       </View>
   //       <Text style={styles.subText} numberOfLines={0}>{data.attributes.comment}</Text> 
   //     </View>

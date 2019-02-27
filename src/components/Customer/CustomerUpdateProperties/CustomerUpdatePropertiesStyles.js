@@ -67,5 +67,18 @@ module.exports = StyleSheet.create({
   profileImage:{
     height:100,width:100,borderRadius:50
   },
+  childContainer: {
+    paddingHorizontal:20,
+    paddingVertical:10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth:1,
+    borderBottomColor:'lightgray'
+  },
+  itemView:{
+    flexDirection:'row',
+    flex:1
 
+    // flexDirection:'row',alignItems:'center'
+  },
 });
