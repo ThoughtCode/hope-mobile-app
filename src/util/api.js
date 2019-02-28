@@ -123,7 +123,11 @@ export const API = {
 
     setAddInvoiceDetail: (onResponse, data, isHeaderRequired) => {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.ADD_INVOICE_DETAIL  , buildHeader());
-    },   
+    },
+
+    setEditInvoiceDetail: (onResponse, data, idEdit, isHeaderRequired) => {
+        request(onResponse, data, 'PUT', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.EDIT_INVOICE_DETAIL + idEdit, buildHeader());
+    },
 
     getCardLists: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_CARD_LIST , buildHeader());

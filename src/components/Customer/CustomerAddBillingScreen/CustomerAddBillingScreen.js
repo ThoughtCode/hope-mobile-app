@@ -30,52 +30,105 @@ export default class AddBillingScreen extends Component {
       phone : globals.cell_phone,
       detailsData : null,
       jobCurrentState: '',
-      maxLengthInput : 0,
-      maxLengthText : ''
+      maxLengthInput : 10,
+      maxLengthText : '',
+      buttonEdit : false,
+      idEdit : 0
     }
   }
 
-  validation() {
-    if (this.state.identificationTypeSelecct == null){
-      Alert.alert(
-        'Error, en el tipo identificación ',
-        'Debe seleccionar un tipo de identificación',
-        [
-          { text: 'OK', onPress: () => console.log('Debe seleccionar un tipo de identificación') }
-        ]
-      );
-      is_form_validated = false;
-    }else if (this.state.identification === "") {
-      Alert.alert(
-        'Error, número de deidentificación',
-        'Debe colocar su número de identificación',
-        [
-          { text: 'OK', onPress: () => console.log('Debe colocar su número de identificación') }
-        ]
-      );
-      is_form_validated = false;
-    }else if (this.state.address === "") {
-      Alert.alert(
-        'Error, de dirección',
-        'Debe colocar la dirección para su facturación',
-        [
-          { text: 'OK', onPress: () => console.log('Debe colocar la dirección para su facturación') }
-        ]
-      );
-      is_form_validated = false;
-    }else if (this.state.telephone === "") {
-      Alert.alert(
-        'Error, de Teléfono',
-        'Debe colocar número de teléfono',
-        [
-          { text: 'OK', onPress: () => console.log('Debe colocar número de telefono') }
-        ]
-      );
-      is_form_validated = false;
-    }else {
-      is_form_validated = true;
+  componentDidMount() {
+    if(this.props.navigation.state.params != undefined){
+      if(this.props.navigation.state.params.is_edit == true){
+        let idEdit = this.props.navigation.state.params.data.id
+        let select = null
+        let identificationTypeSelecctEdit = 0
+        let identificationNumber = this.props.navigation.state.params.data.attributes.identification
+        let email = this.props.navigation.state.params.data.attributes.email      
+        let address = this.props.navigation.state.params.data.attributes.address
+        let telephone = this.props.navigation.state.params.data.attributes.telephone
+        if(this.props.navigation.state.params.data.attributes.identification_type == "consumidor_final"){
+          select = "Consumidor final"
+          identificationTypeSelecctEdit = 0
+        }else if(this.props.navigation.state.params.data.attributes.identification_type == "cedula"){
+          select = "Cédula"
+          identificationTypeSelecctEdit = 1
+        }else if(this.props.navigation.state.params.data.attributes.identification_type == "ruc"){
+          select = "RUC"
+          identificationTypeSelecctEdit = 2
+        }
+        this.setState({idEdit:idEdit,identificationType:select,identificationTypeSelecct:identificationTypeSelecctEdit,identification:identificationNumber,email:email,address:address,telephone:telephone,buttonEdit:true})
+      }
     }
-    this.onPressHandle()
+  }
+
+  validation(value) {
+    if(value == "save"){
+      if (this.state.identificationTypeSelecct == null){
+        Alert.alert(
+          'Error, en el tipo identificación ',
+          'Debe seleccionar un tipo de identificación',
+          [
+            { text: 'OK', onPress: () => console.log('Debe seleccionar un tipo de identificación') }
+          ]
+        );
+        is_form_validated = false;
+      }else if (this.state.identification === "") {
+        Alert.alert(
+          'Error, número de deidentificación',
+          'Debe colocar su número de identificación',
+          [
+            { text: 'OK', onPress: () => console.log('Debe colocar su número de identificación') }
+          ]
+        );
+        is_form_validated = false;
+      }else if (this.state.address === "") {
+        Alert.alert(
+          'Error, de dirección',
+          'Debe colocar la dirección para su facturación',
+          [
+            { text: 'OK', onPress: () => console.log('Debe colocar la dirección para su facturación') }
+          ]
+        );
+        is_form_validated = false;
+      }else if (this.state.telephone === "") {
+        Alert.alert(
+          'Error, de Teléfono',
+          'Debe colocar número de teléfono',
+          [
+            { text: 'OK', onPress: () => console.log('Debe colocar número de telefono') }
+          ]
+        );
+        is_form_validated = false;
+      }else {
+        is_form_validated = true;
+      }
+      this.onPressHandle("saveReady")
+    }else{
+      this.onPressHandle("editReady")
+    }
+  }
+  
+  onPressHandle = (checked) =>{
+    let data = {
+      "invoice_detail": {
+        "email": this.state.email,
+        "identification": this.state.identification,
+        "identification_type": this.state.identificationTypeSelecct,
+        "social_reason": this.state.socialReason,
+        "address": this.state.address,
+        "telephone": this.state.telephone
+      }
+    }
+    if(checked == "saveReady"){
+      if(!this.state.isUpdate && is_form_validated){
+        API.setAddInvoiceDetail(this.addBillingDataResponseData, data, true);
+      }else{
+      }
+    }else if(checked == "editReady"){
+      let idEdit = this.state.idEdit
+      API.setEditInvoiceDetail(this.setEditInvoiceDetailResponseData, data, idEdit, true);
+    }
   }
 
   addBillingDataResponseData = {
@@ -93,23 +146,21 @@ export default class AddBillingScreen extends Component {
       console.log('getBillingResponseData error ' + JSON.stringify(err));
     }
   }
-  
-  onPressHandle = () =>{
-    let data = {
-      "invoice_detail": {
-        "email": this.state.email,
-        "identification": this.state.identification,
-        "identification_type": this.state.identificationTypeSelecct,
-        "social_reason": this.state.socialReason,
-        "address": this.state.address,
-        "telephone": this.state.telephone
+
+  setEditInvoiceDetailResponseData = {
+    success: (response) => {
+      try {
+        Alert.alert(globals.APP_NAME,response.message,[
+          {text: 'OK', onPress: () => this.props.navigation.navigate("CustomerBillingList")},
+        ],
+        { cancelable: false })
+      } catch (error) {
+        console.log('getBillingResponseData catch error ' + JSON.stringify(error));
       }
+    },
+    error: (err) => {
+      console.log('getBillingResponseData error ' + JSON.stringify(err));
     }
-    if(!this.state.isUpdate && is_form_validated){
-      API.setAddInvoiceDetail(this.addBillingDataResponseData, data, true);
-    }else{
-    }
-    
   }
 
   updateSelect = (select) => {
@@ -222,6 +273,7 @@ export default class AddBillingScreen extends Component {
                     }}
                     underlineColorAndroid='transparent'
                     placeholder='N° de identificación'
+                    value={this.state.identification}
                     style={styles.textInputStyle}
                     keyboardType = 'numeric'
                     maxLength = {this.state.maxLengthInput}
@@ -255,6 +307,7 @@ export default class AddBillingScreen extends Component {
                     }}
                     underlineColorAndroid='transparent'
                     placeholder='Dirección'
+                    value={this.state.address}
                     style={styles.textInputStyle}
                     onChangeText={(text) => this.setState({address : text})} />
                   </View>
@@ -270,6 +323,7 @@ export default class AddBillingScreen extends Component {
                     }}
                     underlineColorAndroid='transparent'
                     placeholder='Teléfono'
+                    value={this.state.telephone}
                     style={styles.textInputStyle}
                     onChangeText={(text) => this.setState({telephone : text})} />
                 </View>
@@ -277,11 +331,19 @@ export default class AddBillingScreen extends Component {
 
             </View>
           </ScrollView>
-          <TouchableOpacity onPress={() => this.validation()}>
-            <View style={styles.buttonViewStyle}>
-              <Text style={styles.buttonTextStyle}>{"Guardar"}</Text>
-            </View>
-          </TouchableOpacity>
+          {(this.state.buttonEdit == false) ? (
+            <TouchableOpacity onPress={() => this.validation("save")}>
+              <View style={styles.buttonViewStyle}>
+                <Text style={styles.buttonTextStyle}>{"Guardar"}</Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => this.validation("edit")}>
+              <View style={styles.buttonViewStyle}>
+                <Text style={styles.buttonTextStyle}>{"Editar"}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </KeyboardAvoidingView>
         <ActionSheet
           ref={o => this.ActionSheetIdentification = o}

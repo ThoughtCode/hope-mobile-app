@@ -55,7 +55,6 @@ export default class CustomerBillingList extends Component {
 
   renderItem = (item) => {
     var data = item.item
-    console.log('Item -->', data)
     return (
       <View style={styles.childContainer}>
         <View style={styles.itemView}>
@@ -73,6 +72,7 @@ export default class CustomerBillingList extends Component {
             </Text>
           </View>
         </View>
+        <FontAwesome name={(data.isChecked) ? "edit" : "edit"} size={30} onPress={() => this.props.navigation.navigate('CustomerAddBillingScreen',{data:data, is_edit:true})} style={{ color: '#1F68A9' }}  />
         <FontAwesome name={(data.isChecked) ? "remove" : "remove"} size={30} onPress={() => this.detroyCard(data.id)} style={{ color: '#1F68A9' }}  />
       </View>
     )
