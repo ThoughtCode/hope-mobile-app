@@ -129,16 +129,23 @@ module.exports = StyleSheet.create({
     paddingVertical:10
   },
   listTitleView:{
-    flexDirection:'row',justifyContent:'space-between',alignItems:'center'
+    flexDirection:'row',
+    // justifyContent:'space-between',
+    // alignItems:'center'
   },
   titleText:{
-    fontSize:20,fontWeight:'900',fontFamily:"helvetica"
+    fontSize:20,fontWeight:'900',fontFamily:"helvetica",
+    width: Dimensions.get('window').width / 2
   },
   textFont:{
     fontFamily:"helvetica"
   },
   subtextViewStyle:{
-    flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginVertical:5
+    // flexDirection:'row',
+    // justifyContent:'space-between',
+    // alignItems:'center',
+    // marginVertical:5
+    paddingVertical: 5
   },
   emptyText:{
     fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'

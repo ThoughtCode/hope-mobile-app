@@ -145,7 +145,7 @@ export default class CustomerDashboard extends Component {
                         <View style={styles.subtextViewStyle}>
                         {job.attributes.job_details.map((val,index)=>{
                           return(
-                            <View style={{borderWidth:1,paddingHorizontal:10,paddingVertical:10,borderWidth:1,borderColor:'lightgray',borderRadius:5,marginRight:5}}>
+                            <View style={{marginVertical:3,paddingHorizontal:10,paddingVertical:10,borderWidth:1,borderColor:'lightgray',borderRadius:5,marginRight:5}}>
                               <Text style={[styles.textFont, { fontSize: 12 }]}>{val.service.name + " X " + val.value}</Text>
                             </View>
                           )
@@ -223,14 +223,14 @@ export default class CustomerDashboard extends Component {
                         <EvilIcons name={"location"} size={16} />
                         <Text style={[styles.textFont, { marginLeft: 5, fontSize: 12, fontWeight:'bold' }]}>{location}</Text>
                       </View>
-                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 2 }}>
                         <Ionicons name={"md-time"} size={16} />
-                        <Text style={{fontSize:14}} numberOfLines={1}>{end_date}</Text>
+                        <Text style={{fontSize:14,marginLeft: 8}} numberOfLines={1}>{end_date}</Text>
                       </View>
                       <View style={styles.subtextViewStyle}>
                         {job.attributes.job_details.map((val,index)=>{
                           return(
-                            <View style={{borderWidth:1,paddingHorizontal:10,paddingVertical:10,borderWidth:1,borderColor:'lightgray',borderRadius:5,marginRight:5}}>
+                            <View style={{marginVertical:3,paddingHorizontal:10,paddingVertical:10,borderWidth:1,borderColor:'lightgray',borderRadius:5,marginRight:5}}>
                               <Text style={[styles.textFont, { fontSize: 12 }]}>{val.service.name + " X " + val.value}</Text>
                             </View>
                           )
