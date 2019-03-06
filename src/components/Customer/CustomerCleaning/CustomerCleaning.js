@@ -35,6 +35,7 @@ export default class CustomerCleaning extends Component {
       servicios : null,
       total : 0,
       services_choosen : [],
+      servicesNotChoosen: [],
       is_frequent_job: false,
       isHoliday: (new Date().getDay() == 6 || new Date().getDay() == 7) ? true : false,
       selectedDateCalenderPick: false,
@@ -136,8 +137,8 @@ export default class CustomerCleaning extends Component {
     }
   }
 
-  setServicios = (servicios, services_choosen) =>{
-    this.calculate_total_job(servicios, services_choosen, this.state.isHoliday)
+  setServicios = (servicios, services_choosen, services_not_choosen) =>{
+    this.calculate_total_job(servicios, services_choosen, this.state.isHoliday, services_not_choosen)
   }
 
   setFrequency = (frequencyData) => {
@@ -154,13 +155,14 @@ export default class CustomerCleaning extends Component {
     }
   }
 
-  setDate = (date, is_start, is_holiday, selectedDateCalenderPick) => {
+  setDate = (date, is_start, is_holiday, selectedDateCalenderPick, services_not_choosen) => {
     total = this.calculate_total_job_after_date(is_holiday)
     if (is_start == true){
       this.setState({
         selectedDate: date,
         total: total,
-        selectedDateCalenderPick: selectedDateCalenderPick
+        selectedDateCalenderPick: selectedDateCalenderPick,
+        servicesNotChoosen: services_not_choosen
       })
     } else {
       this.setState({
@@ -169,7 +171,7 @@ export default class CustomerCleaning extends Component {
     }
   }
 
-  calculate_total_job = (servicios, services_choosen, is_holiday) => {
+  calculate_total_job = (servicios, services_choosen, is_holiday, services_not_choosen) => {
     let initial_price = this.state.serviceType.attributes.service_base[0].price
     let initial_time = this.state.serviceType.attributes.service_base[0].time
     let total = initial_price * initial_time;
@@ -189,7 +191,8 @@ export default class CustomerCleaning extends Component {
     this.setState({
       servicios : servicios,
       total : total,
-      services_choosen: services_choosen
+      services_choosen: services_choosen, 
+      servicesNotChoosen: services_not_choosen
     })
   }
 
@@ -351,7 +354,12 @@ export default class CustomerCleaning extends Component {
         <ScrollView>
           <View style={{flex:1}}>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", {
-              serviceTypeID: this.state.serviceType.id,setServicios : this.setServicios, servicesUpdate : this.state.services_choosen })}>
+              serviceTypeID: this.state.serviceType.id,
+              setServicios : this.setServicios, 
+              servicesUpdate : this.state.services_choosen,
+              serviceType: this.state.serviceType,
+              servicesNotChoosen: this.state.servicesNotChoosen
+              })}>
               <View style={styles.rowStyle}>
                 <Image source={require('../../../../assets/img/detallesServicio.png')} style={{width:60,height:60}} />
                 <View style={styles.rowText}>
