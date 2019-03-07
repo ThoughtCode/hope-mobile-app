@@ -59,7 +59,7 @@ export default class AgentUpdatePassword extends Component {
                 }
                 API.updatePassword(this.updatePasswordResponse,data,true);
             }else{
-                Alert.alert(globals.APP_NAME,"No coincida la nueva contraseña")
+                Alert.alert(globals.APP_NAME,"No coincide la nueva contraseña")
             }
         }else{
             Alert.alert(globals.APP_NAME,"Contraseña actual incorrecta")

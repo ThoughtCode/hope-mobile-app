@@ -394,7 +394,7 @@ export default class CustomerJobDetailScreen extends Component {
         :
           <TouchableOpacity onPress={this.tapOnCancle} >
             <View style={[styles.bottomButton,{alignSelf:'auto'}]}>
-              <Text style={[styles.titleText,{color:'red'}]}>{"Cancelar trabajoo"}</Text>
+              <Text style={[styles.titleText,{color:'red'}]}>{"Cancelar trabajo"}</Text>
             </View>
           </TouchableOpacity>
         }

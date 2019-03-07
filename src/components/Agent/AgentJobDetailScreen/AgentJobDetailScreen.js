@@ -129,7 +129,7 @@ export default class AgentJobDetailScreen extends Component {
   //======================================================================
 
   tapReview = () =>{
-    Alert.alert("NOC NOC","Antes de continuar. Confirmas que tú trabajo se realizo con exito.",
+    Alert.alert("NOC NOC","Antes de continuar. Confirmas que tú trabajo se realizo con éxito.",
       [
         {text: 'NO', onPress: () => (this.cancelPayment(), this.props.navigation.navigate("AgentTrabajosDashboard"))},
         {text: 'SI', onPress: () => (this.tapConfirmPayment(), this.props.navigation.navigate("AgentReviewScreen",{jobData : this.props.navigation.state.params.jobData}))},

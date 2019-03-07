@@ -18,7 +18,6 @@ export default class AddCardScreen extends Component {
       data: [],
       socialReason: '',
       identification: '',
-      email: '',
       address: '',
       telephone: '',
       identificationTypeSelecct: null,
@@ -50,7 +49,16 @@ export default class AddCardScreen extends Component {
   }
 
   validation() {
-    if (this.state.identificationTypeSelecct == null){
+    if(this.state.socialReason == ''){
+      Alert.alert(
+        'Error, Razón Social',
+        'Debe colocar nombre de su Razón Social',
+        [
+          { text: 'OK', onPress: () => console.log('Debe colocar nombre de su Razón Social') }
+        ]
+      );
+      is_form_validated = false;
+    }else if (this.state.identificationTypeSelecct == null){
       Alert.alert(
         'Error, en el tipo identificación ',
         'Debe seleccionar un tipo de identificación',
@@ -164,9 +172,9 @@ export default class AddCardScreen extends Component {
     let { data, checked } = this.state;
     var initials = this.state.firstName + " "
         initials += this.state.lastName
-    if(this.state.socialReason == ""){
-      this.setState({socialReason: initials})
-    }
+    // if(this.state.socialReason == ""){
+    //   this.setState({socialReason: initials})
+    // }
     return (
       <View style={styles.container}>
         <View>
@@ -195,7 +203,7 @@ export default class AddCardScreen extends Component {
                     }}
                     underlineColorAndroid='transparent'
                     placeholder='Razón Social'
-                    value={initials}
+                    value={this.state.socialReason}
                     style={styles.textInputStyle}
                     onChangeText={(text) => this.setState({socialReason : text})} />
                 </View>

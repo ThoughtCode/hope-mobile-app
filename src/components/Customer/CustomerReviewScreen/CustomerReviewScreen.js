@@ -125,7 +125,7 @@ export default class CustomerReviewScreen extends Component {
                 <View style={{flex:1,marginHorizontal:10}}>
                     <ScrollView>
                         <View style={styles.textInputVieW}>
-                            <Text style={styles.textInputTitleText}>{"Opinión sobre el cliente"}</Text>
+                            <Text style={styles.textInputTitleText}>{"Opinión sobre el agente"}</Text>
                             <TextInput  ref={ref => (this.firtNameInput = ref)}
                                         underlineColorAndroid={"transparent"}
                                         style={styles.textInputStyle}
@@ -146,7 +146,7 @@ export default class CustomerReviewScreen extends Component {
                                 containerStyle = {{width : "30%"}}
                                 maxStars={5}
                                 rating={this.state.starCount}
-                                starSize={20}
+                                starSize={30}
                                 selectedStar={(rating) => this.onStarRatingPress(rating)}
                                 fullStarColor={'#ffd700'}
                             />

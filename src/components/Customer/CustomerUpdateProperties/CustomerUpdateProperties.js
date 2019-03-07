@@ -49,7 +49,6 @@ export default class CustomerUpdateProperties extends Component {
       try {
         console.log("updateUserResponse data-->"+JSON.stringify(response))
         response.property && response.property.data && this.setState({data : response.property.data})
-          
       } catch (error) {
         console.log('jobApplyResponse catch error ' + JSON.stringify(error));
       }
@@ -71,6 +70,7 @@ export default class CustomerUpdateProperties extends Component {
           <Text style={{fontWeight:'900',fontSize:16,marginRight:5}}>{item.attributes && item.attributes.name && item.attributes.name || ''}</Text>
           <Text numberOfLines={2} style={{color:'gray',fontFamily : 'helvetica', margin:5}}>{address}</Text>
         </View>
+        <FontAwesome name={"edit"} size={20} onPress={() => this.props.navigation.navigate('CreateProperties',{data:item, is_edit:true, refresProperties : this.refresProperties})} style={{ color: '#1F68A9' }}/>
         <FontAwesome name={"remove"} size={20} onPress={() => this.detroyProperties(item.id)} style={{ color: '#1F68A9' }}/>
       </View>
     )
@@ -131,7 +131,7 @@ export default class CustomerUpdateProperties extends Component {
               <FlatList data={this.state.data} renderItem={this.renderItem} />
             </View>
             </ScrollView>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("CreateProperties",{refresProperties : this.refresProperties})}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("CreateProperties",{is_edit:false, refresProperties : this.refresProperties})}>
               <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:'rgb(0,121,189)'}]}>
                 <Text style={[styles.titleText,{color:'#fff'}]}>{"Agregar Propiedad"}</Text>
               </View>

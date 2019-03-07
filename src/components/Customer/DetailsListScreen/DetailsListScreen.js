@@ -94,7 +94,7 @@ export default class CardListScreen extends Component {
             </View>
             <View style={{ flexDirection: 'row' }}>
               <Text>
-                {item.item.attributes.telephone}
+                {item.item.attributes.identification}
               </Text>
             </View>
           </View>
