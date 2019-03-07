@@ -68,7 +68,7 @@ export default class CustomerBillingList extends Component {
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text>
-              {item.item.attributes.telephone}
+              {item.item.attributes.identification}
             </Text>
           </View>
         </View>
@@ -104,8 +104,8 @@ export default class CustomerBillingList extends Component {
 
   ListEmptyComponent = () =>{
     return(
-      <View style={{flex:1,width:width,alignItems:'center',justifyContent:'center',paddingVertical:20}} >
-        <Text style={styles.emptyText}>{"No has registrado datos para el envío de tu factura electrónica."}</Text>
+      <View style={{flexDirection: 'row',alignItems:'center',justifyContent:'center'}} >
+        <Text style={styles.emptyText}>No has registrado datos para el envío de tu factura electrónica.</Text>
       </View>
     )
   }

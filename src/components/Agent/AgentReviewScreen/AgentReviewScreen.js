@@ -174,7 +174,7 @@ export default class AgentReviewScreen extends Component {
                                 containerStyle = {{width : "30%"}}
                                 maxStars={5}
                                 rating={this.state.starCount}
-                                starSize={20}
+                                starSize={30}
                                 selectedStar={(rating) => this.onStarRatingPress(rating)}
                                 fullStarColor={'#ffd700'}
                             />

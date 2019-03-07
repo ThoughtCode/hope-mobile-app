@@ -37,7 +37,8 @@ export default class CreateProperties extends Component {
       directionData: null,
       isUpdate: false,
       cityNameOption: [],
-      neightborhoodNameOption: []
+      neightborhoodNameOption: [],
+      idEdit: 0
     }
   }
 
@@ -50,6 +51,20 @@ export default class CreateProperties extends Component {
       const data = JSON.parse(item)
       this.setState({userData : data})
     })
+    if(this.props.navigation.state.params != undefined){
+      if(this.props.navigation.state.params.is_edit == true){
+        let idEdit = this.props.navigation.state.params.data.id
+        let nameProperty = this.props.navigation.state.params.data.attributes.name
+        let nameCityProperty = this.props.navigation.state.params.data.attributes.city
+        let nameNeightborhoodProperty = this.props.navigation.state.params.data.attributes.neightborhood
+        let nameNeighborhoodIdProperty = this.props.navigation.state.params.data.attributes.neightborhood_id
+        let pStreetProperty = this.props.navigation.state.params.data.attributes.p_street
+        let sStreetProperty = this.props.navigation.state.params.data.attributes.s_street
+        let numberProperty = this.props.navigation.state.params.data.attributes.number
+        let aditionalReferences = this.props.navigation.state.params.data.attributes.additional_reference
+        this.setState({idEdit:idEdit,name:nameProperty,cityName:nameCityProperty,selectNeighborhood:nameNeightborhoodProperty,neighborhoodID:nameNeighborhoodIdProperty,street1:pStreetProperty,street2:sStreetProperty,numeracion:numberProperty,reference:aditionalReferences})
+      }
+    }
     API.getCity(this.getCityResponse,{},true);
   }
 
@@ -83,7 +98,21 @@ export default class CreateProperties extends Component {
     this.setState({cityNameOption:nameCityOption})
   }
 
-  btnUpdateTap = () =>{
+  btnUpdateTap = (value) =>{
+    if(value == "save"){
+      this.validation()
+      if(is_form_validated == true){
+        this.onPressHandle("saveReady")
+      }
+    }else if(value == "edit"){
+      this.validation()
+      if(is_form_validated == true){
+        this.onPressHandle("editReady")
+      }
+    }
+  }
+
+  validation(){
     let valid = true;
     if(this.state.name == ""){
       valid = false;
@@ -143,10 +172,9 @@ export default class CreateProperties extends Component {
     } else {
       is_form_validated = true;
     }
-    this.onSaveHandle()
   }
 
-  onSaveHandle = () => {
+  onPressHandle = (checked) => {
     if(is_form_validated == true){
       data = {
         "property": {
@@ -156,12 +184,33 @@ export default class CreateProperties extends Component {
           "p_street": this.state.street1,
           "s_street": this.state.street2,
           "number": this.state.numeracion,
-          "aditional_references0": this.state.reference
+          "additional_reference": this.state.reference
         }
       }
-      API.createProperties(this.createResponse,data,true);
+      if(checked == "saveReady"){
+        API.createProperties(this.createResponse,data,true);
+      }else if(checked == "editReady"){
+        let idEdit = this.state.idEdit
+        API.setEditProperty(this.setEditPropertyResponseData, data, idEdit, true);
+      }
     }else{
       console.log("No pasa nada -------- No pasa nada --------")
+    }
+  }
+
+  setEditPropertyResponseData = {
+    success: (response) => {
+      try {
+        Alert.alert(globals.APP_NAME,response.message,[
+          {text: 'OK', onPress: () => this.props.navigation.navigate("CustomerUpdateProperties")},
+        ],
+        { cancelable: false })
+      } catch (error) {
+        console.log('getBillingResponseData catch error ' + JSON.stringify(error));
+      }
+    },
+    error: (err) => {
+      console.log('getBillingResponseData error ' + JSON.stringify(err));
     }
   }
 
@@ -277,7 +326,7 @@ export default class CreateProperties extends Component {
                       <Text style={{fontSize:20,fontWeight:'600'}}>{this.state.userData.customer.data.attributes.first_name + " "+ this.state.userData.customer.data.attributes.last_name}</Text>
                     </View>
                   <View style={styles.topTitleView}>
-                    <Text style={styles.mainTitleText}>{"Nueva Propiedad"}</Text>
+                    <Text style={styles.mainTitleText}>{(this.props.navigation.state.params.is_edit == false) ? ("Nueva Propiedad") : ("Editar Propiedad")}</Text>
                   </View>
                 </View>
             <View>
@@ -349,11 +398,19 @@ export default class CreateProperties extends Component {
               </View>
             </View>
           </ScrollView>
-          <TouchableOpacity onPress={this.btnUpdateTap}>
-            <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:'rgb(0,121,189)'}]}>
-              <Text style={[styles.titleText,{color:'#fff'}]}>{"Guardar"}</Text>
-            </View>
-          </TouchableOpacity>
+          {(this.props.navigation.state.params.is_edit == false) ? (
+            <TouchableOpacity onPress={() => this.btnUpdateTap("save")}>
+              <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:'rgb(0,121,189)'}]}>
+                <Text style={[styles.titleText,{color:'#fff'}]}>{"Guardar"}</Text>
+              </View>
+            </TouchableOpacity>  
+          ):(
+            <TouchableOpacity onPress={() => this.btnUpdateTap("edit")}>
+              <View style={[styles.bottomButton,{alignSelf:'auto',backgroundColor:'rgb(0,121,189)'}]}>
+                <Text style={[styles.titleText,{color:'#fff'}]}>{"Editar"}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </KeyboardAvoidingView>        
         {this.state.cityNameOption ? (
           <ActionSheet

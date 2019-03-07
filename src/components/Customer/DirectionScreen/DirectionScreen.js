@@ -92,7 +92,7 @@ export default class DirectionScreen extends Component {
               {data.attributes.name || "Casa"}
             </Text>
             <Text>
-              {data.attributes.number +" "+data.attributes.s_street + " "+data.attributes.p_street+" "+data.attributes.city}
+              {data.attributes.neightborhood +" "+ data.attributes.p_street +" "+ data.attributes.number +" "+data.attributes.s_street}
             </Text>
           </View>
         </View>

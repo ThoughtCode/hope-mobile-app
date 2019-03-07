@@ -58,7 +58,7 @@ module.exports = StyleSheet.create({
         fontSize: 16, marginLeft: 10, color: 'gray', fontFamily: 'helvetica'
     },
     emptyText: {
-        fontSize: 16, color: '#1e67a9', fontFamily: 'helvetica'
+        fontSize: 16, color: '#1e67a9', fontFamily: 'helvetica',paddingVertical:20,paddingHorizontal:20
     },
     buttonViewStyle: {
         margin: 10, height: 50, backgroundColor: '#1F68A9', justifyContent: 'center'

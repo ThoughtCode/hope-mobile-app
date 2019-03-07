@@ -18,7 +18,6 @@ export default class AddBillingScreen extends Component {
       data: [],
       socialReason: '',
       identification: '',
-      email: '',
       address: '',
       telephone: '',
       identificationTypeSelecct: null,
@@ -43,6 +42,7 @@ export default class AddBillingScreen extends Component {
         let idEdit = this.props.navigation.state.params.data.id
         let select = null
         let identificationTypeSelecctEdit = 0
+        let socialReason = this.props.navigation.state.params.data.attributes.social_reason
         let identificationNumber = this.props.navigation.state.params.data.attributes.identification
         let email = this.props.navigation.state.params.data.attributes.email      
         let address = this.props.navigation.state.params.data.attributes.address
@@ -57,14 +57,23 @@ export default class AddBillingScreen extends Component {
           select = "RUC"
           identificationTypeSelecctEdit = 2
         }
-        this.setState({idEdit:idEdit,identificationType:select,identificationTypeSelecct:identificationTypeSelecctEdit,identification:identificationNumber,email:email,address:address,telephone:telephone,buttonEdit:true})
+        this.setState({idEdit:idEdit,socialReason:socialReason,identificationType:select,identificationTypeSelecct:identificationTypeSelecctEdit,identification:identificationNumber,email:email,address:address,telephone:telephone,buttonEdit:true})
       }
     }
   }
 
   validation(value) {
     if(value == "save"){
-      if (this.state.identificationTypeSelecct == null){
+      if(this.state.socialReason == ''){
+        Alert.alert(
+          'Error, Razón Social',
+          'Debe colocar nombre de su Razón Social',
+          [
+            { text: 'OK', onPress: () => console.log('Debe colocar nombre de su Razón Social') }
+          ]
+        );
+        is_form_validated = false;
+      }else if (this.state.identificationTypeSelecct == null){
         Alert.alert(
           'Error, en el tipo identificación ',
           'Debe seleccionar un tipo de identificación',
@@ -216,9 +225,9 @@ export default class AddBillingScreen extends Component {
     let { data, checked } = this.state;
     var initials = this.state.firstName + " "
         initials += this.state.lastName
-    if(this.state.socialReason == ""){
-      this.setState({socialReason: initials})
-    }
+    // if(this.state.socialReason == ""){
+    //   this.setState({socialReason: initials})
+    // }
     return (
       <View style={styles.container}>
         <View>
@@ -247,7 +256,7 @@ export default class AddBillingScreen extends Component {
                     }}
                     underlineColorAndroid='transparent'
                     placeholder='Razón Social'
-                    value={initials}
+                    value={this.state.socialReason}
                     style={styles.textInputStyle}
                     onChangeText={(text) => this.setState({socialReason : text})} />
                 </View>

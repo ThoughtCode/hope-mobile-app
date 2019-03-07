@@ -129,6 +129,10 @@ export const API = {
         request(onResponse, data, 'PUT', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.EDIT_INVOICE_DETAIL + idEdit, buildHeader());
     },
 
+    setEditProperty: (onResponse, data, idEdit, isHeaderRequired) => {
+        request(onResponse, data, 'PUT', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.EDIT_PROPERTY + idEdit, buildHeader());
+    },
+
     getCardLists: (onResponse, data, isHeaderRequired) => {
         request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.GET_CARD_LIST , buildHeader());
     },
