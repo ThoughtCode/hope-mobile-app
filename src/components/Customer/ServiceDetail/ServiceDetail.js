@@ -14,37 +14,15 @@ export default class ServiceDetail extends Component {
       banos : 0,
       serviceTypeID : props.navigation.state.params.serviceTypeID,
       serviceTypeData : null,
-      servicePerameter : [],
+      serviceParameter : [],
       servicesAddons : [],
-      extaraCost : 0,
-      servicesUpdate : props.navigation.state.params.servicesUpdate
+      selectedServiceParameter : props.navigation.state.params.serviceParameters || [],
+      selectedServicesAddons : props.navigation.state.params.serviceAddons || [],
+      extaraCost : 0
     }
   }
 
   componentDidMount(){
-    if(this.props.navigation.state.params.servicesUpdate == ""){
-    }else{
-      this.props.navigation.state.params.servicesUpdate.map((su,index) => {
-        if(su.type_service == "parameter"){
-          this.setState({servicePerameter:su || []})
-        }
-        if(su.type_service == "addon"){
-          var newArr = [];
-          newArr.push(su)
-          console.log("Nuevo array Nuevo array Nuevo array",newArr)
-          // this.setState({servicesAddons:su || []})
-        }
-      })
-    }
-    // this.state.servicesUpdate.map((su,index) => {
-    //   console.log("Estoy aca imprimiendo ==============>>>>>>>>>>>>>>>",su)
-    //   if(this.props.navigation.state.params.data[0].name == n.name){
-    //     var d = this.state.data;
-    //     d[index].isSelected = true;
-    //     this.setState({data: d})
-    //   }
-    // })
-    // console.log("Response data update services--==->",this.state.servicesUpdate)
     this.state.serviceTypeID && API.getServiceType(this.getServiceTypeResponse, this.state.serviceTypeID, true)
   }
 
@@ -55,8 +33,8 @@ export default class ServiceDetail extends Component {
   getServiceTypeResponse = {
     success: (response) => {
       try {
-        let servicePerameter = response.service_type.data && response.service_type.data.attributes && response.service_type.data.attributes.services_parameters 
-        let updatedServicePerameter = servicePerameter.map((item) =>{
+        let serviceParameter = response.service_type.data && response.service_type.data.attributes && response.service_type.data.attributes.services_parameters 
+        let updatedServiceParameter = serviceParameter.map((item) =>{
             item.count = 0
             return item
         })
@@ -65,10 +43,14 @@ export default class ServiceDetail extends Component {
             item.isSelect = false
             return item
         })
+        if(this.state.selectedServiceParameter.length == 0 && this.state.selectedServicesAddons.length == 0){
+          this.setState({
+            selectedServiceParameter : updatedServiceParameter || [],
+            selectedServicesAddons : updatedServicesAddons || [],
+          })
+        }
         this.setState({
             serviceTypeData : response.service_type.data.attributes,
-            servicePerameter : updatedServicePerameter || [],
-            servicesAddons : updatedServicesAddons || [],
             extaraCost : response.service_type.data.attributes.extra_service_fee_holiday.value
         })  
       } catch (error) {
@@ -89,25 +71,26 @@ export default class ServiceDetail extends Component {
   }
 
   toggleSwitch = (value,index) => {
-    let servicesAddons = this.state.servicesAddons
-    let selectedObject = servicesAddons[index]
+    let selectedServicesAddons = this.state.selectedServicesAddons
+    let selectedObject = selectedServicesAddons[index]
     selectedObject.isSelect = !selectedObject.isSelect
-    servicesAddons.slice(index,selectedObject);
-    this.setState({ servicesAddons: servicesAddons })
+    selectedServicesAddons.slice(index,selectedObject);
+    this.setState({ selectedServicesAddons: selectedServicesAddons })
+    // console.log("selectedServicesAddons ------> ",JSON.stringify(selectedServicesAddons))
   }
 
-  updateServicePerameterCounter(data,index,number){
-    var mydata = this.state.servicePerameter
+  updateServiceParameterCounter(data,index,number){
+    var mydata = this.state.selectedServiceParameter
     var selectedObject = mydata[index];
     if(( selectedObject.count + number) >= 0){
       selectedObject.count = selectedObject.count + number
     }
     mydata.slice(selectedObject,index);
-    this.setState({servicePerameter : mydata})
-    console.log("servicePerameter",JSON.stringify(mydata))
+    this.setState({selectedServiceParameter : mydata})
+    // console.log("selectedServiceParameter",JSON.stringify(mydata))
   }
 
-  servicePerameter(data,index){
+  serviceParameter(data,index){
     return(
       <View>
         <View style={styles.titleViewContainer}>
@@ -116,7 +99,7 @@ export default class ServiceDetail extends Component {
         <View style={styles.childContainer}>
           <View style={styles.subChildContainer}>
             <View style={styles.itemViewCotainer}>
-              <TouchableOpacity onPress={() => this.updateServicePerameterCounter(data,index,-1)}>
+              <TouchableOpacity onPress={() => this.updateServiceParameterCounter(data,index,-1)}>
                 <View style={styles.minusView}>
                   <Text style={{ textAlign: 'center' }}>-</Text>
                 </View>
@@ -124,7 +107,7 @@ export default class ServiceDetail extends Component {
               <Text style={{ width: 150, textAlign: 'center' }}>
                 {data.count +" "+ data.name}
               </Text>
-              <TouchableOpacity onPress={() => this.updateServicePerameterCounter(data,index,1)}>
+              <TouchableOpacity onPress={() => this.updateServiceParameterCounter(data,index,1)}>
                 <View style={styles.plusView}>
                   <Text style={{ textAlign: 'center' }}>+</Text>
                 </View>
@@ -146,26 +129,25 @@ export default class ServiceDetail extends Component {
   }
 
   onPressExcoger = () =>{
-    let services_choosen = []
+    selected_parameter = [];
+    selected_addons = [];
     let data = "", 
     total = 0
     // Escoger el monto del tipo de servicio
     let service_base = this.state.serviceTypeData.service_base[0]
     total = total + (service_base.time * service_base.price)
     // Escoger servicios parametros
-    this.state.servicePerameter.map((item)=>{
-      if (item.count != 0){
-        services_choosen.push(item)
-      } 
+    this.state.selectedServiceParameter.map((item)=>{
+      selected_parameter.push(item);
       data += item.name+" X "+ item.count
       data += " , "
       total += item.price * item.time * item.count
       console.log("Total-->",total)
     })
-    let filterData = this.state.servicesAddons.filter(x => x.isSelect == true)
+    let filterData = this.state.selectedServicesAddons
     filterData.map((item,index)=> {
+      selected_addons.push(item)
       if(item.isSelect){
-        services_choosen.push(item)
         data += item.name
         total += item.price * item.time
         console.log("Total de cada add on " +item.name + "  -->",total)
@@ -177,7 +159,7 @@ export default class ServiceDetail extends Component {
       total = total + (total * Number(this.state.extaraCost)/100);
     }
     total = total * 1.12
-    this.props.navigation.state.params.setServicios(data, services_choosen)
+    this.props.navigation.state.params.setServicios(data, selected_parameter, selected_addons)
     this.props.navigation.goBack();
   }
 
@@ -190,15 +172,15 @@ export default class ServiceDetail extends Component {
             <Text style={{fontSize:24,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}}>{"Detalles del servicio"}</Text>
           </View>
           <View style={{flex:1}}>
-            {this.state.servicePerameter && this.state.servicePerameter.map((item,index)=>{
-                return this.servicePerameter(item,index)
+            {this.state.selectedServiceParameter && this.state.selectedServiceParameter.map((item,index)=>{
+                return this.serviceParameter(item,index)
               })    
             }
-            {(this.state.servicesAddons.length > 0 ) ?<View style={styles.titleViewContainer}>
+            {(this.state.selectedServicesAddons.length > 0 ) ?<View style={styles.titleViewContainer}>
               <Text style={styles.titleTextStyle}>Servicios adicionales</Text>
             </View> : null}
               <View style={{ margin: 10 }}>
-                {this.state.servicesAddons && this.state.servicesAddons.map((item,index)=>{
+                {this.state.selectedServicesAddons && this.state.selectedServicesAddons.map((item,index)=>{
                     return this.servicesAddons(item,index)
                   })
                 }

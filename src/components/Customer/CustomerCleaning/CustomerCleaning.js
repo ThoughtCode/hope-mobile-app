@@ -34,7 +34,8 @@ export default class CustomerCleaning extends Component {
       additionalData : null,
       servicios : null,
       total : 0,
-      services_choosen : [],
+      service_parameters : [],
+      service_addons : [],
       is_frequent_job: false,
       isHoliday: (new Date().getDay() == 6 || new Date().getDay() == 7) ? true : false,
       selectedDateCalenderPick: false,
@@ -100,7 +101,8 @@ export default class CustomerCleaning extends Component {
         additionalData : this.props.navigation.state.params.jobCurrentState.additionalData,
         servicios : this.props.navigation.state.params.jobCurrentState.servicios,
         total : this.props.navigation.state.params.jobCurrentState.total,
-        services_choosen : this.props.navigation.state.params.jobCurrentState.services_choosen,
+        service_parameters : this.props.navigation.state.params.jobCurrentState.service_parameters,
+        service_addons : this.props.navigation.state.params.jobCurrentState.service_addons,
         is_frequent_job: this.props.navigation.state.params.jobCurrentState.is_frequent_job,
         isHoliday: this.props.navigation.state.params.jobCurrentState.isHoliday
       })
@@ -136,8 +138,8 @@ export default class CustomerCleaning extends Component {
     }
   }
 
-  setServicios = (servicios, services_choosen) =>{
-    this.calculate_total_job(servicios, services_choosen, this.state.isHoliday)
+  setServicios = (servicios, service_parameters, service_addons) =>{
+    this.calculate_total_job(servicios, service_parameters, service_addons, this.state.isHoliday)
   }
 
   setFrequency = (frequencyData) => {
@@ -169,17 +171,31 @@ export default class CustomerCleaning extends Component {
     }
   }
 
-  calculate_total_job = (servicios, services_choosen, is_holiday) => {
+  calculate_total_job = (servicios, service_parameters, service_addons, is_holiday) => {
     let initial_price = this.state.serviceType.attributes.service_base[0].price
     let initial_time = this.state.serviceType.attributes.service_base[0].time
     let total = initial_price * initial_time;
-    services_choosen.map((item)=>{
-      if (item.count != null){
-        total += item.price * item.time * item.count
-      } else {
-        total += item.price * item.time
-      }
-    })
+    if (this.isServiceEmpty(servicios)) {
+      servicios = null;
+      service_parameters = [];
+      service_addons = [];
+    } else {
+      service_parameters.map((item)=>{
+        if (item.count != null){
+          total += item.price * item.time * item.count
+        } else {
+          total += item.price * item.time
+        }
+      })
+  
+      service_addons.map((item)=>{
+        if (item.count != null){
+          total += item.price * item.time * item.count
+        } else {
+          total += item.price * item.time
+        }
+      })
+    }
     let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
     if (is_holiday == true){  
       total = (total + (total * additional_fee)) * 1.12
@@ -189,15 +205,33 @@ export default class CustomerCleaning extends Component {
     this.setState({
       servicios : servicios,
       total : total,
-      services_choosen: services_choosen
+      service_parameters: service_parameters,
+      service_addons: service_addons
     })
+  }
+
+  isServiceEmpty = (services) => {
+    var as = services.replace(/,\s*$/, "").split(',');
+    var count = 0;
+    as.map((item) => {
+      if (item.includes('X 0'))
+        count++;
+    })
+    return count == as.length ? true : false
   }
 
   calculate_total_job_after_date = (is_holiday) => {
     let initial_price = this.state.serviceType.attributes.service_base[0].price
     let initial_time = this.state.serviceType.attributes.service_base[0].time
     let total = initial_price * initial_time;
-    this.state.services_choosen.map((item)=>{
+    this.state.service_parameters.map((item)=>{
+      if (item.count != null){
+        total += item.price * item.time * item.count
+      } else {
+        total += item.price * item.time
+      }
+    })
+    this.state.service_addons.map((item)=>{
       if (item.count != null){
         total += item.price * item.time * item.count
       } else {
@@ -350,8 +384,14 @@ export default class CustomerCleaning extends Component {
         </View>
         <ScrollView>
           <View style={{flex:1}}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceDetail", {
-              serviceTypeID: this.state.serviceType.id,setServicios : this.setServicios, servicesUpdate : this.state.services_choosen })}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("ServiceDetail", {
+                serviceTypeID: this.state.serviceType.id,
+                setServicios : this.setServicios,
+                serviceParameters : this.state.service_parameters,
+                serviceAddons : this.state.service_addons
+              })}
+            >
               <View style={styles.rowStyle}>
                 <Image source={require('../../../../assets/img/detallesServicio.png')} style={{width:60,height:60}} />
                 <View style={styles.rowText}>
@@ -411,7 +451,7 @@ export default class CustomerCleaning extends Component {
                       <Text style={styles.titleText}>{"Fecha y Hora inicial"}</Text>
                     </View>
                   )}
-                  {this.state.selectedDate && <Text style={styles.subTitleText}>{(this.state.selectedDate).format("DD/MM/YYYY, hh:mm a")}</Text>}
+                  {this.state.selectedDate && <Text style={styles.subTitleText}>{(this.state.selectedDate).format("l - hh:mm a")}</Text>}
                 </View>
                 <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
@@ -433,7 +473,7 @@ export default class CustomerCleaning extends Component {
                         <Text style={styles.titleText}>{"Fecha final"}</Text>
                       </View>
                     )}
-                    {this.state.end_date && <Text style={styles.subTitleText}>{(this.state.end_date).format("DD/MM/YYYY")}</Text>}
+                    {this.state.end_date && <Text style={styles.subTitleText}>{(this.state.end_date).format("l")}</Text>}
                   </View>
                   <EvilIcons name={"chevron-right"} size={50} color={"rgb(0,121,189)"} style={styles.iconStyle} />
                 </View>

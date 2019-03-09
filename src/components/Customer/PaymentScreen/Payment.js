@@ -1,9 +1,11 @@
 import React from 'react';
-import {Text,View,Image,TouchableOpacity,FlatList,Dimensions,Picker,Alert,Linking,ScrollView} from 'react-native';
+import {Text,View,Image,TouchableOpacity,FlatList,Dimensions,Alert,Linking,ScrollView} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './PaymentScreenStyle';
 import { API } from '../../../util/api';
 import Moment from 'moment';
+import ActionSheet from 'react-native-actionsheet'
+
 const { width } = Dimensions.get('window');
 const IMAGES = {
   TOP_BACKGROUND: require("../../../../assets/img/topbg.png")
@@ -122,15 +124,29 @@ export default class Payment extends React.Component {
         }
       }
       API.createJob(this.createJobResponse,data,true);
-      Alert.alert(
-        'Trabajo creado',
-        'Se creo tu trabajo con exito',
-        [
-          { text: 'OK', onPress: () => this.props.navigation.navigate("CustomerDashboard")}
-        ],
-        { cancelable: false }
-      );
     }  
+  }
+
+  createJobResponse = {
+    success: (response) => {
+      try {
+        Alert.alert('Trabajo creado',response.message,[{text:'OK', onPress: () => this.props.navigation.navigate("CustomerDashboard")}],{cancelable:false});  
+      } catch (error) {
+        console.log('getJobResponseData catch error ' + JSON.stringify(error));
+      }
+    },
+    error: (err) => {
+      console.log('getJobResponseData error ' + JSON.stringify(err));
+    }
+  }
+
+  _onOpenActionSheet = () => {
+    this.ActionSheet.show();
+  }
+
+  actionSheetSelect(itemIndex){
+    var select = this.state.toDiffer[itemIndex].name
+    this.setState({optionSelecct: select})
   }
 
     render() {
@@ -253,18 +269,9 @@ export default class Payment extends React.Component {
                   ¿Quieres diferir tú pago?
                 </Text>
                 <View style={styles.textInputStyleContainer}>
-                  {(this.state.toDiffer && this.state.toDiffer.length > 0) ?
-                    <Picker
-                      selectedValue={this.state.toDiffer}
-                      style={{ height: 50, width: width - 20 }}
-                      onValueChange={this.updateSelect}
-                    >
-                      <Picker.Item label={this.state.optionSelecct || "Seleccione opción"} value={this.state.optionSelecct} key={-1} />
-                      { this.state.toDiffer.map((item, key)=>{
-                        return (<Picker.Item label={item.name} value={item.name} key={key} />)
-                      })}
-                    </Picker> : <Text style={{color:'lightgray',paddingLeft:10}}>{console.log("this.state.select",this.state.optionSelecct)}</Text>
-                  }
+                  <TouchableOpacity onPress={this._onOpenActionSheet}>
+                    <Text style={{ height: 50, paddingHorizontal:10, paddingVertical:8 }} >{this.state.optionSelecct || "Seleccione opción"}</Text>
+                  </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', margin: 5 }}>
                   {(this.state.selectTerms == false) ? (
@@ -285,6 +292,13 @@ export default class Payment extends React.Component {
                     <Text style={styles.buttonTextStyle}>Solicitar servicio</Text>
                   </View>
                 </TouchableOpacity>
+                <ActionSheet
+                  ref={o => this.ActionSheet = o}
+                  title={'Seleccione opción'}
+                  options={['No deseo diferir mi pago','Diferir mi pago en 3 meses. Sin intereses','Cancelar']}
+                  cancelButtonIndex={2}
+                  onPress={(index) => { this.actionSheetSelect(index) }}
+                />
             </View>
         )
     }

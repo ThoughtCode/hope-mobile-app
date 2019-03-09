@@ -12,36 +12,37 @@ export default class CalenderPick extends Component {
     super(props);
     this.state = {
       selectedStartDate: this.props.navigation.state.params.start_date,
-      time : this.props.navigation.state.params.start_date.hours() + " : "+ this.props.navigation.state.params.start_date.minutes(),
+      time : this.props.navigation.state.params.start_date.format('hh:mm a'),
+      date:  this.props.navigation.state.params.start_date.format('l'),
       is_start : this.props.navigation.state.params.is_start,
       isHoliday: null,
       isDateTimePickerVisible: false,
       selectedUpdateDate : false
     }
-    this.onDateChange = this.onDateChange.bind(this);
   }
 
-  onDateChange(date) {
+  onDateChange = (date) => {
     this.setState({
-      selectedStartDate: date
+      date: date.format('l')
     });
   }
 
   onPress = () =>{
-    console.log("updateTime",this.state.selectedStartDate)
-    console.log("updateTime",this.state.time)
-    if(this.state.time == "12:00 am"){
-      Alert.alert('Hora', 'Debe seleccionar la hora', [{text:'OK'}]);
-    }else{
-      API.getHoliday(this.getHolidayResponse, this.props.navigation.state.params.service_id, true)
+    var initialDate = Moment(this.state.date).format('l - ') + this.state.time
+    if(!this.state.selectedStartDate == this.state.selectedStartDate){
+      this.setState({selectedUpdateDate:true})
     }
+    this.setState({
+      selectedStartDate: initialDate
+    });
+    API.getHoliday(this.getHolidayResponse, this.props.navigation.state.params.service_id, true)
   }
 
   getHolidayResponse = {
     success: (response) => {
       const { setDate } = this.props.navigation.state.params;
-      let selectedStartDate = this.state.selectedStartDate.utcOffset(-5);
-      let date = this.state.selectedStartDate
+      let selectedStartDate = Moment(this.state.selectedStartDate, 'l - hh:mm a');
+      let date = Moment(this.state.selectedStartDate, 'l - hh:mm a');
       let isHoliday = false
       // Primero ver si es sabado o domingo
       if(date.day() == 0 || date.day() == 6) {
@@ -71,17 +72,14 @@ export default class CalenderPick extends Component {
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
   _handleDatePicked = (date) => {
-    console.log("this.state this.state",date)
-    var updateTime = Moment(date).format('hh:mm a')
-    var initialDate = Moment.utc(new Date(date))
-    console.log("data data data data data",updateTime)
-    if(!this.state.selectedStartDate == this.state.selectedStartDate){
-      this.setState({selectedUpdateDate:true})
+    var time;
+    if (Moment(date).minutes() >= 0 && Moment(date).minutes() < 30) {
+      time = Moment(date).minutes(30)
+    } else {
+      time = Moment(date).minutes(0)
+      time = time.hour(time.hour() + 1)
     }
-    this.setState({
-      time : updateTime,
-      selectedStartDate: initialDate
-    });
+    this.setState({time: time.format('hh:mm a')})
     this._hideDateTimePicker();
   };
     
@@ -96,7 +94,7 @@ export default class CalenderPick extends Component {
         <View style={{flex:1,justifyContent:'space-around'}}>
           <CalendarPicker
             onDateChange={this.onDateChange}
-            selectedStartDate={this.state.selectedStartDate}
+            selectedStartDate={this.state.date}
             weekdays={['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']}
             months={['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']}
             previousTitle="Anterior"
@@ -113,7 +111,7 @@ export default class CalenderPick extends Component {
               onConfirm={this._handleDatePicked}
               onCancel={this._hideDateTimePicker}
               mode='time'
-              minuteInterval={30}
+              is24Hour= {false}
             />
           </View>: null}
         </View>
