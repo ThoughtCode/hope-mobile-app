@@ -73,7 +73,7 @@ export default class CalenderPick extends Component {
 
   _handleDatePicked = (date) => {
     var time;
-    if (Moment(date).minutes() >= 0 && Moment(date).minutes() < 30) {
+    if (Moment(date).minutes() > 0 && Moment(date).minutes() <= 30) {
       time = Moment(date).minutes(30)
     } else {
       time = Moment(date).minutes(0)
