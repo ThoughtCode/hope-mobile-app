@@ -5,12 +5,10 @@ import styles from './PaymentScreenStyle';
 import { API } from '../../../util/api';
 import Moment from 'moment';
 import ActionSheet from 'react-native-actionsheet'
-
 const { width } = Dimensions.get('window');
 const IMAGES = {
   TOP_BACKGROUND: require("../../../../assets/img/topbg.png")
 }
-
 export default class Payment extends React.Component {
   constructor(props) {
     super(props);
@@ -34,24 +32,22 @@ export default class Payment extends React.Component {
       selectTerms : false
     }
   }
-
   updateSelect = (select) => {
     this.setState({ optionSelecct: select })
   }
-
   _calculateHours = () => {
     let total_work_hours = 0
-    this.state.additionalServiceData.map((p)=>{
-      total_work_hours += parseInt(p.time, 10);
-    })
+    if(this.state.additionalServiceData){
+      this.state.additionalServiceData.map((p)=>{
+        total_work_hours += parseInt(p.time, 10);
+      })
+    }
     total_work_hours += this.state.serviceType.attributes.service_base[0].time
     return total_work_hours
   }
-
   _selectTerms = (e) => {
     this.setState({selectTerms: e})
   }
-
   onPressHandle = () =>{
     // console.log(this.state.startedAt, Moment.utc(new Date()).subtract(5, 'h'), (this.state.startedAt > Moment.utc(new Date()).subtract(5, 'h')));
     if(this.state.optionSelecct == ""){
@@ -99,15 +95,16 @@ export default class Payment extends React.Component {
       if(this.state.optionSelecct == "Diferir mi pago en 3 meses. Sin intereses"){
         optionSelecctInstallments = "3"
       }
-
       let service_base = this.state.serviceType.attributes.service_base[0]
       additionalServiceData.push({"service_id": service_base.id, "value": 1})
-
-      this.state.additionalServiceData.map((aS)=>{
-        if (aS.id){
-          additionalServiceData.push({"service_id": aS.id, "value": (aS.count != null ? aS.count : 1)})
-        }
-      })
+      if(this.state.additionalServiceData){
+        this.state.additionalServiceData.map((aS)=>{
+          if (aS.id){
+            additionalServiceData.push({"service_id": aS.id, "value": (aS.count != null ? aS.count : 1)})
+          }
+        })
+      }
+      
       let finished_recurrency_at = (this.state.endDate == null) ? '' : this.state.endDate
       let data = {
         "job": {
@@ -126,7 +123,6 @@ export default class Payment extends React.Component {
       API.createJob(this.createJobResponse,data,true);
     }  
   }
-
   createJobResponse = {
     success: (response) => {
       try {
@@ -139,16 +135,13 @@ export default class Payment extends React.Component {
       console.log('getJobResponseData error ' + JSON.stringify(err));
     }
   }
-
   _onOpenActionSheet = () => {
     this.ActionSheet.show();
   }
-
   actionSheetSelect(itemIndex){
     var select = this.state.toDiffer[itemIndex].name
     this.setState({optionSelecct: select})
   }
-
     render() {
       let { data, checked } = this.state;
       let initial_price = this.state.serviceType.attributes.service_base[0].price
@@ -156,13 +149,16 @@ export default class Payment extends React.Component {
       let total = initial_price * initial_time;
       let vat = 0
       let total_with_additional_fee = 0
-      this.state.additionalServiceData.map((item)=>{
-        if (item.count != null){
-          total += item.price * item.time * item.count
-        } else {
-          total += item.price * item.time
-        }
-      })
+      if(this.state.additionalServiceData){
+        this.state.additionalServiceData.map((item)=>{
+          if (item.count != null){
+            total += item.price * item.time * item.count
+          } else {
+            total += item.price * item.time
+          }
+        })
+      }
+     
       let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
       if (this.state.isHoliday == true){  
         total = (total + (total * additional_fee))

@@ -48,6 +48,8 @@ export default class CustomerCleaning extends Component {
   //======================================================================
 
   componentDidMount() {
+    this.setSelectedDate(Moment());
+
     if(this.props.navigation.state.params.is_second_load == undefined){
       if (this.state.isHoliday == false){
         API.getHoliday(this.getHolidayResponse, this.state.serviceType.id, true)
@@ -136,6 +138,20 @@ export default class CustomerCleaning extends Component {
     error: (err) => {
       console.log('getHolidayData error ' + JSON.stringify(err));
     }
+  }
+
+  setSelectedDate = (date) => {
+    var time = Moment(date).add(1, 'day');
+    var minutes = Moment(date).minutes();
+    if (minutes > 0 && minutes <= 30) {
+      time = Moment(date).minutes(30)
+    } else {
+      if (minutes > 30 && minutes <= 59) {
+        time = Moment(date).minutes(0)
+        time = time.hour(time.hour() + 1)
+      }
+    }
+    this.setState({selectedDate: time})
   }
 
   setServicios = (servicios, service_parameters, service_addons) =>{

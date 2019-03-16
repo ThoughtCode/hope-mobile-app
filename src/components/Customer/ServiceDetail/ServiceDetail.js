@@ -76,7 +76,6 @@ export default class ServiceDetail extends Component {
     selectedObject.isSelect = !selectedObject.isSelect
     selectedServicesAddons.slice(index,selectedObject);
     this.setState({ selectedServicesAddons: selectedServicesAddons })
-    // console.log("selectedServicesAddons ------> ",JSON.stringify(selectedServicesAddons))
   }
 
   updateServiceParameterCounter(data,index,number){
@@ -87,7 +86,6 @@ export default class ServiceDetail extends Component {
     }
     mydata.slice(selectedObject,index);
     this.setState({selectedServiceParameter : mydata})
-    // console.log("selectedServiceParameter",JSON.stringify(mydata))
   }
 
   serviceParameter(data,index){
@@ -142,7 +140,6 @@ export default class ServiceDetail extends Component {
       data += item.name+" X "+ item.count
       data += " , "
       total += item.price * item.time * item.count
-      console.log("Total-->",total)
     })
     let filterData = this.state.selectedServicesAddons
     filterData.map((item,index)=> {
@@ -150,7 +147,6 @@ export default class ServiceDetail extends Component {
       if(item.isSelect){
         data += item.name
         total += item.price * item.time
-        console.log("Total de cada add on " +item.name + "  -->",total)
         if(index < filterData.length - 1)
           data += ","
       }

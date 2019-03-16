@@ -12,13 +12,17 @@ export default class CalenderPick extends Component {
     super(props);
     this.state = {
       selectedStartDate: this.props.navigation.state.params.start_date,
-      time : this.props.navigation.state.params.start_date.format('hh:mm a'),
+      time : null,
       date:  this.props.navigation.state.params.start_date.format('l'),
       is_start : this.props.navigation.state.params.is_start,
       isHoliday: null,
       isDateTimePickerVisible: false,
       selectedUpdateDate : false
     }
+  }
+
+  componentDidMount() {
+    this.handleTimePicker(Moment());
   }
 
   onDateChange = (date) => {
@@ -71,13 +75,16 @@ export default class CalenderPick extends Component {
 
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
-  _handleDatePicked = (date) => {
-    var time;
-    if (Moment(date).minutes() > 0 && Moment(date).minutes() <= 30) {
+  handleTimePicker = (date) => {
+    var time = Moment(date);
+    var minutes = Moment(date).minutes();
+    if (minutes > 0 && minutes <= 30) {
       time = Moment(date).minutes(30)
     } else {
-      time = Moment(date).minutes(0)
-      time = time.hour(time.hour() + 1)
+      if (minutes > 30 && minutes <= 59) {
+        time = Moment(date).minutes(0)
+        time = time.hour(time.hour() + 1)
+      }
     }
     this.setState({time: time.format('hh:mm a')})
     this._hideDateTimePicker();
@@ -108,7 +115,7 @@ export default class CalenderPick extends Component {
             </TouchableOpacity>
             <TimePicker
               isVisible={this.state.isDateTimePickerVisible}
-              onConfirm={this._handleDatePicked}
+              onConfirm={this.handleTimePicker}
               onCancel={this._hideDateTimePicker}
               mode='time'
               is24Hour= {false}
