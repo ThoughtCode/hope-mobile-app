@@ -38,6 +38,7 @@ export default class CustomerCleaning extends Component {
       service_addons : [],
       is_frequent_job: false,
       isHoliday: (new Date().getDay() == 6 || new Date().getDay() == 7) ? true : false,
+      holidayDates: [],
       selectedDateCalenderPick: false,
       selectedStartTime: false
     }
@@ -51,20 +52,11 @@ export default class CustomerCleaning extends Component {
     this.setSelectedDate(Moment());
 
     if(this.props.navigation.state.params.is_second_load == undefined){
-      if (this.state.isHoliday == false){
-        API.getHoliday(this.getHolidayResponse, this.state.serviceType.id, true)
-      } else {
-        let initial_price = this.state.serviceType.attributes.service_base[0].price
-        let initial_time = this.state.serviceType.attributes.service_base[0].time
-        let initial_total = initial_price * initial_time;
-        let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
-        initial_total = (initial_total + (initial_total * additional_fee)) * 1.12
-        this.setState({
-          total: initial_total
-        })
-      }
+      API.getHoliday(this.getHolidayResponse, this.state.serviceType.id, true)
     }
+
     if(this.props.navigation.state.params.is_second_load == true){
+      console.log("holiday dates", this.state.holidayDates)
       let newDetailsData = null
       let newJobData = null
       let newCardData = null
@@ -113,31 +105,23 @@ export default class CustomerCleaning extends Component {
 
   getHolidayResponse = {
     success: (response) => {
-      let date = this.state.selectedDate
-      let isHoliday = false
-      let initial_price = this.state.serviceType.attributes.service_base[0].price
-      let initial_time = this.state.serviceType.attributes.service_base[0].time
-      let initial_total = initial_price * initial_time;
-      let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
-      response.holiday.data.map(item =>{
-        if(item.attributes.holiday_date == date.format("YYYY-MM-DD")){
-          isHoliday = true
-          initial_total = (initial_total + (initial_total * additional_fee)) * 1.12
-          this.setState({
-            isHoliday: isHoliday,
-            total: initial_total
-          })
-          return true
-        }
-      })
+      console.log('PRIMERA LLAMADA', response)
       this.setState({
-        isHoliday: isHoliday,
-        total: initial_total
+        holidayDates: response.holiday.data,
       })
     },
     error: (err) => {
       console.log('getHolidayData error ' + JSON.stringify(err));
     }
+  }
+
+  checkIsHoliday = (date) => {
+    this.state.holidayDates.map(item =>{
+      if(item.attributes.holiday_date == date.format("YYYY-MM-DD") || date.isoWeekday() >= 6){
+        return true;
+      }
+    })
+    return false;
   }
 
   setSelectedDate = (date) => {
@@ -151,10 +135,11 @@ export default class CustomerCleaning extends Component {
         time = time.hour(time.hour() + 1)
       }
     }
-    this.setState({selectedDate: time})
+    this.setState({selectedDate: time},this.checkIsHoliday)
   }
 
   setServicios = (servicios, service_parameters, service_addons) =>{
+    console.log('SETTING SERVICES')
     this.calculate_total_job(servicios, service_parameters, service_addons, this.state.isHoliday)
   }
 
@@ -173,12 +158,14 @@ export default class CustomerCleaning extends Component {
   }
 
   setDate = (date, is_start, is_holiday, selectedDateCalenderPick) => {
+    var isHoliday = this.checkIsHoliday(date);
     total = this.calculate_total_job_after_date(is_holiday)
     if (is_start == true){
       this.setState({
         selectedDate: date,
         total: total,
-        selectedDateCalenderPick: selectedDateCalenderPick
+        selectedDateCalenderPick: selectedDateCalenderPick,
+        isHoliday: isHoliday
       })
     } else {
       this.setState({
@@ -191,29 +178,27 @@ export default class CustomerCleaning extends Component {
     let initial_price = this.state.serviceType.attributes.service_base[0].price
     let initial_time = this.state.serviceType.attributes.service_base[0].time
     let total = initial_price * initial_time;
-    if (this.isServiceEmpty(servicios)) {
-      servicios = null;
-      service_parameters = [];
-      service_addons = [];
-    } else {
-      service_parameters.map((item)=>{
-        if (item.count != null){
+    console.log('TOTAL PRIMERA VEZ', total)
+    service_parameters.map((item)=>{
+      console.log('PARAMETRO ESCOGIDO --------->', item)
+      if (item.count > 0){
+        total += item.price * item.time * item.count
+        console.log('SUMANDO', total)
+      }
+    })
+    service_addons.map((item)=>{
+      console.log('PARAMETRO ESCOGIDO --------->', item)
+      if (item.isSelect){
+        if (item.quantity){
           total += item.price * item.time * item.count
         } else {
           total += item.price * item.time
         }
-      })
-  
-      service_addons.map((item)=>{
-        if (item.count != null){
-          total += item.price * item.time * item.count
-        } else {
-          total += item.price * item.time
-        }
-      })
-    }
+      }
+    })
+    
     let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
-    if (is_holiday == true){  
+    if (this.state.isHoliday){  
       total = (total + (total * additional_fee)) * 1.12
     } else {
       total = total * 1.12;
@@ -241,21 +226,25 @@ export default class CustomerCleaning extends Component {
     let initial_time = this.state.serviceType.attributes.service_base[0].time
     let total = initial_price * initial_time;
     this.state.service_parameters.map((item)=>{
-      if (item.count != null){
+      console.log('PARAMETRO ESCOGIDO --------->', item)
+      if (item.count > 0){
         total += item.price * item.time * item.count
-      } else {
-        total += item.price * item.time
+        console.log('SUMANDO', total)
       }
     })
     this.state.service_addons.map((item)=>{
-      if (item.count != null){
-        total += item.price * item.time * item.count
-      } else {
-        total += item.price * item.time
+      console.log('PARAMETRO ESCOGIDO --------->', item)
+      if (item.isSelect){
+        if (item.quantity){
+          total += item.price * item.time * item.count
+        } else {
+          total += item.price * item.time
+        }
       }
     })
     let additional_fee = this.state.serviceType.attributes.extra_service_fee_holiday.value / 100
-    if (is_holiday == true){  
+    var isHoliday = is_holiday;
+    if (isHoliday){
       total = (total + (total * additional_fee)) * 1.12
     } else {
       total = total * 1.12;
