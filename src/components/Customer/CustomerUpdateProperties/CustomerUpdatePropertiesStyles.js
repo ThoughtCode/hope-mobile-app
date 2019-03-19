@@ -73,12 +73,17 @@ module.exports = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth:1,
-    borderBottomColor:'lightgray'
+    borderBottomColor:'lightgray',
+    width:'100%'
   },
   itemView:{
     flexDirection:'row',
-    flex:1
-
+    width:'80%',
+    // flexDirection:'row',alignItems:'center'
+  },
+  itemView1:{
+    flexDirection:'row',
+    width:'20%',
     // flexDirection:'row',alignItems:'center'
   },
 });
