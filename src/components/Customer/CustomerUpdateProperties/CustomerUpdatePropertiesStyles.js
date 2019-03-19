@@ -67,6 +67,9 @@ module.exports = StyleSheet.create({
   profileImage:{
     height:100,width:100,borderRadius:50
   },
+  boldText:{
+    fontWeight: "900",
+  },
   childContainer: {
     paddingHorizontal:20,
     paddingVertical:10,

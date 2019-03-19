@@ -147,7 +147,7 @@ export default class CustomerProfile extends Component {
                 <View style={styles.accordion_header_contact}>
                   <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://www.nocnoc.com.ec/#contact')}}>
                     <Text style={{ textAlign: 'center', color:'blue'}}>
-                      Contactarnos aqui.
+                      Escríbenos aqui.
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>{Linking.openURL(`whatsapp://send?phone=+593995388728`)}}>

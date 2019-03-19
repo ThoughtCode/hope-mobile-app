@@ -68,7 +68,7 @@ export default class CustomerUpdateProperties extends Component {
       <View style={styles.childContainer}>
         <View style={styles.itemView}>
           <Text style={{fontWeight:'900',fontSize:16,marginRight:5}}>{item.attributes && item.attributes.name && item.attributes.name || ''}</Text>
-          <Text numberOfLines={2} style={{color:'gray',fontFamily : 'helvetica', margin:5}}>{address}</Text>
+          <Text numberOfLines={1} style={{color:'gray',fontFamily : 'helvetica', margin:5}}>{address}</Text>
         </View>
         <FontAwesome name={"edit"} size={20} onPress={() => this.props.navigation.navigate('CreateProperties',{data:item, is_edit:true, refresProperties : this.refresProperties})} style={{ color: '#1F68A9' }}/>
         <FontAwesome name={"remove"} size={20} onPress={() => this.detroyProperties(item.id)} style={{ color: '#1F68A9' }}/>

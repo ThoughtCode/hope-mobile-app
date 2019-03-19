@@ -39,8 +39,7 @@ export default class CustomerCleaning extends Component {
       is_frequent_job: false,
       isHoliday: (new Date().getDay() == 6 || new Date().getDay() == 7) ? true : false,
       holidayDates: [],
-      selectedDateCalenderPick: false,
-      selectedStartTime: false
+      selectedDateCalenderPick: true
     }
   }
 
@@ -405,7 +404,7 @@ export default class CustomerCleaning extends Component {
                     ):(
                       <View style={styles.checkMarkIcon}>
                       <Text style={{paddingHorizontal:10}}>
-                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                        <Ionicons name={"ios-checkmark"} style={styles.boldText} size={50} color={"rgb(0,121,189)"}/>
                       </Text>
                       <Text style={styles.titleText}>{"Detalles del Servicio"}</Text>
                     </View>
@@ -424,7 +423,7 @@ export default class CustomerCleaning extends Component {
                   ):(
                     <View style={styles.checkMarkIcon}>
                       <Text style={{paddingHorizontal:10}}>
-                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                        <Ionicons name={"ios-checkmark"} style={styles.boldText} size={50} color={"rgb(0,121,189)"}/>
                       </Text>
                       <Text style={styles.titleText}>{"Frecuencia"}</Text>
                     </View>
@@ -451,7 +450,7 @@ export default class CustomerCleaning extends Component {
                   ):(
                     <View style={styles.checkMarkIcon}>
                       <Text style={{paddingHorizontal:10}}>
-                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                        <Ionicons name={"ios-checkmark"} style={styles.boldText} size={50} color={"rgb(0,121,189)"}/>
                       </Text>
                       <Text style={styles.titleText}>{"Fecha y Hora inicial"}</Text>
                     </View>
@@ -473,7 +472,7 @@ export default class CustomerCleaning extends Component {
                     ):(
                       <View style={styles.checkMarkIcon}>
                         <Text style={{paddingHorizontal:10}}>
-                          <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                          <Ionicons name={"ios-checkmark"} style={styles.boldText} size={50} color={"rgb(0,121,189)"}/>
                         </Text>
                         <Text style={styles.titleText}>{"Fecha final"}</Text>
                       </View>
@@ -493,7 +492,7 @@ export default class CustomerCleaning extends Component {
                   ):(
                     <View style={styles.checkMarkIcon}>
                       <Text style={{paddingHorizontal:10}}>
-                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                        <Ionicons name={"ios-checkmark"} style={styles.boldText} size={50} color={"rgb(0,121,189)"}/>
                       </Text>
                       <Text style={styles.titleText}>{"Dirección"}</Text>
                     </View>
@@ -512,7 +511,7 @@ export default class CustomerCleaning extends Component {
                   ):(
                     <View style={styles.checkMarkIcon}>
                       <Text style={{paddingHorizontal:10}}>
-                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                        <Ionicons name={"ios-checkmark"} style={styles.boldText} size={50} color={"rgb(0,121,189)"}/>
                       </Text>
                       <Text style={styles.titleText}>{"Detalles adicionales del trabajo"}</Text>
                     </View>
@@ -531,7 +530,7 @@ export default class CustomerCleaning extends Component {
                   ):(
                     <View style={styles.checkMarkIcon}>
                       <Text style={{paddingHorizontal:10}}>
-                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                        <Ionicons name={"ios-checkmark"} style={styles.boldText} size={50} color={"rgb(0,121,189)"}/>
                       </Text>
                       <Text style={styles.titleText}>{"Detalles de facturación"}</Text>
                     </View>
@@ -550,7 +549,7 @@ export default class CustomerCleaning extends Component {
                   ):(
                     <View style={styles.checkMarkIcon}>
                       <Text style={{paddingHorizontal:10}}>
-                        <Ionicons name={"ios-checkmark"} size={40} color={"rgb(0,121,189)"}/>
+                        <Ionicons name={"ios-checkmark"} style={styles.boldText} size={50} color={"rgb(0,121,189)"}/>
                       </Text>
                       <Text style={styles.titleText}>{"Seleccione una forma de pago"}</Text>
                     </View>
