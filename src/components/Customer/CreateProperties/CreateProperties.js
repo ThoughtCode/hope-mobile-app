@@ -4,6 +4,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
 import ActionSheet from 'react-native-actionsheet'
+import Loader from './Loader';
 
 const styles = require('./CreatePropertiesStyles');
 const IMAGES = {TOP_BACKGROUND : require("../../../../assets/img/topbg.png")}
@@ -38,7 +39,14 @@ export default class CreateProperties extends Component {
       isUpdate: false,
       cityNameOption: [],
       neightborhoodNameOption: [],
-      idEdit: 0
+      idEdit: 0,
+      loading: false,
+      neiShow:false,
+    }
+    if(this.props.navigation.state.params.is_edit == true){
+      //alert(this.props.navigation.state.params.data.attributes.city_id);
+      this.setState({neiShow:true});
+      API.getNeightborhoods(this.getneightborhoodResponse,this.props.navigation.state.params.data.attributes.city_id,true);
     }
   }
 
@@ -53,6 +61,7 @@ export default class CreateProperties extends Component {
     })
     if(this.props.navigation.state.params != undefined){
       if(this.props.navigation.state.params.is_edit == true){
+        console.log(this.props.navigation.state.params.data);
         let idEdit = this.props.navigation.state.params.data.id
         let nameProperty = this.props.navigation.state.params.data.attributes.name
         let nameCityProperty = this.props.navigation.state.params.data.attributes.city
@@ -63,9 +72,11 @@ export default class CreateProperties extends Component {
         let numberProperty = this.props.navigation.state.params.data.attributes.number
         let aditionalReferences = this.props.navigation.state.params.data.attributes.additional_reference
         this.setState({idEdit:idEdit,name:nameProperty,cityName:nameCityProperty,selectNeighborhood:nameNeightborhoodProperty,neighborhoodID:nameNeighborhoodIdProperty,street1:pStreetProperty,street2:sStreetProperty,numeracion:numberProperty,reference:aditionalReferences})
+        
       }
     }
     API.getCity(this.getCityResponse,{},true);
+    
   }
 
   //======================================================================
@@ -79,6 +90,7 @@ export default class CreateProperties extends Component {
           city : response.city && response.city.data || []
         },() =>{
           if(this.state.isUpdate){
+            alert('dfd');
             this.state.cityId && this.actionSheetCitySelect(this.state.cityId)
           }
         })
@@ -266,6 +278,7 @@ export default class CreateProperties extends Component {
     var nameNeightborhoodOption = this.state.neightborhood.map((n)=>n.attributes.name)
     nameNeightborhoodOption.push('Cancelar')
     this.setState({neightborhoodNameOption:nameNeightborhoodOption})
+    this.setState({loading:false})
   }
 
   _onOpenActionSheetCity = () => {
@@ -279,10 +292,12 @@ export default class CreateProperties extends Component {
       var cityName = this.state.city[itemIndex].attributes.name
       API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
       this.setState({cityName: cityName})
+      this.setState({neiShow:true});
     }
   }
 
   _onOpenActionSheetNeighborhood = () => {
+    this.setState({loading:true});
     this.ActionSheetNeighborhood.show();
   }
 
@@ -303,12 +318,15 @@ export default class CreateProperties extends Component {
   //======================================================================
   
   render(){
+   
     if(this.state.userData != null){
     var initials = this.state.userData.customer.data.attributes.first_name.charAt(0)
         initials += this.state.userData.customer.data.attributes.last_name.charAt(0) || ""
     return(
       <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView style={{flex:1}} behavior="padding">    
+        <KeyboardAvoidingView style={{flex:1}} behavior="padding">   
+        <Loader
+          loading={this.state.loading} /> 
           <ScrollView style={{flex:1}} bounces={false}>
             <View>
                   <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
@@ -346,11 +364,12 @@ export default class CreateProperties extends Component {
                     <Text style={styles.textStyle}>{this.state.cityName || "Ciudad"}</Text>
                   </TouchableOpacity>
                 </View>
-                <View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
+                {this.state.neiShow?<View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
                   <TouchableOpacity onPress={this._onOpenActionSheetNeighborhood}>
                     <Text style={styles.textStyle}>{this.state.selectNeighborhood || "Barrio"}</Text>
                   </TouchableOpacity>
-                </View>
+                </View>:''}
+                
                 <View style={styles.textInputVieW}>
                   <TextInput  ref={ref => (this.streetInput = ref)}
                               underlineColorAndroid={"transparent"}

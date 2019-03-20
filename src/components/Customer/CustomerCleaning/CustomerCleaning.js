@@ -572,7 +572,7 @@ export default class CustomerCleaning extends Component {
             <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: 'rgb(0,121,189)' }}>{"Total trabajo: $" + this.state.total.toFixed(2)}</Text>
           </View>
           <TouchableOpacity onPress={() => this._requestService()} style={{ backgroundColor: 'rgb(0,121,189)', paddingVertical: 15, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', color: '#fff' }}>{"Solicitar servicio"}</Text>
+            <Text style={{ fontFamily: "helvetica", fontSize: 20, fontWeight: 'bold', color: '#fff' }}>{"Solicitar servicio hjhj"}</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

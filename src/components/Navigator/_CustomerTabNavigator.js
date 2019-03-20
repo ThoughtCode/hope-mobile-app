@@ -179,8 +179,8 @@ const ProfileStackNavigator = StackNavigator({
 
 export default CustomerTabbar = TabNavigator({
   HomeDashboard: {
-    screen: HomeDashboard,
-    navigationOptions: {
+    screen: CustomerDashboard,
+    navigationOptions:({navigation}) => ({
       borderBottomWidth: 0,
       tabBarLabel: 'Inicio',
       tabBarIcon: ({ tintColor }) => (
@@ -189,11 +189,12 @@ export default CustomerTabbar = TabNavigator({
           <Text style={[styles.tabText, { color: tintColor }]}>{"Inicio"}</Text>
         </View>
       ),
-      tabBarOnPress: ev => {
-        CustomerDashboard.getJobsAPICall()
-        ev.jumpToIndex(ev.scene.index); // This actually allow you to jump to your screen 
-      }
-    }
+      //tabBarOnPress: (scene, jumpToIndex) => {
+        //CustomerDashboard.getJobsAPICall()
+        //navigation.navigate('HomeDashboard');
+        //navigation.state.params.onTabFocus();
+      //},
+    })
   },
   CustomerTrabajos: {
     screen: CustomerTrabajos,
