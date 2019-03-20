@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import { Animated, AsyncStorage, Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import * as urls from '../../../constants/api';
 import * as globals from '../../../util/globals';
-import console = require('console');
 
 const { width } = Dimensions.get('window');
 const styles = require('./CustomerDashboardStyles');
