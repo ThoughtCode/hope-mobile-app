@@ -5,6 +5,7 @@ import * as urls from '../../../constants/api';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as globals from '../../../util/globals';
+import console = require('console');
 
 const { width } = Dimensions.get('window');
 const styles = require('./CustomerDashboardStyles');
@@ -115,7 +116,6 @@ export default class CustomerDashboard extends Component {
                   const date = new Date(job.attributes.started_at), locale = "es-ES",
                   month = date.toLocaleString(locale, {month: "long"});
                   var end_date = Moment(month).format('l - hh:mm a')
-                  // var end_date = month.charAt(0).toUpperCase() + month.slice(1) + " " + date.getDate() + " de " + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes() + "Hrs"
                   var description = ""
                   var subDescription = ""
                   job.attributes.job_details.map((val,index)=>{
@@ -126,7 +126,7 @@ export default class CustomerDashboard extends Component {
                       subDescription += (job.attributes.job_details.length - 1 == index) ? "" : ", " 
                     }
                   })
-                  var location = job.attributes.property.data.attributes.name + " "+ job.attributes.property.data.attributes.p_street + ", " + job.attributes.property.data.attributes.s_street +", "+job.attributes.property.data.attributes.city
+                  var location =  job.attributes.property.data.attributes.p_street + " " +  job.attributes.property.data.attributes.number + ' ' + job.attributes.property.data.attributes.s_street +", "+job.attributes.property.data.attributes.real_city
                   return (
                     <View key={job.id} style={styles.trabajos_item}>
                       <View style={styles.renderRowView}>
@@ -211,7 +211,7 @@ export default class CustomerDashboard extends Component {
                   subDescription += (job.attributes.job_details.length - 1 == index) ? "" : ", " 
                 }
               })
-              var location = job.attributes.property.data.attributes.name + " "+ job.attributes.property.data.attributes.p_street + ", " + job.attributes.property.data.attributes.s_street +", "+job.attributes.property.data.attributes.city
+              var location =  job.attributes.property.data.attributes.p_street + " " +  job.attributes.property.data.attributes.number + ' ' + job.attributes.property.data.attributes.s_street +", "+job.attributes.property.data.attributes.real_city
                 return (
                   <View key={job.id} style={styles.trabajos_item}>
                     <View style={styles.renderRowView}>

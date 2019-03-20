@@ -22,7 +22,7 @@ export default class CalenderPick extends Component {
   }
 
   componentDidMount() {
-    this.handleTimePicker(Moment());
+    this.handleTimePicker(this.state.selectedStartDate);
   }
 
   onDateChange = (date) => {
@@ -51,19 +51,19 @@ export default class CalenderPick extends Component {
       // Primero ver si es sabado o domingo
       if(date.day() == 0 || date.day() == 6) {
         isHoliday = true
-        setDate(selectedStartDate, this.state.is_start, isHoliday, this.state.selectedUpdateDate)
+        setDate(selectedStartDate, this.state.is_start, isHoliday, true)
         this.props.navigation.goBack();
       }
       // Ver si es holiday
       response.holiday.data.map(item =>{
         if(item.attributes.holiday_date == date.format('YYYY-MM-DD')){
           isHoliday = true
-          setDate(selectedStartDate, this.state.is_start, isHoliday, this.state.selectedUpdateDate)
+          setDate(selectedStartDate, this.state.is_start, isHoliday, true)
           this.props.navigation.goBack();
         }
       })
       // Si no es holiday re
-      setDate(selectedStartDate, this.state.is_start, isHoliday, this.state.selectedUpdateDate)
+      setDate(selectedStartDate, this.state.is_start, isHoliday, true)
       this.props.navigation.goBack();
     },
     error: (err) => {
