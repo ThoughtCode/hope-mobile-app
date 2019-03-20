@@ -66,12 +66,14 @@ export default class CustomerUpdateProperties extends Component {
     address += item.attributes.city && item.attributes.city + " "  || '' + " " 
     return(
       <View style={styles.childContainer}>
-        <View style={styles.itemView}>
+        <View style={[styles.itemView,{justifyContent: 'space-between',paddingRight:'3%'}]}>
           <Text style={{fontWeight:'900',fontSize:16,marginRight:5}}>{item.attributes && item.attributes.name && item.attributes.name || ''}</Text>
-          <Text numberOfLines={1} style={{color:'gray',fontFamily : 'helvetica', margin:5}}>{address}</Text>
+          <Text numberOfLines={0.5} ellipsizeMode='head' style={{color:'gray',fontFamily : 'helvetica', margin:5}}>{address.substring(0,25)+'...'}</Text>
         </View>
-        <FontAwesome name={"edit"} size={20} onPress={() => this.props.navigation.navigate('CreateProperties',{data:item, is_edit:true, refresProperties : this.refresProperties})} style={{ color: '#1F68A9' }}/>
-        <FontAwesome name={"remove"} size={20} onPress={() => this.detroyProperties(item.id)} style={{ color: '#1F68A9' }}/>
+        <View style={[styles.itemView1,{justifyContent: 'space-between',paddingLeft:'3%'}]}>
+          <FontAwesome name={"edit"} size={20} onPress={() => this.props.navigation.navigate('CreateProperties',{data:item, is_edit:true, refresProperties : this.refresProperties})} style={{ color: '#1F68A9' }}/>
+          <FontAwesome name={"remove"} size={20} onPress={() => this.detroyProperties(item.id)} style={{ color: '#1F68A9' }}/>
+        </View>
       </View>
     )
   }
@@ -128,7 +130,7 @@ export default class CustomerUpdateProperties extends Component {
               </View>
             </View>
             <View style={{flex:1}}>
-              <FlatList data={this.state.data} renderItem={this.renderItem} />
+              <FlatList data={this.state.data} renderItem={this.renderItem} keyExtractor={(item, index) => index.toString()} />
             </View>
             </ScrollView>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("CreateProperties",{is_edit:false, refresProperties : this.refresProperties})}>
