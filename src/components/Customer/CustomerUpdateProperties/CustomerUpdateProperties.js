@@ -60,10 +60,10 @@ export default class CustomerUpdateProperties extends Component {
 
   renderItem = (itemData) =>{
     let item = itemData.item
-    let address = item.attributes.neightborhood && item.attributes.neightborhood + " "  || '' + " " 
-    address += item.attributes.p_street && item.attributes.p_street + " "  || '' + " "
+    let address = item.attributes.p_street && item.attributes.p_street + " "  || '' + " "
     address += item.attributes.number && item.attributes.number + " "  || '' + " "
     address += item.attributes.s_street && item.attributes.s_street + " "  || '' + " "
+    address += item.attributes.city && item.attributes.city + " "  || '' + " " 
     return(
       <View style={styles.childContainer}>
         <View style={styles.itemView}>

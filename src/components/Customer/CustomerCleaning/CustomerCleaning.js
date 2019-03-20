@@ -138,7 +138,6 @@ export default class CustomerCleaning extends Component {
   }
 
   setServicios = (servicios, service_parameters, service_addons) =>{
-    console.log('SETTING SERVICES')
     this.calculate_total_job(servicios, service_parameters, service_addons, this.state.isHoliday)
   }
 
@@ -177,16 +176,12 @@ export default class CustomerCleaning extends Component {
     let initial_price = this.state.serviceType.attributes.service_base[0].price
     let initial_time = this.state.serviceType.attributes.service_base[0].time
     let total = initial_price * initial_time;
-    console.log('TOTAL PRIMERA VEZ', total)
     service_parameters.map((item)=>{
-      console.log('PARAMETRO ESCOGIDO --------->', item)
       if (item.count > 0){
         total += item.price * item.time * item.count
-        console.log('SUMANDO', total)
       }
     })
     service_addons.map((item)=>{
-      console.log('PARAMETRO ESCOGIDO --------->', item)
       if (item.isSelect){
         if (item.quantity){
           total += item.price * item.time * item.count
@@ -225,14 +220,11 @@ export default class CustomerCleaning extends Component {
     let initial_time = this.state.serviceType.attributes.service_base[0].time
     let total = initial_price * initial_time;
     this.state.service_parameters.map((item)=>{
-      console.log('PARAMETRO ESCOGIDO --------->', item)
       if (item.count > 0){
         total += item.price * item.time * item.count
-        console.log('SUMANDO', total)
       }
     })
     this.state.service_addons.map((item)=>{
-      console.log('PARAMETRO ESCOGIDO --------->', item)
       if (item.isSelect){
         if (item.quantity){
           total += item.price * item.time * item.count
@@ -257,7 +249,6 @@ export default class CustomerCleaning extends Component {
     })
   }
 
-
   //======================================================================
   // onRefresh
   //======================================================================
@@ -273,7 +264,6 @@ export default class CustomerCleaning extends Component {
     }
     API.getJobs(_this.getJobResponseData, data, true);
   }
-
 
   //======================================================================
   // getJobResponseData
@@ -377,6 +367,7 @@ export default class CustomerCleaning extends Component {
   //======================================================================
 
   render() {
+    let direction_data = this.state.directionData
     return (
       <SafeAreaView style={styles.container}>
         <View>
@@ -496,8 +487,8 @@ export default class CustomerCleaning extends Component {
                       </Text>
                       <Text style={styles.titleText}>{"Dirección"}</Text>
                     </View>
-                  )}                  
-                  {this.state.directionData && <Text style={styles.subTitleText}>{this.state.directionData.attributes.number +" "+this.state.directionData.attributes.s_street + " "+this.state.directionData.attributes.p_street+" "+this.state.directionData.attributes.city}</Text>}
+                  )}
+                  {direction_data && <Text style={styles.subTitleText}>{ direction_data.attributes.p_street + ' ' + direction_data.attributes.number + " " + direction_data.attributes.s_street + ", "+ direction_data.attributes.city}</Text>}
                 </View>
                 <Entypo name={"location-pin"} size={30} color={"rgb(0,121,189)"} style={styles.iconStyle} />
               </View>
