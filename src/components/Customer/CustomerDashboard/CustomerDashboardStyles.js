@@ -123,7 +123,8 @@ module.exports = StyleSheet.create({
   mainTitleText:{
     fontFamily:"helvetica",
     fontSize: 18,
-    color : 'gray'  
+    color : 'gray',
+    fontWeight: '900',
   },
   renderRowView:{
     paddingVertical:10
@@ -134,18 +135,25 @@ module.exports = StyleSheet.create({
     // alignItems:'center'
   },
   titleText:{
-    fontSize:20,fontWeight:'900',fontFamily:"helvetica",
+    fontSize:20,
+    fontWeight:'900',
+    //fontFamily:"helvetica",
     width: Dimensions.get('window').width / 2
   },
+  imgContainer: {
+    width: 100,
+    height: 90,
+    marginRight: '1%'
+},
   textFont:{
-    fontFamily:"helvetica"
+    fontFamily:"helvetica",
   },
   subtextViewStyle:{
     // flexDirection:'row',
     // justifyContent:'space-between',
     // alignItems:'center',
     // marginVertical:5
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   emptyText:{
     fontSize:16,color:'#1e67a9',fontFamily : 'helvetica'
