@@ -94,7 +94,6 @@ const HomeDashboard = StackNavigator({
 //======================================================================
 
 const CustomerTrabajos = StackNavigator({
-  CustomerTrabajosDashboard : { screen : CustomerTrabajosDashboard },
   CustomerDashboard : { screen :CustomerDashboard},
   CustomerResetPassword : { screen :CustomerResetPassword},
   CustomerProfile : { screen :CustomerProfile},
@@ -105,6 +104,7 @@ const CustomerTrabajos = StackNavigator({
   CustomerServiceType : { screen : CustomerServiceType },
   CustomerAddonService : { screen : CustomerAddonService },
   CustomerNewAddress : { screen : CustomerNewAddress },
+  CustomerTrabajosDashboard : { screen : CustomerTrabajosDashboard },
   CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
   CustomerReviewScreen : { screen : CustomerReviewScreen },
   CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
@@ -117,7 +117,9 @@ const CustomerTrabajos = StackNavigator({
   AddressForm : { screen : AddressForm },
   AdditionalDetail : { screen : AdditionalDetail },
   CardListScreen : { screen : CardListScreen },
+  DetailsListScreen : { screen : DetailsListScreen },
   AddCardScreen : { screen : AddCardScreen },
+  AddDetailsScreen : { screen : AddDetailsScreen },
   CommentListScreen : { screen : CommentListScreen },
   CustomerProfileCardList : { screen : CustomerProfileCardList },
   CustomerProfileAddCard : { screen : CustomerProfileAddCard },
@@ -127,7 +129,7 @@ const CustomerTrabajos = StackNavigator({
 },{
   navigationOptions:{
     header : null,
-    initialRouteName : "CustomerTrabajosDashboard"
+    initialRouteName : "CustomerDashboard"
   }
 })
 
@@ -179,7 +181,7 @@ const ProfileStackNavigator = StackNavigator({
 
 export default CustomerTabbar = TabNavigator({
   HomeDashboard: {
-    screen: HomeDashboard,
+    screen: CustomerDashboard,
     navigationOptions:() => ({
       borderBottomWidth: 0,
       tabBarLabel: 'Inicio',
