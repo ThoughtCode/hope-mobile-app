@@ -234,7 +234,7 @@ export default class Payment extends React.Component {
                       {item.name}
                     </Text>
                     <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                      ${(item.price * item.time).toFixed(2) * ((item.count != null) ? (item.count) : (1))}
+                      ${((item.price * item.time) * ((item.count != null) ? (item.count) : (1))).toFixed(2) }
                     </Text>
                   </View>
                 </View>

@@ -194,7 +194,7 @@ export default CustomerTabbar = TabNavigator({
     })
   },
   CustomerTrabajos: {
-    screen: CustomerTrabajos,
+    screen: CustomerTrabajosDashboard,
     navigationOptions: {
       borderBottomWidth: 0,
       tabBarLabel: 'Trabajos',
