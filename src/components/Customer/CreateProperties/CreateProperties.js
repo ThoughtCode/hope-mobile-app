@@ -41,12 +41,17 @@ export default class CreateProperties extends Component {
       neightborhoodNameOption: [],
       idEdit: 0,
       loading: false,
-      neiShow:false,
     }
     if(this.props.navigation.state.params.is_edit == true){
       //alert(this.props.navigation.state.params.data.attributes.city_id);
-      this.setState({neiShow:true});
+      this.state = {
+        neiShow:true
+      }
       API.getNeightborhoods(this.getneightborhoodResponse,this.props.navigation.state.params.data.attributes.city_id,true);
+    }else{
+      this.state = {
+        neiShow:false
+      }
     }
   }
 
@@ -90,7 +95,6 @@ export default class CreateProperties extends Component {
           city : response.city && response.city.data || []
         },() =>{
           if(this.state.isUpdate){
-            alert('dfd');
             this.state.cityId && this.actionSheetCitySelect(this.state.cityId)
           }
         })
@@ -292,7 +296,10 @@ export default class CreateProperties extends Component {
       var cityName = this.state.city[itemIndex].attributes.name
       API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
       this.setState({cityName: cityName})
-      this.setState({neiShow:true});
+      if(this.props.navigation.state.params.is_edit == true){
+      }else{
+        this.setState({neiShow:true});
+      }
     }
   }
 
@@ -304,12 +311,14 @@ export default class CreateProperties extends Component {
   actionSheetNeighborhoodSelect = (itemIndex) => {
     if(this.state.neightborhoodNameOption.length -1 == itemIndex){
     }else{
-      var neighborhoodId = this.state.neightborhood[itemIndex].id
-      var neighborhoodName = this.state.neightborhood[itemIndex].attributes.name
-      this.setState({ 
-        selectNeighborhood: neighborhoodName, 
-        neighborhoodID: neighborhoodId 
-      })
+      if(itemIndex){
+        var neighborhoodId = this.state.neightborhood[itemIndex].id
+        var neighborhoodName = this.state.neightborhood[itemIndex].attributes.name
+        this.setState({ 
+          selectNeighborhood: neighborhoodName, 
+          neighborhoodID: neighborhoodId 
+        })
+      }  
     }
   }
 
