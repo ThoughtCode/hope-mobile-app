@@ -181,7 +181,7 @@ const ProfileStackNavigator = StackNavigator({
 
 export default CustomerTabbar = TabNavigator({
   HomeDashboard: {
-    screen: CustomerDashboard,
+    screen: HomeDashboard,
     navigationOptions:() => ({
       borderBottomWidth: 0,
       tabBarLabel: 'Inicio',
