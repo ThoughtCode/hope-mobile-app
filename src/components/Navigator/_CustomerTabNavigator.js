@@ -179,8 +179,8 @@ const ProfileStackNavigator = StackNavigator({
 
 export default CustomerTabbar = TabNavigator({
   HomeDashboard: {
-    screen: CustomerDashboard,
-    navigationOptions:({navigation}) => ({
+    screen: HomeDashboard,
+    navigationOptions:() => ({
       borderBottomWidth: 0,
       tabBarLabel: 'Inicio',
       tabBarIcon: ({ tintColor }) => (
@@ -188,12 +188,7 @@ export default CustomerTabbar = TabNavigator({
           <Entypo name="home" style={[styles.tabIcon]} size={iconHeight} color={tintColor} />
           <Text style={[styles.tabText, { color: tintColor }]}>{"Inicio"}</Text>
         </View>
-      ),
-      //tabBarOnPress: (scene, jumpToIndex) => {
-        //CustomerDashboard.getJobsAPICall()
-        //navigation.navigate('HomeDashboard');
-        //navigation.state.params.onTabFocus();
-      //},
+      )
     })
   },
   CustomerTrabajos: {
