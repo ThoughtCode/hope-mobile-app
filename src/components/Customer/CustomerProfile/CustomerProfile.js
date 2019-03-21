@@ -140,10 +140,6 @@ export default class CustomerProfile extends Component {
                     <Ionicons name="ios-arrow-forward" size={24} color='#2478AE' />
                   </View>
                 </TouchableOpacity>
-
-                <View style={styles.accordion_header_contact}>
-                  <Text style={styles.accordion_header_title}>{"Contáctanos"}</Text>
-                </View>
                 <View style={styles.accordion_header_contact}>
                   <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://www.nocnoc.com.ec/#contact')}}>
                     <Text style={{ textAlign: 'center', color:'blue'}}>
