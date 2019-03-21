@@ -151,11 +151,11 @@ export default class CustomerDashboard extends Component {
                             return (
                               <View style={{ marginVertical: 3, paddingHorizontal: 10, paddingVertical: 1, marginRight: 5 }}>
                                   <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-around' }}>
-                                    <View style={{width:'16%',marginRight:'1%'}}>
-                                    <Ionicons name={"md-checkmark"} size={16} style={{ marginLeft: 2 }} />
+                                    <View style={{width:'5%',marginRight:'1%'}}>
+                                      <Ionicons name={"md-checkmark"} size={16} color='#2478AE' style={{ marginLeft: 2 }} />
                                     </View>
-                                    <View style={{width:'84%'}}>
-                                    <Text style={[styles.textFont, { fontSize: 12,color:'#000' }]}>{val.service.name + " X " + val.value}</Text>
+                                    <View style={{width:'95%'}}>
+                                      <Text style={[styles.textFont, { fontSize: 12, color:'#000' }]}>{val.service.name + " X " + val.value}</Text>
                                     </View>
                                   </View>
                               </View>
@@ -168,11 +168,11 @@ export default class CustomerDashboard extends Component {
                             return (
                               <View style={{ marginVertical: 3, paddingHorizontal: 10, paddingVertical: 1, marginRight: 5 }}>
                                   <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-around' }}>
-                                    <View style={{width:'16%',marginRight:'1%'}}>
-                                    <Ionicons name={"md-checkmark"} size={16} style={{ marginLeft: 2 }} />
+                                    <View style={{width:'5%',marginRight:'1%'}}>
+                                      <Ionicons name={"md-checkmark"} size={16} color='#2478AE' style={{ marginLeft: 2 }} />
                                     </View>
-                                    <View style={{width:'84%'}}>
-                                    <Text style={[styles.textFont, { fontSize: 12,color:'#000' }]}>{val.service.name + " X " + val.value}</Text>
+                                    <View style={{width:'95%'}}>
+                                      <Text style={[styles.textFont, { fontSize: 12,color:'#000' }]}>{val.service.name + " X " + val.value}</Text>
                                     </View>
                                   </View>
                               </View>
@@ -263,10 +263,10 @@ export default class CustomerDashboard extends Component {
                             return (
                               <View style={{ marginVertical: 3, paddingHorizontal: 10, paddingVertical: 1, marginRight: 5 }}>
                                   <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-around' }}>
-                                    <View style={{width:'16%',marginRight:'1%'}}>
-                                    <Ionicons name={"md-checkmark"} size={16} style={{ marginLeft: 2 }} />
+                                    <View style={{width:'5%',marginRight:'1%'}}>
+                                    <Ionicons name={"md-checkmark"} size={16} color='#2478AE' style={{ marginLeft: 2 }} />
                                     </View>
-                                    <View style={{width:'84%'}}>
+                                    <View style={{width:'95%'}}>
                                     <Text style={[styles.textFont, { fontSize: 12,color:'#000' }]}>{val.service.name + " X " + val.value}</Text>
                                     </View>
                                   </View>
@@ -280,10 +280,10 @@ export default class CustomerDashboard extends Component {
                             return (
                               <View style={{ marginVertical: 3, paddingHorizontal: 10, paddingVertical: 1, marginRight: 5 }}>
                                   <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-around' }}>
-                                    <View style={{width:'16%',marginRight:'1%'}}>
-                                    <Ionicons name={"md-checkmark"} size={16} style={{ marginLeft: 2 }} />
+                                    <View style={{width:'5%',marginRight:'1%'}}>
+                                    <Ionicons name={"md-checkmark"} size={16} color='#2478AE' style={{ marginLeft: 2 }} />
                                     </View>
-                                    <View style={{width:'84%'}}>
+                                    <View style={{width:'95%'}}>
                                     <Text style={[styles.textFont, { fontSize: 12,color:'#000' }]}>{val.service.name + " X " + val.value}</Text>
                                     </View>
                                   </View>

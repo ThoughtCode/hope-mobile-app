@@ -4,7 +4,6 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
 import ActionSheet from 'react-native-actionsheet'
-import Loader from './Loader';
 
 const styles = require('./CreatePropertiesStyles');
 const IMAGES = {TOP_BACKGROUND : require("../../../../assets/img/topbg.png")}
@@ -40,18 +39,9 @@ export default class CreateProperties extends Component {
       cityNameOption: [],
       neightborhoodNameOption: [],
       idEdit: 0,
-      loading: false,
     }
     if(this.props.navigation.state.params.is_edit == true){
-      //alert(this.props.navigation.state.params.data.attributes.city_id);
-      this.state = {
-        neiShow:true
-      }
       API.getNeightborhoods(this.getneightborhoodResponse,this.props.navigation.state.params.data.attributes.city_id,true);
-    }else{
-      this.state = {
-        neiShow:false
-      }
     }
   }
 
@@ -66,7 +56,6 @@ export default class CreateProperties extends Component {
     })
     if(this.props.navigation.state.params != undefined){
       if(this.props.navigation.state.params.is_edit == true){
-        console.log(this.props.navigation.state.params.data);
         let idEdit = this.props.navigation.state.params.data.id
         let nameProperty = this.props.navigation.state.params.data.attributes.name
         let nameCityProperty = this.props.navigation.state.params.data.attributes.city
@@ -77,11 +66,9 @@ export default class CreateProperties extends Component {
         let numberProperty = this.props.navigation.state.params.data.attributes.number
         let aditionalReferences = this.props.navigation.state.params.data.attributes.additional_reference
         this.setState({idEdit:idEdit,name:nameProperty,cityName:nameCityProperty,selectNeighborhood:nameNeightborhoodProperty,neighborhoodID:nameNeighborhoodIdProperty,street1:pStreetProperty,street2:sStreetProperty,numeracion:numberProperty,reference:aditionalReferences})
-        
       }
     }
     API.getCity(this.getCityResponse,{},true);
-    
   }
 
   //======================================================================
@@ -109,9 +96,17 @@ export default class CreateProperties extends Component {
   }
 
   optionsCitySelection(){
-    var nameCityOption = this.state.city.map((c)=>c.attributes.name)
-    nameCityOption.push('Cancelar')
-    this.setState({cityNameOption:nameCityOption})
+    if (this.state.cityName != ''){
+      var cityId = this.state.cityID
+      API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
+      var nameCityOption = this.state.city.map((c)=>c.attributes.name)
+      nameCityOption.push('Cancelar')
+      this.setState({cityNameOption:nameCityOption})
+    } else {
+      var nameCityOption = this.state.city.map((c)=>c.attributes.name)
+      nameCityOption.push('Cancelar')
+      this.setState({cityNameOption:nameCityOption})
+    }
   }
 
   btnUpdateTap = (value) =>{
@@ -282,7 +277,6 @@ export default class CreateProperties extends Component {
     var nameNeightborhoodOption = this.state.neightborhood.map((n)=>n.attributes.name)
     nameNeightborhoodOption.push('Cancelar')
     this.setState({neightborhoodNameOption:nameNeightborhoodOption})
-    this.setState({loading:false})
   }
 
   _onOpenActionSheetCity = () => {
@@ -290,52 +284,46 @@ export default class CreateProperties extends Component {
   }
 
   actionSheetCitySelect(itemIndex){
-    if(this.state.cityNameOption.length -1 == itemIndex){
-    }else{
+    if(this.state.cityNameOption.length -1 != itemIndex){
       var cityId = this.state.city[itemIndex].id
       var cityName = this.state.city[itemIndex].attributes.name
       API.getNeightborhoods(this.getneightborhoodResponse,cityId,true);
-      this.setState({cityName: cityName})
-      if(this.props.navigation.state.params.is_edit == true){
-      }else{
-        this.setState({neiShow:true});
-      }
-    }
+      this.setState({cityName: cityName}
+    )}
   }
 
   _onOpenActionSheetNeighborhood = () => {
-    this.setState({loading:true});
-    this.ActionSheetNeighborhood.show();
+    console.log('VALIDACION ---->', this.state.cityName, this.state.cityName != null )
+    if (this.state.cityName != ''){
+      this.ActionSheetNeighborhood.show();
+    } else {
+      Alert.alert('NOC NOC','Por favor selecciona la ciudad')
+    }
   }
 
   actionSheetNeighborhoodSelect = (itemIndex) => {
-    if(this.state.neightborhoodNameOption.length -1 == itemIndex){
-    }else{
-      if(itemIndex){
-        var neighborhoodId = this.state.neightborhood[itemIndex].id
-        var neighborhoodName = this.state.neightborhood[itemIndex].attributes.name
-        this.setState({ 
-          selectNeighborhood: neighborhoodName, 
-          neighborhoodID: neighborhoodId 
-        })
-      }  
+    if(this.state.neightborhoodNameOption.length -1 != itemIndex){
+      var neighborhoodId = this.state.neightborhood[itemIndex].id
+      var neighborhoodName = this.state.neightborhood[itemIndex].attributes.name
+      this.setState({ 
+        selectNeighborhood: neighborhoodName, 
+        neighborhoodID: neighborhoodId 
+      })}
     }
-  }
 
   //======================================================================
   // render
   //======================================================================
   
   render(){
-   
     if(this.state.userData != null){
     var initials = this.state.userData.customer.data.attributes.first_name.charAt(0)
         initials += this.state.userData.customer.data.attributes.last_name.charAt(0) || ""
+
+    console.log(this.state.cityID, this.state.cityName, this.state.name)
     return(
       <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView style={{flex:1}} behavior="padding">   
-        <Loader
-          loading={this.state.loading} /> 
+        <KeyboardAvoidingView style={{flex:1}} behavior="padding">    
           <ScrollView style={{flex:1}} bounces={false}>
             <View>
                   <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
@@ -373,12 +361,11 @@ export default class CreateProperties extends Component {
                     <Text style={styles.textStyle}>{this.state.cityName || "Ciudad"}</Text>
                   </TouchableOpacity>
                 </View>
-                {this.state.neiShow?<View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
+                <View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
                   <TouchableOpacity onPress={this._onOpenActionSheetNeighborhood}>
                     <Text style={styles.textStyle}>{this.state.selectNeighborhood || "Barrio"}</Text>
                   </TouchableOpacity>
-                </View>:''}
-                
+                </View>
                 <View style={styles.textInputVieW}>
                   <TextInput  ref={ref => (this.streetInput = ref)}
                               underlineColorAndroid={"transparent"}

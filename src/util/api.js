@@ -176,13 +176,6 @@ export const buildHeader = (headerParams = {}) => {
 async function request(onResponse, data, type, returnType, isHeaderRequired, featureURL, secureRequest) {
     let response = '';
     let responseJSON;
-    console.log("featureURL >>> " + featureURL);
-    console.log("secureRequest " + JSON.stringify(secureRequest));
-    console.log("data >>> " + JSON.stringify(data));
-    console.log("returnType " + returnType);
-    console.log("isHeaderRequired " + isHeaderRequired);
-    console.log("type " + type);
-
     try {
         if (type === 'GET') {
             if (isHeaderRequired) {
