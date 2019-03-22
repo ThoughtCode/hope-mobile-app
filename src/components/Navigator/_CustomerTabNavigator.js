@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet,Text,View} from 'react-native';
 import {TabNavigator,TabBarBottom,StackNavigator} from 'react-navigation';
-
+import SelectNeighb from '../../components/Customer/CreateProperties/SelectNeighb';
 import CustomerDashboard from '../../components/Customer/CustomerDashboard/CustomerDashboard';
 import CustomerResetPassword from '../../components/Customer/CustomerResetPassword/CustomerResetPassword';
 import CustomerProfile from '../../components/Customer/CustomerProfile/CustomerProfile';
@@ -50,6 +50,7 @@ const iconHeight = 20;
 
 const HomeDashboard = StackNavigator({
   CustomerDashboard : { screen :CustomerDashboard},
+  SelectNeighb: {screen: SelectNeighb},
   CustomerResetPassword : { screen :CustomerResetPassword},
   CustomerProfile : { screen :CustomerProfile},
   CustomerJobs : { screen : CustomerJobs },
@@ -95,6 +96,7 @@ const HomeDashboard = StackNavigator({
 
 const CustomerTrabajos = StackNavigator({
   CustomerTrabajosDashboard : { screen : CustomerTrabajosDashboard },
+  SelectNeighb: {screen: SelectNeighb},
   CustomerDashboard : { screen :CustomerDashboard},
   CustomerResetPassword : { screen :CustomerResetPassword},
   CustomerProfile : { screen :CustomerProfile},
@@ -138,6 +140,7 @@ const CustomerTrabajos = StackNavigator({
 const ProfileStackNavigator = StackNavigator({
   CustomerProfile : { screen :CustomerProfile},
   CustomerDashboard : { screen :CustomerDashboard},
+  SelectNeighb: {screen: SelectNeighb},
   CustomerResetPassword : { screen :CustomerResetPassword},
   CustomerJobs : { screen : CustomerJobs },
   CustomerAddress : { screen : CustomerAddress },
