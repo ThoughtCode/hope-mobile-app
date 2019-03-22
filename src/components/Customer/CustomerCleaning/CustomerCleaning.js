@@ -115,25 +115,20 @@ export default class CustomerCleaning extends Component {
   }
 
   checkIsHoliday = (date) => {
+    console.log('ESTA ES LA FECHA')
+    let check_holiday = false
     this.state.holidayDates.map(item =>{
+      console.log(item.attributes.holiday_date, date.format("YYYY-MM-DD"), "DIA", date.isoWeekday() )
       if(item.attributes.holiday_date == date.format("YYYY-MM-DD") || date.isoWeekday() >= 6){
+        check_holiday = true;
         return true;
       }
     })
-    return false;
+    return check_holiday
   }
 
   setSelectedDate = (date) => {
-    var time = Moment(date).add(1, 'day');
-    var minutes = Moment(date).minutes();
-    if (minutes > 0 && minutes <= 30) {
-      time = Moment(date).minutes(30)
-    } else {
-      if (minutes > 30 && minutes <= 59) {
-        time = Moment(date).minutes(0)
-        time = time.hour(time.hour() + 1)
-      }
-    }
+    var time = Moment(date)
     this.setState({selectedDate: time},this.checkIsHoliday)
   }
 
@@ -157,6 +152,7 @@ export default class CustomerCleaning extends Component {
 
   setDate = (date, is_start, is_holiday, selectedDateCalenderPick) => {
     var isHoliday = this.checkIsHoliday(date);
+    console.log('SHOULD BE HOLIDAY? --->', isHoliday)
     total = this.calculate_total_job_after_date(is_holiday)
     if (is_start == true){
       this.setState({
@@ -367,6 +363,8 @@ export default class CustomerCleaning extends Component {
   //======================================================================
 
   render() {
+    console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',this.state.isHoliday,'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+    
     let direction_data = this.state.directionData
     return (
       <SafeAreaView style={styles.container}>

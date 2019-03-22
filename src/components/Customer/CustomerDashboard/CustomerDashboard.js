@@ -127,7 +127,7 @@ export default class CustomerDashboard extends Component {
                     subDescription += (job.attributes.job_details.length - 1 == index) ? "" : ", "
                   }
                 })
-                var location = job.attributes.property.data.attributes.name + " " + job.attributes.property.data.attributes.p_street + ", " + job.attributes.property.data.attributes.s_street + ", " + job.attributes.property.data.attributes.city
+                var location = job.attributes.property.data.attributes.p_street + " " + job.attributes.property.data.attributes.number + ' ' + job.attributes.property.data.attributes.s_street +", "+job.attributes.property.data.attributes.real_city
                 return (
                   <View key={job.id} style={styles.trabajos_item}>
                     <View style={styles.renderRowView}>
@@ -240,7 +240,7 @@ export default class CustomerDashboard extends Component {
                   subDescription += (job.attributes.job_details.length - 1 == index) ? "" : ", "
                 }
               })
-              var location = job.attributes.property.data.attributes.name + " " + job.attributes.property.data.attributes.p_street + ", " + job.attributes.property.data.attributes.s_street + ", " + job.attributes.property.data.attributes.city
+              var location = job.attributes.property.data.attributes.p_street + " " + job.attributes.property.data.attributes.number + ' ' + job.attributes.property.data.attributes.s_street +", "+job.attributes.property.data.attributes.real_city
               return (
                 <View key={job.id} style={styles.trabajos_item}>
                   <View style={styles.renderRowView}>

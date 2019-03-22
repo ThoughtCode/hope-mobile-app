@@ -77,15 +77,6 @@ export default class CalenderPick extends Component {
 
   handleTimePicker = (date) => {
     var time = Moment(date);
-    var minutes = Moment(date).minutes();
-    if (minutes > 0 && minutes <= 30) {
-      time = Moment(date).minutes(30)
-    } else {
-      if (minutes > 30 && minutes <= 59) {
-        time = Moment(date).minutes(0)
-        time = time.hour(time.hour() + 1)
-      }
-    }
     this.setState({time: time.format('hh:mm a')})
     this._hideDateTimePicker();
   };

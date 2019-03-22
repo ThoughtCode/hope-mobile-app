@@ -72,12 +72,14 @@ module.exports = StyleSheet.create({
   },
   childContainer: {
     paddingHorizontal:20,
-    paddingVertical:10,
     flexDirection: 'row',
     alignItems: 'center',
+    width:'100%'
+  },
+  childContainerRow: {
     borderBottomWidth:1,
     borderBottomColor:'lightgray',
-    width:'100%'
+    paddingVertical: 10,
   },
   itemView:{
     flexDirection:'row',
