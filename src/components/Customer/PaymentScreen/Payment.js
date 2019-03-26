@@ -160,8 +160,10 @@ export default class Payment extends React.Component {
     this.ActionSheet.show();
   }
   actionSheetSelect(itemIndex){
-    var select = this.state.toDiffer[itemIndex].name
-    this.setState({optionSelecct: select})
+    if (itemIndex != 2) {
+      var select = this.state.toDiffer[itemIndex].name
+      this.setState({optionSelecct: select})
+    }
   }
   render() {
     let { data, checked } = this.state;
