@@ -361,11 +361,6 @@ export default class CreateProperties extends Component {
                     <Text style={styles.textStyle}>{this.state.cityName || "Ciudad"}</Text>
                   </TouchableOpacity>
                 </View>
-                <View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
-                  <TouchableOpacity onPress={this._onOpenActionSheetNeighborhood}>
-                    <Text style={styles.textStyle}>{this.state.selectNeighborhood || "Barrio"}</Text>
-                  </TouchableOpacity>
-                </View>
                 <View style={styles.textInputVieW}>
                   <TextInput  ref={ref => (this.streetInput = ref)}
                               underlineColorAndroid={"transparent"}
@@ -409,6 +404,11 @@ export default class CreateProperties extends Component {
                               onChangeText={(reference) => this.setState({reference : reference})}
                               returnKeyType={"done"}
                               onSubmitEditing={() => Keyboard.dismiss()} />
+                </View>
+                <View style={[styles.textInputVieW, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
+                  <TouchableOpacity onPress={this._onOpenActionSheetNeighborhood}>
+                    <Text style={styles.textStyle}>{this.state.selectNeighborhood || "Barrio"}</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>

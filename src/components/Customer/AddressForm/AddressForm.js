@@ -322,12 +322,6 @@ export default class AddressForm extends React.Component {
                     </TouchableOpacity>
                   </View>
 
-                  <View style={[styles.textInputStyleContainer, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
-                    <TouchableOpacity onPress={this._onOpenActionSheetNeighborhood}>
-                      <Text style={styles.textStyle}>{this.state.selectNeighborhood || "Barrio"}</Text>
-                    </TouchableOpacity>
-                  </View>
-
                   <View style={styles.textInputStyleContainer}>
                     <TextInput ref={ref => (this.streetInput = ref)}
                       underlineColorAndroid={"transparent"}
@@ -373,6 +367,12 @@ export default class AddressForm extends React.Component {
                       value={this.state.reference}
                       onChangeText={(reference) => this.setState({ reference: reference })}
                       returnKeyType={"done"}/>
+                  </View>
+
+                  <View style={[styles.textInputStyleContainer, { borderWidth: 1, borderRadius: 5, borderColor: "lightgray", height: 40, justifyContent: 'center' }]}>
+                    <TouchableOpacity onPress={this._onOpenActionSheetNeighborhood}>
+                      <Text style={styles.textStyle}>{this.state.selectNeighborhood || "Barrio"}</Text>
+                    </TouchableOpacity>
                   </View>
 
                 </View>
