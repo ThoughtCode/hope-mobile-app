@@ -84,7 +84,7 @@ export default class ServiceDetail extends Component {
     var selectedObject = mydata[index];
     if(( selectedObject.count + number) >= 0){
       selectedObject.count = selectedObject.count + number
-    }container
+    }
     mydata.slice(selectedObject,index);
     this.setState({selectedServiceParameter : mydata})
   }
