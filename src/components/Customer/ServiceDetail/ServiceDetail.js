@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Switch,Text,View,TouchableOpacity,} from 'react-native';
+import {Switch,Text,View,TouchableOpacity, ScrollView} from 'react-native';
 import styles from './ServiceDetailStyle';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { API } from '../../../util/api';
@@ -35,17 +35,18 @@ export default class ServiceDetail extends Component {
       try {
         let serviceParameter = response.service_type.data && response.service_type.data.attributes && response.service_type.data.attributes.services_parameters 
         let updatedServiceParameter = serviceParameter.map((item) =>{
-            item.count = 0
-            return item
+          item.count = 0
+          return item
         })
         let servicesAddons = response.service_type.data && response.service_type.data.attributes && response.service_type.data.attributes.services_addons 
         let updatedServicesAddons = servicesAddons.map((item) =>{
-            item.isSelect = false
-            return item
+          item.isSelect = false
+          return item
         })
         if(this.state.selectedServiceParameter.length == 0 && this.state.selectedServicesAddons.length == 0){
+
           this.setState({
-            selectedServiceParameter : updatedServiceParameter || [],
+            selectedServiceParameter : updatedServiceParameter.reverse() || [],
             selectedServicesAddons : updatedServicesAddons || [],
           })
         }
@@ -83,7 +84,7 @@ export default class ServiceDetail extends Component {
     var selectedObject = mydata[index];
     if(( selectedObject.count + number) >= 0){
       selectedObject.count = selectedObject.count + number
-    }
+    }container
     mydata.slice(selectedObject,index);
     this.setState({selectedServiceParameter : mydata})
   }
@@ -160,34 +161,41 @@ export default class ServiceDetail extends Component {
   }
 
   render() {
+    console.log(this.state.serviceParameter, this.state.selectedServiceParameter)
+    
     if(this.state.serviceTypeData != null){
       return (
         <View style={styles.container}>
-          <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginVertical:10}}>
-            <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
-            <Text style={{fontSize:24,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}}>{"Detalles del servicio"}</Text>
-          </View>
-          <View style={{flex:1}}>
-            {this.state.selectedServiceParameter && this.state.selectedServiceParameter.map((item,index)=>{
-                return this.serviceParameter(item,index)
-              })    
-            }
-            {(this.state.selectedServicesAddons.length > 0 ) ?<View style={styles.titleViewContainer}>
-              <Text style={styles.titleTextStyle}>Servicios adicionales</Text>
-            </View> : null}
-              <View style={{ margin: 10 }}>
-                {this.state.selectedServicesAddons && this.state.selectedServicesAddons.map((item,index)=>{
-                    return this.servicesAddons(item,index)
-                  })
-                }
-              </View>
-            <View style={styles.deviderStyle} />
-          </View>
-          <TouchableOpacity onPress={this.onPressExcoger}>
-            <View style={styles.buttonViewStyle}>
-              <Text style={styles.buttonTextStyle}>Escoger</Text>
+          <ScrollView>
+            <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginVertical:10}}>
+              <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
+              <Text style={{fontSize:24,fontFamily:'helvetica',color:'#2478AE',marginLeft:20}}>{"Detalles del servicio"}</Text>
             </View>
-          </TouchableOpacity>
+            <View>
+              {this.state.selectedServiceParameter && this.state.selectedServiceParameter.map((item,index)=>{
+                console.log("ESTE ITEM VA PRIMERO ---->", item)
+                  return this.serviceParameter(item,index)
+                })    
+              }
+              {(this.state.selectedServicesAddons.length > 0 ) ?<View style={styles.titleViewContainer}>
+                <Text style={styles.titleTextStyle}>Servicios adicionales</Text>
+              </View> : null}
+                <View style={{ margin: 10 }}>
+                  {this.state.selectedServicesAddons && this.state.selectedServicesAddons.map((item,index)=>{
+                      return this.servicesAddons(item,index)
+                    })
+                  }
+                </View>
+              <View style={styles.deviderStyle} />
+            </View>
+            <View>
+              <TouchableOpacity onPress={this.onPressExcoger}>
+                <View style={styles.buttonViewStyle}>
+                  <Text style={styles.buttonTextStyle}>Escoger</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </View>
       )
     }else{

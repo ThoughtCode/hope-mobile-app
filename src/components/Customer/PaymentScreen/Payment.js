@@ -34,15 +34,11 @@ export default class Payment extends React.Component {
   }
 
   componentDidMount() {
-    console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',this.state.isHoliday,'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
     var additionalServiceData = []
-
     this.props.navigation.state.params.data.service_parameters.filter(service => service.count > 0)
                                                               .map(service => additionalServiceData.push(service))
-
     this.props.navigation.state.params.data.service_addons.filter(service => service.isSelect)
                                                           .map(service => additionalServiceData.push(service))
-
     this.setState({
       additionalServiceData: additionalServiceData
     })
