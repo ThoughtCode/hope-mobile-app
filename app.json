@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Noc Noc V1",
+    "name": "Noc Noc",
     "icon": "./assets/img/logo_azul.png",
     "version": "1.0.0",
     "facebookScheme": "fb2057031764572769",
@@ -11,7 +11,7 @@
       "bundleIdentifier": "com.nocnoc.app"
     },
     "android": {
-      "versionCode": 2,
+      "versionCode": 2.1,
       "package": "com.nocnoc.app",
       "permissions": [
         "ACCESS_FINE_LOCATION",
