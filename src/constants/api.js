@@ -1,5 +1,10 @@
+// Production
 export const BASE_URL = "https://hopeec-production.herokuapp.com";
 export const STAGING_URL = "https://hopeec-production.herokuapp.com";
+// Staging
+// export const BASE_URL = "https://hopeec-staging.herokuapp.com/";
+// export const STAGING_URL = "https://hopeec-staging.herokuapp.com/";
+
 // export const BASE_URL = "http://localhost:3000";
 export const SIGNUP_URI = "/api/v1/customers/signup";
 export const AGENT_SIGNUP_URI = "/api/v1/agents/signup";

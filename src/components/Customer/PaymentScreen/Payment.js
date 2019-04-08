@@ -189,132 +189,134 @@ export default class Payment extends React.Component {
     total += vat
     return (
       <View style={styles.container}>
-        <View>
-          <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
-          <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
-          <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 15, width: width }}>
-            <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>
-              {this.state.serviceType.attributes.name}
-            </Text>
-            <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>
-              {this.state.frequencyData[0].name}
-            </Text>
-          </View>
-        </View>
-        <Text style={{ margin: 5, fontSize: 18, fontFamily: "helvetica" }}>
-          {Moment(this.state.startedAt).format('L, h:mm:ss a')}
-        </Text>
-        <View style={styles.deviderStyle} />
         <ScrollView>
-          <View style={{ flex: 0.9 }}>
-            <FlatList data={this.state.serviceType.attributes.service_base}
-              extraData={this.state}
-              renderItem={({ item, index }) =>
+          <View>
+            <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
+            <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
+            <View style={{ position: 'absolute', zIndex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 15, width: width }}>
+              <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>
+                {this.state.serviceType.attributes.name}
+              </Text>
+              <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'helvetica' }}>
+                {this.state.frequencyData[0].name}
+              </Text>
+            </View>
+          </View>
+          <Text style={{ margin: 5, fontSize: 18, fontFamily: "helvetica" }}>
+            {Moment(this.state.startedAt).format('L, h:mm:ss a')}
+          </Text>
+          <View style={styles.deviderStyle} />
+          <View>
+            <View style={{ flex: 0.9 }}>
+              <FlatList data={this.state.serviceType.attributes.service_base}
+                extraData={this.state}
+                renderItem={({ item, index }) =>
+                  <View style={styles.childContainer}>
+                    <View style={styles.itemView}>
+                      <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
+                        {item.name}
+                      </Text>
+                      <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
+                        ${(item.price * item.time).toFixed(2)}
+                      </Text>
+                    </View>
+                  </View>
+                }
+                keyExtractor={(item, index) => index.toString()}
+              />
+              <FlatList data={this.state.additionalServiceData}
+                extraData={this.state}
+                renderItem={({ item, index }) =>
+                  <View style={styles.childContainer}>
+                    <View style={styles.itemView}>
+                      <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
+                        {item.name}
+                      </Text>
+                      <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
+                        ${((item.price * item.time) * ((item.count != null) ? (item.count) : (1))).toFixed(2) }
+                      </Text>
+                    </View>
+                  </View>
+                }
+                keyExtractor={(item, index) => index.toString()}
+              />
+              {(this.state.isHoliday == true) ? (
                 <View style={styles.childContainer}>
                   <View style={styles.itemView}>
                     <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
-                      {item.name}
+                      Recargo fin de semana o feriados
                     </Text>
                     <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                      ${(item.price * item.time).toFixed(2)}
+                      ${additional_fee.toFixed(2)}
                     </Text>
                   </View>
                 </View>
-              }
-              keyExtractor={(item, index) => index.toString()}
-            />
-            <FlatList data={this.state.additionalServiceData}
-              extraData={this.state}
-              renderItem={({ item, index }) =>
-                <View style={styles.childContainer}>
-                  <View style={styles.itemView}>
-                    <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
-                      {item.name}
-                    </Text>
-                    <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                      ${((item.price * item.time) * ((item.count != null) ? (item.count) : (1))).toFixed(2) }
-                    </Text>
-                  </View>
-                </View>
-              }
-              keyExtractor={(item, index) => index.toString()}
-            />
-            {(this.state.isHoliday == true) ? (
+              ):null}
               <View style={styles.childContainer}>
                 <View style={styles.itemView}>
                   <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
-                    Recargo fin de semana o feriados
+                    I.V.A
                   </Text>
                   <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                    ${additional_fee.toFixed(2)}
+                    ${vat.toFixed(2)}
                   </Text>
                 </View>
               </View>
-            ):null}
-            <View style={styles.childContainer}>
-              <View style={styles.itemView}>
-                <Text style={{ flex: 0.8, fontSize: 16,fontFamily: "helvetica" }}>
-                  I.V.A
-                </Text>
-                <Text style={{ flex: 0.2, fontSize: 16,fontFamily: "helvetica" }}>
-                  ${vat.toFixed(2)}
-                </Text>
-              </View>
             </View>
           </View>
-        </ScrollView>
-        <View style={{ flexDirection: 'row', margin: 5 }}>
-          <Text style={{ flex: 0.4,fontSize: 16, fontFamily: "helvetica" }}>
-            Horas de limpieza
-          </Text>
-          <Text style={{ flex: 0.6, fontSize: 16,fontFamily: "helvetica", color: '#288fe2' }}>
-            {this._calculateHours()} horas
-          </Text>
-        </View>
-        <View style={styles.deviderStyle} />
           <View style={{ flexDirection: 'row', margin: 5 }}>
-            <Text style={{ flex: 0.7, color: '#288fe2', fontSize: 24, fontFamily: "helvetica" }}>
-              Total
+            <Text style={{ flex: 0.4,fontSize: 16, fontFamily: "helvetica" }}>
+              Horas de limpieza
             </Text>
-            <Text style={{ flex: 0.3, color: '#288fe2', fontSize: 24, fontFamily: "helvetica" }}>
-              ${total.toFixed(2)}
+            <Text style={{ flex: 0.6, fontSize: 16,fontFamily: "helvetica", color: '#288fe2' }}>
+              {this._calculateHours()} horas
             </Text>
           </View>
-        <View style={styles.deviderStyle} />
-        <Text style={{ margin: 5 }}>
-          ¿Quieres diferir tú pago?
-        </Text>
-        <View style={styles.textInputStyleContainer}>
-          <TouchableOpacity onPress={this._onOpenActionSheet}>
-            <Text style={{ height: 50, paddingHorizontal:10, paddingVertical:8 }} >{this.state.optionSelecct || "Seleccione opción"}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{ flexDirection: 'row', margin: 5 }}>
-          {(this.state.selectTerms == false) ? (
-            <Ionicons name={"ios-square-outline"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(true)} />
-          ) : (
-            <Ionicons name={"ios-checkbox"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(false)} />
-          )}
-          <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://www.nocnoc.com.ec/politicas#policies')}}>
-            <View>
-              <Text style={{ textAlign: 'center', margin: 5, color:'blue'}}>
-                Acepto términos y condiciones
+          <View style={styles.deviderStyle} />
+            <View style={{ flexDirection: 'row', margin: 5 }}>
+              <Text style={{ flex: 0.7, color: '#288fe2', fontSize: 24, fontFamily: "helvetica" }}>
+                Total
+              </Text>
+              <Text style={{ flex: 0.3, color: '#288fe2', fontSize: 24, fontFamily: "helvetica" }}>
+                ${total.toFixed(2)}
               </Text>
             </View>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity onPress={() => this.onPressHandle()}>
-          <View style={styles.buttonViewStyle}>
-            <Text style={styles.buttonTextStyle}>Solicitar servicio</Text>
+          <View style={styles.deviderStyle} />
+          <Text style={{ margin: 5 }}>
+            ¿Quieres diferir tú pago?
+          </Text>
+          <View style={styles.textInputStyleContainer}>
+            <TouchableOpacity onPress={this._onOpenActionSheet}>
+              <Text style={{ height: 50, paddingHorizontal:10, paddingVertical:8 }} >{this.state.optionSelecct || "Seleccione opción"}</Text>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-        <ActionSheet
-          ref={o => this.ActionSheet = o}
-          title={'Seleccione opción'}
-          options={['No deseo diferir mi pago','Diferir mi pago en 3 meses. Sin intereses','Cancelar']}
-          cancelButtonIndex={2}
-          onPress={(index) => { this.actionSheetSelect(index) }}
-        />
+          <View style={{ flexDirection: 'row', margin: 5 }}>
+            {(this.state.selectTerms == false) ? (
+              <Ionicons name={"ios-square-outline"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(true)} />
+            ) : (
+              <Ionicons name={"ios-checkbox"} size={30} style={styles.iconStyle} onPress={() => this._selectTerms(false)} />
+            )}
+            <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://www.nocnoc.com.ec/politicas#policies')}}>
+              <View>
+                <Text style={{ textAlign: 'center', margin: 5, color:'blue'}}>
+                  Acepto términos y condiciones
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity onPress={() => this.onPressHandle()}>
+            <View style={styles.buttonViewStyle}>
+              <Text style={styles.buttonTextStyle}>Solicitar servicio</Text>
+            </View>
+          </TouchableOpacity>
+          <ActionSheet
+            ref={o => this.ActionSheet = o}
+            title={'Seleccione opción'}
+            options={['No deseo diferir mi pago','Diferir mi pago en 3 meses. Sin intereses','Cancelar']}
+            cancelButtonIndex={2}
+            onPress={(index) => { this.actionSheetSelect(index) }}
+          />
+        </ScrollView>
       </View>
     )
   }

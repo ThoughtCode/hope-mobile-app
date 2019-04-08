@@ -11,12 +11,13 @@
       "bundleIdentifier": "com.nocnoc.app"
     },
     "android": {
-      "versionCode": 3,
+      "versionCode": 4,
       "package": "com.nocnoc.app",
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "INTERNET"
       ]
-    }
+    },
+    "description": ""
   }
 }
