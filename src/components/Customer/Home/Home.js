@@ -31,8 +31,12 @@ export default class Home extends Component {
     return (
         <View key={index}>
             <Image style={{ width: BannerWidth, height: BannerHeight }} source={ image.src } />
-            <Text style={styles.carousel_description}> {image.description} {'\n'}</Text>
-            <Text style={styles.carousel_subtitle}> {image.subtitle} </Text>
+            <Text style={styles.carousel_description}>
+              {image.description}
+              {'\n'}
+              {'\n'}
+              <Text style={styles.carousel_subtitle}> {image.subtitle} </Text>
+            </Text>
         </View>
     );
   }
@@ -67,7 +71,6 @@ export default class Home extends Component {
               <Text style={styles.action_buttons}>INICIAR SESIÓN</Text>
             </View>
           </TouchableOpacity>
-          
         </View>
       </View>
     );
