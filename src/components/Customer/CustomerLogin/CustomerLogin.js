@@ -60,6 +60,7 @@ export default class CustomerLogin extends React.Component {
       );
     } else {
       signinURL = urls.BASE_URL + urls.CUSTOMER_SIGNIN;
+      console.log(signinURL);
       fetch(signinURL, {
         method: 'POST',
         headers: {
@@ -86,6 +87,7 @@ export default class CustomerLogin extends React.Component {
           return response;
         } else {
           response.json().then(async data => {
+            console.log(data.customer.data.attributes.access_token);
             await this._postMobilePushNotificationToken(data.customer.data.attributes.access_token);
             globals.password = this.state.password
             AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
@@ -98,11 +100,8 @@ export default class CustomerLogin extends React.Component {
               globals.cell_phone = data.customer.data.attributes.cell_phone || ""
               globals.status = data.customer.data.attributes.status || ""
               globals.avatar = data.customer.data.attributes.avatar.url || ""
-              
-              // this.props.navigation.navigate('CustomerTabbar', { data: data });
               this.props.navigation.navigate('CustomerTabbar');
             })
-            
           });
         }
       })
@@ -111,19 +110,19 @@ export default class CustomerLogin extends React.Component {
 }
 
 loginWithFacebookResponse = {
-  success: (response) => {
+  success: async (response) => {
     try {
-      console.log("Fb Login Response-->",JSON.stringify(response))
-            AsyncStorage.multiSet([["access_token",response.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(response)]],()=>{
-              globals.access_token = response.customer.data.attributes.access_token ||""
-              globals.first_name = response.customer.data.attributes.first_name || ""
-              globals.last_name = response.customer.data.attributes.last_name || ""
-              globals.email = response.customer.data.attributes.email || ""
-              globals.cell_phone = response.customer.data.attributes.cell_phone || ""
-              globals.status = response.customer.data.attributes.status && response.customer.data.attributes.status || ""
-              globals.avatar = response.customer.data.attributes.avatar.url || ""
-              this.props.navigation.navigate('CustomerTabbar');
-        })
+      await this._postMobilePushNotificationToken(response.customer.data.attributes.access_token);
+      AsyncStorage.multiSet([["access_token", response.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(response)]],()=>{
+        globals.access_token = response.customer.data.attributes.access_token ||""
+        globals.first_name = response.customer.data.attributes.first_name || ""
+        globals.last_name = response.customer.data.attributes.last_name || ""
+        globals.email = response.customer.data.attributes.email || ""
+        globals.cell_phone = response.customer.data.attributes.cell_phone || ""
+        globals.status = response.customer.data.attributes.status && response.customer.data.attributes.status || ""
+        globals.avatar = response.customer.data.attributes.avatar.url || ""
+        this.props.navigation.navigate('CustomerTabbar');
+      })
     } catch (error) {
       this.setState({ errorMessage: error.message, spinner: false })
       console.log('Loginwith facebook catch error ' + JSON.stringify(error));
@@ -157,34 +156,6 @@ loginWithFacebookResponse = {
           }
         }
         API.loginWithFacebook(this.loginWithFacebookResponse,data,true);
-      
-    //     let fbSigninURL = urls.STAGING_URL + urls.CUSTOMER_FACEBOOK_LOGIN;
-      
-    //   console.log("Login URL-->",fbSigninURL)
-    //   console.log("data-->",data)
-    //   fetch(fbSigninURL, {
-    //     method: 'POST',
-    //     body : data
-    //   }).then((response) => {
-    //     response.json().then((data) => {
-    //       console.log("Fb Login Response-->",JSON.stringify(data))
-    //       // this._handleLoginResponse(data);
-    //       // globals.password = this.state.password
-    //       //   AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
-    //       //     globals.access_token = data.customer.data.attributes.access_token ||""
-
-    //       //     globals.first_name = data.customer.data.attributes.first_name || ""
-    //       //     globals.last_name = data.customer.data.attributes.last_name || ""
-    //       //     globals.email = data.customer.data.attributes.email || ""
-    //       //     globals.password = this.state.password || ""
-    //       //     globals.cell_phone = data.customer.data.attributes.cell_phone || ""
-    //       //     globals.status = data.customer.data.attributes.status || ""
-    //       //     globals.avatar = data.customer.data.attributes.avatar.url || ""
-    //       // this._handleLoginResponse(response);
-    //     // })
-        
-    //   }).catch((error) => this.setState({ errorMessage: error.message, spinner: false }));
-    // })
   }
 }
 
