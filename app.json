@@ -18,6 +18,9 @@
         "INTERNET"
       ]
     },
-    "description": ""
+    "description": "",
+    "notification": {
+      "icon": "./assets/img/notification_logo.png"
+    }
   }
 }
