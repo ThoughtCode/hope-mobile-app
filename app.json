@@ -11,7 +11,7 @@
       "bundleIdentifier": "com.nocnoc.app"
     },
     "android": {
-      "versionCode": 6,
+      "versionCode": 7,
       "package": "com.nocnoc.app",
       "permissions": [
         "ACCESS_FINE_LOCATION",
