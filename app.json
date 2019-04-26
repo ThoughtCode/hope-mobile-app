@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Noc Noc",
-    "icon": "./assets/img/logo_azul.png",
+    "icon": "./assets/img/logo_azul_no_transparente.png",
     "version": "2.0.0",
     "facebookScheme": "fb2057031764572769",
     "facebookDisplayName": "Noc Noc",
