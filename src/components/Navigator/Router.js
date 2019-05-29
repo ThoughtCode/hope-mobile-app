@@ -3,6 +3,7 @@ import {SwitchNavigator} from 'react-navigation';
 import Home from '../../components/Customer/Home/Home'
 import CustomerLogin from '../../components/Customer/CustomerLogin/CustomerLogin';
 import CustomerSignUp from '../../components/Customer/CustomerSignUp/CustomerSignUp';
+import CustomerDashboardServe from '../../components/Customer/CustomerDashboardServe/CustomerDashboardServe';
 import CustomerResetPassword from '../../components/Customer/CustomerResetPassword/CustomerResetPassword';
 import CustomerTabbar from "./_CustomerTabNavigator";
 import CustomerTabbarServ from './_CustomerTabNavigatorServ';
@@ -17,6 +18,7 @@ export const MainNavigator = SwitchNavigator({
   CustomerLogin: {screen: CustomerLogin},
   AgentLogin: {screen: AgentLogin},
   CustomerSignUp: {screen: CustomerSignUp},
+  CustomerDashboardServe: {screen: CustomerDashboardServe},
   AgentSignUp: {screen: AgentSignUp},
   AgentTabar : { screen :AgentTabar},
   CustomerTabbar : {screen : CustomerTabbar},
@@ -30,6 +32,7 @@ export const MainNavigator = SwitchNavigator({
 export const AgentNavigator = SwitchNavigator({
   Home: {screen: Home},
   CustomerLogin: {screen: CustomerLogin},
+  CustomerDashboardServe: {screen: CustomerDashboardServe},
   AgentLogin: {screen: AgentLogin},
   CustomerSignUp: {screen: CustomerSignUp},
   AgentSignUp: {screen: AgentSignUp},

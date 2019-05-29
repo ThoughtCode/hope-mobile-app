@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet,Text,View} from 'react-native';
 import {TabNavigator,TabBarBottom,StackNavigator} from 'react-navigation';
 
-import CustomerDashboard from '../../components/Customer/CustomerDashboard/CustomerDashboard';
+import CustomerDashboardServe from '../../components/Customer/CustomerDashboardServe/CustomerDashboardServe';
 import CustomerResetPassword from '../../components/Customer/CustomerResetPassword/CustomerResetPassword';
 import CustomerProfile from '../../components/Customer/CustomerProfile/CustomerProfile';
 import CustomerJobs from '../../components/Customer/CustomerJobs/CustomerJobs';
@@ -51,7 +51,7 @@ const iconHeight = 20;
 //======================================================================
 
 const HomeDashboard = StackNavigator({
-  CustomerDashboard : { screen :CustomerDashboard},
+  CustomerDashboardServe : { screen :CustomerDashboardServe},
   CustomerResetPassword : { screen :CustomerResetPassword},
   CustomerProfile : { screen :CustomerProfile},
   CustomerJobs : { screen : CustomerJobs },
@@ -86,164 +86,11 @@ const HomeDashboard = StackNavigator({
 },{
   navigationOptions:{
     header : null,
-    initialRouteName : "CustomerDashboard"
-  }
-})
-  
-
-//======================================================================
-// AgentTrabajos StackNavigator
-//======================================================================
-
-const CustomerTrabajos = StackNavigator({
-  CustomerDashboard : { screen :CustomerDashboard},
-  CustomerResetPassword : { screen :CustomerResetPassword},
-  CustomerProfile : { screen :CustomerProfile},
-  CustomerJobs : { screen : CustomerJobs },
-  CustomerAddress : { screen : CustomerAddress },
-  CustomerDateTime : { screen : CustomerDateTime },
-  CustomerBaseService : { screen : CustomerBaseService },
-  CustomerServiceType : { screen : CustomerServiceType },
-  CustomerAddonService : { screen : CustomerAddonService },
-  CustomerNewAddress : { screen : CustomerNewAddress },
-  CustomerTrabajosDashboard : { screen : CustomerTrabajosDashboard },
-  CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
-  CustomerReviewScreen : { screen : CustomerReviewScreen },
-  CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
-  CustomerCleaning : { screen : CustomerCleaning },
-  CreateJob : { screen : CreateJob },
-  ServiceDetail : { screen : ServiceDetail },
-  Frequency : { screen : Frequency },
-  CalenderPick : { screen : CalenderPick },
-  DirectionScreen : { screen : DirectionScreen },
-  AddressForm : { screen : AddressForm },
-  AdditionalDetail : { screen : AdditionalDetail },
-  CardListScreen : { screen : CardListScreen },
-  DetailsListScreen : { screen : DetailsListScreen },
-  AddCardScreen : { screen : AddCardScreen },
-  AddDetailsScreen : { screen : AddDetailsScreen },
-  CommentListScreen : { screen : CommentListScreen },
-  CustomerProfileCardList : { screen : CustomerProfileCardList },
-  CustomerProfileAddCard : { screen : CustomerProfileAddCard },
-  CustomerBillingList : { screen : CustomerBillingList },
-  CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
-  PaymentScreen : { screen : PaymentScreen },
-},{
-  navigationOptions:{
-    header : null,
-    initialRouteName : "CustomerDashboard"
+    initialRouteName : "CustomerDashboardServe"
   }
 })
 
-//======================================================================
-// Profile StackNavigator
-//======================================================================
-
-const ProfileStackNavigator = StackNavigator({
-  CustomerProfile : { screen :CustomerProfile},
-  CustomerDashboard : { screen :CustomerDashboard},
-  CustomerResetPassword : { screen :CustomerResetPassword},
-  CustomerJobs : { screen : CustomerJobs },
-  CustomerAddress : { screen : CustomerAddress },
-  CustomerDateTime : { screen : CustomerDateTime },
-  CustomerBaseService : { screen : CustomerBaseService },
-  CustomerServiceType : { screen : CustomerServiceType },
-  CustomerAddonService : { screen : CustomerAddonService },
-  CustomerNewAddress : { screen : CustomerNewAddress },
-  CustomerTrabajosDashboard : { screen : CustomerTrabajosDashboard },
-  CustomerJobDetailScreen : { screen : CustomerJobDetailScreen },
-  CreateJob : { screen : CreateJob },
-  CustomerUpdateProfile : { screen : CustomerUpdateProfile },
-  CustomerUpdateProperties : { screen : CustomerUpdateProperties },
-  CreateProperties : { screen : CreateProperties },
-  CustomerUpdatePassword : { screen : CustomerUpdatePassword },
-  CustomerReviewScreen : { screen : CustomerReviewScreen },
-  CustomerAgentReviewScreen : { screen : CustomerAgentReviewScreen },
-  CustomerCleaning : { screen : CustomerCleaning },
-  ServiceDetail : { screen : ServiceDetail },
-  Frequency : { screen : Frequency },
-  CalenderPick : { screen : CalenderPick },
-  DirectionScreen : { screen : DirectionScreen },
-  AddressForm : { screen : AddressForm },
-  AdditionalDetail : { screen : AdditionalDetail },
-  CardListScreen : { screen : CardListScreen },
-  AddCardScreen : { screen : AddCardScreen },
-  CommentListScreen : { screen : CommentListScreen },
-  CustomerProfileCardList : { screen : CustomerProfileCardList },
-  CustomerProfileAddCard : { screen : CustomerProfileAddCard },
-  CustomerBillingList : { screen : CustomerBillingList },
-  CustomerAddBillingScreen : { screen : CustomerAddBillingScreen },
-  PaymentScreen : { screen : PaymentScreen },
-},{
-  navigationOptions:{
-    header : null,
-    initialRouteName : "CustomerProfile"
-  }
-})
-
-export default CustomerTabbar = TabNavigator({
-  HomeDashboard: {
-    screen: HomeDashboard,
-    navigationOptions:() => ({
-      borderBottomWidth: 0,
-      tabBarLabel: 'Inicio',
-      tabBarIcon: ({ tintColor }) => (
-        <View style={[styles.tabViewBox]}>
-          <Entypo name="home" style={[styles.tabIcon]} size={iconHeight} color={tintColor} />
-          <Text style={[styles.tabText, { color: tintColor }]}>{"Inicio"}</Text>
-        </View>
-      )
-    })
-  },
-  Register: {
-    screen: CustomerSignUp,
-    navigationOptions: {
-      borderBottomWidth: 0,
-      tabBarLabel: 'REGISTRO',
-      tabBarIcon: ({ tintColor }) => (
-        <View style={[styles.tabViewBox]}>
-          <Entypo name="user" style={[styles.tabIcon]} size={iconHeight} color={tintColor} />
-          <Text style={[styles.tabText, { color: tintColor }]}>{"REGISTRO"}</Text>
-        </View>
-      )
-    }
-  },
-  Login: {
-    screen: CustomerLogin,
-    navigationOptions: {
-      borderBottomWidth: 0,
-      tabBarLabel: 'INICIAR SESIÓN',
-      tabBarIcon: ({ tintColor }) => (
-        <View style={[styles.tabViewBox]}>
-          <Entypo name="user" style={[styles.tabIcon]} size={iconHeight} color={tintColor} />
-          <Text style={[styles.tabText, { color: tintColor }]}>{"INICIAR SESIÓN"}</Text>
-        </View>
-      )
-    }
-  },
-},{
-  tabBarOptions: {
-    activeTintColor: '#1e67a9',
-    inactiveTintColor: 'gray',
-    style: {
-      backgroundColor: '#FFF',
-      height: 49,
-      borderTopColor: 'transparent',
-      borderTopWidth: 1,
-      paddingRight: 10,
-      paddingLeft: 10,
-      borderTopWidth: 1,
-      borderTopColor: 'gray'
-    },
-    showLabel: false,
-    showIcon : true,
-  },
-  tabBarComponent : TabBarBottom,
-  initialRouteName: 'HomeDashboard',
-  tabBarPosition: 'bottom',
-  animationEnabled: false,
-  swipeEnabled: false
-}, []);
+export default HomeDashboard;
 
 const styles = StyleSheet.create({
   container: {
