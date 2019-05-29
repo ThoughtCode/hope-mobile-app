@@ -5,6 +5,7 @@ import CustomerLogin from '../../components/Customer/CustomerLogin/CustomerLogin
 import CustomerSignUp from '../../components/Customer/CustomerSignUp/CustomerSignUp';
 import CustomerResetPassword from '../../components/Customer/CustomerResetPassword/CustomerResetPassword';
 import CustomerTabbar from "./_CustomerTabNavigator";
+import CustomerTabbarServ from './_CustomerTabNavigatorServ';
 
 import AgentSignUp from '../../components/Agent/AgentSignup/AgentSignUp';
 import AgentLogin from '../../components/Agent/AgentLogin/AgentLogin';
@@ -19,6 +20,7 @@ export const MainNavigator = SwitchNavigator({
   AgentSignUp: {screen: AgentSignUp},
   AgentTabar : { screen :AgentTabar},
   CustomerTabbar : {screen : CustomerTabbar},
+  CustomerTabbarServ : {screen : CustomerTabbarServ},
   CustomerResetPassword: {screen: CustomerResetPassword},
   AgentResetPassword: {screen: AgentResetPassword},
 },{

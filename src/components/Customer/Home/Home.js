@@ -72,6 +72,16 @@ export default class Home extends Component {
             </View>
           </TouchableOpacity>
         </View>
+        <View style={styles.actions_container_bott}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('CustomerTabbarServ')}
+          >
+            <View style={styles.signup_button_container}>
+              <Text style={styles.action_buttons}>Ver servicios</Text>
+            </View>
+          </TouchableOpacity>
+          
+        </View>
       </View>
     );
   }

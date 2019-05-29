@@ -35,6 +35,13 @@ module.exports = StyleSheet.create({
   },
   actions_container: {
     position: 'absolute',
+    bottom: 70,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    backgroundColor: 'transparent',
+  },
+  actions_container_bott: {
+    position: 'absolute',
     bottom: 20,
     flexDirection: 'row',
     alignItems: 'stretch',
