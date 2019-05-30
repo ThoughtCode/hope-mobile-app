@@ -1,6 +1,6 @@
 // Production
 export const BASE_URL = "https://hopeec-production.herokuapp.com";
-export const STAGING_URL = "https://hopeec-production.herokuapp.com";
+export const STAGING_URL = "https://hopeec-staging.herokuapp.com";
 // Staging
 // export const BASE_URL = "https://hopeec-staging.herokuapp.com/";
 // export const STAGING_URL = "https://hopeec-staging.herokuapp.com/";
