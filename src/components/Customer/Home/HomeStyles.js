@@ -40,12 +40,28 @@ module.exports = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: 'transparent',
   },
+  actions_container_bott: {
+    position: 'absolute',
+    bottom: 70,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    backgroundColor: 'transparent',
+  },
   signup_button_container: {
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     width: 140,
     height: 30,
+    borderRadius: 3,
+    margin: 10
+  },
+  serve_button_container:{
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 300,
+    height: 40,
     borderRadius: 3,
     margin: 10
   },
