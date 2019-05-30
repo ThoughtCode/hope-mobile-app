@@ -35,14 +35,14 @@ module.exports = StyleSheet.create({
   },
   actions_container: {
     position: 'absolute',
-    bottom: 70,
+    bottom: 20,
     flexDirection: 'row',
     alignItems: 'stretch',
     backgroundColor: 'transparent',
   },
   actions_container_bott: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 70,
     flexDirection: 'row',
     alignItems: 'stretch',
     backgroundColor: 'transparent',
@@ -53,6 +53,15 @@ module.exports = StyleSheet.create({
     justifyContent: 'center',
     width: 140,
     height: 30,
+    borderRadius: 3,
+    margin: 10
+  },
+  serve_button_container:{
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 300,
+    height: 40,
     borderRadius: 3,
     margin: 10
   },

@@ -132,9 +132,7 @@ module.exports = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
   },
-  servicios_item_description: {
-    margin: 10
-  },
+  
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',

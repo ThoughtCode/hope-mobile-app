@@ -5,6 +5,10 @@
 
 # dependencies
 /node_modules
+.DS_Store
+/src/.DS_Store
+/src/components/.DS_Store
+
 
 # misc
 .env.local

@@ -56,6 +56,16 @@ export default class Home extends Component {
           </Carousel>
         </View>
         <Image style={ styles.logo_image } source={ require('../../../../assets/img/logo_blanco.gif')} />
+        <View style={styles.actions_container_bott}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('CustomerServices')}
+          >
+            <View style={styles.serve_button_container}>
+              <Text style={styles.action_buttons}>VER SERVICIOS</Text>
+            </View>
+          </TouchableOpacity>
+          
+        </View>
         <View style={styles.actions_container}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('CustomerSignUp')}
@@ -71,16 +81,6 @@ export default class Home extends Component {
               <Text style={styles.action_buttons}>INICIAR SESIÓN</Text>
             </View>
           </TouchableOpacity>
-        </View>
-        <View style={styles.actions_container_bott}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('CustomerTabbarServ')}
-          >
-            <View style={styles.signup_button_container}>
-              <Text style={styles.action_buttons}>VER SERVICIOS</Text>
-            </View>
-          </TouchableOpacity>
-          
         </View>
       </View>
     );
