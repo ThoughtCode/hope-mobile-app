@@ -142,25 +142,31 @@ export default class Payment extends React.Component {
           "source": 1
         }
       }
-      this.setState({spinner: true});
-      API.createJob(this.createJobResponse,data,true);
+      // this.setState({spinner: true});
+
+      if(this.state.spinner == false){
+        this.setState({ spinner: true }, () => {
+          API.createJob(this.createJobResponse,data,true);
+        })
+      }
     }  
   }
   createJobResponse = {
     success: (response) => {
-      this.setState({spinner: false});
       try {
-        Alert.alert('Trabajo creado',response.message,[{text:'OK', onPress: () => this.props.navigation.navigate("CustomerDashboard")}],{cancelable:false});  
+        Alert.alert('Trabajo creado',response.message,[{text:'OK', onPress: () => this.props.navigation.navigate("CustomerDashboard")}],{cancelable:false});
+        this.setState({spinner: false});
       } catch (error) {
         Alert.alert(error);  
         console.log('getJobResponseData catch error ' + JSON.stringify(error));
+        this.setState({spinner: false});
       }
       
     },
     error: (err) => {
-      this.setState({spinner: false});
       Alert.alert(err);  
       console.log('getJobResponseData error ' + JSON.stringify(err));
+      this.setState({spinner: false});
     }
   }
   _onOpenActionSheet = () => {
