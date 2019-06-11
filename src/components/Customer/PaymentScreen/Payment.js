@@ -4,11 +4,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './PaymentScreenStyle';
 import { API } from '../../../util/api';
 import Moment from 'moment';
+import Spinner from 'react-native-loading-spinner-overlay';
 import ActionSheet from 'react-native-actionsheet'
 const { width } = Dimensions.get('window');
 const IMAGES = {
   TOP_BACKGROUND: require("../../../../assets/img/topbg.png")
 }
+
 export default class Payment extends React.Component {
   constructor(props) {
     super(props);
@@ -17,6 +19,7 @@ export default class Payment extends React.Component {
       frequencyData: this.props.navigation.state.params.data.frequencyData,
       startedAt: this.props.navigation.state.params.data.selectedDate,
       endDate: this.props.navigation.state.params.data.end_date,
+      spinner:false,
       additionalServiceData: [],
       total: this.props.navigation.state.params.data.total,
       invoicesData: this.props.navigation.state.params.data.invoicesData,
@@ -66,6 +69,7 @@ export default class Payment extends React.Component {
     this.setState({selectTerms: e})
   }
   onPressHandle = () =>{
+    
     // console.log(this.state.startedAt, Moment.utc(new Date()).subtract(5, 'h'), (this.state.startedAt > Moment.utc(new Date()).subtract(5, 'h')));
     if(this.state.optionSelecct == ""){
       Alert.alert(
@@ -92,6 +96,7 @@ export default class Payment extends React.Component {
         [
           { text: 'OK', onPress: () => this.props.navigation.goBack()}
         ],
+
         { cancelable: false }
     )} else {
       let frequencyDataCall = 0
@@ -137,18 +142,24 @@ export default class Payment extends React.Component {
           "source": 1
         }
       }
+      this.setState({spinner: true});
       API.createJob(this.createJobResponse,data,true);
     }  
   }
   createJobResponse = {
     success: (response) => {
+      this.setState({spinner: false});
       try {
         Alert.alert('Trabajo creado',response.message,[{text:'OK', onPress: () => this.props.navigation.navigate("CustomerDashboard")}],{cancelable:false});  
       } catch (error) {
+        Alert.alert(error);  
         console.log('getJobResponseData catch error ' + JSON.stringify(error));
       }
+      
     },
     error: (err) => {
+      this.setState({spinner: false});
+      Alert.alert(err);  
       console.log('getJobResponseData error ' + JSON.stringify(err));
     }
   }
@@ -189,6 +200,7 @@ export default class Payment extends React.Component {
     total += vat
     return (
       <View style={styles.container}>
+              <Spinner visible={this.state.spinner} />
         <ScrollView>
           <View>
             <Image source={IMAGES.TOP_BACKGROUND} style={styles.topImage} />
