@@ -15,6 +15,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import * as urls from '../../../constants/api';
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
+import * as Facebook from 'expo-facebook';
+
 const styles = require('./CustomerLoginStyles');
 
 export default class CustomerLogin extends React.Component {
@@ -128,16 +130,16 @@ loginWithFacebookResponse = {
   },
   error: (err) => {
     console.log('Loginwith facebook error ' + JSON.stringify(err));
-    this.setState({ errorMessage: error.message, spinner: false })
+    this.setState({ errorMessage: err, spinner: false })
   },
-  complete: () => {
-    this.setState({ errorMessage: error.message, spinner: false })
+  complete: (err) => {
+    this.setState({ errorMessage: err, spinner: false })
   }
 }
 
   facebookLogin = async() =>{
 
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('2057031764572769', {
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync('2057031764572769', {
       permissions: ['public_profile', 'email', 'user_friends'],
     });
     if (type === 'success') {
@@ -153,6 +155,7 @@ loginWithFacebookResponse = {
             "facebook_access_token": token
           }
         }
+        console.log('\n\n\n\nData:', data, '\n\n\n\n\n');
         API.loginWithFacebook(this.loginWithFacebookResponse,data,true);
   }
 }

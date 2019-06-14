@@ -5,7 +5,8 @@ const {height , width} = Dimensions.get('window')
 import Ionicons from '@expo/vector-icons/Ionicons'
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
-import { ImagePicker, Camera, Permissions  } from 'expo';
+import { ImagePicker, Camera } from 'expo';
+import * as Permissions from 'expo-permissions';
 import ImageUpload from '../../../util/ImageUpload';
 import ActionSheet from 'react-native-actionsheet';
 import DateTimePicker from 'react-native-modal-datetime-picker';
