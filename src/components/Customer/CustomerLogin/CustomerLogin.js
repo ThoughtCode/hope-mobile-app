@@ -86,12 +86,10 @@ export default class CustomerLogin extends React.Component {
           return response;
         } else {
           response.json().then(async data => {
-            console.log(data.customer.data.attributes.access_token);
             await this._postMobilePushNotificationToken(data.customer.data.attributes.access_token);
             globals.password = this.state.password
             AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
               globals.access_token = data.customer.data.attributes.access_token ||""
-              console.log(data.customer);
               globals.id = data.customer.data.attributes.id || ""
               globals.first_name = data.customer.data.attributes.first_name || ""
               globals.last_name = data.customer.data.attributes.last_name || ""
