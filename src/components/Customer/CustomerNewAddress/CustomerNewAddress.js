@@ -41,7 +41,6 @@ class CustomerNewAddress extends Component {
     //   this.setState({servicesTypes});
     //   this.setState({selectedServiceType: this.state.servicesTypes[0]})
     // }).catch((error) => this.setState({errorMessage: error.message}));
-    console.log('List of neighbordhoods');
   };
 
   getCities = (authToken) => {
@@ -58,7 +57,6 @@ class CustomerNewAddress extends Component {
     //   this.setState({servicesTypes});
     //   this.setState({selectedServiceType: this.state.servicesTypes[0]})
     // }).catch((error) => this.setState({errorMessage: error.message}));
-    console.log('List of cities');
   }
 
   componentDidMount() {

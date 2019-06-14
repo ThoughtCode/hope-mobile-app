@@ -74,7 +74,6 @@ export default class AgentFilterScreen extends Component {
             url += "&frequency="+this.state.frequency
         }
             
-        console.log("Filter URL-->"+url)
         this.props.navigation.state.params.setFilterData(url)
         this.props.navigation.goBack()
     }

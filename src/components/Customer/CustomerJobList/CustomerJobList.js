@@ -53,7 +53,6 @@ export default class CustomerJobList extends Component {
   //======================================================================
 
   onRefresh = () =>{
-    console.log("this.getJobResponseData",this.getJobResponseData)
     this.setState({isOnRefresh : true,isAPICall:true,page : 1})
     API.getCustomerJobs(this.getJobResponseData,"/"+this.state.type+"?current_page=1",true);
   }

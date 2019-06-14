@@ -48,8 +48,6 @@ export default class CardListScreen extends Component {
   detailsListsResponseData = {
     success: (response) => {
       try {
-          console.log("Response data-->" + JSON.stringify(response.invoice_detail.data))
-
           let temDetailList = response.invoice_detail.data.map((item) => {
             item.isChecked = false;
             return item
@@ -73,12 +71,10 @@ export default class CardListScreen extends Component {
     selectedObject.isChecked = !selectedObject.isChecked
     newCardList.slice(selectedObject,index);
     this.setState({ detailsListData : newCardList });
-    console.log("CradList-->",JSON.stringify(newCardList))
   }
 
   renderRow = (item) => {
     var data = item.item
-    console.log('Item -->', data)
     return (
       <TouchableOpacity onPress={() => this.selectCatdTap(item.index)}>
         <View style={styles.childContainer}>

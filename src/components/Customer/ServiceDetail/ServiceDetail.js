@@ -161,8 +161,6 @@ export default class ServiceDetail extends Component {
   }
 
   render() {
-    console.log(this.state.serviceParameter, this.state.selectedServiceParameter)
-    
     if(this.state.serviceTypeData != null){
       return (
         <View style={styles.container}>

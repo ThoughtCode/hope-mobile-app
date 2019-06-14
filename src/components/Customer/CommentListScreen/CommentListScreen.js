@@ -53,7 +53,6 @@ export default class CommentListScreen extends Component {
   getAgentCommentsProfileResponse = {
     success: (response) => {
       try {
-        console.log("Response data-->"+JSON.stringify(response))
         response.review && response.review.data && this.setState({data : response.review.data})          
       } catch (error) {
         console.log('getAgentCommentsProfileResponse catch error ' + JSON.stringify(error));

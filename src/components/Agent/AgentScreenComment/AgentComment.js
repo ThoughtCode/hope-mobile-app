@@ -50,10 +50,8 @@ export default class AgentComment extends Component {
     getAgentCommentsProfileResponse = {
         success: (response) => {
             try {
-                console.log("getAgentCommentsProfileResponse data-->"+JSON.stringify(response.review.data))
                 let review_avg = 0
                 response.review.data.map((val)=>{
-                   console.log("ITEM ---------------->", parseInt(val.attributes.qualification, 10))
                    review_avg += parseInt(val.attributes.qualification, 10)
                 })
                 review_avg = review_avg / response.review.data.length
@@ -132,7 +130,6 @@ export default class AgentComment extends Component {
     render(){
         var initials = globals.first_name.charAt(0) || ""
         initials += globals.last_name.charAt(0) || ""
-        console.log("COMENTARIOS ------------------>",this.state)
         return(
             <SafeAreaView style={styles.container}>
                  <KeyboardAvoidingView

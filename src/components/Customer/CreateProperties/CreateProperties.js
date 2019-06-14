@@ -293,7 +293,6 @@ export default class CreateProperties extends Component {
   }
 
   _onOpenActionSheetNeighborhood = () => {
-    console.log('VALIDACION ---->', this.state.cityName, this.state.cityName != null )
     if (this.state.cityName != ''){
       this.ActionSheetNeighborhood.show();
     } else {
@@ -320,7 +319,6 @@ export default class CreateProperties extends Component {
     var initials = this.state.userData.customer.data.attributes.first_name.charAt(0)
         initials += this.state.userData.customer.data.attributes.last_name.charAt(0) || ""
 
-    console.log(this.state.cityID, this.state.cityName, this.state.name)
     return(
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView style={{flex:1}} behavior="padding">    

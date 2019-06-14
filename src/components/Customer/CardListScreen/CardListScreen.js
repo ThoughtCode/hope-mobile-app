@@ -76,7 +76,6 @@ export default class CardListScreen extends Component {
 
   renderRow = (item) => {
     var data = item.item
-    console.log('Item -->', data)
     return (
       <TouchableOpacity onPress={() => this.selectCardTap(item.index)}>
         <View style={styles.childContainer}>

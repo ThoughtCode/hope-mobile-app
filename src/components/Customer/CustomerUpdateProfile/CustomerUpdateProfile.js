@@ -82,7 +82,6 @@ export default class CustomerUpdateProfile extends Component {
     updateUserResponse = {
         success: (response) => {
             try {
-                console.log("updateUserResponse data-->"+JSON.stringify(response))
                 AsyncStorage.setItem("customerData",JSON.stringify(response))
                 Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {
                     this.props.navigation.state.params.updatePhoto()
@@ -141,8 +140,6 @@ export default class CustomerUpdateProfile extends Component {
                     aspect: [4, 3],
                 });
             
-                console.log(result);
-            
                 if (!result.cancelled) {
                     this.setState({ profilePhoto: result.uri });
                 }
@@ -154,8 +151,6 @@ export default class CustomerUpdateProfile extends Component {
                 aspect: [4, 3],
                 mediaTypes : "Images"
               });
-          
-              console.log(result);
           
               if (!result.cancelled) {
                 this.setState({ profilePhoto: result.uri });
@@ -189,7 +184,6 @@ export default class CustomerUpdateProfile extends Component {
             "customer": profiePicture,
           }
       
-          console.log("Data-->"+JSON.stringify(data))
           ImageUpload.imageUpload(profiePicture,false)
     }
 
@@ -213,10 +207,9 @@ export default class CustomerUpdateProfile extends Component {
     //======================================================================
     
     render(){
-        if(this.state.userData != null) {
-            var initials = this.state.userData.customer.data.attributes.first_name.charAt(0)
-            initials += this.state.userData.customer.data.attributes.last_name.charAt(0) || ""
-        
+      if(this.state.userData != null) {
+        var initials = this.state.userData.customer.data.attributes.first_name.charAt(0)
+        initials += this.state.userData.customer.data.attributes.last_name.charAt(0) || ""
         return(
             <SafeAreaView style={styles.container}>
                 <KeyboardAvoidingView
@@ -345,8 +338,8 @@ export default class CustomerUpdateProfile extends Component {
                     />
             </SafeAreaView>
         )
-        }else{
-            return null
-        }
+      }else{
+          return null
+      }
     }
 }

@@ -56,7 +56,6 @@ export default class AgentJobDetailScreen extends Component {
   canReviewJobResponse = {
     success: (response) => {
       try {
-        console.log("canReviewJobResponse data-->"+JSON.stringify(response))
         this.setState({
             canReviewJob : response.can_review,
             isLoading:false
@@ -78,8 +77,6 @@ export default class AgentJobDetailScreen extends Component {
   canApplyJobResponse = {
     success: (response) => {
       try {
-        console.log("jobApplyResponse data-->"+JSON.stringify(response))
-          
         this.setState({isJobApply  : response.can_apply,isLoading:false})
       } catch (error) {
         console.log('jobApplyResponse catch error ' + JSON.stringify(error));
@@ -206,7 +203,6 @@ export default class AgentJobDetailScreen extends Component {
   jobApplyResponse = {
     success: (response) => {
       try {
-        console.log("jobApplyResponse data-->"+JSON.stringify(response))
         this.setState({isJobApply : true},() =>{
           this.props.navigation.state.params.setRow(this.state.index)
           Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => this.props.navigation.goBack()}])

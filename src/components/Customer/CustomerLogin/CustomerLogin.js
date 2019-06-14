@@ -60,7 +60,6 @@ export default class CustomerLogin extends React.Component {
       );
     } else {
       signinURL = urls.BASE_URL + urls.CUSTOMER_SIGNIN;
-      console.log(signinURL);
       fetch(signinURL, {
         method: 'POST',
         headers: {
@@ -92,7 +91,8 @@ export default class CustomerLogin extends React.Component {
             globals.password = this.state.password
             AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
               globals.access_token = data.customer.data.attributes.access_token ||""
-              globals.id = data.customer.data.id ||""
+              console.log(data.customer);
+              globals.id = data.customer.data.attributes.id || ""
               globals.first_name = data.customer.data.attributes.first_name || ""
               globals.last_name = data.customer.data.attributes.last_name || ""
               globals.email = data.customer.data.attributes.email || ""
@@ -193,14 +193,13 @@ loginWithFacebookResponse = {
         }
       })
     })
-      .then(response => {
-        if (response.status === 200) {
-          response.json().then(async data => {
-            console.log(data);
-          });
-        }
-      })
-      .catch(error => console.log('token not saved'));
+    .then(response => {
+      if (response.status === 200) {
+        response.json().then(async data => {
+        });
+      }
+    })
+    .catch(error => console.log('token not saved'));
   };
 
   render(){

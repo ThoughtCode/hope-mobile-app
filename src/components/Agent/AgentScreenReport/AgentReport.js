@@ -50,13 +50,6 @@ export default class AgentComment extends Component {
 
   btnFilterJobs = () =>{
 
-    // tomer los nuevos inputs
-
-    // guardar en unas variables los inputs
-
-    // setear correctamente abajo (NO TOMAR DEL ESTADO)
-
-    console.log("Estoy aca filtro --------------------------------------------------->", this.state.startDate, this.state.endDate)
     var url = "?"
     
     if(this.state.startDate != null){
@@ -79,7 +72,6 @@ export default class AgentComment extends Component {
     success: (response) => {
       try {
         if (response.job != undefined) {
-          console.log("getAgentReportProfileResponse data------------------------------>"+JSON.stringify(response.job))
           this.setState({
             reportList : response.job.data
           })

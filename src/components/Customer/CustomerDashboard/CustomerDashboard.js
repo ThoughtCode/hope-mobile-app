@@ -112,7 +112,6 @@ export default class CustomerDashboard extends Component {
           >
             {
               this.state.nextJobs.map((job) => {
-                //console.log(job);
                 const date = new Date(job.attributes.started_at), locale = "es-ES",
                   month = date.toLocaleString(locale, { month: "long" });
                 var end_date = Moment(month).format('l - hh:mm a')
