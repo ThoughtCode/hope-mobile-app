@@ -15,6 +15,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import * as urls from '../../../constants/api';
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
+import * as Facebook from 'expo-facebook';
+
 const styles = require('./CustomerLoginStyles');
 
 export default class CustomerLogin extends React.Component {
@@ -60,7 +62,6 @@ export default class CustomerLogin extends React.Component {
       );
     } else {
       signinURL = urls.BASE_URL + urls.CUSTOMER_SIGNIN;
-      console.log(signinURL);
       fetch(signinURL, {
         method: 'POST',
         headers: {
@@ -87,12 +88,11 @@ export default class CustomerLogin extends React.Component {
           return response;
         } else {
           response.json().then(async data => {
-            console.log(data.customer.data.attributes.access_token);
             await this._postMobilePushNotificationToken(data.customer.data.attributes.access_token);
             globals.password = this.state.password
             AsyncStorage.multiSet([["access_token",data.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(data)]],()=>{
               globals.access_token = data.customer.data.attributes.access_token ||""
-              globals.id = data.customer.data.id ||""
+              globals.id = data.customer.data.attributes.id || ""
               globals.first_name = data.customer.data.attributes.first_name || ""
               globals.last_name = data.customer.data.attributes.last_name || ""
               globals.email = data.customer.data.attributes.email || ""
@@ -130,16 +130,16 @@ loginWithFacebookResponse = {
   },
   error: (err) => {
     console.log('Loginwith facebook error ' + JSON.stringify(err));
-    this.setState({ errorMessage: error.message, spinner: false })
+    this.setState({ errorMessage: err, spinner: false })
   },
-  complete: () => {
-    this.setState({ errorMessage: error.message, spinner: false })
+  complete: (err) => {
+    this.setState({ errorMessage: err, spinner: false })
   }
 }
 
   facebookLogin = async() =>{
 
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('2057031764572769', {
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync('2057031764572769', {
       permissions: ['public_profile', 'email', 'user_friends'],
     });
     if (type === 'success') {
@@ -155,6 +155,7 @@ loginWithFacebookResponse = {
             "facebook_access_token": token
           }
         }
+        console.log('\n\n\n\nData:', data, '\n\n\n\n\n');
         API.loginWithFacebook(this.loginWithFacebookResponse,data,true);
   }
 }
@@ -193,14 +194,13 @@ loginWithFacebookResponse = {
         }
       })
     })
-      .then(response => {
-        if (response.status === 200) {
-          response.json().then(async data => {
-            console.log(data);
-          });
-        }
-      })
-      .catch(error => console.log('token not saved'));
+    .then(response => {
+      if (response.status === 200) {
+        response.json().then(async data => {
+        });
+      }
+    })
+    .catch(error => console.log('token not saved'));
   };
 
   render(){

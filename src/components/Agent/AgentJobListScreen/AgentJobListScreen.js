@@ -148,7 +148,6 @@ export default class AgentJobListScreen extends Component {
           isAPICall : false,
           isPagination : false
         })
-        console.log('getJobResponseData catch error ' + JSON.stringify(error));
       }
     },
     error: (err) => {

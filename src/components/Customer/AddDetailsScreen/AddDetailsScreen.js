@@ -38,7 +38,6 @@ export default class AddCardScreen extends Component {
     success: (response) => {
       try {
         Alert.alert("NOC NOC",response.message)
-        console.log("Response data-->" + JSON.stringify(response))
       } catch (error) {
         console.log('getJobResponseData catch error ' + JSON.stringify(error));
       }

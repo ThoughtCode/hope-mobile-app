@@ -76,7 +76,6 @@ export default class AgentComment extends Component {
           dataList : response.job.data
         })
       } catch (error) {
-        console.log('getJobResponseData catch error ' + JSON.stringify(error));
         this.setState({isOnRefresh : false,isAPICall : false,})
       }
     },

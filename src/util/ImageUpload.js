@@ -27,7 +27,6 @@ class ImageUpload{
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log("Register Profile pic Response-->"+JSON.stringify(responseJson));
       // AsyncStorage.multiSet([["access_token",response.agent.data.attributes.access_token || ""],
       if(isAgent){
         AsyncStorage.setItem('avatar', responseJson.agent.data.attributes.avatar.url || "").then(()=>{

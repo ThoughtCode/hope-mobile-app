@@ -75,7 +75,6 @@ export default class CustomerUpdatePassword extends Component {
     updatePasswordResponse = {
         success: (response) => {
             try {
-                // console.log("jobApplyResponse data-->"+JSON.stringify(response))
                 Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {
                     AsyncStorage.clear().then(()=>{
                         this.props.navigation.navigate("CustomerLogin")

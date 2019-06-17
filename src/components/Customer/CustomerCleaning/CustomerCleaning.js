@@ -55,7 +55,6 @@ export default class CustomerCleaning extends Component {
     }
 
     if(this.props.navigation.state.params.is_second_load == true){
-      console.log("holiday dates", this.state.holidayDates)
       let newDetailsData = null
       let newJobData = null
       let newCardData = null
@@ -104,7 +103,6 @@ export default class CustomerCleaning extends Component {
 
   getHolidayResponse = {
     success: (response) => {
-      console.log('PRIMERA LLAMADA', response)
       this.setState({
         holidayDates: response.holiday.data,
       })
@@ -115,7 +113,6 @@ export default class CustomerCleaning extends Component {
   }
 
   checkIsHoliday = (date) => {
-    console.log('ESTA ES LA FECHA')
     let check_holiday = false
     this.state.holidayDates.map(item =>{
       console.log(item.attributes.holiday_date, date.format("YYYY-MM-DD"), "DIA", date.isoWeekday() )
@@ -152,7 +149,6 @@ export default class CustomerCleaning extends Component {
 
   setDate = (date, is_start, is_holiday, selectedDateCalenderPick) => {
     var isHoliday = this.checkIsHoliday(date);
-    console.log('SHOULD BE HOLIDAY? --->', isHoliday)
     total = this.calculate_total_job_after_date(is_holiday)
     if (is_start == true){
       this.setState({
@@ -363,8 +359,6 @@ export default class CustomerCleaning extends Component {
   //======================================================================
 
   render() {
-    console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',this.state.isHoliday,'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
-    
     let direction_data = this.state.directionData
     return (
       <SafeAreaView style={styles.container}>

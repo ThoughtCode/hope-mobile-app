@@ -81,7 +81,6 @@ export default class AgentSignUp extends Component {
       });
       return valid;
     }
-    console.log(this.state.national_id.length)
     if (this.state.national_id.length !== 10) {
       valid = false;
       Alert.alert('Error de validación', 'El número de cédula debe tener 10 caracteres', [{ text: 'OK' }], {
@@ -102,7 +101,6 @@ export default class AgentSignUp extends Component {
   signUpAgent = () => {
     if (this.validateFields()) {
       signup_url = urls.BASE_URL + urls.AGENT_SIGNUP_URI;
-      console.log('Registration url', signup_url);
       var data = {
         agent: {
           first_name: this.state.firstname,
@@ -114,7 +112,6 @@ export default class AgentSignUp extends Component {
           cell_phone: this.state.cell_phone
         }
       };
-      console.log('Registration body', JSON.stringify(data));
       fetch(signup_url, {
         method: 'POST',
         headers: {
@@ -135,7 +132,6 @@ export default class AgentSignUp extends Component {
       })
         .then(response => {
           if (response.status === 200) {
-            console.log('Registration response', response);
             response.json().then(async data => {
               await this._postMobilePushNotificationToken(data.agent.data.attributes.access_token);
               AsyncStorage.multiSet(
@@ -186,7 +182,6 @@ export default class AgentSignUp extends Component {
   _postMobilePushNotificationToken = async authToken => {
     setMobileTokenUrl = urls.STAGING_URL + urls.SET_AGENT_MOBILE_TOKEN;
     let push_notification = await this._getStorageValue('PushNotificationToken');
-    console.log('PushNotificationToken:' + push_notification);
     fetch(setMobileTokenUrl, {
       method: 'POST',
       headers: {

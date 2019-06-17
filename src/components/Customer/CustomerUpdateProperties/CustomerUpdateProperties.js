@@ -47,7 +47,6 @@ export default class CustomerUpdateProperties extends Component {
   propertiesResponse = {
     success: (response) => {
       try {
-        console.log("updateUserResponse data-->"+JSON.stringify(response))
         response.property && response.property.data && this.setState({data : response.property.data})
       } catch (error) {
         console.log('jobApplyResponse catch error ' + JSON.stringify(error));

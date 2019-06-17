@@ -70,7 +70,6 @@ export default class Payment extends React.Component {
   }
   onPressHandle = () =>{
     
-    // console.log(this.state.startedAt, Moment.utc(new Date()).subtract(5, 'h'), (this.state.startedAt > Moment.utc(new Date()).subtract(5, 'h')));
     if(this.state.optionSelecct == ""){
       Alert.alert(
         'Alerta',
@@ -158,14 +157,12 @@ export default class Payment extends React.Component {
         this.setState({spinner: false});
       } catch (error) {
         Alert.alert(error);  
-        console.log('getJobResponseData catch error ' + JSON.stringify(error));
         this.setState({spinner: false});
       }
       
     },
     error: (err) => {
       Alert.alert(err);  
-      console.log('getJobResponseData error ' + JSON.stringify(err));
       this.setState({spinner: false});
     }
   }

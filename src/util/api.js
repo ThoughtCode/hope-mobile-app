@@ -179,7 +179,6 @@ async function request(onResponse, data, type, returnType, isHeaderRequired, fea
     try {
         if (type === 'GET') {
             if (isHeaderRequired) {
-                console.log("Request Call get with Header");
                 response = await fetch(featureURL, {
                     method: type,
                     headers: secureRequest
@@ -210,16 +209,7 @@ async function request(onResponse, data, type, returnType, isHeaderRequired, fea
         } else {
             onResponse.error(responseJSON);
         }
-        // if (onResponse.complete) {
-        //     console.log("onResponse complete");
-        //     onResponse.complete();
-        // }
     } catch (error) {
-        console.log("ESTAMOS EN ERROR =================>>>>>>>>>>>>>",error)
         onResponse.error(responseJSON);
-        // if (onResponse.complete) {
-        //     console.log("onResponse catch complete");
-        //     onResponse.complete();
-        // }
     }
 }

@@ -32,9 +32,7 @@ export default class AgentReviewScreen extends Component {
     // componentDidMount
     //======================================================================
 
-    componentDidMount(){
-        console.log("Jobdata")
-    }
+    componentDidMount(){}
 
     //======================================================================
     // tapJobReviewTap
@@ -49,7 +47,6 @@ export default class AgentReviewScreen extends Component {
                 },
                 "job_id" : this.state.jobData.customer.hashed_id
             }
-            console.log("Data-->",data)
             API.setReview(this.reviewJobResponse,data,this.props.navigation.state.params.jobData.id,true);
         }else{
             Alert.alert("NOC NOC","Por favor ingrese un comentario")
@@ -64,8 +61,6 @@ export default class AgentReviewScreen extends Component {
     reviewJobResponse = {
         success: (response) => {
             try {
-                console.log("reviewJobResponse data-->"+JSON.stringify(response))
-                
                 // this.setState({isJobReview : response.can_review,isLoading:false})
                 Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => this.props.navigation.navigate("AgentTrabajosDashboard")}])
                 

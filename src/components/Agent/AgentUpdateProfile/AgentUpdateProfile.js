@@ -6,7 +6,8 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
 import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
-import { ImagePicker, Camera, Permissions  } from 'expo';
+import { ImagePicker, Camera } from 'expo';
+import * as Permissions from 'expo-permissions';
 import ImageUpload from '../../../util/ImageUpload';
 import ActionSheet from 'react-native-actionsheet'
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -63,7 +64,6 @@ export default class AgentProfile extends Component {
         if(this.state.profilePhoto != null){
             this.uploadPhoto()
         }
-        console.log(data)
         API.updateUser(this.updateUserResponse,data,true);
     }
 
@@ -74,9 +74,6 @@ export default class AgentProfile extends Component {
     updateUserResponse = {
         success: (response) => {
             try {
-                
-                console.log("updateUserResponse data-->"+JSON.stringify(response))
-                console.log("Aqui ------------->",response.agent.data.attributes)
                 Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {
                     this.props.navigation.state.params.updatePhoto()
                     AsyncStorage.multiSet([["access_token",response.agent.data.attributes.access_token || ""],
@@ -135,8 +132,6 @@ export default class AgentProfile extends Component {
                     aspect: [4, 3],
                 });
             
-                console.log(result);
-            
                 if (!result.cancelled) {
                     this.setState({ profilePhoto: result.uri });
                 }
@@ -148,8 +143,6 @@ export default class AgentProfile extends Component {
                 aspect: [4, 3],
                 mediaTypes : "Images"
               });
-          
-              console.log(result);
           
               if (!result.cancelled) {
                 this.setState({ profilePhoto: result.uri });
@@ -182,8 +175,6 @@ export default class AgentProfile extends Component {
           var data = {
             "avatar": profiePicture,
           }
-      
-          console.log("Data-->"+JSON.stringify(data))
           ImageUpload.imageUpload(profiePicture,true)
     }
 
@@ -209,7 +200,6 @@ export default class AgentProfile extends Component {
     render(){
         var initials = globals.first_name.charAt(0) || "" 
         initials += globals.last_name.charAt(0) || ""
-        console.log(globals)
         return(
             <SafeAreaView style={styles.container}>
                 <KeyboardAvoidingView

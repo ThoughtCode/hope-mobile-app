@@ -1,4 +1,5 @@
-import { Permissions, Notifications } from 'expo';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 import {
   AsyncStorage
 } from 'react-native';
@@ -26,7 +27,6 @@ export default registerForNotifications = async () => {
   // Get the token that uniquely identifies this device
   try {
     let token = await Notifications.getExpoPushTokenAsync();
-    console.log("token = ", token);
     await AsyncStorage.setItem('PushNotificationToken', token);
   } catch (err) {
     console.log(err);

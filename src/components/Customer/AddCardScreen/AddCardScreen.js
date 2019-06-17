@@ -18,6 +18,7 @@ export default class AddCardScreen extends React.Component {
     }
   }
   render() {
+    const url = `https://hopeec-production.herokuapp.com/add_credit_card?email=${globals.email}&id=${globals.id}`;
     return (
       <View style={{flex: 1}}>
         <View>
@@ -29,7 +30,7 @@ export default class AddCardScreen extends React.Component {
         <WebView
           javaScriptEnabled={true}
           domStorageEnabled={true}
-          source={{ uri: `https://hopeec-production.herokuapp.com/add_credit_card?email=${this.state.email}&id=${this.state.id}`}}
+          source={{ uri: url}}
         />
         <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{jobActualState:this.props.navigation.state.params.jobActualState})} style={styles.back_button}>

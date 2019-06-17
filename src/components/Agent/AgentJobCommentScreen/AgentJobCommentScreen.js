@@ -32,7 +32,6 @@ export default class AgentJobCommentScreen extends Component {
     //======================================================================
 
     componentDidMount(){
-        console.log("Response data-->"+JSON.stringify(this.state.jobData.customer.hashed_id))
         API.getJobsComments(this.getJobCommentsResponseData,this.state.jobData.customer.hashed_id,true);
     }
 
@@ -43,7 +42,6 @@ export default class AgentJobCommentScreen extends Component {
     getJobCommentsResponseData = {
         success: (response) => {
             try {
-                console.log("Response data-->"+JSON.stringify(response.review.data))
                 this.setState({
                     jobCommentList : response.review.data
                 })
