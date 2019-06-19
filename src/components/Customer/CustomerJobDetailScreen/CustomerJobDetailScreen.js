@@ -204,7 +204,41 @@ export default class CustomerJobDetailScreen extends Component {
                 <Text style={[styles.titleText,{color:'#fff'}]}>{"Contratar Agente"}</Text>
               </View>
             </TouchableOpacity>
-          </View> : <View><Text></Text></View> : <View><Text>Trabajo completado</Text></View>}
+          </View>
+          :
+          <View>
+            <View style={{flexDirection:'row',alignItems:'center'}}>
+              <View style={styles.userImageView} >
+                {(data.attributes.agent.data.attributes.avatar.url != null)?
+                  <Image source={{uri : data.attributes.agent.data.attributes.avatar.url || ""}} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> 
+                :
+                <Image source={require("../../../../assets/img/profile_placehoder.png")} style={styles.userImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/>}
+              </View>
+              <View style={{flex:1}}>
+                <Text onPress={() => this.props.navigation.navigate("CustomerAgentReviewScreen",{isHired : false,jobData : data, review : data.attributes.agent.data.attributes.rewiews_average, statusJob : this.state.jobData.status })} style={styles.titleText}>{data.attributes.agent.data.attributes.first_name + " "+ data.attributes.agent.data.attributes.last_name}</Text>
+              </View>
+              <StarRating
+                disabled={true}
+                emptyStar={'ios-star-outline'}
+                fullStar={'ios-star'}
+                halfStar={'ios-star-half'}
+                iconSet={'Ionicons'}
+                maxStars={5}
+                rating={data.attributes.agent.data.attributes.rewiews_average}
+                starSize={18}
+                fullStarColor={'#ffd700'}/>
+            </View>
+            <View style={{flexDirection:'row',justifyContent:'space-between',marginLeft:40}}>
+              <Text style={{color:'gray'}}>{data.attributes.agent.data.attributes.rewiews_count+" Trabajos Completados"}</Text>
+              <Text style={{color:'gray'}}>{data.attributes.agent.data.attributes.rewiews_count+" Opiniones"}</Text>
+            </View>
+            <TouchableOpacity onPress={() => this.agentContract(data.id)} >
+              <View style={{backgroundColor:'#1e67a9',marginHorizontal:10,alignItems:'center',justifyContent:'center',paddingVertical:7,marginTop:10}}>
+                <Text style={[styles.titleText,{color:'#fff'}]}>{"Contratar Agente"}</Text>
+              </View>
+            </TouchableOpacity>
+          </View> 
+          : <View><Text>Trabajo completado</Text></View>}
       </View>
     )
   }
