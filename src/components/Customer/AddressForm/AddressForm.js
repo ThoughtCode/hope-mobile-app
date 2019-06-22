@@ -4,7 +4,8 @@ import styles from './AddressFormStyle';
 import { API } from '../../../util/api';
 import * as globals from '../../../util/globals';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import ActionSheet from 'react-native-actionsheet'
+import ActionSheet from 'react-native-actionsheet';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const IMAGES = {TOP_BACKGROUND : require("../../../../assets/img/topbg.png")}
 var is_form_validated = false;
@@ -35,7 +36,8 @@ export default class AddressForm extends React.Component {
       directionData: null,
       jobCurrentState: this.props.navigation.state.params.jobActualState,
       cityNameOption: [],
-      neightborhoodNameOption: []
+      neightborhoodNameOption: [],
+      spinner:false
     }
   }
 
@@ -178,7 +180,11 @@ export default class AddressForm extends React.Component {
       }
     }
     if(!this.state.isUpdate || is_form_validated == true){
-      API.createProperties(this.createPropertiesResponse,data,true);
+      if(this.state.spinner == false){
+        this.setState({ spinner: true }, () => {
+          API.createProperties(this.createPropertiesResponse,data,true);
+        })
+      }
     }else{
       this.state.propertyData && this.state.propertyData.id && API.updateProperties(this.createPropertiesResponse,data,true,this.state.propertyData.id);
     }
@@ -200,12 +206,15 @@ export default class AddressForm extends React.Component {
         this.props.navigation.state.params.refresProperties()
         let jobCurrentStateSend = this.props.navigation.state.params.jobActualState
         Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {this.props.navigation.navigate("DirectionScreen",{setDirection : this.setDirection, jobActualState : jobCurrentStateSend})}}])
+        this.setState({spinner: false});
       } catch (error) {
         Alert.alert("NOC NOC",error.message)
+        this.setState({spinner: false});
       }
     },
     error: (err) => {
       console.log('create properties error ' + JSON.stringify(err));
+      this.setState({spinner: false});
     }
   }
 
@@ -282,6 +291,7 @@ export default class AddressForm extends React.Component {
       return (
         <SafeAreaView style={styles.container}>
           <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+            <Spinner visible={this.state.spinner} />
             <ScrollView style={{ flex: 1 }} bounces={false}>
               <View>
                 <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
