@@ -3,7 +3,8 @@ import {Text,TouchableOpacity,View,ScrollView,Image,SafeAreaView,Alert,TextInput
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as globals from '../../../util/globals';
 import { API } from '../../../util/api';
-import ActionSheet from 'react-native-actionsheet'
+import ActionSheet from 'react-native-actionsheet';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const styles = require('./CreatePropertiesStyles');
 const IMAGES = {TOP_BACKGROUND : require("../../../../assets/img/topbg.png")}
@@ -39,6 +40,7 @@ export default class CreateProperties extends Component {
       cityNameOption: [],
       neightborhoodNameOption: [],
       idEdit: 0,
+      spinner:false,
     }
     if(this.props.navigation.state.params.is_edit == true){
       API.getNeightborhoods(this.getneightborhoodResponse,this.props.navigation.state.params.data.attributes.city_id,true);
@@ -199,10 +201,18 @@ export default class CreateProperties extends Component {
         }
       }
       if(checked == "saveReady"){
-        API.createProperties(this.createResponse,data,true);
+        if(this.state.spinner == false){
+          this.setState({ spinner: true }, () => {
+            API.createProperties(this.createResponse,data,true);
+          })
+        }        
       }else if(checked == "editReady"){
         let idEdit = this.state.idEdit
-        API.setEditProperty(this.setEditPropertyResponseData, data, idEdit, true);
+        if(this.state.spinner == false){
+          this.setState({ spinner: true }, () => {
+            API.setEditProperty(this.setEditPropertyResponseData, data, idEdit, true);
+          })
+        }
       }
     }else{
       console.log("No pasa nada -------- No pasa nada --------")
@@ -216,7 +226,9 @@ export default class CreateProperties extends Component {
           {text: 'OK', onPress: () => this.props.navigation.navigate("CustomerUpdateProperties")},
         ],
         { cancelable: false })
+        this.setState({spinner: false});
       } catch (error) {
+        this.setState({spinner: false});
         console.log('getBillingResponseData catch error ' + JSON.stringify(error));
       }
     },
@@ -234,8 +246,10 @@ export default class CreateProperties extends Component {
       try {
         this.props.navigation.state.params.refresProperties()
         Alert.alert("NOC NOC",response.message,[{text: 'OK', onPress: () => {this.props.navigation.goBack()}}])
+        this.setState({spinner: false})
       } catch (error) {
         Alert.alert("NOC NOC",error.message)
+        this.setState({spinner: false})
       }
     },
     error: (err) => {
@@ -321,7 +335,8 @@ export default class CreateProperties extends Component {
 
     return(
       <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView style={{flex:1}} behavior="padding">    
+        <KeyboardAvoidingView style={{flex:1}} behavior="padding">
+          <Spinner visible={this.state.spinner} />
           <ScrollView style={{flex:1}} bounces={false}>
             <View>
                   <Ionicons name={"ios-arrow-back"} size={40} style={styles.backButtonImage} onPress={() => this.props.navigation.goBack()} />
