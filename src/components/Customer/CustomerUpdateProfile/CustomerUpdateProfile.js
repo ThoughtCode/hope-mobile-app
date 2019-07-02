@@ -130,34 +130,29 @@ export default class CustomerUpdateProfile extends Component {
     //======================================================================
 
     selectedPhoto = async (index) => {
-
-        if(index == 0){
-            const { status_camera } = await Permissions.askAsync(Permissions.CAMERA);
-            const { status_cameraRoll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-        // this.setState({ hasCameraPermission: status === 'granted' });
-            // if(status_camera === 'granted' || status_cameraRoll === 'granted'){
-                let result = await ImagePicker.launchCameraAsync({
-                    allowsEditing: true,
-                    aspect: [4, 3],
-                });
-            
-                if (!result.cancelled) {
-                    this.setState({ profilePhoto: result.uri });
-                }
-            // }
-            
-        }else{
-            let result = await ImagePicker.launchImageLibraryAsync({
-                allowsEditing: true,
-                aspect: [4, 3],
-                mediaTypes : "Images"
-              });
-          
-              if (!result.cancelled) {
-                this.setState({ profilePhoto: result.uri });
-            }
+      if(index == 0){
+        const { status_camera } = await Permissions.askAsync(Permissions.CAMERA);
+        const { status_cameraRoll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        this.setState({ hasCameraPermission: status_camera !== 'granted' });
+        if(status_camera === 'granted' || status_cameraRoll !== 'granted'){
+          let result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+          });
+          if (!result.cancelled) {
+            this.setState({ profilePhoto: result.uri });
+          }
         }
-        
+      }else{
+        let result = await ImagePicker.launchImageLibraryAsync({
+          allowsEditing: true,
+          aspect: [4, 3],
+          mediaTypes : "Images"
+        });
+        if (!result.cancelled) {
+          this.setState({ profilePhoto: result.uri });
+        }
+      }
     }
 
     //======================================================================
@@ -165,8 +160,8 @@ export default class CustomerUpdateProfile extends Component {
     //======================================================================
 
     cameraPhoto = async () => {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA);
-        this.setState({ hasCameraPermission: status === 'granted' });
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      this.setState({ hasCameraPermission: status === 'granted' });
     }
 
     //======================================================================
@@ -223,22 +218,23 @@ export default class CustomerUpdateProfile extends Component {
                                 
                                     
                             <View style={styles.profileView}>
-                                    {(this.state.avatar != "")?
-                                        <TouchableOpacity onPress={this._onOpenActionSheet}>
-                                            {(this.state.profilePhoto != null) ? <Image source={{uri : this.state.profilePhoto}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/camera.png")}/> 
-                                            :
-                                            <Image source={{uri : this.state.avatar}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> }
-                                        </TouchableOpacity>
-                                        :
-                                        <TouchableOpacity onPress={this._onOpenActionSheet}>
-                                            {(this.state.profilePhoto != null) ? <Image source={{uri : this.state.profilePhoto}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/camera.png")}/>
-                                            : 
-                                            <View style={[styles.profileImage, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center' }]} >
-                                                <Text style={{ color: '#fff' }}>{initials}</Text>
-                                            </View>
-                                            }
-                                    </TouchableOpacity>}
-                                </View>
+                              {(this.state.avatar != "")?
+                                <TouchableOpacity onPress={this._onOpenActionSheet}>
+                                  {(this.state.profilePhoto != null) ? <Image source={{uri : this.state.profilePhoto}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/camera.png")}/> 
+                                  :
+                                  <Image source={{uri : this.state.avatar}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/profile_placehoder.png")}/> }
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity onPress={this._onOpenActionSheet}>
+                                  {(this.state.profilePhoto != null) ? <Image source={{uri : this.state.profilePhoto}} style={styles.profileImage} resizeMode={"cover"} defaultSource={require("../../../../assets/img/camera.png")}/>
+                                  : 
+                                  <View style={[styles.profileImage, { backgroundColor: 'gray', alignItems: 'center', justifyContent: 'center' }]} >
+                                    <Text style={{ color: '#fff' }}>{initials}</Text>
+                                  </View>
+                                  }
+                                </TouchableOpacity>
+                              }
+                            </View>
                                     
                                 
                                 
@@ -331,12 +327,12 @@ export default class CustomerUpdateProfile extends Component {
                         </TouchableOpacity>
                 </KeyboardAvoidingView>            
                 <ActionSheet
-                    ref={o => this.ActionSheet = o}
-                    title={'Seleccionar imagen'}
-                    options={['Tomar foto', 'Elige de la galería', 'Cancelar']}
-                    cancelButtonIndex={2}
-                    onPress={(index) => { this.selectedPhoto(index) }}
-                    />
+                  ref={o => this.ActionSheet = o}
+                  title={'Seleccionar imagen'}
+                  options={['Tomar foto', 'Elige de la galería', 'Cancelar']}
+                  cancelButtonIndex={2}
+                  onPress={(index) => { this.selectedPhoto(index) }}
+                />
             </SafeAreaView>
         )
       }else{
