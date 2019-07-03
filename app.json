@@ -4,7 +4,7 @@
     "slug": "noc-noc",
     "privacy": "public",
     "sdkVersion": "33.0.0",
-    "version": "2.0.1",
+    "version": "2.1.0",
     "platforms": [
       "ios",
       "android",
@@ -20,11 +20,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.nocnoc.app",
-      "buildNumber": "2.0"
+      "bundleIdentifier": "com.nocnoc.app"
     },
     "android": {
-      "versionCode": 9,
+      "versionCode": 10,
       "package": "com.nocnoc.app",
       "permissions": [
         "ACCESS_FINE_LOCATION",
