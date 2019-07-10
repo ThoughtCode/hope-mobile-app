@@ -115,6 +115,7 @@ loginWithFacebookResponse = {
       await this._postMobilePushNotificationToken(response.customer.data.attributes.access_token);
       AsyncStorage.multiSet([["access_token", response.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(response)]],()=>{
         globals.access_token = response.customer.data.attributes.access_token ||""
+        globals.id = response.customer.data.attributes.id
         globals.first_name = response.customer.data.attributes.first_name || ""
         globals.last_name = response.customer.data.attributes.last_name || ""
         globals.email = response.customer.data.attributes.email || ""
