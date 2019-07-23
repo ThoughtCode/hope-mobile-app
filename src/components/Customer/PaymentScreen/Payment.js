@@ -153,17 +153,17 @@ export default class Payment extends React.Component {
   createJobResponse = {
     success: (response) => {
       try {
+        this.setState({spinner: false});
         Alert.alert('Trabajo creado',response.message,[{text:'OK', onPress: () => this.props.navigation.navigate("CustomerDashboard")}],{cancelable:false});
-        this.setState({spinner: false});
       } catch (error) {
-        Alert.alert(error);  
         this.setState({spinner: false});
+        Alert.alert(error);  
       }
       
     },
     error: (err) => {
-      Alert.alert(err);  
       this.setState({spinner: false});
+      Alert.alert(err);  
     }
   }
   _onOpenActionSheet = () => {
@@ -281,7 +281,7 @@ export default class Payment extends React.Component {
           </View>
           <View style={{ flexDirection: 'row', margin: 5 }}>
             <Text style={{ flex: 0.4,fontSize: 16, fontFamily: "helvetica" }}>
-              Horas de limpieza
+              Horas del servicio
             </Text>
             <Text style={{ flex: 0.6, fontSize: 16,fontFamily: "helvetica", color: '#288fe2' }}>
               {this._calculateHours()} horas
