@@ -88,16 +88,16 @@ export default class Payment extends React.Component {
         ],
         { cancelable: false }
       );
-    } else if (this.state.startedAt < Moment.utc(new Date()).subtract(5, 'h')){
+    } else if (this.state.startedAt < Moment.utc(new Date()).subtract('h')){
       Alert.alert(
         'Alerta',
         'La fecha de inicio debe ser mayor a la fecha del trabajo',
         [
           { text: 'OK', onPress: () => this.props.navigation.goBack()}
         ],
-
         { cancelable: false }
-    )} else {
+      );
+    } else {
       let frequencyDataCall = 0
       let optionSelecctInstallments = 0
       let additionalServiceData = []
@@ -141,7 +141,6 @@ export default class Payment extends React.Component {
           "source": 1
         }
       }
-      // this.setState({spinner: true});
 
       if(this.state.spinner == false){
         this.setState({ spinner: true }, () => {
@@ -153,16 +152,13 @@ export default class Payment extends React.Component {
   createJobResponse = {
     success: (response) => {
       try {
-        this.setState({spinner: false});
-        Alert.alert('Trabajo creado',response.message,[{text:'OK', onPress: () => this.props.navigation.navigate("CustomerDashboard")}],{cancelable:false});
+        Alert.alert('Trabajo creado',response.message,[{text:'OK', onPress: () => this.props.navigation.navigate("CustomerDashboard") [this.setState({spinner: false})] }], {cancelable:false});
       } catch (error) {
-        this.setState({spinner: false});
         Alert.alert(error);  
       }
       
     },
     error: (err) => {
-      this.setState({spinner: false});
       Alert.alert(err);  
     }
   }
