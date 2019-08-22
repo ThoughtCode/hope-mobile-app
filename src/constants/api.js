@@ -1,9 +1,9 @@
 // Production
-export const BASE_URL = "https://hopeec-production.herokuapp.com";
-export const STAGING_URL = "https://hopeec-production.herokuapp.com";
+// export const BASE_URL = "https://hopeec-production.herokuapp.com";
+// export const STAGING_URL = "https://hopeec-production.herokuapp.com";
 // Staging
-// export const BASE_URL = "https://hopeec-staging.herokuapp.com/";
-// export const STAGING_URL = "https://hopeec-staging.herokuapp.com/";
+export const BASE_URL = "https://hopeec-staging.herokuapp.com/";
+export const STAGING_URL = "https://hopeec-staging.herokuapp.com/";
 
 // export const BASE_URL = "http://706e28a3.ngrok.io";
 // export const STAGING_URL = "http://706e28a3.ngrok.io";
