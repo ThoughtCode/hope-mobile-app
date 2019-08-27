@@ -131,10 +131,14 @@ export default class CustomerUpdateProfile extends Component {
 
     selectedPhoto = async (index) => {
       if(index == 0){
-        const { status_camera } = await Permissions.askAsync(Permissions.CAMERA);
-        const { status_cameraRoll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-        this.setState({ hasCameraPermission: status_camera !== 'granted' });
-        if(status_camera === 'granted' || status_cameraRoll !== 'granted'){
+        const { status, expires, permissions } = await Permissions.askAsync(
+          Permissions.CAMERA,
+          Permissions.CAMERA_ROLL
+        );
+        // const { status_camera } = await Permissions.askAsync(Permissions.CAMERA);
+        // const { status_cameraRoll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        this.setState({ hasCameraPermission: permissions.camera.status !== 'granted' });
+        if(permissions.camera.status === 'granted' || permissions.cameraRoll.status !== 'granted'){
           let result = await ImagePicker.launchCameraAsync({
             allowsEditing: true,
             aspect: [4, 3],
