@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image,ScrollView,Text,TouchableOpacity,View,AsyncStorage,Linking} from 'react-native';
+import {Image,ScrollView,Text,TouchableOpacity,View,AsyncStorage,Linking,Alert} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as globals from '../../../util/globals';
 import * as urls from '../../../constants/api';
@@ -30,19 +30,25 @@ export default class CustomerProfile extends Component {
   }
 
   signOutCustomer = (authToken) => {
-    signoutURL = urls.BASE_URL + urls.CUSTOMER_SIGNOUT;
-    fetch(signoutURL, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${authToken}`
-      },
-    }).then((response) => {
-      if (response.status === 200) {
-        this.props.navigation.navigate('CustomerLogin');
-      }
-    }).catch((error) => this.setState({errorMessage: error.message}));
+    Alert.alert(globals.APP_NAME,"¿Seguro que quieres desconectarte?",[
+      {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      {text: 'Si', onPress: () => {
+        signoutURL = urls.BASE_URL + urls.CUSTOMER_SIGNOUT;
+        fetch(signoutURL, {
+          method: 'DELETE',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${authToken}`
+          },
+        }).then((response) => {
+          if (response.status === 200) {
+            this.props.navigation.navigate('Home');
+          }
+        }).catch((error) => this.setState({errorMessage: error.message}));
+      }},
+    ],
+    { cancelable: false })
   };
 
   _renderHeader(section) {

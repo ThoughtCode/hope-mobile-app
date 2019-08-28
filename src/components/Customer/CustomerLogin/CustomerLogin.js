@@ -138,26 +138,20 @@ loginWithFacebookResponse = {
   }
 }
 
-  facebookLogin = async() =>{
-
-    const { type, token } = await Facebook.logInWithReadPermissionsAsync('2057031764572769', {
-      permissions: ['public_profile', 'email', 'user_friends'],
-    });
-    if (type === 'success') {
-      // Get the user's name using Facebook's Graph API
-
-
-      const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`);
-
-        this.setState({ spinner: true });
-        let data = {
-          "customer": {
-            "facebook_access_token": token
-          }
-        }
-        console.log('\n\n\n\nData:', data, '\n\n\n\n\n');
-        API.loginWithFacebook(this.loginWithFacebookResponse,data,true);
+facebookLogin = async() =>{
+  const { type, token } = await Facebook.logInWithReadPermissionsAsync('2057031764572769', {
+    permissions: ['public_profile', 'email', 'user_friends'],
+  });
+  if (type === 'success') {
+    const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+    this.setState({ spinner: true });
+    let data = {
+      "customer": {
+        "facebook_access_token": token
+      }
+    }
+    console.log('\n\n\n\nData:', data, '\n\n\n\n\n');
+    API.loginWithFacebook(this.loginWithFacebookResponse,data,true);
   }
 }
 

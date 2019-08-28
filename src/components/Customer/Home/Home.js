@@ -29,15 +29,15 @@ export default class Home extends Component {
 
   renderPage(image, index) {
     return (
-        <View key={index}>
-            <Image style={{ width: BannerWidth, height: BannerHeight }} source={ image.src } />
-            <Text style={styles.carousel_description}>
-              {image.description}
-              {'\n'}
-              {'\n'}
-              <Text style={styles.carousel_subtitle}> {image.subtitle} </Text>
-            </Text>
-        </View>
+      <View key={index}>
+        <Image style={{ width: BannerWidth, height: BannerHeight }} source={ image.src } />
+        <Text style={styles.carousel_description}>
+          {image.description}
+          {'\n'}
+          {'\n'}
+          <Text style={styles.carousel_subtitle}> {image.subtitle} </Text>
+        </Text>
+      </View>
     );
   }
 

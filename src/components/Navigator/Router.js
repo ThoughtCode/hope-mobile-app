@@ -35,4 +35,3 @@ export const AgentNavigator = SwitchNavigator({
 },{
   initialRouteName :"AgentTabar"
 });
-
