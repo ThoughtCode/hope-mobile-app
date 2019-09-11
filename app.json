@@ -4,7 +4,7 @@
     "slug": "noc-noc",
     "privacy": "public",
     "sdkVersion": "33.0.0",
-    "version": "2.1.5",
+    "version": "2.1.6",
     "platforms": [
       "ios",
       "android",
@@ -26,7 +26,7 @@
       "es": "./languages/es.json"
     },
     "android": {
-      "versionCode": 15,
+      "versionCode": 16,
       "package": "com.nocnoc.app",
       "permissions": [
         "ACCESS_FINE_LOCATION",
