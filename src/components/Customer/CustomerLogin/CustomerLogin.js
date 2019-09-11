@@ -106,71 +106,52 @@ export default class CustomerLogin extends React.Component {
         }
       })
       .catch(error => console.log('token not saved'));
-  };
-}
-
-loginWithFacebookResponse = {
-  success: async (response) => {
-    try {
-      await this._postMobilePushNotificationToken(response.customer.data.attributes.access_token);
-      AsyncStorage.multiSet([["access_token", response.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(response)]],()=>{
-        globals.access_token = response.customer.data.attributes.access_token ||""
-        globals.id = response.customer.data.attributes.id
-        globals.first_name = response.customer.data.attributes.first_name || ""
-        globals.last_name = response.customer.data.attributes.last_name || ""
-        globals.email = response.customer.data.attributes.email || ""
-        globals.cell_phone = response.customer.data.attributes.cell_phone || ""
-        globals.status = response.customer.data.attributes.status && response.customer.data.attributes.status || ""
-        globals.avatar = response.customer.data.attributes.avatar.url || ""
-        this.props.navigation.navigate('CustomerTabbar');
-      })
-    } catch (error) {
-      this.setState({ errorMessage: error.message, spinner: false })
-      console.log('Loginwith facebook catch error ' + JSON.stringify(error));
-    }
-  },
-  error: (err) => {
-    console.log('Loginwith facebook error ' + JSON.stringify(err));
-    this.setState({ errorMessage: err, spinner: false })
-  },
-  complete: (err) => {
-    this.setState({ errorMessage: err, spinner: false })
+    };
   }
-}
+
+  loginWithFacebookResponse = {
+    success: async (response) => {
+      try {
+        await this._postMobilePushNotificationToken(response.customer.data.attributes.access_token);
+        AsyncStorage.multiSet([["access_token", response.customer.data.attributes.access_token || ""], ["customerData", JSON.stringify(response)]],()=>{
+          globals.access_token = response.customer.data.attributes.access_token ||""
+          globals.id = response.customer.data.attributes.id
+          globals.first_name = response.customer.data.attributes.first_name || ""
+          globals.last_name = response.customer.data.attributes.last_name || ""
+          globals.email = response.customer.data.attributes.email || ""
+          globals.cell_phone = response.customer.data.attributes.cell_phone || ""
+          globals.status = response.customer.data.attributes.status && response.customer.data.attributes.status || ""
+          globals.avatar = response.customer.data.attributes.avatar.url || ""
+          this.props.navigation.navigate('CustomerTabbar');
+        })
+      } catch (error) {
+        this.setState({ errorMessage: error.message, spinner: false })
+        console.log('Loginwith facebook catch error ' + JSON.stringify(error));
+      }
+    },
+    error: (err) => {
+      console.log('Loginwith facebook error ' + JSON.stringify(err));
+      this.setState({ errorMessage: err, spinner: false })
+    },
+    complete: (err) => {
+      this.setState({ errorMessage: err, spinner: false })
+    }
+  }
 
   facebookLogin = async() =>{
-
     const { type, token } = await Facebook.logInWithReadPermissionsAsync('2057031764572769', {
       permissions: ['public_profile', 'email', 'user_friends'],
     });
-    if (type === 'success') {
-      // Get the user's name using Facebook's Graph API
-
-
-      const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`);
-
-        this.setState({ spinner: true });
-        let data = {
-          "customer": {
-            "facebook_access_token": token
-          }
+    if (type == 'success') {
+      const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+      this.setState({ spinner: true });
+      let data = {
+        "customer": {
+          "facebook_access_token": token
         }
-        console.log('\n\n\n\nData:', data, '\n\n\n\n\n');
-        API.loginWithFacebook(this.loginWithFacebookResponse,data,true);
-  }
-}
-
-  _handleLoginResponse = (response) => {
-    if (response.status === 401) {
-      this.setState({ errorMessage: <Text style={styles.text_error}>Verifique su usuario y su contraseña</Text> });
-      this.setState({ spinner: false });
-      return response;
-    } else {
-      response.json().then((data) => {
-          // this.props.navigation.navigate('CustomerTabbar', { data: data });
-          this.props.navigation.navigate('CustomerTabbar');
-        })
+      }
+      console.log('\n\n\n\nData:', data, '\n\n\n\n\n');
+      API.loginWithFacebook(this.loginWithFacebookResponse,data,true);
     }
   }
 
@@ -197,7 +178,16 @@ loginWithFacebookResponse = {
     })
     .then(response => {
       if (response.status === 200) {
-        response.json().then(async data => {
+        response.json().then(async responseData => {
+          AsyncStorage.getItem('Data').then((data) => {
+            if(data !== null){
+              const dataParse = JSON.parse(data);
+              AsyncStorage.setItem('Data', JSON.stringify(dataParse))
+              globals.access_token = dataParse.customer.data.attributes.access_token;
+            }else{
+              AsyncStorage.setItem('Data', JSON.stringify(responseData))
+            }
+          })
         });
       }
     })

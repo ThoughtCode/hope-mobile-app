@@ -11,6 +11,7 @@
     "@expo/vector-icons": "^10.0.2",
     "@ptomasroos/react-native-multi-slider": "^1.0.0",
     "expo": "^33.0.0",
+    "expo-localization": "^6.0.0",
     "expo-permissions": "^5.0.1",
     "moment": "^2.24.0",
     "react": "16.8.3",
