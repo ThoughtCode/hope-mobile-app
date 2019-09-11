@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, AsyncStorage, Image, Dimensions,SafeAreaView,Alert,FlatList} from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons'
-const {height , width} = Dimensions.get('window')
-import Ionicons from '@expo/vector-icons/Ionicons'
+const width = Dimensions.get('window')
 import * as globals from '../../../util/globals';
-import { API } from '../../../util/api';
-import AgentJobListScreen from '../AgentJobListScreen/AgentJobListScreen';
 
 const styles = require('./AgentProfileStyles');
 
@@ -139,9 +136,8 @@ export default class AgentProfile extends Component {
        Alert.alert(globals.APP_NAME,"¿Seguro que quieres desconectarte?",[
         {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: 'Si', onPress: () => {
-            AsyncStorage.clear().then(()=>{
-                this.props.navigation.navigate("AgentLogin")
-            })
+            AsyncStorage.clear()
+            this.props.navigation.navigate("AgentLogin")
         }},
       ],
       { cancelable: false })

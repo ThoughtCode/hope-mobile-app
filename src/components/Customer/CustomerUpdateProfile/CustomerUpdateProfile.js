@@ -9,7 +9,6 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import * as globals from '../../../util/globals';
 import * as Permissions from 'expo-permissions';
-import * as Localization from 'expo-localization';
 
 const styles = require('./CustomerUpdateProfileStyles');
 const IMAGES = {
@@ -118,23 +117,28 @@ export default class CustomerUpdateProfile extends Component {
 
   selectedPhoto = async (index) => {
     if(index == 0){
-      const { status, expires, permissions } = await Permissions.askAsync(
-        Permissions.CAMERA,
-        Permissions.CAMERA_ROLL
-      );
-      // const { status_camera } = await Permissions.askAsync(Permissions.CAMERA);
-      // const { status_cameraRoll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      // this.setState({ hasCameraPermission: permissions.camera.status !== 'granted' });
-      if(permissions.camera.status === 'granted' || permissions.cameraRoll.status !== 'granted'){
+      const { status, expires, permissions } = await Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+      if (permissions.camera.status !== 'granted' && permissions.cameraRoll.status !== 'granted') {
+        const { status, expires, permissions } = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+        if (permissions.camera.status === 'granted' && permissions.cameraRoll.status === 'granted') {
+          let result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+          });
+          if (!result.cancelled) {
+            this.setState({ profilePhoto: result.uri });
+          } 
+        }
+      } else {
         let result = await ImagePicker.launchCameraAsync({
           allowsEditing: true,
-          aspect: [4, 3],
+          aspect: [4, 3]
         });
         if (!result.cancelled) {
           this.setState({ profilePhoto: result.uri });
         }
       }
-    }else{
+    }else if(index == 1){
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
         aspect: [4, 3],
@@ -143,6 +147,7 @@ export default class CustomerUpdateProfile extends Component {
       if (!result.cancelled) {
         this.setState({ profilePhoto: result.uri });
       }
+    }else{
     }
   }
 

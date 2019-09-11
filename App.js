@@ -1,8 +1,7 @@
 import React from 'react';
-import {AsyncStorage} from 'react-native';
-import {AgentNavigator, MainNavigator } from './src/components/Navigator/Router.js';
+import {YellowBox, AsyncStorage} from 'react-native';
+import {MainNavigator, CustomerLoginAuth, AgentLoginAuth} from './src/components/Navigator/Router.js';
 import * as globals from './src/util/globals';
-import {YellowBox} from 'react-native';
 
 // Redux Store
 import {createStore} from 'redux';
@@ -27,8 +26,9 @@ export default class App extends React.Component {
     this.state = {
       fontLoaded: false,
       isLoading : true,
-      isAgentLogin : false,
-      notification : {}
+      notification : {},
+      isAutomaticLoginCustomer : false,
+      isAutomaticLoginAgent : false,
     };
   }
 
@@ -46,16 +46,40 @@ export default class App extends React.Component {
     await Expo.Font.loadAsync({
       'helvetica': require('./assets/fonts/HELR45W.ttf'),
     })
-    AsyncStorage.getItem("customerData").then((item) =>{
-      // const data = this.props.navigation.getParam('data');
-      if(item != null){
-        const data = JSON.parse(item)
-        const authToken = data.customer.data.attributes.access_token;
-        globals.id = data.customer.id
-        globals.access_token = authToken;
-        globals.avatar = data.customer.data.attributes.avatar.url;
+    AsyncStorage.getItem("Data").then((item) =>{
+      const dataa = JSON.parse(item)
+      if(dataa !== null){
+        let user_type = Object.keys(dataa)[1];
+        console.log("Es ::::::::::::::",user_type)
+        if (user_type === "customer") {
+          const data = JSON.parse(item)
+          globals.id = data.customer.id;
+          globals.access_token = data.customer.data.attributes.access_token || "";
+          globals.avatar = data.customer.data.attributes.avatar.url;
+          globals.first_name = data.customer.data.attributes.first_name || "";
+          globals.last_name = data.customer.data.attributes.last_name || "";
+          globals.email = data.customer.data.attributes.email || "";
+          globals.cell_phone = data.customer.data.attributes.cell_phone || "";
+          globals.class_name = data.customer.data.attributes.class_name || "";
+          this.setState({isAutomaticLoginCustomer : true})
+        }else if(user_type === "agent"){
+          const data = JSON.parse(item)
+          globals.access_token = data.agent.data.attributes.access_token || '';
+          globals.first_name = data.agent.data.attributes.first_name || '';
+          globals.last_name = data.agent.data.attributes.last_name || '';
+          globals.email = data.agent.data.attributes.email || '';
+          globals.password = this.state.password || '';
+          globals.cell_phone = data.agent.data.attributes.cell_phone || '';
+          globals.status = data.agent.data.attributes.status || '';
+          globals.avatar = data.agent.data.attributes.avatar.url || '';
+          globals.rewiews_average = data.agent.data.attributes.rewiews_average || '';
+          globals.rewiews_count = data.agent.data.attributes.rewiews_count || '';
+          globals.class_name = data.agent.data.attributes.class_name || ""
+          this.setState({isAutomaticLoginAgent : true})
+        }
+      }else{
+        console.log("ALERTA ALERTA ========= AsyncStorage.getItem is NULL ========= ALERTA ALERTA")
       }
-      // this.setState({isLoading : true,fontLoaded: true,isAgentLogin : data != null})
     })
     AsyncStorage.multiGet(['password', 'access_token', 'first_name', 'last_name', 'email', 'cell_phone', 'avatar', 'status', 'birthday', 'id'],(error,value) =>{
       if(value[4][1] != null && value[4][1] != undefined){
@@ -71,25 +95,30 @@ export default class App extends React.Component {
         globals.id = value[9][1] || ""
       }
       this.setState({isLoading : true,fontLoaded: true,isAgentLogin : value[4][1] != null})
-      // this.setState({isLoading : true,fontLoaded: true,isAgentLogin : null})
     })
   }
   
   render() {
     if (this.state.fontLoaded) {
-      if (this.state.isAgentLogin) {
+      if (this.state.isAutomaticLoginCustomer == true) {
         return (
           <Provider store={store}>
-            <AgentNavigator />
+            <CustomerLoginAuth />
           </Provider>
         );
+      } else if(this.state.isAutomaticLoginAgent == true){
+      return (
+          <Provider store={store}>
+            <AgentLoginAuth />
+          </Provider>
+        )
       } else {
         return (
           <Provider store={store}>
             <MainNavigator />
           </Provider>
         )
-      }
+      }     
     } else {
       return null
     }

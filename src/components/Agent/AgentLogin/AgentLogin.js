@@ -146,8 +146,16 @@ export default class AgentLogin extends React.Component {
     })
       .then(response => {
         if (response.status === 200) {
-          response.json().then(async data => {
-            console.log(data);
+          response.json().then(async responseData => {
+            AsyncStorage.getItem('Data').then((data) => {
+              if(data !== null){
+                const dataParse = JSON.parse(data);
+                AsyncStorage.setItem('Data', JSON.stringify(dataParse))
+                globals.access_token = data.agent.data.attributes.access_token;
+              }else{
+                AsyncStorage.setItem('Data', JSON.stringify(responseData))
+              }
+            })
           });
         }
       })
