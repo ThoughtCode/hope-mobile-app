@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, AsyncStorage, Image, Dimensions,SafeAreaView,Alert,FlatList} from 'react-native';
-import EvilIcons from '@expo/vector-icons/EvilIcons'
-const width = Dimensions.get('window')
+import EvilIcons from '@expo/vector-icons/EvilIcons';
+const {height , width} = Dimensions.get('window');
 import * as globals from '../../../util/globals';
 
 const styles = require('./AgentProfileStyles');
