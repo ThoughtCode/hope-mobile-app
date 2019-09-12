@@ -108,7 +108,29 @@ export default class CustomerLogin extends React.Component {
       .catch(error => console.log('token not saved'));
     };
   }
-
+  
+  _facebookLogin = async() =>{
+    const { type, token, expires, permissions, declinedPermissions, } = await Facebook.logInWithReadPermissionsAsync('2057031764572769', {
+      permissions: ["public_profile", "user_friends", "email"],
+    });
+    if (type === 'success') {
+      const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+      this.setState({ spinner: true });
+      try {
+        let data = {
+          "customer": {
+            "facebook_access_token": token
+          }
+        }
+        API.loginWithFacebook(this.loginWithFacebookResponse,data,true);
+      } catch ({message}) {
+        console.log(`Facebook Login Error: ${message}`)
+      }
+    } else {
+      console.log("Error logging in. You should try again.")
+    }
+  }
+  
   loginWithFacebookResponse = {
     success: async (response) => {
       try {
@@ -135,23 +157,6 @@ export default class CustomerLogin extends React.Component {
     },
     complete: (err) => {
       this.setState({ errorMessage: err, spinner: false })
-    }
-  }
-
-  facebookLogin = async() =>{
-    const { type, token } = await Facebook.logInWithReadPermissionsAsync('2057031764572769', {
-      permissions: ['public_profile', 'email', 'user_friends'],
-    });
-    if (type == 'success') {
-      const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-      this.setState({ spinner: true });
-      let data = {
-        "customer": {
-          "facebook_access_token": token
-        }
-      }
-      console.log('\n\n\n\nData:', data, '\n\n\n\n\n');
-      API.loginWithFacebook(this.loginWithFacebookResponse,data,true);
     }
   }
 
@@ -252,7 +257,7 @@ export default class CustomerLogin extends React.Component {
               <Text style={styles.login_button_text}>Entrar</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={this.facebookLogin} style={styles.fb_login_button}>
+            <TouchableOpacity onPress={this._facebookLogin} style={styles.fb_login_button}>
               <Text style={styles.fb_login_button_text}>Iniciar sesión con facebook</Text>
             </TouchableOpacity>
             <TouchableOpacity
