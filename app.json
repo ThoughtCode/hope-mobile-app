@@ -4,12 +4,11 @@
     "slug": "noc-noc",
     "privacy": "public",
     "sdkVersion": "33.0.0",
-    "version": "2.1.7",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "version": "2.1.8",
+    "platforms": ["ios","android"],
+    "facebookScheme": "fb2057031764572769",
+    "facebookAppId": "2057031764572769",
+    "facebookDisplayName": "NOC NOC",
     "orientation": "portrait",
     "icon": "./assets/img/logo_azul_no_transparente.png",
     "updates": {
@@ -26,7 +25,7 @@
       "es": "./languages/es.json"
     },
     "android": {
-      "versionCode": 17,
+      "versionCode": 18,
       "package": "com.nocnoc.app",
       "permissions": [
         "ACCESS_FINE_LOCATION",
