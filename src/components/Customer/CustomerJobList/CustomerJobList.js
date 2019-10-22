@@ -63,6 +63,7 @@ export default class CustomerJobList extends Component {
 
   getJobResponseData = {
       success: (response) => {
+        console.log("ESTA MIERDA ES EL APIII CUSTOMER",response)
           try {
               if(this.state.isOnRefresh){
                   this.setState({

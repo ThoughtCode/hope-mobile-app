@@ -1,21 +1,19 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, Image, Dimensions,SafeAreaView, Slider} from 'react-native';
+import {Text, TouchableOpacity, View, Image, Dimensions,SafeAreaView} from 'react-native';
 
 import Octicons from '@expo/vector-icons/Octicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-const {height , width} = Dimensions.get('window')
-import { API } from '../../../util/api';
-import Moment from 'moment';
-import TrabajosTab from '../../Navigator/_TrabajosTab';
+const {width} = Dimensions.get('window')
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import DatePicker from 'react-native-datepicker'
 
 const styles = require('./AgentFilterScreenStyles');
 
 const IMAGES = {
-    TOP_BACKGROUND : require("../../../../assets/img/topbg.png"),
-    LOGO : require("../../../../assets/img/logo_blanco.gif")
+  TOP_BACKGROUND : require("../../../../assets/img/topbg.png"),
+  LOGO : require("../../../../assets/img/logo_blanco.gif")
 }
+
 var _this = null;
 
 export default class AgentFilterScreen extends Component {

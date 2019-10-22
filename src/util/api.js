@@ -2,14 +2,14 @@ import * as APILIST from '../constants/api.js';
 import * as globals from '../util/globals';
 export const API = {
 
-    //Agent API
+  //Agent API
 
-    getJobs: (onResponse, data, isHeaderRequired) => {
-        request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.JOBS + data, buildHeader());
-    },
+  getJobs: (onResponse, data, isHeaderRequired) => {
+    request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.JOBS + data, buildHeader());
+  },
 
-    getJobsAccepted: (onResponse, data, isHeaderRequired) => {
-      request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.JOBS_ACCEPTED + data, buildHeader());
+  getJobsAccepted: (onResponse, data, isHeaderRequired) => {
+    request(onResponse, {}, 'GET', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.JOBS_ACCEPTED + data, buildHeader());
   },
 
     applyJob: (onResponse, data, isHeaderRequired) => {
@@ -48,7 +48,7 @@ export const API = {
         request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_REVIEW + job_id + "/review", buildHeader());
     },   
     confirmPayment: (onResponse, data, job_id, isHeaderRequired) => {
-        request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_REVIEW + job_id + "/confirm_payment", buildHeader());
+      request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.SET_REVIEW + job_id + "/confirm_payment", buildHeader());
     },
 
     //Customers API
@@ -159,7 +159,11 @@ export const API = {
 
     detroyProperty: (onResponse, id, isHeaderRequired) => {
         request(onResponse, {}, 'DELETE', 'JSON', isHeaderRequired, APILIST.BASE_URL + APILIST.DELETE_PROPERTY + id, buildHeader());
-    }
+    },
+
+    validateCode: (onResponse, data, isHeaderRequired) => {
+      request(onResponse, data, 'POST', "JSON", isHeaderRequired, APILIST.BASE_URL + APILIST.VALIDATE_CODE , buildHeader());
+    },
 }
 
 export const buildHeader = (headerParams = {}) => {
@@ -174,42 +178,39 @@ export const buildHeader = (headerParams = {}) => {
 }
 
 async function request(onResponse, data, type, returnType, isHeaderRequired, featureURL, secureRequest) {
-    let response = '';
-    let responseJSON;
-    try {
-        if (type === 'GET') {
-            if (isHeaderRequired) {
-                response = await fetch(featureURL, {
-                    method: type,
-                    headers: secureRequest
-                });
-            }
-            else {
-                response = await fetch(featureURL, {
-                    method: type,
-                });
-            }
-        }
-        else {
-            response = await fetch(featureURL, {
-                method: type,
-                headers: secureRequest,
-                body: JSON.stringify(data)
-            });
-        }
-        if (returnType === 'TEXT') {
-            responseJSON = await response.text();
-        }
-        else {
-            responseJSON = await response.json();
-        }
-
-        if (response.status == 200) {
-            onResponse.success(responseJSON);
-        } else {
-            onResponse.error(responseJSON);
-        }
-    } catch (error) {
-        onResponse.error(responseJSON);
+  let response = '';
+  let responseJSON;
+  try {
+    if (type === 'GET') {
+      if (isHeaderRequired) {
+        response = await fetch(featureURL, {
+          method: type,
+          headers: secureRequest
+        });
+      }
+      else {
+        response = await fetch(featureURL, {
+          method: type,
+        });
+      }
+    } else {
+      response = await fetch(featureURL, {
+        method: type,
+        headers: secureRequest,
+        body: JSON.stringify(data)
+      });
     }
+    if (returnType === 'TEXT') {
+      responseJSON = await response.text();
+    } else {
+      responseJSON = await response.json();
+    }
+    if (response.status == 200) {
+      onResponse.success(responseJSON);
+    } else {
+      onResponse.error(responseJSON);
+    }
+  } catch (error) {
+    onResponse.error(responseJSON);
+  }
 }

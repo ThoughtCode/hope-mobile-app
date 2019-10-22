@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View, FlatList, Image, Dimensions,SafeAreaView, ActivityIndicator} from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons'
-const {height , width} = Dimensions.get('window')
-import { API } from '../../../util/api';
+const {width} = Dimensions.get('window')
 import Moment from 'moment';
 import AgentTrabajosDashboard from "../AgentTrabajosDashboard/AgentTrabajosDashboard";
 import CustomerTrabajosDashboard from "../../Customer/CustomerTrabajosDashboard/CustomerTrabajosDashboard";

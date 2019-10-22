@@ -1,14 +1,14 @@
 // Production
-export const BASE_URL = "https://hopeec-production.herokuapp.com";
-export const STAGING_URL = "https://hopeec-production.herokuapp.com";
+// export const BASE_URL = "https://hopeec-production.herokuapp.com";
+// export const STAGING_URL = "https://hopeec-production.herokuapp.com";
+
 // Staging
-// export const BASE_URL = "https://hopeec-staging.herokuapp.com/";
-// export const STAGING_URL = "https://hopeec-staging.herokuapp.com/";
+export const BASE_URL = "https://hopeec-staging.herokuapp.com/";
+export const STAGING_URL = "https://hopeec-staging.herokuapp.com/";
 
-// export const BASE_URL = "http://706e28a3.ngrok.io";
-// export const STAGING_URL = "http://706e28a3.ngrok.io";
+// export const BASE_URL = "https://5afbc306.ngrok.io";
+// export const STAGING_URL = "https://5afbc306.ngrok.io";
 
-// export const BASE_URL = "http://localhost:3000";
 export const SIGNUP_URI = "/api/v1/customers/signup";
 export const AGENT_SIGNUP_URI = "/api/v1/agents/signup";
 export const CUSTOMER_SIGNIN = "/api/v1/customers/signin";
@@ -57,3 +57,4 @@ export const SET_CUSTOMER_MOBILE_TOKEN = "/api/v1/customers/add_mobile_token";
 export const DELETE_CARD = "/api/v1/customers/delete_card/";
 export const DELETE_INVOICE = "/api/v1/customers/invoice_details/";
 export const DELETE_PROPERTY = "/api/v1/customers/properties/";
+export const VALIDATE_CODE = "/api/v1/customers/validate_promo_code";

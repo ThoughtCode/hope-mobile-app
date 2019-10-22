@@ -1,3 +1,5 @@
 {
-  "NSCameraUsageDescription": "Esta app usa la cámara"
+  "NSCameraUsageDescription": "Esta app usa la cámara",
+  "NSPhotoLibraryAddUsageDescription": "Requiere permiso para guardar fotos",
+  "NSPhotoLibraryUsageDescription": "Requiere permiso para acceder a tus fotos"
 }

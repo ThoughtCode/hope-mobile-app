@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View, FlatList, Image, Dimensions,SafeAreaView} from 'react-native';
-import EvilIcons from '@expo/vector-icons/EvilIcons'
-const {height , width} = Dimensions.get('window')
+import {Text, TouchableOpacity, View, Image, Dimensions,SafeAreaView} from 'react-native';
 import { API } from '../../../util/api';
-import Moment from 'moment';
 import JobList from "./_JobList";
 const styles = require('./AgentJobListScreenStyles');
 import * as globals from '../../../util/globals';
 const IMAGES = {
-    TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
+  TOP_BACKGROUND : require("../../../../assets/img/topbg.png")
 }
 var _this = null;
 export default class AgentJobListScreen extends Component {

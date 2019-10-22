@@ -28,6 +28,13 @@ const thirdScreenStyle = StyleSheet.create({
         margin: 5,
         height: 40
     },
+    textInputStyleContainerPromotion: {
+      borderColor: "#000000",
+      borderWidth: 1,
+      margin: 5,
+      height: 40,
+      width: 200
+    },
     textInputStyle: {
         // placeholderTextColor: "#A8A8A8",
         fontSize: 15,
@@ -41,9 +48,8 @@ const thirdScreenStyle = StyleSheet.create({
         borderBottomColor: '#000000',
         borderBottomWidth: 1,
     },
-    buttonViewStyle:
-    {
-        margin: 5, height: 40, backgroundColor: '#1F68A9', justifyContent: 'center'
+    buttonViewStyle:{
+      margin: 5, height: 40, backgroundColor: '#1F68A9', justifyContent: 'center'
     },
     buttonTextStyle:
     {
