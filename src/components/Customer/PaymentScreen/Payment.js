@@ -217,15 +217,27 @@ export default class Payment extends React.Component {
     service = sa.filter(function(service){
       return service.id === serviceId;
     });
-    if (service)
-      return (service.price * service.time) * discountPercentage / 100;
+    if (service.length != []) {
+      let s = service;
+      calculate = s.filter(function(service){
+        calculateReady = (service.price * service.time) * discountPercentage / 100;
+      });
+      return calculateReady
+    }
 
     let sp = services.attributes.services_parameters;
     service = sp.filter(function(service){
       return service.id === serviceId;
     });
-    if (service)
-      return (service.price * service.time) * discountPercentage / 100;
+    if (service.length != []){
+      let s = service;
+      calculate = s.filter(function(service){
+        calculateReady = (service.price * service.time) * discountPercentage / 100;
+      });
+      return calculateReady
+    }
+
+    return false
   }
 
   onChangeText = (text) => {
@@ -238,7 +250,7 @@ export default class Payment extends React.Component {
     if (this.state.textCode != '' && this.state.textCodePlaceholder == "Ingrese código"){
       Alert.alert(globals.APP_NAME,"¿Seguro que quieres VALIDAR el codigo?",[
         {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Si', onPress: () => {this.promoCode()}},
+        {text: 'Si', onPress: () => this.promoCode()},
       ],{cancelable:false})
     }else{
       Alert.alert('Validación de código','No puede estar vacio',[{text:'OK'}], {cancelable:false});
@@ -304,9 +316,16 @@ export default class Payment extends React.Component {
 
     if(this.state.codeAplay == true){
       discount = this.calculateDiscount(this.state.dataCodeResponse.promotion.data.attributes.service.id, this.state.serviceType, this.state.dataCodeResponse.promotion.data.attributes.discount)
-      total = (total - discount)
+      if(discount != false){
+        total = (total - discount)
+      }else{
+        discount = 0
+        Alert.alert(globals.APP_NAME,"CÓDIGO Promocional no valido para este Servicio",[
+          {text: 'OK', onPress: () => this.setState({textInputStatus: true,codeAplay: false})},
+        ])
+      }
     }else{
-      console.log("additionalServiceData ======>>>>>",discount," ----- ",total)
+      total = total;
     }
 
     vat = total * 0.12
