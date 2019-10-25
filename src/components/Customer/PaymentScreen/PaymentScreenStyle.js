@@ -53,7 +53,7 @@ const thirdScreenStyle = StyleSheet.create({
     },
     buttonTextStyle:
     {
-      fontFamily:"helvetica", fontSize: 16, color: '#ffffff', textAlign: 'center'
+      fontFamily:"helvetica", fontSize: 16, color: '#ffffff', textAlign: 'center', marginHorizontal: 10
     },
     topImage:{
       height: width * 0.2,
