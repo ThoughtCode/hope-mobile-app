@@ -248,44 +248,28 @@ export default class Payment extends React.Component {
 
   validateCodeButton = () => {
     if (this.state.textCode != '' && this.state.textCodePlaceholder == "Ingrese código"){
-      Alert.alert(globals.APP_NAME,"¿Seguro que quieres VALIDAR el codigo?",[
-        {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Si', onPress: () => this.promoCode()},
-      ],{cancelable:false})
+      let data = {
+        "promo_code": this.state.textCode
+      }
+      API.validateCode(this.validateCodeResponse,data,true)
     }else{
       Alert.alert('Validación de código','No puede estar vacio',[{text:'OK'}], {cancelable:false});
     }
   }
 
-  promoCode = () => {
-    let data = {
-      "promo_code": this.state.textCode
-    }
-    API.validateCode(this.validateCodeResponse,data,true)
-  }
-
   validateCodeResponse = {
     success: (response) => {
       try {
-        Alert.alert(globals.APP_NAME,response.message + " " + response.promotion.data.attributes.name + " " + "¿Seguro que quieres APLICAR el codigo?",
-          [
-            {text: 'Cancelar', onPress: () => console.log('Cancel Pressed')},   
-            {text: 'Aplicar', onPress: () => this.promoCodeAplay()}, this.setState({dataCodeResponse: response})
-          ],
-          { cancelable: false }
-        )
+        this.setState({dataCodeResponse: response, textInputStatus: false, codeAplay: true})
       } catch (error) {
         console.log("respuesta error",error)
+        Alert.alert(globals.APP_NAME,error.message,[{text: 'OK'}])
       }
     },
     error: (err) => {
       console.log("respuesta erro",err)
       Alert.alert(globals.APP_NAME,err.message,[{text: 'OK'}])
     }
-  }
-
-  promoCodeAplay = () => {
-    this.setState({textInputStatus: false, codeAplay: true})
   }
 
   render() {
@@ -446,7 +430,7 @@ export default class Payment extends React.Component {
               <Text style={{ height: 50, paddingHorizontal:10, paddingVertical:8 }} >{this.state.optionSelecct || "Seleccione opción"}</Text>
             </TouchableOpacity>
           </View>
-          {(this.state.textInputStatus == true) ? (
+          {(this.state.textInputStatus == false) ? (
             <View>
               <Text style={{ margin: 5 }}>
                 ¿Tiene código promocional?
