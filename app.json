@@ -3,7 +3,7 @@
     "name": "Noc Noc",
     "slug": "noc-noc",
     "privacy": "public",
-    "sdkVersion": "33.0.0",
+    "sdkVersion": "36.0.0",
     "version": "2.2.0",
     "platforms": ["ios","android"],
     "facebookScheme": "fb2057031764572769",

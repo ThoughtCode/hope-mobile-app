@@ -108,12 +108,14 @@ export default class CustomerLogin extends React.Component {
       .catch(error => console.log('token not saved'));
     };
   }
-  
+
   _facebookLogin = async() =>{
-    const { type, token, expires, permissions, declinedPermissions, } = await Facebook.logInWithReadPermissionsAsync('2057031764572769', {
+    await Facebook.initializeAsync('2057031764572769');
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync('2057031764572769', {
       permissions: ["public_profile", "user_friends", "email"],
     });
     if (type === 'success') {
+      console.log("<<<==== TOKEN TOKEN TOKEN TOKEN TOKEN ====>>>", token)
       const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
       this.setState({ spinner: true });
       try {

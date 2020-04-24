@@ -55,8 +55,8 @@ export default TrabajosTab = TabNavigator({
   },
   initialRouteName: 'AgentActules',
   tabBarPosition: 'top',
-  animationEnabled: true,
-  swipeEnabled: true
+  animationEnabled: false,
+  swipeEnabled: false
 })
 
 const styles = StyleSheet.create({
