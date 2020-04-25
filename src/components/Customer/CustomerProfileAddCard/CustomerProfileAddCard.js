@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity,WebView,Image,SafeAreaView} from 'react-native';
+import {Text, TouchableOpacity,Image,SafeAreaView} from 'react-native';
+import { WebView } from 'react-native-webview';
 import * as globals from '../../../util/globals';
 import { View } from 'react-native-animatable';
 
@@ -51,8 +52,8 @@ export default class CustomerProfileAddCard extends Component {
         </View> 
         <View style={{flex: 1}}>
           <WebView
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
+            // javaScriptEnabled={true}
+            // domStorageEnabled={true}
             source={{ uri: `https://hopeec-production.herokuapp.com/add_credit_card?email=${this.state.email}&id=${this.state.id}`}}
           />
           <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>

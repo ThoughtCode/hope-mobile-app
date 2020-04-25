@@ -1,5 +1,6 @@
 import React from 'react';
-import { WebView,TouchableOpacity,Text,Image,Dimensions} from 'react-native';
+import { TouchableOpacity,Text,Image,Dimensions} from 'react-native';
+import { WebView } from 'react-native-webview';
 import * as globals from '../../../util/globals';
 import { View } from 'react-native-animatable';
 
@@ -18,7 +19,6 @@ export default class AddCardScreen extends React.Component {
     }
   }
   render() {
-    const url = `https://hopeec-production.herokuapp.com/add_credit_card?email=${globals.email}&id=${globals.id}`;
     return (
       <View style={{flex: 1}}>
         <View>
@@ -28,9 +28,9 @@ export default class AddCardScreen extends React.Component {
           </View>
         </View>
         <WebView
-          javaScriptEnabled={true}
-          domStorageEnabled={true}
-          source={{ uri: url}}
+          // javaScriptEnabled={true}
+          // domStorageEnabled={true}
+          source={{ uri: `https://hopeec-production.herokuapp.com/add_credit_card?email=${globals.email}&id=${globals.id}` }}
         />
         <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate("CardListScreen",{jobActualState:this.props.navigation.state.params.jobActualState})} style={styles.back_button}>

@@ -34,6 +34,7 @@
     "react-native-star-rating": "^1.0.9",
     "react-native-swiper": "^1.5.14",
     "react-native-web": "^0.11.4",
+    "react-native-webview": "7.4.3",
     "react-navigation": "^1.5.11",
     "react-redux": "^5.0.7",
     "redux": "^4.0.1"
