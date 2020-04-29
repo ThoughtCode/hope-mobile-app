@@ -14,8 +14,6 @@ export default class AddCardScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email : globals.email,
-      id : globals.id,
     }
   }
   render() {

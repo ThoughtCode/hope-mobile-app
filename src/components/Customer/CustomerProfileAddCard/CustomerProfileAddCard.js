@@ -16,8 +16,6 @@ export default class CustomerProfileAddCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id : globals.id,
-      email : globals.email,
     }
   }
 
@@ -54,7 +52,7 @@ export default class CustomerProfileAddCard extends Component {
           <WebView
             // javaScriptEnabled={true}
             // domStorageEnabled={true}
-            source={{ uri: `https://hopeec-production.herokuapp.com/add_credit_card?email=${this.state.email}&id=${this.state.id}`}}
+            source={{ uri: `https://hopeec-production.herokuapp.com/add_credit_card?email=${globals.email}&id=${globals.id}` }}
           />
           <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("CustomerProfileCardList")} style={styles.back_button}>
