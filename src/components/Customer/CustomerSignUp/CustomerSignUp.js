@@ -23,6 +23,7 @@ export default class CustomerSignUp extends Component {
       firstname: '',
       lastname: '',
       email: '',
+      cell_phone: '',
       password: '',
       password_confirmation: ''
     };
@@ -54,6 +55,13 @@ export default class CustomerSignUp extends Component {
     if (this.validateEmail(this.state.email) === false) {
       valid = false;
       Alert.alert('Error de validación', 'El correo ingresado no es válido', [{ text: 'OK' }], {
+        cancelable: false
+      });
+      return valid;
+    }
+    if (this.state.cell_phone.length !== 10) {
+      valid = false;
+      Alert.alert('Error de validación', 'El número celular debe tener 10 caracteres', [{ text: 'OK' }], {
         cancelable: false
       });
       return valid;
@@ -90,6 +98,7 @@ export default class CustomerSignUp extends Component {
             first_name: this.state.firstname,
             last_name: this.state.lastname,
             email: this.state.email,
+            cell_phone: this.state.cell_phone,
             password: this.state.password,
             password_confirmation: this.state.password_confirmation
           }
@@ -220,6 +229,18 @@ export default class CustomerSignUp extends Component {
                   autoCapitalize="none"
                   underlineColorAndroid="transparent"
                   keyboardType="email-address"
+                />
+              </View>
+              <View style={styles.signup_input_container_border}>
+                <FontAwesome name="mobile-phone" size={32} color="#fff" />
+                <TextInput
+                  style={styles.signup_input}
+                  onChangeText={cell_phone => this.setState({ cell_phone })}
+                  placeholder="CELULAR"
+                  placeholderTextColor="#fff"
+                  autoCapitalize="none"
+                  underlineColorAndroid="transparent"
+                  keyboardType="phone-pad"
                 />
               </View>
               <View style={styles.signup_input_container_border}>
